@@ -1,0 +1,15 @@
+
+# for filter modules
+# ngx_addon_name=ngx_http_<your module>_module
+# HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_<your module>_module"
+# NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_<your module>_module.c"
+
+# for other modules
+
+module_name=monsys
+
+ngx_addon_name="ngx_http_${module_name}_module"
+HTTP_MODULES="$HTTP_MODULES ngx_http_${module_name}_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS src/${module_name}/ngx_http_${module_name}_module.c"
+
+

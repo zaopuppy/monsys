@@ -1,0 +1,4 @@
+
+[ ] use persist connection between nginx and monsys server.
+
+
