@@ -15,15 +15,15 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -Wall -g \
 	-I/Volumes/Data/source/libevent/libevent-2.0.21-stable/out/include/ \
-	-Ilibmonsys/
+	-I../libmonsys/
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
 	-L/Volumes/Data/source/libevent/libevent-2.0.21-stable/out/lib/ -levent_core \
-	-Llibmonsys/ -lmonsys
+	-L../libmonsys/ -lmonsys
 
 $(TARGET) : $(OBJFILES)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $(OBJFILES)
 
 obj/%.d : %.cc
 	$(CXX) $(CFLAGS) -MT $(@:%.d=%.o) -MM -o $@ $<
@@ -40,6 +40,9 @@ obj/%.o : %.c
 include $(DEPFILES)
 
 .PHONY : clean rebuild test gdb
+
+check :
+	if [ ! -d obj ]; then rm -rf obj; mkdir obj; fi
 
 clean :
 	rm -f $(OBJFILES) $(DEPFILES)
