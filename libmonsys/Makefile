@@ -9,7 +9,7 @@ ARFLAGS := -r
 
 TARGET  := libmonsys.a
 
-CFILES := main.c zlog.c zmessage_codec.c
+CFILES := main.c zlog.c zmessage_codec.c z_codec.c zb_msg.c
 
 OBJFILES := $(CFILES:.c=.o)
 DEPFILES := $(OBJFILES:.o=.d)

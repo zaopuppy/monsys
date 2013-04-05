@@ -76,13 +76,13 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 	trace_bin(buf, buf_len);
 
 	// ---- FOR DEBUGGING ONLY ----
-	if (true) {
+	if (false) {
 		processCmd(fd, buf, buf_len);
 		return 0;
 	}
 	// ---- FOR DEBUGGING ONLY ----
 
-	if (buf_len < sizeof(struct z_header)) {
+	if (buf_len < 12) { // MIN_MSG_LEN(header length)
 		printf("message is not long enough: %u\n", buf_len);
 		
 		return -1;
@@ -98,6 +98,16 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 
 	int result = -1;
 	switch (hdr.cmd) {
+	case (uint16_t)ID_GET_DEV_REQ:
+		{
+			struct z_query_dev_req req;
+			int enc_len = z_decode_query_dev_req(&req, buf, buf_len);
+			if (enc_len <= 0) {
+				printf("failed to decode request.\n");
+				break;
+			}
+			break;
+		}
 	default:
 		printf("unknown message type: 0x%08X\n", hdr.cmd);
 		break;

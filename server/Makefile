@@ -7,19 +7,20 @@ YACC   := bison
 TARGET := ts
 CFILES :=
 CXXFILES := main.cc ztask.cc zclient.cc zserver.cc \
-	zapi_module.cc zzigbee_module.cc zdispatcher.cc
+	zapi_module.cc zzigbee_module.cc zdispatcher.cc zserial.cc \
+	zzigbee_message.cc
 
 # intermedia files
 OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -Wall -g \
-	-I/Volumes/Data/source/libevent/libevent-2.0.21-stable/out/include/ \
+	-I../libs/include/ \
 	-I../libmonsys/
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
-	-L/Volumes/Data/source/libevent/libevent-2.0.21-stable/out/lib/ -levent_core \
+	-L../libs/lib -levent_core \
 	-L../libmonsys/ -lmonsys
 
 $(TARGET) : $(OBJFILES)

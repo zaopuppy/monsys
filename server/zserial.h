@@ -5,6 +5,8 @@
 
 #include "zmodule.h"
 
+#include "zzigbee_message.h"
+
 class ZSerial : public ZTask {
  public:
  ZSerial(event_base* base):
@@ -24,16 +26,17 @@ class ZSerial : public ZTask {
   virtual int onInnerMsg(ZInnerMsg *msg);
 
  private:
-  int onWaitingForConnect(evutil_socket_t fd, short events);
+  // int onWaitingForConnect(evutil_socket_t fd, short events);
   void onConnected(evutil_socket_t fd, short events);
   int onDisconnected(evutil_socket_t fd, short events);
+	void onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 
   int connect();
   void scheduleReconnect();
 
  private:
   enum STATE {
-    STATE_WAITING_FOR_CONNECT,
+    // STATE_WAITING_FOR_CONNECT,
     STATE_CONNECTED,
     STATE_DISCONNECTED,
     STATE_FINISHED,

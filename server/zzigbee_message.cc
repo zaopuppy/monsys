@@ -76,7 +76,7 @@ int ZZigBeeMsg::decode(char* buf, uint32_t buf_len)
 
 
 ///////////////////////////////////////////////////////////////
-
+// GET
 ZZBGetReq::ZZBGetReq():
 	ZZigBeeMsg()
 {
@@ -177,7 +177,7 @@ int ZZBGetReq::decode(char* buf, uint32_t buf_len) {
 }
 
 ///////////////////////////////////////////////////////////////
-
+// GET rsp
 ZZBGetRsp::ZZBGetRsp():
 	ZZigBeeMsg()
 {
@@ -298,6 +298,212 @@ int ZZBGetRsp::decode(char* buf, uint32_t buf_len) {
 		// push
 		items_.push_back(itemPair);
 	}
+
+	return len;
+}
+
+///////////////////////////////////////////////////////////////
+// SET
+ZZBSetReq::ZZBSetReq():
+	ZZigBeeMsg()
+{
+	cmd_ = Z_ID_ZB_SET_REQ;
+}
+
+int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
+	printf("ZZBSetReq::encode()\n");
+
+	// check buf length
+	int enc_len = getEncodeLen();
+	if ((int)buf_len < enc_len) {
+		printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+		return -1;
+	}
+
+	// update len_ first
+	len_ = getBodyLen();
+
+	// super::encode()
+	int rv = super_::encode(buf, buf_len);
+	if (rv < 0) {
+		printf("failed to call super_::encode()\n");
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+
+	// itemCount_
+	rv = z_encode_byte((char)(items_.size()), buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+
+	size_t item_count = items_.size();
+	struct ZItemPair itemPair;
+	for (size_t i = 0; i < item_count; ++i) {
+		itemPair = items_[i];
+		rv = z_encode_byte((char)itemPair.id, buf, buf_len);
+		if (rv < 0) {
+			return rv;
+		}
+		buf += rv;
+		buf_len -= rv;
+		rv = z_encode_integer16((uint16_t)itemPair.val, buf, buf_len);
+		if (rv < 0) {
+			return rv;
+		}
+		buf += rv;
+		buf_len -= rv;
+	}
+
+	return enc_len;
+}
+
+int ZZBSetReq::decode(char* buf, uint32_t buf_len) {
+	printf("ZZBSetReq::decode()\n");
+
+	// check buf length
+	// int enc_len = getEncodeLen();
+	// if (buf_len < enc_len) {
+	// 	printf("No enough buffer length\n");
+	// 	return -1;
+	// }
+
+	// super::decode()
+	int len = 0;
+	
+	int rv = super_::decode(buf, buf_len);
+	if (rv < 0) {
+		printf("failed to call super_::decode()\n");
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	if (buf_len < len_) {
+		printf("No enough buffer: %u, %u\n", len_, buf_len);
+		return -1;
+	}
+
+	// itemCount_
+	uint8_t item_count;
+	rv = z_decode_byte((char*)(&item_count), buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	struct ZItemPair itemPair;
+	for (size_t i = 0; i < item_count; ++i) {
+		// id
+		rv = z_decode_byte((char*)(&itemPair.id), buf, buf_len);
+		if (rv < 0) {
+			return rv;
+		}
+		buf += rv;
+		buf_len -= rv;
+		len += rv;
+		// val
+		rv = z_decode_integer16(&itemPair.val, buf, buf_len);
+		if (rv < 0) {
+			return rv;
+		}
+		buf += rv;
+		buf_len -= rv;
+		len += rv;
+		// push
+		items_.push_back(itemPair);
+	}
+	return len;
+}
+
+///////////////////////////////////////////////////////////////
+// SET rsp
+ZZBSetRsp::ZZBSetRsp():
+	ZZigBeeMsg()
+{
+	cmd_ = Z_ID_ZB_SET_RSP;
+}
+
+int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
+	printf("ZZBSetRsp::encode()\n");
+
+	// check buf length
+	int enc_len = getEncodeLen();
+	if ((int)buf_len < enc_len) {
+		printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+		return -1;
+	}
+
+	// update len_ first
+	len_ = getBodyLen();
+	
+	// super::encode()
+	int rv = super_::encode(buf, buf_len);
+	if (rv < 0) {
+		printf("failed to call super_::encode()\n");
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+
+	// status_
+	rv = z_encode_byte((char)status_, buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+
+	return enc_len;
+}
+
+int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
+	printf("ZZBSetRsp::decode()\n");
+
+	// check buf length
+	// int enc_len = getEncodeLen();
+	// if (buf_len < enc_len) {
+	// 	printf("No enough buffer length\n");
+	// 	return -1;
+	// }
+
+	// super::decode()
+	int len = 0;
+	
+	int rv = super_::decode(buf, buf_len);
+	if (rv < 0) {
+		printf("failed to call super_::decode()\n");
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	if (buf_len < len_) {
+		printf("No enough buffer: %u, %u\n", len_, buf_len);
+		return -1;
+	}
+
+	// status_
+	rv = z_decode_byte((char*)(&status_), buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
 
 	return len;
 }

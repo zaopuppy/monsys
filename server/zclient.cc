@@ -171,8 +171,8 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 }
 
 void ZClient::scheduleReconnect() {
-		struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);
-		event_add(ev, &RETRY_INTERVAL);
+	struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);
+	event_add(ev, &RETRY_INTERVAL);
 }
 
 void ZClient::onConnected(evutil_socket_t fd, short events) {
@@ -183,22 +183,24 @@ void ZClient::onConnected(evutil_socket_t fd, short events) {
 		state_ = STATE_DISCONNECTED;
 		scheduleReconnect();
 		// close();
+		return;
 	} else if (rv < 0) { // XXX EAGAIN
 		perror("recv");
 		printf("Failed to receive data from socket\n");
 		::close(fd);
 		state_ = STATE_DISCONNECTED;
 		scheduleReconnect();
-	} else {
-		// == for DEBUGGING only ==
-		if (rv >= (int)sizeof(buf_)) {
-			buf_[sizeof(buf_) - 1] = 0x00;
-		} else {
-			buf_[rv] = 0x00;
-		}
-		printf("Received: %s\n", buf_);
-		// == for DEBUGGING only ==
+		return;
 	}
+	
+	// == for DEBUGGING only ==
+	if (rv >= (int)sizeof(buf_)) {
+		buf_[sizeof(buf_) - 1] = 0x00;
+	} else {
+		buf_[rv] = 0x00;
+	}
+	printf("Received: %s\n", buf_);
+	// == for DEBUGGING only ==
 }
 
 int ZClient::onDisconnected(evutil_socket_t fd, short events) {
@@ -231,7 +233,7 @@ int ZClient::onDisconnected(evutil_socket_t fd, short events) {
 				printf("Failed to connect\n");
 				state_ = STATE_DISCONNECTED;
 
-				// scheduleReconnect();
+				scheduleReconnect();
 
 				break;
 			}

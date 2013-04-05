@@ -5,6 +5,8 @@
 
 #include <string.h>
 
+#include <zmessage_codec.h>
+
 ngx_module_t ngx_http_monsys_module;
 
 static void* ngx_http_monsys_create_loc_conf(ngx_conf_t *ngx_conf);
@@ -149,14 +151,30 @@ ngx_http_monsys_handler(ngx_http_request_t *r)
 	return NGX_DONE;
 }
 
-static char test_str[] = "Just a test.\n";
+// static char test_str[] = "Just a test.\n";
+static char g_buffer[1024];
 
 static ngx_int_t
 ngx_http_monsys_create_request(ngx_http_request_t *r)
 {
 	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
 			"ngx_http_monsys_create_request()");
-	ngx_buf_t *b = ngx_create_temp_buf(r->pool, sizeof(test_str) - 1);
+
+	// encode first
+	struct z_query_dev_req req;
+	memset(&req, 0x00, sizeof(struct z_query_dev_req));
+	int enc_len = z_encode_query_dev_req(&req, g_buffer, sizeof(g_buffer));
+	if (enc_len <= 0) {
+		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+				"Failed to encode request, bad.");
+		return NGX_ERROR;
+	} else if (enc_len >= (int)(sizeof(g_buffer))) {
+		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+				"Big message....should return error immediately");
+		return NGX_ERROR;
+	}
+
+	ngx_buf_t *b = ngx_create_temp_buf(r->pool, (size_t)enc_len);
 	if (b == NULL) {
 		return NGX_ERROR;
 	}
@@ -172,8 +190,8 @@ ngx_http_monsys_create_request(ngx_http_request_t *r)
 	r->upstream->request_bufs = chain;
 
 	// now write to the buffer
-	b->pos = (u_char*)test_str;
-	b->last = (u_char*)(b->pos + sizeof(test_str) - 1);
+	b->pos = (u_char*)g_buffer;
+	b->last = (u_char*)(g_buffer + enc_len);
 
 	return NGX_OK;
 }
@@ -193,6 +211,19 @@ ngx_http_monsys_process_header(ngx_http_request_t *r)
 			"ngx_http_monsys_process_header()");
 
 	ngx_http_upstream_t *u = r->upstream;
+
+	// decode first
+	z_query_dev_rsp rsp;
+	memset(&rsp, 0x00, sizeof(struct z_query_dev_rsp));
+	int dec_len = z_decode_query_dev_rsp(
+			&rsp, u->buffer.pos, (u->buffer.last - u->buffer.pos));
+	if (dec_len <= 0) {
+		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+				"failed to decode z_query_dev_rsp response.");
+		return NGX_ERROR;
+	}
+
+	snprintf(g_buffer);
 
 	u->headers_in.status_n = 200;
 	u->headers_in.content_length_n = u->buffer.last - u->buffer.pos;
