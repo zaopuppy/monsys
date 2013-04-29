@@ -52,6 +52,7 @@ private:
 	STATE state_;
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];
+	evutil_socket_t fd_;
 };
 
 #endif // _ZAPI_MODULE_H__

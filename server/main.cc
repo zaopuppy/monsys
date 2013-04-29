@@ -197,10 +197,8 @@ void test_zigbee_message_set()
 
 int main(int argc, char *argv[])
 {
-	trace_bin("asf", 3);
-
 	// test_zigbee_message_get();
-	test_zigbee_message_set();
+	// test_zigbee_message_set();
 
 	struct event_base* base = event_base_new();
 	assert(base);
@@ -209,11 +207,11 @@ int main(int argc, char *argv[])
 	// 	printf("failed to start server: (0.0.0.0, 1983).\n");
 	// 	return -1;
 	// }
-	// 
-	// if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_TERM)) {
-	// 	printf("failed to start server: (0.0.0.0, 1984).\n");
-	// 	return -1;
-	// }
+
+	if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_TERM)) {
+		printf("failed to start server: (0.0.0.0, 1984).\n");
+		return -1;
+	}
 	
  	// if (!start_client(base)) {
  	// 	printf("failed to start client.\n");

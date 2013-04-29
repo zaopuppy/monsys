@@ -213,20 +213,27 @@ ngx_http_monsys_process_header(ngx_http_request_t *r)
 	ngx_http_upstream_t *u = r->upstream;
 
 	// decode first
-	z_query_dev_rsp rsp;
+	struct z_query_dev_rsp rsp;
 	memset(&rsp, 0x00, sizeof(struct z_query_dev_rsp));
 	int dec_len = z_decode_query_dev_rsp(
-			&rsp, u->buffer.pos, (u->buffer.last - u->buffer.pos));
+			&rsp, (char*)u->buffer.pos, (uint32_t)(u->buffer.last - u->buffer.pos));
 	if (dec_len <= 0) {
 		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
 				"failed to decode z_query_dev_rsp response.");
 		return NGX_ERROR;
 	}
 
-	snprintf(g_buffer);
+	int rv = snprintf(g_buffer, sizeof(g_buffer),
+					 "code: %u\n" "reason: %s\n",
+					 rsp.code, rsp.reason);
 
 	u->headers_in.status_n = 200;
-	u->headers_in.content_length_n = u->buffer.last - u->buffer.pos;
+	u->state->status = 200;
+	// this is very import, or nginx won't known if it should return, or
+	// wait util upstrea close connection
+	// u->headers_in.content_length_n = u->buffer.last - u->buffer.pos;
+	u->headers_in.content_length_n = rv;
+	u->buffer.pos = (u_char*)g_buffer;
 
 	return NGX_OK;
 }

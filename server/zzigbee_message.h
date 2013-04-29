@@ -59,7 +59,6 @@ class ZZBGetReq : public ZZigBeeMsg {
 	}
 
  public:
-	// uint8_t itemCount_;
 	std::vector<uint8_t> items_;
 };
 

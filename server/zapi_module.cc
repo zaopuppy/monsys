@@ -22,6 +22,7 @@ void ZApiModule::close() {
 }
 
 void ZApiModule::event(evutil_socket_t fd, short events) {
+	fd_ = fd;
 	switch (state_) {
 		case STATE_CONNECTED:
 			onConnected(fd, events);
@@ -76,7 +77,7 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 	trace_bin(buf, buf_len);
 
 	// ---- FOR DEBUGGING ONLY ----
-	if (false) {
+	if (true) {
 		processCmd(fd, buf, buf_len);
 		return 0;
 	}
@@ -84,6 +85,9 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 
 	if (buf_len < 12) { // MIN_MSG_LEN(header length)
 		printf("message is not long enough: %u\n", buf_len);
+		
+		const char *data = "too short\n";
+		send(fd_, data, strlen(data), 0);
 		
 		return -1;
 	}
@@ -93,6 +97,10 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 	if (rv < 0) {
 		printf("Unknown message, discard.\n");
 		trace_bin(buf, buf_len);
+		
+		const char *data = "unknown message type\n";
+		send(fd_, data, strlen(data), 0);
+		
 		return -1;
 	}
 
@@ -106,6 +114,9 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 				printf("failed to decode request.\n");
 				break;
 			}
+
+			processMsg(req);
+			
 			break;
 		}
 	default:
@@ -118,7 +129,28 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 
 void ZApiModule::processMsg(struct z_query_dev_req &msg)
 {
-	printf("ZZigBeeSession::processMsg()\n");
+	printf("ZApiModule::processMsg()\n");
+
+	struct z_dev_info info;
+	info.id = 0x14;
+	info.stat = 0x15;
+	info.desc = (char*)"randam device";
+
+	struct z_query_dev_rsp rsp;
+	rsp.code = 444;
+	rsp.reason = (char*)"good reason...";
+	rsp.info_list.count = 1;
+	rsp.info_list.infos = &info;
+
+	int rv = z_encode_query_dev_rsp(&rsp, out_buf_, sizeof(out_buf_));
+	if (rv <= 0) {
+		printf("Bubu, failed to encode response\n");
+		return;
+	}
+
+	printf("Read to send response\n");
+	rv = send(fd_, out_buf_, rv, 0);
+	printf("Sending complete[%d]\n", rv);
 }
 
 void ZApiModule::printMsg(struct z_header &msg)
@@ -175,6 +207,7 @@ static bool isBlank(const char *str, uint32_t str_len)
 		if (*str != ' ' && *str != '\t' && *str != '\r' && *str != '\n') {
 			return false;
 		}
+		++str;
 	}
 	return true;
 }
@@ -191,12 +224,14 @@ void ZApiModule::processCmd(evutil_socket_t fd, char *buf, uint32_t buf_len)
 		return;
 	}
 
+	int target_module = Z_MODULE_SERIAL;
+
 	const char* p = buf;
 	if (*p == '1') {
 		msg = "You gave me a '1', right?\n";
 		send(fd, msg, strlen(msg), 0);
 
-		ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_ZIGBEE, 1);
+		ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
 		ZData *data = new ZData();
 		data->data = 1;
 		innerMsg->data = data;
@@ -207,7 +242,7 @@ void ZApiModule::processCmd(evutil_socket_t fd, char *buf, uint32_t buf_len)
 		msg = "You gave me a '2', right?\n";
 		send(fd, msg, strlen(msg), 0);
 
-		ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_ZIGBEE, 1);
+		ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
 		ZData *data = new ZData();
 		data->data = 2;
 		innerMsg->data = data;
@@ -216,7 +251,7 @@ void ZApiModule::processCmd(evutil_socket_t fd, char *buf, uint32_t buf_len)
 		}
 	} else {
 		msg = "Unknown command.\n";
-		send(fd, msg, strlen(msg), 0);
+		// send(fd, msg, strlen(msg), 0);
 	}
 }
 

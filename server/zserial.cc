@@ -3,9 +3,13 @@
 #include <assert.h>
 #include <fcntl.h>
 #include <termios.h>
+#include <errno.h>
+// #include <unistd.h>
+#include <sys/ioctl.h>
 
 #include "zerrno.h"
 #include "zlog.h"
+
 
 static const struct timeval RETRY_INTERVAL = { 5, 0 };
 
@@ -71,40 +75,114 @@ bool ZSerial::isComplete()
 int ZSerial::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZSerial::onInnerMsg()\n");
+
+	ZData *data = (ZData*)msg->data;
+
+	printf("Data.data: %d\n", data->data);
+
+	if (fd_ < 0) {
+		printf("not connected yet\n");
+		return OK;
+	}
+
+	switch (data->data) {
+	case 1:
+		{
+			ZZBGetReq msg;
+			int rv = msg.encode(buf_out_, sizeof(buf_out_));
+			if (rv < 0) {
+				printf("Failed to encode\n");
+			} else {
+				trace_bin(buf_out_, rv);
+				// rv = send(fd_, buf_, rv, 0);
+
+				// // RTS
+				// {
+				// 	int status;
+				// 	ioctl(fd_, TIOCMGET, &status);
+				// 	status |= TIOCM_RTS;
+				// 	ioctl(fd_, TIOCMSET, &status);
+				// }
+
+				sleep(1);
+
+				rv = write(fd_, buf_out_, rv);
+				if (rv <= 0) {
+					perror("send");
+					printf("Failed to send\n");
+				} else {
+					printf("write over.\n");
+				}
+
+				// // DTR
+				// {
+				// 	int status;
+
+				// 	ioctl(fd_, TIOCMGET, &status);
+				// 	status |= TIOCM_DTR;
+				// 	ioctl(fd_, TIOCMSET, &status);
+				// }
+			}
+			break;
+		}
+	case 2:
+		break;
+	default:
+		break;
+	}
+	
 	return OK;
 }
 
 void ZSerial::onConnected(evutil_socket_t fd, short events)
 {
-	int rv = read(fd, buf_, sizeof(buf_));
+	printf("ZSerial::onConnected\n");
+	
+	int rv;
+	int offset = 0;
+	size_t buf_len = sizeof(buf_);
+
+	do {
+		rv = read(fd, buf_ + offset, buf_len);
+		printf("read %d bytes\n", rv);
+		if (rv > 0) {
+			buf_len -= rv;
+			offset += rv;
+		}
+	} while (rv > 0 && buf_len > 0);
+
+	if (buf_len <= 0) {
+		printf("Receved too many bytes...no.\n");
+	}
+
+	if (offset > 0) {
+		printf("Received:\n");
+		trace_bin(buf_, offset);
+	}
+
 	if (rv == 0) {
 		printf("peer closed\n");
-		state_ = STATE_DISCONNECTED;
-		scheduleReconnect();
-		return;
-	} else if (rv < 0) { // XXX EAGAIN
-		perror("read");
-		printf("failed to read from serial port.\n");
 		::close(fd);
 		state_ = STATE_DISCONNECTED;
 		scheduleReconnect();
 		return;
-	}
-
-	if (rv >= (int)sizeof(buf_)) {
-		printf("Receved too many bytes...no.\n");
-	}
-
-	printf("Received:\n");
-
-	trace_bin(buf_, rv);
+	} else if (rv < 0 && errno != EAGAIN) {
+		perror("read");
+		printf("failed to read from serial port, errno: [%d]\n", errno);
+		::close(fd);
+		state_ = STATE_DISCONNECTED;
+		scheduleReconnect();
+		return;
+	}	
 }
 
 int ZSerial::connect()
 {
-	const char* serial_dev = "/dev/tty.usbmodemfd141";
-	fd_ = open(serial_dev, O_RDWR|O_NONBLOCK);
-	// fd_ = open(serial_dev, O_RDONLY|O_NONBLOCK);
+	// const char* serial_dev = "/dev/tty.usbmodemfd141";
+	// const char* serial_dev = "/dev/cu.usbmodemfa121";
+	// const char* serial_dev = "/dev/cu.usbserial-ftDX0P76";
+	const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+	fd_ = open(serial_dev, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 	if (fd_ < 0) {
 		perror(serial_dev);
 		return FAIL;
@@ -117,40 +195,44 @@ int ZSerial::connect()
 	// 	saio.sa_flags = 0;
 	// 	saio.sa_restorer = NULL;
 	// 	sigaction(SIGIO, &saio, NULL);
-  //	fcntl(fd_, F_SETOWN, getpid());
-	// TODO:
-	fcntl(fd_, F_SETFL, FASYNC);
 
-	// ┌─────────[Comm Parameters]──────────┐ 
-	// │                                    │ 
-	// │     Current:  9600 8N1             │ 
-	// │ Speed            Parity      Data  │ 
-	// │ A: <next>        L: None     S: 5  │ 
-	// │ B: <prev>        M: Even     T: 6  │ 
-	// │ C:   9600        N: Odd      U: 7  │ 
-	// │ D:  38400        O: Mark     V: 8  │ 
-	// │ E: 115200        P: Space          │ 
-	// │                                    │ 
-	// │ Stopbits                           │ 
-	// │ W: 1             Q: 8-N-1          │ 
-	// │ X: 2             R: 7-E-1          │ 
-	// │                                    │ 
-	// │                                    │ 
-	// │ Choice, or <Enter> to exit?        │ 
-	// └────────────────────────────────────┘ 
+  fcntl(fd_, F_SETOWN, getpid());
+
+	fcntl(fd_, F_SETFL, FASYNC | FNDELAY);
+
 	// setting
-	struct termios oldtio, newtio;
-	// save first
-	tcgetattr(fd_, &oldtio);
-	// newtio.c_cflag = BAUDRATE|CRTSCTS|CS8|CLOCAL|CREAD;
-	// 8N1: 8 bits| no-parity | 1 stop bit
-	newtio.c_cflag = B9600|CRTSCTS|CS8|CLOCAL|CREAD;
-	newtio.c_iflag = IGNPAR|ICRNL;
-	newtio.c_oflag = 0;
-	newtio.c_lflag = ICANON;
-	newtio.c_cc[VMIN] = 1;
-	newtio.c_cc[VTIME] = 0;
-	tcsetattr(fd_, TCSANOW, &newtio);
+	{
+		struct termios opts;
+
+		tcgetattr(fd_, &opts);
+
+		// cfsetispeed(&opts, B38400);
+		// cfsetospeed(&opts, B38400);
+		cfsetispeed(&opts, B9600);
+		cfsetospeed(&opts, B9600);
+
+		// control
+		// with hardware flow control
+		// opts.c_cflag |= (CLOCAL | CREAD | CRTSCTS);
+		// without hardware flow control
+		opts.c_cflag |= (CLOCAL | CREAD);
+		// 8N1
+		// set character size
+		opts.c_cflag &= ~PARENB;
+		opts.c_cflag &= ~CSTOPB;
+		opts.c_cflag &= ~CSIZE;
+		opts.c_cflag |= CS8;
+
+		// local options
+		opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+
+		opts.c_iflag = IGNPAR;
+		opts.c_oflag = 0;
+		opts.c_cc[VMIN] = 1;
+		opts.c_cc[VTIME] = 0;
+
+		tcsetattr(fd_, TCSANOW, &opts);
+	}
 
 	state_ = STATE_CONNECTED;
 

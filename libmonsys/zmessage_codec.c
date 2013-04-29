@@ -191,10 +191,10 @@ z_decode_query_dev_req(struct z_query_dev_req *val, char *buf, uint32_t buf_len)
   int rv;
 
   assert(val != NULL);
-  
-  val->hdr.len = 0;
-  val->hdr.len += z_getlen_string(val->uid);
-  val->hdr.len += z_getlen_integer16(val->dev_id);
+
+  // val->hdr.len = 0;
+  // val->hdr.len += z_getlen_string(val->uid);
+  // val->hdr.len += z_getlen_integer16(val->dev_id);
 
   DECODE_WITH_METHOD(z_decode_header, &(val->hdr), buf, buf_len, rv);
   

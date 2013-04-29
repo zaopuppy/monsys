@@ -48,6 +48,7 @@ class ZSerial : public ZTask {
   // struct event* write_event_;
   STATE state_;
   char buf_[1 << 10];
+	char buf_out_[1 << 10];
 };
 
 
