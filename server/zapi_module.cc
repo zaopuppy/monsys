@@ -8,6 +8,7 @@
 #include "zmessage_codec.h"
 #include "zlog.h"
 #include "zdispatcher.h"
+#include "zutil.h"
 
 #include "zmodule.h"
 
@@ -77,10 +78,10 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 	trace_bin(buf, buf_len);
 
 	// ---- FOR DEBUGGING ONLY ----
-	if (true) {
-		processCmd(fd, buf, buf_len);
-		return 0;
-	}
+	// if (true) {
+	// 	processCmd(fd, buf, buf_len);
+	// 	return 0;
+	// }
 	// ---- FOR DEBUGGING ONLY ----
 
 	if (buf_len < 12) { // MIN_MSG_LEN(header length)
@@ -199,17 +200,6 @@ void ZApiModule::printMsg(struct z_query_dev_rsp &msg)
 	printf("- z_query_dev_req::reason: %s\n", msg.reason);
 	
 	printMsg(msg.info_list);
-}
-
-static bool isBlank(const char *str, uint32_t str_len)
-{
-	while (str_len > 0) {
-		if (*str != ' ' && *str != '\t' && *str != '\r' && *str != '\n') {
-			return false;
-		}
-		++str;
-	}
-	return true;
 }
 
 void ZApiModule::processCmd(evutil_socket_t fd, char *buf, uint32_t buf_len)

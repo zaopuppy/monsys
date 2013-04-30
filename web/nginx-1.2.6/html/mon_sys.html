@@ -6,69 +6,7 @@
 		<meta name="Keywords" content="Canvas" />
 		<meta name="Description" content="Testing code for Moniter System" />
 		<link rel="stylesheet" type="text/css" href="mon_sys.css" >
-		<script type='text/javascript'>
-			//////////////////////////////////////////////////////////
-			// initialization
-			// var g_console;
-			var g_xmlHttp;
-
-			window.onload = function() {
-				init();
-			};
-
-			function init() {
-				// g_console = document.getElementById("console");
-				if (window.XMLHttpRequest) {
-					g_xmlHttp = new XMLHttpRequest();
-				} else {
-					g_xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				g_xmlHttp.onreadystatechange = onHTTPReadStateChange;
-			}
-
-			function test001() {
-				console.log("Test001");
-			  doTest001();
-			}
-			function test002() {
-				console.log("Test002");
-			}
-			function test003() {
-				console.log("Test003");
-			}
-			function test004() {
-				console.log("Test004");
-			}
-
-			// function log(msg) {
-			// 	console.log(msg);
-			// }
-
-			function onHTTPReadStateChange() {
-				if (g_xmlHttp.readyState == 4) {
-					console.log(g_xmlHttp.responseText);
-				} else {
-					console.log("bu...");
-				}
-			}
-
-			function doGetDevInfo() {
-			  console.log("doGetDevInfo");
-				var req_obj = {
-					"cmd": "get-dev-info",
-					"uid": "uid001",
-					"dev-id": "5000"
-				};
-				g_xmlHttp.open("GET", "monsys", true);
-				g_xmlHttp.send();
-			}
-			
-			function doTest001() {
-			  doGetDevInfo();
-			}
-		</script>
-		<!--[if lt IE 7]>
-		<![endif]-->
+		<script type="text/javascript" src="mon_sys.js" ></script>
 	</head>
 	<body>
 		<!--
@@ -76,16 +14,38 @@
 			<canvas id="myCanvas" width="480" height="320" style="border: 1px solid #000000;" />
 		</div>
 		-->
-		<input id="field01" type="text" value="1" /><br/>
-		<input id="field02" type="text" value="2" /><br/>
-		<input id="field03" type="text" value="3" /><br/>
-		<input id="field04" type="text" value="4" /><br/>
-		<input id="field05" type="text" value="5" /><br/>
-		<input id="field06" type="text" value="6" /><br/>
-		<input id="field07" type="text" value="7" /><br/>
-		<input id="field08" type="text" value="8" /><br/>
-		<input id="field09" type="text" value="9" /><br/>
-		<input id="field10" type="text" value="10" /><br/>
+		<table id="params">
+			<tr>
+				<td>Field 01</td> <td><input id="field01" type="text" value="1" /></td>
+			</tr>
+			<tr>
+				<td>Field 02</td> <td><input id="field02" type="text" value="2" /></td>
+			</tr>
+			<tr>
+				<td>Field 03</td> <td><input id="field03" type="text" value="3" /></td>
+			</tr>
+			<tr>
+				<td>Field 04</td> <td><input id="field04" type="text" value="4" /></td>
+			</tr>
+			<tr>
+				<td>Field 05</td> <td><input id="field05" type="text" value="5" /></td>
+			</tr>
+			<tr>
+				<td>Field 06</td> <td><input id="field06" type="text" value="6" /></td>
+			</tr>
+			<tr>
+				<td>Field 07</td> <td><input id="field07" type="text" value="7" /></td>
+			</tr>
+			<tr>
+				<td>Field 08</td> <td><input id="field08" type="text" value="8" /></td>
+			</tr>
+			<tr>
+				<td>Field 09</td> <td><input id="field09" type="text" value="9" /></td>
+			</tr>
+			<tr>
+				<td>Field 10</td> <td><input id="field10" type="text" value="10" /></td>
+			</tr>
+		</table>
 		<br/>
 		<input type="button" onclick="test001()" value="test001" />
 		<input type="button" onclick="test002()" value="test002" />
@@ -97,5 +57,4 @@
 		-->
 	</body>
 </html>
-
 

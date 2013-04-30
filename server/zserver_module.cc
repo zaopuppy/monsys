@@ -1,4 +1,4 @@
-#include "zserver.h"
+#include "zserver_module.h"
 
 #include <assert.h>
 // ::close
@@ -6,7 +6,7 @@
 // inet_ntoa
 #include <arpa/inet.h>
 
-#include "zapi_module.h"
+#include "zwebapi_module.h"
 #include "zzigbee_module.h"
 
 #include "zerrno.h"
@@ -18,7 +18,7 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 	task->event(fd, events);
 }
 
-int ZServer::init() {
+int ZServerModule::init() {
 	int rv = super_::init();
 	if (rv != 0) {
 		return rv;
@@ -65,13 +65,13 @@ int ZServer::init() {
 	return OK;
 }
 
-void ZServer::close() {
+void ZServerModule::close() {
 	::close(fd_);
 	fd_ = -1;
 	state_ = STATE_FINISHED;
 }
 
-void ZServer::event(evutil_socket_t fd, short events) {
+void ZServerModule::event(evutil_socket_t fd, short events) {
 	switch (state_) {
 		case STATE_ACCEPTING:
 			onAccepting(fd, events);
@@ -82,25 +82,25 @@ void ZServer::event(evutil_socket_t fd, short events) {
 	}
 }
 
-void ZServer::doTimeout() {
+void ZServerModule::doTimeout() {
 }
 
-bool ZServer::isComplete() {
+bool ZServerModule::isComplete() {
 	return (state_ == STATE_FINISHED);
 }
 
-int ZServer::onInnerMsg(ZInnerMsg *msg) {
-	printf("ZServer::onInnerMsg()");
+int ZServerModule::onInnerMsg(ZInnerMsg *msg) {
+	printf("ZServerModule::onInnerMsg()");
 	return 0;
 }
 
 static ZTask*
 getAcceptedSession(int type, event_base* base) {
 	switch (type) {
-		case ZServer::TYPE_ZIGBEE:
+		case ZServerModule::TYPE_ZIGBEE:
 			return new ZZigBeeModule(base);
-		case ZServer::TYPE_TERM:
-			return new ZApiModule(base);
+		case ZServerModule::TYPE_WEBCLIENT:
+			return new ZWebApiModule(base);
 		default:
 			printf("Unknown server type\n");
 			assert(false);
@@ -108,8 +108,8 @@ getAcceptedSession(int type, event_base* base) {
 	}
 }
 
-void ZServer::onAccepting(evutil_socket_t fd, short events) {
-	printf("ZServer::onAccepting()\n");
+void ZServerModule::onAccepting(evutil_socket_t fd, short events) {
+	printf("ZServerModule::onAccepting()\n");
 
 	struct sockaddr_storage ss;
 	socklen_t slen = sizeof(ss);

@@ -5,8 +5,6 @@
 
 #include <string.h>
 
-#include <zmessage_codec.h>
-
 ngx_module_t ngx_http_monsys_module;
 
 static void* ngx_http_monsys_create_loc_conf(ngx_conf_t *ngx_conf);
@@ -24,7 +22,6 @@ static void ngx_http_monsys_finalize_request(ngx_http_request_t *r, ngx_int_t rc
 // configuration
 typedef struct {
 	ngx_http_upstream_conf_t       upstream;
-	// ngx_str_t test_str;
 } ngx_http_monsys_conf_t;
 
 /////////////////////////////////////////////////////////////////////
@@ -32,7 +29,6 @@ typedef struct {
 
 static ngx_command_t ngx_http_monsys_commands[] = {
 	{ ngx_string("monsys"),
-		/* NGX_HTTP_LOC_CONF|NGX_HTTP_LIF_CONF|NGX_CONF_TAKE1, */
 		NGX_HTTP_LOC_CONF|NGX_CONF_NOARGS,
 		ngx_http_monsys,
 		NGX_HTTP_LOC_CONF_OFFSET,
@@ -49,6 +45,7 @@ ngx_http_monsys(ngx_conf_t *ngx_conf, ngx_command_t *cmd, void *conf)
 	ngx_http_core_loc_conf_t *core_loc_conf;
 
 	core_loc_conf = ngx_http_conf_get_module_loc_conf(ngx_conf, ngx_http_core_module);
+
 	// POINT 1:
 	core_loc_conf->handler = ngx_http_monsys_handler;
 
@@ -82,13 +79,13 @@ ngx_http_monsys_handler(ngx_http_request_t *r)
 		ngx_http_get_module_loc_conf(r, ngx_http_monsys_module);
 
 	/* check method */
-	if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_POST))) {
+	if (!(r->method & (NGX_HTTP_GET | NGX_HTTP_POST))) {
 		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
 				"GET/POST method only.");
 		return NGX_HTTP_NOT_ALLOWED;
 	}
 
-	// /* discard request body */
+	// // /* discard request body */
 	// ngx_int_t rc = ngx_http_discard_request_body(r);
 	// if (rc != NGX_OK) {
 	// 	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
@@ -151,48 +148,13 @@ ngx_http_monsys_handler(ngx_http_request_t *r)
 	return NGX_DONE;
 }
 
-// static char test_str[] = "Just a test.\n";
-static char g_buffer[1024];
-
 static ngx_int_t
 ngx_http_monsys_create_request(ngx_http_request_t *r)
 {
 	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
 			"ngx_http_monsys_create_request()");
 
-	// encode first
-	struct z_query_dev_req req;
-	memset(&req, 0x00, sizeof(struct z_query_dev_req));
-	int enc_len = z_encode_query_dev_req(&req, g_buffer, sizeof(g_buffer));
-	if (enc_len <= 0) {
-		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-				"Failed to encode request, bad.");
-		return NGX_ERROR;
-	} else if (enc_len >= (int)(sizeof(g_buffer))) {
-		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-				"Big message....should return error immediately");
-		return NGX_ERROR;
-	}
-
-	ngx_buf_t *b = ngx_create_temp_buf(r->pool, (size_t)enc_len);
-	if (b == NULL) {
-		return NGX_ERROR;
-	}
-
-	ngx_chain_t *chain = ngx_alloc_chain_link(r->pool);
-	if (chain == NULL) {
-		return NGX_ERROR;
-	}
-
-	// hook the buffer to the chain
-	chain->buf = b;
-	// chain to the upstream
-	r->upstream->request_bufs = chain;
-
-	// now write to the buffer
-	b->pos = (u_char*)g_buffer;
-	b->last = (u_char*)(g_buffer + enc_len);
-
+	// r->upstream->request_bufs = r->request_body->bufs;
 	return NGX_OK;
 }
 
@@ -212,28 +174,9 @@ ngx_http_monsys_process_header(ngx_http_request_t *r)
 
 	ngx_http_upstream_t *u = r->upstream;
 
-	// decode first
-	struct z_query_dev_rsp rsp;
-	memset(&rsp, 0x00, sizeof(struct z_query_dev_rsp));
-	int dec_len = z_decode_query_dev_rsp(
-			&rsp, (char*)u->buffer.pos, (uint32_t)(u->buffer.last - u->buffer.pos));
-	if (dec_len <= 0) {
-		ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-				"failed to decode z_query_dev_rsp response.");
-		return NGX_ERROR;
-	}
-
-	int rv = snprintf(g_buffer, sizeof(g_buffer),
-					 "code: %u\n" "reason: %s\n",
-					 rsp.code, rsp.reason);
-
 	u->headers_in.status_n = 200;
 	u->state->status = 200;
-	// this is very import, or nginx won't known if it should return, or
-	// wait util upstrea close connection
-	// u->headers_in.content_length_n = u->buffer.last - u->buffer.pos;
-	u->headers_in.content_length_n = rv;
-	u->buffer.pos = (u_char*)g_buffer;
+	u->headers_in.content_length_n = u->buffer.last - u->buffer.pos;
 
 	return NGX_OK;
 }

@@ -1,4 +1,4 @@
-#include "zclient.h"
+#include "zclient_module.h"
 
 #include <errno.h>
 #include <assert.h>
@@ -21,7 +21,7 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 	task->event(fd, events);
 }
 
-int ZClient::init() {
+int ZClientModule::init() {
 	int rv = super_::init();
 	if (rv != OK) {
 		return rv;
@@ -38,7 +38,7 @@ int ZClient::init() {
 // 0: success, connected
 //-1: IO_PENDING
 // this method should not change current state;
-int ZClient::connect() {
+int ZClientModule::connect() {
 	if (fd_ >= 0) {
 		::close(fd_); // XXX: evutil_closesocket(fd_);
 		fd_ = -1;
@@ -94,7 +94,7 @@ int ZClient::connect() {
 	return OK;
 }
 
-// int ZClient::doLoop() {
+// int ZClientModule::doLoop() {
 // 	do {
 // 	} while (rv 
 // 	int rv = connect();
@@ -111,14 +111,14 @@ int ZClient::connect() {
 // 	}
 // }
 
-void ZClient::close() {
+void ZClientModule::close() {
 	::close(fd_); // XXX: evutil_closesocket(fd_);
 	fd_ = -1;
 	state_ = STATE_FINISHED;
 }
 
-void ZClient::event(evutil_socket_t fd, short events) {
-	printf("ZClient::event()\n");
+void ZClientModule::event(evutil_socket_t fd, short events) {
+	printf("ZClientModule::event()\n");
 	switch (state_) {
 		case STATE_WAITING_FOR_CONNECT:
 			onWaitingForConnect(fd, events);
@@ -139,7 +139,7 @@ void ZClient::event(evutil_socket_t fd, short events) {
 	}
 }
 
-int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
+int ZClientModule::onWaitingForConnect(evutil_socket_t fd, short events) {
 	int val;
 	socklen_t val_len = sizeof(val);
 	int rv = getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &val_len);
@@ -170,12 +170,12 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 
 }
 
-void ZClient::scheduleReconnect() {
+void ZClientModule::scheduleReconnect() {
 	struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);
 	event_add(ev, &RETRY_INTERVAL);
 }
 
-void ZClient::onConnected(evutil_socket_t fd, short events) {
+void ZClientModule::onConnected(evutil_socket_t fd, short events) {
 	assert(fd >= 0);
 	int rv = recv(fd, buf_, sizeof(buf_), 0);
 	if (rv == 0) {
@@ -203,7 +203,7 @@ void ZClient::onConnected(evutil_socket_t fd, short events) {
 	// == for DEBUGGING only ==
 }
 
-int ZClient::onDisconnected(evutil_socket_t fd, short events) {
+int ZClientModule::onDisconnected(evutil_socket_t fd, short events) {
 	// state_ = STATE_DISCONNECTED;
 	// return doLoop();
 	int rv = connect();
@@ -247,15 +247,15 @@ int ZClient::onDisconnected(evutil_socket_t fd, short events) {
 	return rv;
 }
 
-void ZClient::doTimeout() {
+void ZClientModule::doTimeout() {
 }
 
-bool ZClient::isComplete() {
+bool ZClientModule::isComplete() {
 	return (state_ == STATE_FINISHED);
 }
 
-int ZClient::onInnerMsg(ZInnerMsg *msg) {
-	printf("ZClient::onInnerMsg()\n");
+int ZClientModule::onInnerMsg(ZInnerMsg *msg) {
+	printf("ZClientModule::onInnerMsg()\n");
 	return 0;
 }
 

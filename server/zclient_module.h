@@ -1,14 +1,14 @@
-#ifndef _ZCLIENT_SESSION_H__
-#define _ZCLIENT_SESSION_H__
+#ifndef _ZCLIENT_MODULE_H__
+#define _ZCLIENT_MODULE_H__
 
 #include "ztask.h"
 
 #include "zmodule.h"
 
-class ZClient : public ZTask {
+class ZClientModule : public ZTask {
 public:
-	ZClient(event_base* base):
-		ZTask(base, Z_MODULE_TERM), fd_(-1)	// XXX: should not be Z_MODULE_TERM
+	ZClientModule(event_base* base):
+		ZTask(base, Z_MODULE_CLIENT), fd_(-1)	// XXX: should not be Z_MODULE_CLIENT
 	{
 	}
 
@@ -47,5 +47,5 @@ private:
 	char buf_[1 << 10];
 };
 
-#endif // _ZCLIENT_SESSION_H__
+#endif // _ZCLIENT_MODULE_H__
 

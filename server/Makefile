@@ -6,9 +6,10 @@ YACC   := bison
 
 TARGET := ts
 CFILES :=
-CXXFILES := main.cc ztask.cc zclient.cc zserver.cc \
+CXXFILES := main.cc ztask.cc zutil.cc \
+	zclient_module.cc zserver_module.cc \
 	zapi_module.cc zzigbee_module.cc zdispatcher.cc zserial.cc \
-	zzigbee_message.cc
+	zzigbee_message.cc zwebapi_module.cc
 
 # intermedia files
 OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)
@@ -16,12 +17,14 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -Wall -g \
 	-I../libs/include/ \
-	-I../libmonsys/
+	-I../libmonsys/ \
+	-I/Volumes/Data/workspaces/jansson/out/include/
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
 	-L../libs/lib -levent_core \
-	-L../libmonsys/ -lmonsys
+	-L../libmonsys/ -lmonsys \
+	-L/Volumes/Data/workspaces/jansson/out/lib -ljansson
 
 $(TARGET) : $(OBJFILES)
 	$(CXX) $(LDFLAGS) -o $@ $(OBJFILES)

@@ -1,16 +1,17 @@
-#ifndef _ZAPI_MODULE_H__
-#define _ZAPI_MODULE_H__
+#ifndef _ZWEBAPI_MODULE_H__
+#define _ZWEBAPI_MODULE_H__
 
 #include "ztask.h"
 
 #include <event2/event.h>
 
+#include <jansson.h>
 
 #include "zmodule.h"
 
-class ZApiModule : public ZTask {
+class ZWebApiModule : public ZTask {
 public:
-	ZApiModule(event_base* base): ZTask(base, Z_MODULE_API) {
+	ZWebApiModule(event_base* base): ZTask(base, Z_MODULE_API) {
 	}
 
 	typedef ZTask super_;
@@ -26,16 +27,8 @@ public:
 private:
 	void onConnected(evutil_socket_t fd, short events);
 	int onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
-
-	void processMsg(struct z_query_dev_req &msg);
-	
-	void printMsg(struct z_header &msg);
-	void printMsg(struct z_dev_info &msg);
-	void printMsg(struct z_dev_info_list &msg);
-	void printMsg(struct z_query_dev_req &msg);
-	void printMsg(struct z_query_dev_rsp &msg);
-
-	void processCmd(evutil_socket_t fd, char* buf, uint32_t buf_len);
+	void sendRsp(const char *text_msg, int status);
+	int processJson(json_t *root);
 
 private:
 	enum STATE {
@@ -43,9 +36,6 @@ private:
 		STATE_FINISHED,
 	};
 
-
-// public:
-// 	struct event* read_event_;
 
 private:
 	// ZSocket server_;
@@ -55,6 +45,7 @@ private:
 	evutil_socket_t fd_;
 };
 
-#endif // _ZAPI_MODULE_H__
+#endif // _ZWEBAPI_MODULE_H__
+
 
 

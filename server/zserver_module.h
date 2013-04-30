@@ -7,16 +7,16 @@
 
 #include "zmodule.h"
 
-class ZServer : public ZTask {
+class ZServerModule : public ZTask {
 public:
 	enum SESSION_TYPE {
 		TYPE_UNKNOWN,
 		TYPE_ZIGBEE,
-		TYPE_TERM,
+		TYPE_WEBCLIENT,
 	};
 
 public:
-	ZServer(const char* ip, uint16_t port,
+	ZServerModule(const char* ip, uint16_t port,
 			event_base* base, int type)
 		: ZTask(base, Z_MODULE_SERVER), ip_(ip), port_(port), type_(type) {
 	}

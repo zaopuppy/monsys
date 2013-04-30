@@ -7,8 +7,8 @@
 
 // project files
 // #include "zsocket.h"
-#include "zserver.h"
-#include "zclient.h"
+#include "zserver_module.h"
+#include "zclient_module.h"
 #include "zerrno.h"
 #include "zlog.h"
 #include "zdispatcher.h"
@@ -27,8 +27,8 @@ using namespace std;
 
 bool start_server(const char* ip, uint16_t port, event_base* base, int type)
 {
-	ZTask *task = new ZServer(ip, port, base, type);
-		// new ZServer(base, ZServer::TYPE_TERM);
+	ZTask *task = new ZServerModule(ip, port, base, type);
+		// new ZServerModule(base, ZServerModule::TYPE_TERM);
 	if (task->init() != OK) {
 		printf("Failed to initialize server.\n");
 		return false;
@@ -42,7 +42,7 @@ bool start_client(event_base *base)
 
 	ZTask *task;
 	for (int i = 0; i < count; ++i) {
-	  task = new ZClient(base);
+	  task = new ZClientModule(base);
 		if (task->init() != OK) {
 			printf("Failed to init client: %d\n", i);
 			return false;
@@ -203,25 +203,25 @@ int main(int argc, char *argv[])
 	struct event_base* base = event_base_new();
 	assert(base);
 	
-	// if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
+	// if (!start_server("0.0.0.0", 1984, base, ZServerModule::TYPE_ZIGBEE)) {
 	// 	printf("failed to start server: (0.0.0.0, 1983).\n");
 	// 	return -1;
 	// }
 
-	if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_TERM)) {
+	if (!start_server("0.0.0.0", 1983, base, ZServerModule::TYPE_WEBCLIENT)) {
 		printf("failed to start server: (0.0.0.0, 1984).\n");
 		return -1;
 	}
-	
+
  	// if (!start_client(base)) {
  	// 	printf("failed to start client.\n");
  	// 	return -1;
  	// }
 	
-	if (!start_serial(base)) {
-		printf("failed to start serial.\n");
-		return FAIL;
-	}
+	// if (!start_serial(base)) {
+	// 	printf("failed to start serial.\n");
+	// 	return FAIL;
+	// }
 	
 	// event_base_dispatch(base);
 	while (1) {
