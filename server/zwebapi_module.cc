@@ -11,6 +11,21 @@
 
 #include "zmodule.h"
 
+// int ZWebApiModule::init()
+// {
+// 	super_::init();
+// 	return 0;
+// }
+// 
+// int ZWebApiModule::onInnerMsg(ZInnerMsg *msg)
+// {
+// 	return 0;
+// }
+// 
+// void ZWebApiModule::onAccept(evutil_socket_t fd, short events)
+// {
+// }
+
 int ZWebApiModule::init() {
 	printf("Oops, client's coming\n");
 

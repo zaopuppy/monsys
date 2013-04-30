@@ -7,8 +7,9 @@
 
 // project files
 // #include "zsocket.h"
-#include "zserver_module.h"
-#include "zclient_module.h"
+#include "zwebapi_server.h"
+#include "zapi_server.h"
+#include "zclient.h"
 #include "zerrno.h"
 #include "zlog.h"
 #include "zdispatcher.h"
@@ -25,14 +26,35 @@ using namespace std;
 //     delete session;
 // }
 
-bool start_server(const char* ip, uint16_t port, event_base* base, int type)
+// bool start_server(const char* ip, uint16_t port, event_base* base, int type)
+// {
+// 	ZTask *task = new ZServer(ip, port, base, type);
+// 		// new ZServer(base, ZServer::TYPE_TERM);
+// 	if (task->init() != OK) {
+// 		printf("Failed to initialize server.\n");
+// 		return false;
+// 	}
+// 	return true;
+// }
+bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
 {
-	ZTask *task = new ZServerModule(ip, port, base, type);
-		// new ZServerModule(base, ZServerModule::TYPE_TERM);
+	ZTask *task = new ZWebApiServer(ip, port, base);
 	if (task->init() != OK) {
 		printf("Failed to initialize server.\n");
 		return false;
 	}
+
+	return true;
+}
+
+bool start_api_server(const char* ip, uint16_t port, event_base* base)
+{
+	ZTask *task = new ZApiServer(ip, port, base);
+	if (task->init() != OK) {
+		printf("Failed to initialize server.\n");
+		return false;
+	}
+
 	return true;
 }
 
@@ -42,7 +64,7 @@ bool start_client(event_base *base)
 
 	ZTask *task;
 	for (int i = 0; i < count; ++i) {
-	  task = new ZClientModule(base);
+	  task = new ZClient(base);
 		if (task->init() != OK) {
 			printf("Failed to init client: %d\n", i);
 			return false;
@@ -203,13 +225,28 @@ int main(int argc, char *argv[])
 	struct event_base* base = event_base_new();
 	assert(base);
 	
-	// if (!start_server("0.0.0.0", 1984, base, ZServerModule::TYPE_ZIGBEE)) {
+	// if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
 	// 	printf("failed to start server: (0.0.0.0, 1983).\n");
 	// 	return -1;
 	// }
 
-	if (!start_server("0.0.0.0", 1983, base, ZServerModule::TYPE_WEBCLIENT)) {
-		printf("failed to start server: (0.0.0.0, 1984).\n");
+	// if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_WEBCLIENT)) {
+	// 	printf("failed to start server: (0.0.0.0, 1984).\n");
+	// 	return -1;
+	// }
+
+	// if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_APICLIENT)) {
+	// 	printf("failed to start server: (0.0.0.0, 1984).\n");
+	// 	return -1;
+	// }
+
+	if (!start_webapi_server("0.0.0.0", 1983, base)) {
+		printf("failed to start server: (0.0.0.0, 1983).\n");
+		return -1;
+	}
+
+	if (!start_api_server("0.0.0.0", 1984, base)) {
+		printf("failed to start server: (0.0.0.0, 1983).\n");
 		return -1;
 	}
 
@@ -218,10 +255,10 @@ int main(int argc, char *argv[])
  	// 	return -1;
  	// }
 	
-	// if (!start_serial(base)) {
-	// 	printf("failed to start serial.\n");
-	// 	return FAIL;
-	// }
+	if (!start_serial(base)) {
+		printf("failed to start serial.\n");
+		return FAIL;
+	}
 	
 	// event_base_dispatch(base);
 	while (1) {

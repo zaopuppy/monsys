@@ -302,6 +302,8 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 			int rv = msg.decode(buf, buf_len);
 			if (rv < 0) {
 				printf("Failed to decode message\n");
+			} else {
+				printf("decoding success\n");
 			}
 			break;
 		}

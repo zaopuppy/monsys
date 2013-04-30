@@ -45,6 +45,27 @@ private:
 	evutil_socket_t fd_;
 };
 
+// class ZWebApiModule : public ZServerModule {
+// public:
+// 	ZWebApiModule(const char* ip, uint16_t port, event_base* base)
+// 		: ZServerModule(ip, port, base) {
+// 	}
+// 
+// 	typedef ZServerModule super_;
+// 
+// public:
+// 	virtual int init();
+// 	// virtual void close();
+// 	// virtual void event(evutil_socket_t fd, short events);
+// 	// virtual void doTimeout();
+// 	// virtual bool isComplete();
+// 	virtual int onInnerMsg(ZInnerMsg *msg);
+// 
+// protected:
+// 	virtual void onAccept(evutil_socket_t fd, short events);
+// 
+// };
+
 #endif // _ZWEBAPI_MODULE_H__
 
 

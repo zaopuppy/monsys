@@ -78,10 +78,10 @@ int ZApiModule::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len) {
 	trace_bin(buf, buf_len);
 
 	// ---- FOR DEBUGGING ONLY ----
-	// if (true) {
-	// 	processCmd(fd, buf, buf_len);
-	// 	return 0;
-	// }
+	if (true) {
+		processCmd(fd, buf, buf_len);
+		return 0;
+	}
 	// ---- FOR DEBUGGING ONLY ----
 
 	if (buf_len < 12) { // MIN_MSG_LEN(header length)
