@@ -34,6 +34,11 @@ int z_encode_string(const char *val, char *buf, uint32_t buf_len);
 int z_decode_string(char **val, char *buf, uint32_t buf_len);
 uint32_t z_getlen_string(const char *val);
 
+// binary string
+// int z_encode_bstring(const char *val, char *buf, uint32_t buf_len);
+// int z_decode_bstring(char **val, char *buf, uint32_t buf_len);
+// uint32_t z_getlen_bstring(const char *val);
+
 // byte(integer8)
 int z_encode_byte(char val, char *buf, uint32_t buf_len);
 int z_decode_byte(char *val, char *buf, uint32_t buf_len);

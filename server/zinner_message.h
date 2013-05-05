@@ -6,6 +6,11 @@ struct ZData {
 	int data;
 };
 
+enum {
+	Z_INVALID = -1,
+	Z_ZB_GET_DEV_REQ,
+};
+
 struct ZInnerAddress {
 	int moduleType;
 	int moduleId;
@@ -22,11 +27,13 @@ struct ZInnerMsg {
 	ZInnerAddress addr;
 	// TODO: src address
 	// ZInnerAddress srcAddr;
+	// XXX: no delet method
 	void* data;
+	int msgType;
 
-	ZInnerMsg(int type, int id): data(NULL) {
-		addr.moduleType = type;
-		addr.moduleId = id;
+	ZInnerMsg(int moduleType, int moduleId): data(NULL) {
+		addr.moduleType = moduleType;
+		addr.moduleId = moduleId;
 	}
 };
 

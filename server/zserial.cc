@@ -21,7 +21,6 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 	task->event(fd, events);
 }
 
-
 int ZSerial::init()
 {
 	int rv = super_::init();
@@ -39,6 +38,8 @@ int ZSerial::init()
 
 void ZSerial::close()
 {
+	::close(fd_);
+	fd_ = -1;
 }
 
 void ZSerial::event(evutil_socket_t fd, short events)
@@ -76,35 +77,18 @@ int ZSerial::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZSerial::onInnerMsg()\n");
 
-	ZData *data = (ZData*)msg->data;
+	switch (msg->msgType) {
+		case Z_ZB_GET_DEV_REQ:
+			{
+				// TODO: delete req
+				ZZBGetReq *req = (ZZBGetReq*) msg->data;
+				int rv = req->encode(buf_out_, sizeof(buf_out_));
+				if (rv < 0) {
+					printf("Failed to encode\n");
+					return -1;
+				}
 
-	printf("Data.data: %d\n", data->data);
-
-	if (fd_ < 0) {
-		printf("not connected yet\n");
-		return OK;
-	}
-
-	switch (data->data) {
-	case 1:
-		{
-			ZZBGetReq msg;
-			int rv = msg.encode(buf_out_, sizeof(buf_out_));
-			if (rv < 0) {
-				printf("Failed to encode\n");
-			} else {
 				trace_bin(buf_out_, rv);
-				// rv = send(fd_, buf_, rv, 0);
-
-				// // RTS
-				// {
-				// 	int status;
-				// 	ioctl(fd_, TIOCMGET, &status);
-				// 	status |= TIOCM_RTS;
-				// 	ioctl(fd_, TIOCMSET, &status);
-				// }
-
-				sleep(1);
 
 				rv = write(fd_, buf_out_, rv);
 				if (rv <= 0) {
@@ -113,25 +97,79 @@ int ZSerial::onInnerMsg(ZInnerMsg *msg)
 				} else {
 					printf("write over.\n");
 				}
-
-				// // DTR
-				// {
-				// 	int status;
-
-				// 	ioctl(fd_, TIOCMGET, &status);
-				// 	status |= TIOCM_DTR;
-				// 	ioctl(fd_, TIOCMSET, &status);
-				// }
+				break;
 			}
+		default:
+			printf("Unknown message type\n");
 			break;
-		}
-	case 2:
-		break;
-	default:
-		break;
 	}
-	
+
+	delete msg;
+	msg = NULL;
+
 	return OK;
+
+	// ZData *data = (ZData*)msg->data;
+
+	// printf("Data.data: %p\n", data->data);
+
+	// if (fd_ < 0) {
+	// 	printf("not connected yet\n");
+	// 	return OK;
+	// }
+
+	// switch (data->data) {
+	// case 1:
+	// 	{
+	// 		ZZBGetReq msg;
+	// 		msg.items_.push_back(0x01);
+	// 		msg.items_.push_back(0x02);
+	// 		msg.items_.push_back(0x04);
+	// 		msg.items_.push_back(0x07);
+	// 		msg.items_.push_back(0x08);
+	// 		int rv = msg.encode(buf_out_, sizeof(buf_out_));
+	// 		if (rv < 0) {
+	// 			printf("Failed to encode\n");
+	// 		} else {
+	// 			trace_bin(buf_out_, rv);
+	// 			// rv = send(fd_, buf_, rv, 0);
+
+	// 			// // RTS
+	// 			// {
+	// 			// 	int status;
+	// 			// 	ioctl(fd_, TIOCMGET, &status);
+	// 			// 	status |= TIOCM_RTS;
+	// 			// 	ioctl(fd_, TIOCMSET, &status);
+	// 			// }
+
+	// 			sleep(1);
+
+	// 			rv = write(fd_, buf_out_, rv);
+	// 			if (rv <= 0) {
+	// 				perror("send");
+	// 				printf("Failed to send\n");
+	// 			} else {
+	// 				printf("write over.\n");
+	// 			}
+
+	// 			// // DTR
+	// 			// {
+	// 			// 	int status;
+
+	// 			// 	ioctl(fd_, TIOCMGET, &status);
+	// 			// 	status |= TIOCM_DTR;
+	// 			// 	ioctl(fd_, TIOCMSET, &status);
+	// 			// }
+	// 		}
+	// 		break;
+	// 	}
+	// case 2:
+	// 	break;
+	// default:
+	// 	break;
+	// }
+	
+	// return OK;
 }
 
 void ZSerial::onConnected(evutil_socket_t fd, short events)
@@ -158,6 +196,7 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
 	if (offset > 0) {
 		printf("Received:\n");
 		trace_bin(buf_, offset);
+		onRead(fd, buf_, offset);
 	}
 
 	if (rv == 0) {
@@ -179,9 +218,9 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
 int ZSerial::connect()
 {
 	// const char* serial_dev = "/dev/tty.usbmodemfd141";
-	// const char* serial_dev = "/dev/cu.usbmodemfa121";
-	// const char* serial_dev = "/dev/cu.usbserial-ftDX0P76";
-	const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+	// const char* serial_dev = "/dev/tty.usbmodemfa121";
+	const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
+	// const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
 	fd_ = open(serial_dev, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 	if (fd_ < 0) {
 		perror(serial_dev);
@@ -206,10 +245,8 @@ int ZSerial::connect()
 
 		tcgetattr(fd_, &opts);
 
-		// cfsetispeed(&opts, B38400);
-		// cfsetospeed(&opts, B38400);
-		cfsetispeed(&opts, B9600);
-		cfsetospeed(&opts, B9600);
+		cfsetispeed(&opts, B38400);
+		cfsetospeed(&opts, B38400);
 
 		// control
 		// with hardware flow control
@@ -285,16 +322,20 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 
 	uint8_t msg_type = ZZigBeeMsg::getMsgType(buf, buf_len);
 	switch (msg_type) {
-	case Z_ID_ZB_GET_REQ:
-		{
-			printf("Z_ID_ZB_GET_REQ\n");
-			ZZBGetReq msg;
-			int rv = msg.decode(buf, buf_len);
-			if (rv < 0) {
-				printf("Failed to decode message\n");
+		case Z_ID_ZB_REG_REQ:
+			{
+				printf("Z_ID_ZB_REG_REQ\n");
+				ZZBRegReq msg;
+				int rv = msg.decode(buf, buf_len);
+				if (rv < 0) {
+					printf("Failed to decode message\n");
+				} else {
+					printf("decoding success\n");
+					printf("MAC:\n");
+					trace_bin(msg.mac_.c_str(), msg.mac_.size());
+				}
+				break;
 			}
-			break;
-		}
 	case Z_ID_ZB_GET_RSP:
 		{
 			printf("Z_ID_ZB_GET_RSP\n");
@@ -304,16 +345,11 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 				printf("Failed to decode message\n");
 			} else {
 				printf("decoding success\n");
-			}
-			break;
-		}
-	case Z_ID_ZB_SET_REQ:
-		{
-			printf("Z_ID_ZB_SET_REQ\n");
-			ZZBSetReq msg;
-			int rv = msg.decode(buf, buf_len);
-			if (rv < 0) {
-				printf("Failed to decode message\n");
+				printf("rsp item count: %ld\n", msg.items_.size());
+				for (unsigned int i = 0; i < msg.items_.size(); ++i) {
+					printf("items.id[%d]: 0x%02X\n", i, msg.items_[i].id);
+					printf("items.val[%d]: 0x%02X\n", i, msg.items_[i].val);
+				}
 			}
 			break;
 		}

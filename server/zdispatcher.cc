@@ -2,6 +2,7 @@
 
 #include "zerrno.h"
 
+// we handle the memory
 int ZDispatcher::sendMsg(ZInnerMsg *msg)
 {
 #ifdef Z_USE_MULTI_THREAD
@@ -20,13 +21,14 @@ int ZDispatcher::sendMsg(ZInnerMsg *msg)
 	}
 
 	return session->sendMsg(msg);
-#else // Z_USE_MULTI_THREAD
+#else // not define Z_USE_MULTI_THREAD
 	if (!msg->addr.isValid()) {
 		delete msg;
 		return -1;
 	}
 
 	msg_list_.push_back(msg);
+
 	return 0;
 #endif // Z_USE_MULTI_THREAD
 }
@@ -76,6 +78,7 @@ void ZDispatcher::routine()
 		if (iter2 == session_list_.end()) {
 			// XXX:
 			// delete (*iter1)->data;
+			printf("target module not found\n");
 			delete *iter1;
 		}
 	}

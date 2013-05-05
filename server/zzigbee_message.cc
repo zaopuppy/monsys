@@ -6,6 +6,155 @@
 #include "zmessage_codec.h"
 
 ///////////////////////////////////////////////////////////////
+// REG req
+ZZBRegReq::ZZBRegReq() : ZZigBeeMsg(), mac_len_(6)
+{
+	cmd_ = Z_ID_ZB_REG_REQ;
+}
+
+int ZZBRegReq::encode(char* buf, uint32_t buf_len)
+{
+	uint16_t enc_len = getEncodeLen();
+	if (buf_len < enc_len) {
+		return -1;
+	}
+
+	len_ = getBodyLen();
+
+	int rv = super_::encode(buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+
+	// check length
+	if (mac_.size() != mac_len_) {
+		return -1;
+	}
+
+	// encode
+	memcpy(buf, mac_.c_str(), mac_len_);
+	buf += mac_len_;
+	buf_len -= mac_len_;
+
+	return enc_len;
+}
+
+int ZZBRegReq::decode(char* buf, uint32_t buf_len)
+{
+	int len = 0;
+
+	int rv = super_::decode(buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	if (buf_len < len_) {
+		return -1;
+	}
+
+	if (len_ != mac_len_) {
+		return -1;
+	}
+
+	mac_.assign(buf, mac_len_);
+	buf += mac_len_;
+	buf_len -= mac_len_;
+	len += mac_len_;
+
+	return len;
+}
+
+///////////////////////////////////////////////////////////////
+// REG rsp
+ZZBRegRsp::ZZBRegRsp() : ZZigBeeMsg()
+{
+	cmd_ = Z_ID_ZB_REG_RSP;
+}
+
+int ZZBRegRsp::encode(char* buf, uint32_t buf_len)
+{
+	uint16_t enc_len = getEncodeLen();
+	if (buf_len < enc_len) {
+		return -1;
+	}
+
+	len_ = getBodyLen();
+
+	int rv = super_::encode(buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+
+	// addr_
+	rv = z_encode_byte((char)addr_, buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+
+	// status_
+	rv = z_encode_byte((char)status_, buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+
+	return enc_len;
+}
+
+int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
+{
+	int len = 0;
+
+	int rv = super_::decode(buf, buf_len);
+	if (rv < 0) {
+		printf("failed to call super_::decode()\n");
+		return rv;
+	}
+
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	if (buf_len < len_) {
+		printf("No enough buffer: %u, %u\n", len_, buf_len);
+		return -1;
+	}
+
+	// addr_
+	rv = z_decode_byte((char*)&addr_, buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// status_
+	rv = z_decode_byte((char*)&status_, buf, buf_len);
+	if (rv < 0) {
+		return rv;
+	}
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	return len;
+}
+
+///////////////////////////////////////////////////////////////
 ZZigBeeMsg::ZZigBeeMsg():
 	syn_(0xFF)
 {

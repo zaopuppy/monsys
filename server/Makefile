@@ -10,7 +10,7 @@ CXXFILES := main.cc ztask.cc zutil.cc \
 	zclient.cc zserver.cc \
 	zapi_module.cc zzigbee_module.cc zdispatcher.cc zserial.cc \
 	zzigbee_message.cc zwebapi_server.cc zwebapi_module.cc \
-	zapi_server.cc
+	zapi_server.cc zwebapi_session.cc
 
 # intermedia files
 OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

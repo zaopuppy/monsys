@@ -8,7 +8,7 @@
 class ZApiServer : public ZServer {
 	public:
 		ZApiServer(const char *ip, uint16_t port, event_base *base)
-			: ZServer(ip, port, base) {
+			: ZServer(ip, port, base, Z_MODULE_API) {
 		}
 
 		typedef ZServer super_;

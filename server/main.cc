@@ -217,10 +217,73 @@ void test_zigbee_message_set()
 	}
 }
 
+void test_zigbee_message_reg()
+{
+	// req
+	{
+		char buf[128];
+		ZZBRegReq req1, req2;
+		int rv1, rv2;
+
+		// bad
+		req1.mac_.assign("\xab\xcd\x12");
+		rv1 = req1.encode(buf, sizeof(buf));
+		assert(rv1 < 0);
+
+		req1.mac_.assign("\xab\xcd\x12\x23\x34\x78", 6);
+
+		rv1 = req1.encode(buf, sizeof(buf));
+		assert(rv1 > 0);
+		trace_bin(buf, rv1);
+
+		rv2 = req2.decode(buf, rv1);
+		assert(rv2 > 0);
+
+		assert(rv1 == rv2);
+
+		// check header
+		assert(req1.syn_ == req2.syn_);
+		assert(req1.len_ == req2.len_);
+		assert(req1.cmd_ == req2.cmd_);
+
+		assert(req1.mac_ == req2.mac_);
+	}
+	
+	// rsp
+	{
+		char buf[128];
+		ZZBRegRsp req1, req2;
+
+		req1.addr_ = 0x0F;
+		req1.status_ = 0x0B;
+
+		int rv1, rv2;
+
+		rv1 = req1.encode(buf, sizeof(buf));
+		assert(rv1 > 0);
+		trace_bin(buf, rv1);
+
+		rv2 = req2.decode(buf, rv1);
+		assert(rv2 > 0);
+
+		assert(rv1 == rv2);
+
+		// check header
+		assert(req1.syn_ == req2.syn_);
+		assert(req1.len_ == req2.len_);
+		assert(req1.cmd_ == req2.cmd_);
+
+		assert(req1.addr_ == req2.addr_);
+		assert(req1.status_ == req2.status_);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	// test_zigbee_message_get();
 	// test_zigbee_message_set();
+	// test_zigbee_message_reg();
+	// return 0;
 
 	struct event_base* base = event_base_new();
 	assert(base);

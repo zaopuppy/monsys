@@ -1,6 +1,9 @@
 #ifndef _ZWEBAPI_MODULE_H__
 #define _ZWEBAPI_MODULE_H__
 
+
+#include <map>
+
 #include "ztask.h"
 
 #include <event2/event.h>
@@ -8,6 +11,8 @@
 #include <jansson.h>
 
 #include "zmodule.h"
+
+#include "zwebapi_session.h"
 
 class ZWebApiModule : public ZTask {
 public:
@@ -28,7 +33,7 @@ private:
 	void onConnected(evutil_socket_t fd, short events);
 	int onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 	void sendRsp(const char *text_msg, int status);
-	int processJson(json_t *root);
+	int processGetDevInfo(json_t *root);
 
 private:
 	enum STATE {
@@ -43,6 +48,8 @@ private:
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];
 	evutil_socket_t fd_;
+
+	std::map<uint32_t, ZWebApiSession*> session_map_;
 };
 
 // class ZWebApiModule : public ZServerModule {

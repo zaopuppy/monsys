@@ -9,16 +9,8 @@
 
 class ZServer : public ZTask {
 public:
-	enum SESSION_TYPE {
-		TYPE_UNKNOWN,
-		TYPE_ZIGBEE,
-		TYPE_APICLIENT,
-		TYPE_WEBCLIENT,
-	};
-
-public:
-	ZServer(const char* ip, uint16_t port, event_base* base)
-		: ZTask(base, Z_MODULE_SERVER), ip_(ip), port_(port) {
+	ZServer(const char* ip, uint16_t port, event_base* base, int type)
+		: ZTask(base, type), ip_(ip), port_(port) {
 	}
 
 	typedef ZTask super_;
