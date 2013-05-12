@@ -1,6 +1,8 @@
 #ifndef _Z_INNER_MESSAGE_H__
 #define _Z_INNER_MESSAGE_H__
 
+#include <stdlib.h>
+
 // --- temporary using
 struct ZData {
 	int data;
@@ -8,7 +10,12 @@ struct ZData {
 
 enum {
 	Z_INVALID = -1,
+
 	Z_ZB_GET_DEV_REQ,
+	Z_ZB_GET_DEV_RSP,
+
+	Z_ZB_SET_DEV_REQ,
+	Z_ZB_SET_DEV_RSP,
 };
 
 struct ZInnerAddress {

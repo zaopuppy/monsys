@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////
 // REG req
-ZZBRegReq::ZZBRegReq() : ZZigBeeMsg(), mac_len_(6)
+ZZBRegReq::ZZBRegReq() : ZZigBeeMsg(), mac_len_(8)
 {
 	cmd_ = Z_ID_ZB_REG_REQ;
 }

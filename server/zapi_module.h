@@ -8,20 +8,21 @@
 
 #include "zmodule.h"
 
-class ZApiModule : public ZTask {
+class ZApiModule : public ZModule {
 public:
-	ZApiModule(event_base* base): ZTask(base, Z_MODULE_API) {
+	ZApiModule(event_base* base): base_(base) {
 	}
 
-	typedef ZTask super_;
+	typedef ZModule super_;
 
 public:
 	virtual int init();
 	virtual void close();
-	virtual void event(evutil_socket_t fd, short events);
-	virtual void doTimeout();
-	virtual bool isComplete();
+	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
+	virtual int getType() { return Z_MODULE_API; }
+
+	void event(evutil_socket_t fd, short events);
 
 private:
 	void onConnected(evutil_socket_t fd, short events);
@@ -44,11 +45,11 @@ private:
 	};
 
 
-// public:
-// 	struct event* read_event_;
+public:
+	struct event* read_event_;
 
 private:
-	// ZSocket server_;
+	event_base *base_;
 	STATE state_;
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];

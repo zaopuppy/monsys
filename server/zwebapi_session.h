@@ -3,8 +3,6 @@
 
 #include <map>
 
-#include "ztask.h"
-
 #include <event2/event.h>
 
 #include <jansson.h>
@@ -13,7 +11,7 @@
 
 class ZWebApiSession {
  public:
- ZWebApiSession(ZTask *module)
+ ZWebApiSession(ZModule *module)
 	 : key_(sequence_), state_(STATE_INIT), module_(module) {
 		++sequence_;
 	}
@@ -37,7 +35,7 @@ class ZWebApiSession {
 	
  private:
 	int state_;
-	ZTask *module_;
+	ZModule *module_;
 
  private:
 	static uint32_t sequence_;

@@ -26,11 +26,6 @@ int ZZigBeeModule::onTimer()
 int ZZigBeeModule::init() {
 	printf("Caught a tiny zigbee\n");
 
-	int rv = super_::init();
-	if (rv != OK) {
-		return rv;
-	}
-
 	// --- DEBUG ---
 	struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);
 	event_add(ev, &RETRY_INTERVAL);
@@ -43,6 +38,33 @@ void ZZigBeeModule::close() {
 	state_ = STATE_FINISHED;
 }
 
+int ZZigBeeModule::onInnerMsg(ZInnerMsg *msg) {
+	printf("ZZigBeeModule::onInnerMsg()\n");
+
+	ZData *data = (ZData*)msg->data;
+
+	delete msg;
+	msg = NULL;
+
+	if (data->data == 1) {
+		printf("Got one\n");
+	} else if (data->data == 2) {
+		printf("Got two\n");
+	} else {
+		printf("Unknown data\n");
+	}
+
+	delete data;
+
+	return 0;
+}
+
+int ZZigBeeModule::sendMsg(ZInnerMsg *msg)
+{
+	printf("ZZigBeeModule::sendMsg\n");
+	return 0;
+}
+
 void ZZigBeeModule::event(evutil_socket_t fd, short events) {
 	switch (state_) {
 		case STATE_CONNECTED:
@@ -52,13 +74,6 @@ void ZZigBeeModule::event(evutil_socket_t fd, short events) {
 			close();
 			break;
 	}
-}
-
-void ZZigBeeModule::doTimeout() {
-}
-
-bool ZZigBeeModule::isComplete() {
-	return (state_ == STATE_FINISHED);
 }
 
 void ZZigBeeModule::onConnected(evutil_socket_t fd, short events)
@@ -142,27 +157,6 @@ void ZZigBeeModule::processReq(char* buf, uint32_t buf_len)
 void ZZigBeeModule::processRsp(char* buf, uint32_t buf_len)
 {
 	printf("ZZigBeeModule::processRsp()\n");
-}
-
-int ZZigBeeModule::onInnerMsg(ZInnerMsg *msg) {
-	printf("ZZigBeeModule::onInnerMsg()\n");
-
-	ZData *data = (ZData*)msg->data;
-
-	delete msg;
-	msg = NULL;
-
-	if (data->data == 1) {
-		printf("Got one\n");
-	} else if (data->data == 2) {
-		printf("Got two\n");
-	} else {
-		printf("Unknown data\n");
-	}
-
-	delete data;
-
-	return 0;
 }
 
 

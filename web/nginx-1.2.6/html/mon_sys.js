@@ -35,6 +35,17 @@ function Monsys() {
 		this.xml_http.open("POST", "monsys", true);
 		this.xml_http.send(req_obj);
 	};
+	this.set_dev_info = function(uid, dev_id) {
+		// TODO:
+		// var req_obj = {
+		// 	"cmd": "set-dev-info",
+		// 	"uid": "uid001",
+		// 	"dev-id": "5000",
+		// };
+		var req_obj = "{ \"cmd\": \"set-dev-info\", \"uid\": " + uid + ", \"dev-id\": " + dev_id + " }";
+		this.xml_http.open("POST", "monsys", true);
+		this.xml_http.send(req_obj);
+	};
 }
 
 function test001() {
@@ -50,6 +61,14 @@ function test001() {
 }
 function test002() {
 	console.log("Test002");
+
+	var tbl = document.getElementById("params");
+	var uid = tbl.rows[0].cells[1].firstChild.value;
+	var dev_id = tbl.rows[1].cells[1].firstChild.value;
+
+	console.log("uid: " + uid);
+	console.log("dev_id: " + dev_id);
+	g_monsys.set_dev_info(uid, dev_id);
 }
 function test003() {
 	console.log("Test003");

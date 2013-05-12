@@ -1,37 +1,38 @@
-#include "zwebapi_server.h"
+#include "zapi_server.h"
 
 #include <assert.h>
 
-#include "zwebapi_module.h"
+
+#include "zapi_module.h"
 #include "zerrno.h"
 
 static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 {
 	assert(arg);
-	ZTask* task = (ZTask*)arg;
-	task->event(fd, events);
+	ZApiModule *p = (ZApiModule*)arg;
+	p->event(fd, events);
 }
 
-int ZWebApiServer::init()
+int ZApiServer::init()
 {
 	return super_::init();
 }
 
-void ZWebApiServer::close()
+void ZApiServer::close()
 {
 	super_::close();
 }
 
-int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
+int ZApiServer::onInnerMsg(ZInnerMsg *msg)
 {
-	printf("ZWebApiServer::onInnerMsg()");
+	printf("ZApiServer::onInnerMsg()");
 	return 0;
 }
 
-void ZWebApiServer::onAccept(
+void ZApiServer::onAccept(
 		evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)
 {
-	ZWebApiModule *task = new ZWebApiModule(base_);
+	ZApiModule *task = new ZApiModule(base_);
 	assert(task);
 
 	task->read_event_ =

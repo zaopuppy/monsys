@@ -6,11 +6,11 @@ YACC   := bison
 
 TARGET := ts
 CFILES :=
-CXXFILES := main.cc ztask.cc zutil.cc \
+CXXFILES := main.cc ztask.cc zutil.cc zmodule.cc \
 	zclient.cc zserver.cc \
 	zapi_module.cc zzigbee_module.cc zdispatcher.cc zserial.cc \
-	zzigbee_message.cc zwebapi_server.cc zwebapi_module.cc \
-	zapi_server.cc zwebapi_session.cc
+	zzigbee_message.cc zwebapi_server.cc zwebapi_handler.cc \
+	zapi_server.cc zwebapi_session.cc zzigbee_handler.cc
 
 # intermedia files
 OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

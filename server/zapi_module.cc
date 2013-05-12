@@ -15,7 +15,7 @@
 int ZApiModule::init() {
 	printf("Oops, client's coming\n");
 
-	return super_::init();
+	return 0;
 }
 
 void ZApiModule::close() {
@@ -34,15 +34,15 @@ void ZApiModule::event(evutil_socket_t fd, short events) {
 	}
 }
 
-void ZApiModule::doTimeout() {
-}
-
-bool ZApiModule::isComplete() {
-	return (state_ == STATE_FINISHED);
-}
-
-int ZApiModule::onInnerMsg(ZInnerMsg *msg) {
+int ZApiModule::onInnerMsg(ZInnerMsg *msg)
+{
 	printf("ZApiModule::onInnerMsg()\n");
+	return 0;
+}
+
+int ZApiModule::sendMsg(ZInnerMsg *msg)
+{
+	printf("ZApiModule::sendMsg()\n");
 	return 0;
 }
 

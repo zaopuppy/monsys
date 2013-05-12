@@ -17,22 +17,29 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 {
 	// printf("SOCKET_CALLBACK\n");
 	assert(arg);
-	ZTask *task = (ZTask*)arg;
-	task->event(fd, events);
+	ZClient *m = (ZClient*)arg;
+	m->event(fd, events);
 }
 
 int ZClient::init() {
-	int rv = super_::init();
-	if (rv != OK) {
-		return rv;
-	}
-
-	rv = onDisconnected(-1, 0);
+	int rv = onDisconnected(-1, 0);
 	if (rv != OK && rv != ERR_IO_PENDING) {
 		return FAIL;
 	}
 
 	return OK;
+}
+
+int ZClient::sendMsg(ZInnerMsg *msg)
+{
+	printf("ZClient::sendMsg(%p)\n", msg);
+	return 0;
+}
+
+int ZClient::onInnerMsg(ZInnerMsg *msg)
+{
+	printf("ZClient::sendMsg(%p)\n", msg);
+	return 0;
 }
 
 // 0: success, connected
@@ -245,18 +252,6 @@ int ZClient::onDisconnected(evutil_socket_t fd, short events) {
 	}
 
 	return rv;
-}
-
-void ZClient::doTimeout() {
-}
-
-bool ZClient::isComplete() {
-	return (state_ == STATE_FINISHED);
-}
-
-int ZClient::onInnerMsg(ZInnerMsg *msg) {
-	printf("ZClient::onInnerMsg()\n");
-	return 0;
 }
 
 

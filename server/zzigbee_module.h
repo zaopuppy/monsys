@@ -1,26 +1,24 @@
 #ifndef _Z_ZIGBEE_SESSION_H__
 #define _Z_ZIGBEE_SESSION_H__
 
-#include "ztask.h"
-
 #include <event2/event.h>
 
 #include "zmodule.h"
 
-class ZZigBeeModule : public ZTask {
+class ZZigBeeModule : public ZModule {
 public:
-	ZZigBeeModule(event_base* base): ZTask(base, Z_MODULE_ZIGBEE) {
+	ZZigBeeModule(event_base* base): base_(base) {
 	}
 
-	typedef ZTask super_;
+	typedef ZModule super_;
 public:
 	virtual int init();
 	virtual void close();
-	virtual void event(evutil_socket_t fd, short events);
-	virtual void doTimeout();
-	virtual bool isComplete();
+	virtual int sendMsg(ZInnerMsg *msg) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg);
+	virtual int getType() { return Z_MODULE_ZIGBEE; }
 
+	void event(evutil_socket_t fd, short events);
 	virtual int onTimer();
 
 private:
@@ -40,7 +38,7 @@ private:
 // 	struct event* read_event_;
 
 private:
-	// ZSocket server_;
+	event_base *base_;
 	STATE state_;
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];

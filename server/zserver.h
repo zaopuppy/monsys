@@ -4,47 +4,53 @@
 #include "ztask.h"
 
 #include <iostream>
+#include <event2/event.h>
 
 #include "zmodule.h"
 
-class ZServer : public ZTask {
-public:
-	ZServer(const char* ip, uint16_t port, event_base* base, int type)
-		: ZTask(base, type), ip_(ip), port_(port) {
+class ZServer : public ZModule {
+ public:
+	ZServer(const char *ip, uint16_t port, event_base *base, Z_MODULE_TYPE type)
+		: ip_(ip), port_(port), base_(base), state_(STATE_INIT), type_(type) {
 	}
 
-	typedef ZTask super_;
+	typedef ZModule super_;
 
-public:
+ public:
 	virtual int init();
 	virtual void close();
-	virtual void event(evutil_socket_t fd, short events);
-	virtual void doTimeout();
-	// FIXME: does this neccessary?
-	virtual bool isComplete();
+	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
+	virtual int getType() { return type_; }
 
-protected:
+ public:
+	void event(evutil_socket_t fd, short events);
+
+ protected:
 	// virtual void onAccept_o(evutil_socket_t fd, short events);
 	virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port) = 0;
 
-protected:
+ protected:
 	void acceptClient(evutil_socket_t fd, short events);
 
-private:
+ private:
 	enum STATE {
+		STATE_INIT,
 		STATE_ACCEPTING,
 		STATE_FINISHED,
 	};
 
-private:
+ protected:
 	std::string ip_;
 	uint16_t port_;
 
 	// int type_;
 	evutil_socket_t fd_;
+	event_base *base_;
 	STATE state_;
+	Z_MODULE_TYPE type_;
 };
+
 
 #endif // _ZSERVER__H__
 
