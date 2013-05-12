@@ -21,7 +21,6 @@ int ZWebApiHandler::init() {
 }
 
 void ZWebApiHandler::close() {
-	state_ = STATE_FINISHED;
 	::close(fd_);
 	fd_ = -1;
 	event_del(read_event_);
@@ -29,20 +28,10 @@ void ZWebApiHandler::close() {
 
 int ZWebApiHandler::event(evutil_socket_t fd, short events)
 {
-	int rv = 0;
 	// FIXME: remove following line
 	fd_ = fd;
-	switch (state_) {
-		case STATE_CONNECTED:
-			onConnected(fd, events);
-			break;
-		default:
-			close();
-			rv = -1;
-			break;
-	}
-
-	return rv;
+	onConnected(fd, events);
+	return OK;
 }
 
 int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg) {

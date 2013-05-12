@@ -38,15 +38,7 @@ private:
 	int processSetDevInfo(json_t *root);
 
 private:
-	enum STATE {
-		STATE_CONNECTED,
-		STATE_FINISHED,
-	};
-
-
-private:
 	// ZSocket server_;
-	STATE state_;
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];
 	evutil_socket_t fd_;

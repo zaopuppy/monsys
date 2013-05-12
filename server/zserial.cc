@@ -132,7 +132,7 @@ int ZSerial::event(evutil_socket_t fd, short events)
 
 void ZSerial::onConnected(evutil_socket_t fd, short events)
 {
-	printf("ZSerial::onConnected\n");
+	printf("ZSerial::onConnected(%d)\n", fd);
 
 	int rv;
 	int offset = 0;
@@ -283,6 +283,7 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 void ZSerial::scheduleReconnect()
 {
 	printf("ZSerial::scheduleReconnect()\n");
+	close();
 	struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);
 	event_add(ev, &RETRY_INTERVAL);
 }

@@ -90,7 +90,7 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 		return -1;
 	}
 
-	send(fd_, buf_, rv, 0);
+	write(fd_, buf_, rv);
 
 	return 0;
 }
