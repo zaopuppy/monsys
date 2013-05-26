@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "zmsg.h"
+
 const uint8_t Z_ID_ZB_REG_REQ = 0x01;
 const uint8_t Z_ID_ZB_REG_RSP = 0x81;
 
@@ -19,7 +21,17 @@ struct ZItemPair {
 	uint16_t val;
 };
 
-class ZZigBeeMsg {
+enum ITEM_ID {
+	ITEM_ID_ALL = 0,
+	ITEM_ID_DEV_TYPE = 1,
+};
+
+typedef union {
+	uint16_t int_val;
+	char str_val[1];
+} zb_dev_item_val_t;
+
+class ZZigBeeMsg : public ZMsg {
  public:
 	ZZigBeeMsg();
 	

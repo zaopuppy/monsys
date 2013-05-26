@@ -5,6 +5,8 @@
 #include <list>
 
 #include "zmodule.h"
+#include "zsession.h"
+#include "zsession_ctrl.h"
 
 class ZDispatcher {
  private:
@@ -22,14 +24,19 @@ class ZDispatcher {
 	int sendMsg(ZInnerMsg *msg);
 	void routine();
 
-	// typedef std::hashmap<int, ZTask*> LIST_TYPE;
-	typedef std::list<ZModule*> MODULE_LIST_TYPE;
  private:
-	// use hash map instead of list
+	ZModule* findModule(int moduleType, int moduleId);
+	void processGetDevReq(ZInnerGetDevInfoReq *msg);
+	void processGetDevRsp(ZInnerGetDevInfoRsp *msg);
+	void processMsg(ZInnerMsg *msg);
+
+	typedef std::list<ZModule*> MODULE_LIST_TYPE;
+
+ private:
+	// TODO: use hash map instead of list
 	MODULE_LIST_TYPE module_list_;
-#ifndef Z_USE_MULTI_THREAD
 	std::list<ZInnerMsg*> msg_list_;
-#endif // Z_USE_MULTI_THREAD
+	ZSessionCtrl<uint32_t, ZSession> session_ctrl_;
 };
 
 #endif

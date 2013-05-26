@@ -41,20 +41,20 @@ void ZZigBeeModule::close() {
 int ZZigBeeModule::onInnerMsg(ZInnerMsg *msg) {
 	printf("ZZigBeeModule::onInnerMsg()\n");
 
-	ZData *data = (ZData*)msg->data;
+	// ZData *data = (ZData*)msg->data;
 
-	delete msg;
-	msg = NULL;
+	// delete msg;
+	// msg = NULL;
 
-	if (data->data == 1) {
-		printf("Got one\n");
-	} else if (data->data == 2) {
-		printf("Got two\n");
-	} else {
-		printf("Unknown data\n");
-	}
+	// if (data->data == 1) {
+	// 	printf("Got one\n");
+	// } else if (data->data == 2) {
+	// 	printf("Got two\n");
+	// } else {
+	// 	printf("Unknown data\n");
+	// }
 
-	delete data;
+	// delete data;
 
 	return 0;
 }

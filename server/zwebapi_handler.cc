@@ -16,7 +16,6 @@
 int ZWebApiHandler::init() {
 	printf("Oops, client's coming\n");
 
-	// return super_::init();
 	return 0;
 }
 
@@ -26,181 +25,161 @@ void ZWebApiHandler::close() {
 	event_del(read_event_);
 }
 
-int ZWebApiHandler::event(evutil_socket_t fd, short events)
+int ZWebApiHandler::processMsg(ZInnerGetDevInfoRsp *msg)
 {
-	// FIXME: remove following line
-	fd_ = fd;
-	onConnected(fd, events);
-	return OK;
-}
+	printf("ZWebApiHandler::processMsg(GetDevInfoRsp)\n");
 
-int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg) {
-	printf("ZWebApiModule::onInnerMsg()\n");
+	// no session
+	printf("Z_ZB_GET_DEV_RSP\n");
+	// const char *str = "{
+	// 	\"cmd\": \"get-dev-info-rsp\",
+	// 	\"code\": -4,
+	// 	\"info\": [
+	// 		{ \"id\": 1, \"status\": 2, \"desc\": \"OK0\" },
+	// 		{ \"id\": 2, \"status\": 3, \"desc\": \"OK1\" },
+	// 		{ \"id\": 3, \"status\": 4, \"desc\": \"OK3\" }
+	// 	]
+	// }";
 
-	switch (msg->msgType) {
-		case Z_ZB_GET_DEV_RSP:
-			{
-				printf("Z_ZB_GET_DEV_RSP\n");
-				// const char *str = "{
-				// 	\"cmd\": \"get-dev-info-rsp\",
-				// 	\"code\": -4,
-				// 	\"info\": [
-				// 		{ \"id\": 1, \"status\": 2, \"desc\": \"OK0\" },
-				// 		{ \"id\": 2, \"status\": 3, \"desc\": \"OK1\" },
-				// 		{ \"id\": 3, \"status\": 4, \"desc\": \"OK3\" }
-				// 	]
-				// }";
+	// ZZBGetRsp *rsp = (ZZBGetRsp*)msg->data;
 
-				// ZZBGetRsp *rsp = (ZZBGetRsp*)msg->data;
+	do {
+		int rv;
 
-				do {
-					int rv;
+		json_t *jobj = json_object();
+		assert(jobj);
 
-					json_t *jobj = json_object();
-					assert(jobj);
+		json_t *cmd = json_string("get-dev-info-rsp");
+		rv = json_object_set_new(jobj, "cmd", cmd);
 
-					json_t *cmd = json_string("get-dev-info-rsp");
-					rv = json_object_set_new(jobj, "cmd", cmd);
+		json_t *code;
+		if (msg->dev_infos_.size() > 0) {
+			code = json_integer(0);
+		} else {
+			code = json_integer(-1);
+		}
 
-					json_t *code = json_integer(-4);
-					rv = json_object_set_new(jobj, "code", code);
+		rv = json_object_set_new(jobj, "code", code);
 
-					json_t *info = json_array();
-					// 1
-					{
-						json_t *obj1 = json_object();
+		json_t *info = json_array();
 
-						json_t *id1 = json_integer(1);
-						json_object_set_new(obj1, "id", id1);
+		for (uint32_t i = 0; i < msg->dev_infos_.size(); ++i) {
+			json_t *obj1 = json_object();
 
-						json_t *status1 = json_integer(0);
-						json_object_set_new(obj1, "status", status1);
+			json_t *id1 = json_integer(msg->dev_infos_[i].id);
+			json_object_set_new(obj1, "id", id1);
 
-						json_t *desc1 = json_string("OK0");
-						json_object_set_new(obj1, "desc", desc1);
+			json_t *status1 = json_integer(msg->dev_infos_[i].val);
+			json_object_set_new(obj1, "status", status1);
 
-						json_array_append_new(info, obj1);
-					}
+			json_t *desc1 = json_string("OK0");
+			json_object_set_new(obj1, "desc", desc1);
 
-					json_object_set_new(jobj, "info", info);
+			json_array_append_new(info, obj1);
+		}
 
-					char *str_dump = json_dumps(jobj, 0);
+		json_object_set_new(jobj, "info", info);
 
-					sendRsp(str_dump, 200);
+		char *str_dump = json_dumps(jobj, 0);
 
-					free(str_dump);
-					json_decref(jobj);
+		sendRsp(str_dump, 200);
 
-				} while (0);
+		free(str_dump);
+		json_decref(jobj);
 
-				break;
-			}
-		case Z_ZB_SET_DEV_RSP:
-			{
-				printf("Z_ZB_SET_DEV_RSP\n");
-				// const char *str = "{
-				// 	\"cmd\": \"set-dev-info-rsp\",
-				// 	\"code\": -4,
-				// 	\"info\": [
-				// 		{ \"id\": 1, \"status\": 2, \"desc\": \"OK0\" },
-				// 		{ \"id\": 2, \"status\": 3, \"desc\": \"OK1\" },
-				// 		{ \"id\": 3, \"status\": 4, \"desc\": \"OK3\" }
-				// 	]
-				// }";
-
-				// ZZBGetRsp *rsp = (ZZBGetRsp*)msg->data;
-
-				do {
-					int rv;
-
-					json_t *jobj = json_object();
-					assert(jobj);
-
-					json_t *cmd = json_string("set-dev-info-rsp");
-					rv = json_object_set_new(jobj, "cmd", cmd);
-
-					json_t *code = json_integer(-4);
-					rv = json_object_set_new(jobj, "code", code);
-
-					json_t *info = json_array();
-					// 1
-					{
-						json_t *obj1 = json_object();
-
-						json_t *id1 = json_integer(1);
-						json_object_set_new(obj1, "id", id1);
-
-						json_t *status1 = json_integer(0);
-						json_object_set_new(obj1, "status", status1);
-
-						json_t *desc1 = json_string("OK0");
-						json_object_set_new(obj1, "desc", desc1);
-
-						json_array_append_new(info, obj1);
-					}
-
-					json_object_set_new(jobj, "info", info);
-
-					char *str_dump = json_dumps(jobj, 0);
-
-					sendRsp(str_dump, 200);
-
-					free(str_dump);
-					json_decref(jobj);
-
-				} while (0);
-
-				break;
-			}
-		default:
-			break;
-	}
+	} while (0);
 
 	return 0;
 }
 
-void ZWebApiHandler::onConnected(evutil_socket_t fd, short events) {
-	printf("ZWebApiModule::doConnected()\n");
-	unsigned int buf_idx = 0;
-	ssize_t len;
-	do {
-		len = recv(fd, buf_ + buf_idx, sizeof(buf_), 0);
-		if (len > 0)
-			buf_idx += len;
-	} while (buf_idx <= sizeof(buf_) && len > 0);
+// int processMsg(ZInnerSetDevInfoRsp *msg)
+// {
+// 	printf("ZWebApiHandler::processMsg(SetDevInfoRsp)\n");
+// 	printf("Z_ZB_SET_DEV_RSP\n");
+// 	// const char *str = "{
+// 	// 	\"cmd\": \"set-dev-info-rsp\",
+// 	// 	\"code\": -4,
+// 	// 	\"info\": [
+// 	// 		{ \"id\": 1, \"status\": 2, \"desc\": \"OK0\" },
+// 	// 		{ \"id\": 2, \"status\": 3, \"desc\": \"OK1\" },
+// 	// 		{ \"id\": 3, \"status\": 4, \"desc\": \"OK3\" }
+// 	// 	]
+// 	// }";
+// 
+// 	// ZZBGetRsp *rsp = (ZZBGetRsp*)msg->data;
+// 
+// 	do {
+// 		int rv;
+// 
+// 		json_t *jobj = json_object();
+// 		assert(jobj);
+// 
+// 		json_t *cmd = json_string("set-dev-info-rsp");
+// 		rv = json_object_set_new(jobj, "cmd", cmd);
+// 
+// 		json_t *code = json_integer(-4);
+// 		rv = json_object_set_new(jobj, "code", code);
+// 
+// 		json_t *info = json_array();
+// 		// 1
+// 		{
+// 			json_t *obj1 = json_object();
+// 
+// 			json_t *id1 = json_integer(1);
+// 			json_object_set_new(obj1, "id", id1);
+// 
+// 			json_t *status1 = json_integer(0);
+// 			json_object_set_new(obj1, "status", status1);
+// 
+// 			json_t *desc1 = json_string("OK0");
+// 			json_object_set_new(obj1, "desc", desc1);
+// 
+// 			json_array_append_new(info, obj1);
+// 		}
+// 
+// 		json_object_set_new(jobj, "info", info);
+// 
+// 		char *str_dump = json_dumps(jobj, 0);
+// 
+// 		sendRsp(str_dump, 200);
+// 
+// 		free(str_dump);
+// 		json_decref(jobj);
+// 
+// 	} while (0);
+// 
+// 	return 0;
+// }
 
-	printf("len: %ld\n", len);
-	if (len < 0 && errno != EAGAIN) {
-		perror("recv");
-		// freeSession(session);
-		close();
-	} else if (len == 0) {
-		printf("peer closed.\n");
-		close();
-	}else {
-		// XXX, may write beyond the bound.
-		if (buf_idx > 0) {
-			buf_[buf_idx] = 0x00;
-			onRead(fd, buf_, buf_idx);
-		}
+int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg) {
+	printf("ZWebApiHandler::onInnerMsg()\n");
+
+	switch (msg->msg_type_) {
+		case Z_ZB_GET_DEV_RSP:
+			{
+				return processMsg((ZInnerGetDevInfoRsp*)msg);
+			}
+		case Z_ZB_SET_DEV_RSP:
+			{
+				return -1;
+				// return processMsg((ZInnerSetDevInfoRsp*)msg);
+			}
+		default:
+			return -1;
 	}
 }
 
 void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 {
-	send(fd_, text_msg, strlen(text_msg), 0);
+	printf("ZWebApiHandler::sendRsp\n");
+	int rv = send(text_msg, strlen(text_msg));
+	printf("sent %d bytes\n", rv);
 }
 
-int ZWebApiHandler::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
+int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 {
 	printf("ZWebApiModule::onRead()\n");
-	trace_bin(buf, buf_len);
 
-	return event(buf, buf_len);
-}
-
-int ZWebApiHandler::event(char *buf, uint32_t buf_len)
-{
 	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 		printf("empty message\n");
 
@@ -227,21 +206,22 @@ int ZWebApiHandler::event(char *buf, uint32_t buf_len)
 			sendRsp("Missing 'cmd' field, or 'cmd' is not a string\n", 400);
 			return -1;
 		}
+
 		// 3. check session
 		const char *cmd_str = json_string_value(cmd);
 		if (!strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
-			return processGetDevInfo(jobj);
+			return processGetDevInfoReq(jobj);
 		} else if (!strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
-			return processSetDevInfo(jobj);
+			return processSetDevInfoReq(jobj);
 		} else {
 			return -1;
 		}
 	}
 }
 
-int ZWebApiHandler::processGetDevInfo(json_t *root)
+int ZWebApiHandler::processGetDevInfoReq(json_t *root)
 {
-	printf("ZWebApiModule::processGetDevInfo()\n");
+	printf("ZWebApiModule::processGetDevInfoReq()\n");
 
 	// var req_obj = {
 	// 	"cmd": "get-dev-info",
@@ -262,45 +242,52 @@ int ZWebApiHandler::processGetDevInfo(json_t *root)
 		return -1;
 	}
 
-	json_t *uid = json_object_get(root, "uid");
-	if (!uid || !json_is_integer(uid)) {
+	json_t *juid = json_object_get(root, "uid");
+	if (!juid || !json_is_integer(juid)) {
 		printf("uid is illegal\n");
 		sendRsp("uid is illegal\n", 400);
 		return -1;
 	}
 
-	json_t *dev_id = json_object_get(root, "dev-id");
-	if (!dev_id || !json_is_integer(dev_id)) {
+	json_t *jdev_id = json_object_get(root, "dev-id");
+	if (!jdev_id || !json_is_integer(jdev_id)) {
 		printf("dev-id is illegal\n");
 		sendRsp("dev-id is illegal\n", 400);
 		return -1;
 	}
 
-	printf("uid: %d\n", (int)json_integer_value(uid));
-	printf("dev-id: %d\n", (int)json_integer_value(dev_id));
+	int uid = (int)json_integer_value(juid);
+	int dev_id = (int)json_integer_value(jdev_id);
+
+	printf("uid: %d, dev-id: %d\n", uid, dev_id);
+
+	if (uid < 0 || uid > 255 || dev_id < 0 || dev_id > 255) {
+		printf("Invalid uid or dev-id\n");
+		sendRsp("invalid uid or dev-id\n", 200);
+		return 0;
+	}
 
 	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
 	// transfer from json to ZigBee message
-	ZZBGetReq *req = new ZZBGetReq();
-	req->items_.push_back(1);
-	req->items_.push_back(2);
-	req->items_.push_back(3);
+	ZInnerGetDevInfoReq *req = new ZInnerGetDevInfoReq(addr_);
+	req->dev_addr_ = dev_id;
 
-	// broadcast to all bees
-	ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_SERIAL, 1);
-	innerMsg->msgType = Z_ZB_GET_DEV_REQ;
-	innerMsg->data = req;
+	ZDispatcher::instance()->sendMsg(req);
+	// // broadcast to all bees
+	// ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_SERIAL, 1);
+	// innerMsg->msgType = Z_ZB_GET_DEV_REQ;
+	// innerMsg->data = req;
 
-	ZDispatcher::instance()->sendMsg(innerMsg);
+	// ZDispatcher::instance()->sendMsg(innerMsg);
 
 	// sendRsp("request has been sent\n", 200);
 
 	return 0;
 }
 
-int ZWebApiHandler::processSetDevInfo(json_t *root)
+int ZWebApiHandler::processSetDevInfoReq(json_t *root)
 {
-	printf("ZWebApiModule::processSetDevInfo()\n");
+	printf("ZWebApiModule::processSetDevInfoReq()\n");
 
 	// var req_obj = {
 	// 	"cmd": "set-dev-info",
@@ -350,12 +337,12 @@ int ZWebApiHandler::processSetDevInfo(json_t *root)
 	pair.id = 3; pair.val = 0x03;
 	req->items_.push_back(pair);
 
-	// broadcast to all bees
-	ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_SERIAL, 1);
-	innerMsg->msgType = Z_ZB_GET_DEV_REQ;
-	innerMsg->data = req;
+	// // broadcast to all bees
+	// ZInnerMsg *innerMsg = new ZInnerMsg(Z_MODULE_SERIAL, 1);
+	// innerMsg->msgType = Z_ZB_GET_DEV_REQ;
+	// innerMsg->data = req;
 
-	ZDispatcher::instance()->sendMsg(innerMsg);
+	// ZDispatcher::instance()->sendMsg(innerMsg);
 
 	// sendRsp("request has been sent\n", 200);
 

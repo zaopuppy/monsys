@@ -5,7 +5,7 @@
 
 #include <event2/event.h>
 
-#include "zhandler.h"
+#include "zserver_handler.h"
 
 class ZWebApiServer : public ZServer {
  public:
@@ -25,7 +25,7 @@ class ZWebApiServer : public ZServer {
 
  private:
 	// XXX
-	ZHandler *handler_;
+	ZServerHandler *handler_;
 };
 
 #endif // _Z_WEBAPI_SERVER_H__

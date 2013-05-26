@@ -206,43 +206,43 @@ void ZApiModule::processCmd(evutil_socket_t fd, char *buf, uint32_t buf_len)
 {
 	printf("ZApiModule::processCmd\n");
 
-	const char *msg;
+	// const char *msg;
 
-	if (isBlank(buf, buf_len)) {
-		msg = "no command\n";
-		send(fd, msg, strlen(msg), 0);
-		return;
-	}
+	// if (isBlank(buf, buf_len)) {
+	// 	msg = "no command\n";
+	// 	send(fd, msg, strlen(msg), 0);
+	// 	return;
+	// }
 
-	int target_module = Z_MODULE_SERIAL;
+	// int target_module = Z_MODULE_SERIAL;
 
-	const char* p = buf;
-	if (*p == '1') {
-		msg = "You gave me a '1', right?\n";
-		send(fd, msg, strlen(msg), 0);
+	// const char* p = buf;
+	// if (*p == '1') {
+	// 	msg = "You gave me a '1', right?\n";
+	// 	send(fd, msg, strlen(msg), 0);
 
-		ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
-		ZData *data = new ZData();
-		data->data = 1;
-		innerMsg->data = data;
-		if (0 != ZDispatcher::instance()->sendMsg(innerMsg)) {
-			printf("Failed to send inner message to other module\n");
-		}
-	} else if (*p == '2') {
-		msg = "You gave me a '2', right?\n";
-		send(fd, msg, strlen(msg), 0);
+	// 	ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
+	// 	ZData *data = new ZData();
+	// 	data->data = 1;
+	// 	innerMsg->data = data;
+	// 	if (0 != ZDispatcher::instance()->sendMsg(innerMsg)) {
+	// 		printf("Failed to send inner message to other module\n");
+	// 	}
+	// } else if (*p == '2') {
+	// 	msg = "You gave me a '2', right?\n";
+	// 	send(fd, msg, strlen(msg), 0);
 
-		ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
-		ZData *data = new ZData();
-		data->data = 2;
-		innerMsg->data = data;
-		if (0 != ZDispatcher::instance()->sendMsg(innerMsg)) {
-			printf("Failed to send inner message to other module\n");
-		}
-	} else {
-		msg = "Unknown command.\n";
-		// send(fd, msg, strlen(msg), 0);
-	}
+	// 	ZInnerMsg *innerMsg = new ZInnerMsg(target_module, 1);
+	// 	ZData *data = new ZData();
+	// 	data->data = 2;
+	// 	innerMsg->data = data;
+	// 	if (0 != ZDispatcher::instance()->sendMsg(innerMsg)) {
+	// 		printf("Failed to send inner message to other module\n");
+	// 	}
+	// } else {
+	// 	msg = "Unknown command.\n";
+	// 	// send(fd, msg, strlen(msg), 0);
+	// }
 }
 
 

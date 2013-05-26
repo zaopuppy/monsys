@@ -8,9 +8,12 @@
 class ZHandler {
  public:
 	virtual int init() = 0;
+	virtual void close() = 0;
 	// virtual int event(evutil_socket_t fd, short events) = 0;
-	virtual int event(char *buf, uint32_t buf_len) = 0;
+	virtual int onRead(char *buf, uint32_t buf_len) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
+
+	virtual int send(const char *buf, uint32_t buf_len) = 0;
 
  public:
 	evutil_socket_t fd_;

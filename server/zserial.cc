@@ -51,56 +51,8 @@ int ZSerial::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZSerial::onInnerMsg()\n");
 
-	switch (msg->msgType) {
-		case Z_ZB_GET_DEV_REQ:
-			{
-				// TODO: delete req
-				ZZBGetReq *req = (ZZBGetReq*) msg->data;
-				int rv = req->encode(buf_out_, sizeof(buf_out_));
-				if (rv < 0) {
-					printf("Failed to encode\n");
-					return -1;
-				}
-				// delete req;
 
-				trace_bin(buf_out_, rv);
-
-				rv = write(fd_, buf_out_, rv);
-				if (rv <= 0) {
-					perror("send");
-					printf("Failed to send\n");
-				} else {
-					printf("write over.\n");
-				}
-				break;
-			}
-		case Z_ZB_SET_DEV_REQ:
-			{
-				ZZBSetReq *req = (ZZBSetReq*) msg->data;
-				int rv = req->encode(buf_out_, sizeof(buf_out_));
-				if (rv < 0) {
-					printf("Failed to encode\n");
-					return -1;
-				}
-				// delete req;
-
-				trace_bin(buf_out_, rv);
-
-				rv = write(fd_, buf_out_, rv);
-				if (rv <= 0) {
-					perror("send");
-					printf("Failed to send\n");
-				} else {
-					printf("write over.\n");
-				}
-				break;
-			}
-		default:
-			printf("Unknown message type\n");
-			break;
-	}
-
-	return OK;
+	return handler_->onInnerMsg(msg);
 }
 
 int ZSerial::event(evutil_socket_t fd, short events)
@@ -175,9 +127,8 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
 
 int ZSerial::connect()
 {
-	// const char* serial_dev = "/dev/tty.usbmodemfd141";
-	// const char* serial_dev = "/dev/tty.usbmodemfa121";
-	const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
+	const char* serial_dev = "/dev/tty.usbmodemfd141";
+	// const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
 	// const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
 	fd_ = open(serial_dev, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 	if (fd_ < 0) {
@@ -277,7 +228,7 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 	printf("ZSerial::onRead\n");
 
 	// TODO: should be a loop...
-	handler_->event(buf, buf_len);
+	handler_->onRead(buf, buf_len);
 }
 
 void ZSerial::scheduleReconnect()
