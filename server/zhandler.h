@@ -7,6 +7,10 @@
 
 class ZHandler {
  public:
+ 	// ZHandler(): fd_(-1), read_event_(NULL) {}
+ 	// virtual ~ZHandler() {}
+
+ public:
 	virtual int init() = 0;
 	virtual void close() = 0;
 	// virtual int event(evutil_socket_t fd, short events) = 0;
@@ -15,9 +19,9 @@ class ZHandler {
 
 	virtual int send(const char *buf, uint32_t buf_len) = 0;
 
- public:
-	evutil_socket_t fd_;
-	struct event *read_event_;
+ // public:
+	// evutil_socket_t fd_;
+	// struct event *read_event_;
 };
 
 

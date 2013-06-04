@@ -22,21 +22,32 @@ class ZDispatcher {
  public:
 	int registerModule(ZModule *module);
 	int sendMsg(ZInnerMsg *msg);
-	void routine();
+	void routine(time_t delta);
 
  private:
 	ZModule* findModule(int moduleType, int moduleId);
-	void processGetDevReq(ZInnerGetDevInfoReq *msg);
-	void processGetDevRsp(ZInnerGetDevInfoRsp *msg);
-	void processMsg(ZInnerMsg *msg);
 
+	void processMsg(ZInnerGetDevListReq *msg);
+	void processMsg(ZInnerGetDevListRsp *msg);
+	void processMsg(ZInnerGetDevInfoReq *msg);
+	void processMsg(ZInnerGetDevInfoRsp *msg);
+	void processMsg(ZInnerSetDevInfoReq *msg);
+	void processMsg(ZInnerSetDevInfoRsp *msg);
+
+	void processInnerMsg(ZInnerMsg *msg);
+
+	void consumeMsg();
+	void checkTimeout(time_t delta);
+
+ private:
 	typedef std::list<ZModule*> MODULE_LIST_TYPE;
+	typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
 
  private:
 	// TODO: use hash map instead of list
 	MODULE_LIST_TYPE module_list_;
 	std::list<ZInnerMsg*> msg_list_;
-	ZSessionCtrl<uint32_t, ZSession> session_ctrl_;
+	SESSION_CTRL_TYPE session_ctrl_;
 };
 
 #endif

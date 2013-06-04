@@ -1,0 +1,98 @@
+
+
+// GetDevList
+{
+	"cmd": "get-dev-list",
+	"uid": 1
+}
+
+{
+	"cmd": "get-dev-list-rsp",
+	"status": 0,
+	"devs": []
+}
+
+// GetDevInfo
+{
+	"cmd": "get-dev-info",
+	"uid": 1,
+	"addr": 1234,
+	"id-list": "1,2,3,4"
+}
+
+{
+	"cmd": "get-dev-info-rsp",
+	"code": -4,
+	"info": [
+		{ "id": 1, "status": 2, "desc": "OK0" },
+		{ "id": 2, "status": 3, "desc": "OK1" },
+		{ "id": 3, "status": 4, "desc": "OK3" }
+	]
+}
+
+// SetDevInfo
+{
+	"cmd": "set-dev-info",
+	"uid": 1,
+	"addr": 1234,
+	"vals": [
+		{ "id": 1, "val": 2 },
+		{ "id": 2, "val": 4 }
+	]
+}
+
+{
+	"cmd": "set-dev-info-rsp",
+	"status": 0
+}
+
+
+////////////////////////////////////////////
+//
+
+// 1234
+{
+	"id": 3,
+	"name": "temperture",
+	"desc": "xxx of xxx",
+	"type": "integer",
+	"val": 0x300,
+	"formatter": "div($1, 100)"
+}
+
+QuerySupportIdList
+{
+
+}
+
+{
+	{ "id": 1, "name": "xx", "type": integer, "formatter": "xx" },
+	{ "id": 2, "name": "xx", "type": integer, "formatter": "xx" },
+	{ "id": 3, "name": "xx", "type": integer, "formatter": "xx" },
+	{ "id": 4, "name": "xx", "type": integer, "formatter": "xx" }
+}
+
+// fridge
+1: temp
+2: time
+3: xxx
+
+// telev
+
+
+// air-con
+
+
+00 03 01 'd' 'i' 'v' '(' '$' '1'.....
+
+
+id
+name
+desc
+type
+
+
+
+
+
+

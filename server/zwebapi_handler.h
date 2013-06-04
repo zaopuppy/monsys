@@ -42,11 +42,14 @@ private:
 	// void onConnected(evutil_socket_t fd, short events);
 	// int onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 	void sendRsp(const char *text_msg, int status);
+
+	int processGetDevListReq(json_t *root);
 	int processGetDevInfoReq(json_t *root);
 	int processSetDevInfoReq(json_t *root);
 
+	int processMsg(ZInnerGetDevListRsp *msg);
 	int processMsg(ZInnerGetDevInfoRsp *msg);
-	// int processMsg(ZInnerSetDevInfoRsp *msg);
+	int processMsg(ZInnerSetDevInfoRsp *msg);
 
 private:
 	// ZSocket server_;

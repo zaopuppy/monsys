@@ -61,8 +61,6 @@ int ZSerial::event(evutil_socket_t fd, short events)
 
 	int rv = 0;
 
-	handler_->fd_ = fd;
-
 	switch (state_) {
 	case STATE_CONNECTED:
 		onConnected(fd, events);
@@ -127,12 +125,11 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
 
 int ZSerial::connect()
 {
-	const char* serial_dev = "/dev/tty.usbmodemfd141";
-	// const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
-	// const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
-	fd_ = open(serial_dev, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
+	printf("Openning serial device: [%s]\n", serial_dev_.c_str());
+
+	fd_ = open(serial_dev_.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 	if (fd_ < 0) {
-		perror(serial_dev);
+		perror(serial_dev_.c_str());
 		return FAIL;
 	}
 
@@ -197,6 +194,8 @@ int ZSerial::connect()
 		return FAIL;
 	}
 
+	handler_->fd_  = fd_;
+
 	return OK;
 }
 
@@ -213,6 +212,7 @@ int ZSerial::onDisconnected(evutil_socket_t fd, short events)
 	case FAIL:
 		{
 			state_ = STATE_DISCONNECTED;
+			// XXX
 			scheduleReconnect();
 			return ERR_IO_PENDING;
 		}

@@ -16,8 +16,9 @@
 #include "zlog.h"
 #include "zdispatcher.h"
 #include "zserial.h"
-
+#include "ztime.h"
 #include "zzigbee_message.h"
+#include "zutil.h"
 
 using namespace std;
 
@@ -150,7 +151,10 @@ bool start_client(event_base *base)
 
 bool start_serial(event_base *base)
 {
-	ZModule *h = new ZSerial(base);
+	// const char* serial_dev = "/dev/tty.usbmodemfd141";
+	const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
+	// const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+	ZModule *h = new ZSerial(base, serial_dev);
 	if (h->init() != OK) {
 		printf("Failed to init serial module.\n");
 		return false;
@@ -293,63 +297,211 @@ void test_zigbee_message_set()
 
 void test_zigbee_message_reg()
 {
-	// req
-	{
-		char buf[128];
-		ZZBRegReq req1, req2;
-		int rv1, rv2;
+	// // req
+	// {
+	// 	char buf[128];
+	// 	ZZBRegReq req1, req2;
+	// 	int rv1, rv2;
 
-		// bad
-		req1.mac_.assign("\xab\xcd\x12");
-		rv1 = req1.encode(buf, sizeof(buf));
-		assert(rv1 < 0);
+	// 	// bad
+	// 	req1.mac_.assign("\xab\xcd\x12");
+	// 	rv1 = req1.encode(buf, sizeof(buf));
+	// 	assert(rv1 < 0);
 
-		req1.mac_.assign("\xab\xcd\x12\x23\x34\x78", 6);
+	// 	req1.mac_.assign("\xab\xcd\x12\x23\x34\x78\x90\x33", 8);
+	// 	req1.addr_ = 0x4455;
 
-		rv1 = req1.encode(buf, sizeof(buf));
-		assert(rv1 > 0);
-		trace_bin(buf, rv1);
+	// 	rv1 = req1.encode(buf, sizeof(buf));
+	// 	assert(rv1 > 0);
+	// 	trace_bin(buf, rv1);
 
-		rv2 = req2.decode(buf, rv1);
-		assert(rv2 > 0);
+	// 	rv2 = req2.decode(buf, rv1);
+	// 	assert(rv2 > 0);
 
-		assert(rv1 == rv2);
+	// 	assert(rv1 == rv2);
 
-		// check header
-		assert(req1.syn_ == req2.syn_);
-		assert(req1.len_ == req2.len_);
-		assert(req1.cmd_ == req2.cmd_);
+	// 	// check header
+	// 	assert(req1.syn_ == req2.syn_);
+	// 	assert(req1.len_ == req2.len_);
+	// 	assert(req1.cmd_ == req2.cmd_);
 
-		assert(req1.mac_ == req2.mac_);
-	}
+	// 	assert(req1.mac_ == req2.mac_);
+	// }
 	
-	// rsp
+	// // rsp
+	// {
+	// 	char buf[128];
+	// 	ZZBRegRsp req1, req2;
+
+	// 	req1.addr_ = 0x0F;
+	// 	req1.status_ = 0x0B;
+
+	// 	int rv1, rv2;
+
+	// 	rv1 = req1.encode(buf, sizeof(buf));
+	// 	assert(rv1 > 0);
+	// 	trace_bin(buf, rv1);
+
+	// 	rv2 = req2.decode(buf, rv1);
+	// 	assert(rv2 > 0);
+
+	// 	assert(rv1 == rv2);
+
+	// 	// check header
+	// 	assert(req1.syn_ == req2.syn_);
+	// 	assert(req1.len_ == req2.len_);
+	// 	assert(req1.cmd_ == req2.cmd_);
+
+	// 	assert(req1.addr_ == req2.addr_);
+	// 	assert(req1.status_ == req2.status_);
+	// }
+}
+
+void test_util()
+{
+	const char *str = "ab12345,124";
+	int rv;
+
+	rv = ZStringUtil::atoi(str, -1);
+	assert(-1 == rv);
+
+	rv = ZStringUtil::atoi(str, -1, 2, 6);
+	assert(12345 == rv);
+
+	rv = ZStringUtil::atoi(str, -1, 8, 10);
+	assert(124 == rv);
+
 	{
-		char buf[128];
-		ZZBRegRsp req1, req2;
+		const char *id_list = "1,2,3,4,5";
 
-		req1.addr_ = 0x0F;
-		req1.status_ = 0x0B;
+		// tokenize string
+		size_t begin_idx = 0;
+		size_t end_idx = 0;
+		size_t id_list_len = strlen(id_list);
+		int id;
 
-		int rv1, rv2;
+		while (true) {
+			while (id_list[end_idx] != ',' && end_idx < id_list_len) {
+				end_idx++;
+			}
 
-		rv1 = req1.encode(buf, sizeof(buf));
-		assert(rv1 > 0);
-		trace_bin(buf, rv1);
+			// don't include ',' or eol
+			--end_idx;
 
-		rv2 = req2.decode(buf, rv1);
-		assert(rv2 > 0);
+			id = ZStringUtil::atoi(id_list, -1, begin_idx, end_idx);
+			printf("id: [%d]\n", id);
+			if (id == -1) {
+				printf("Bad number\n");
+				break;
+			}
 
-		assert(rv1 == rv2);
-
-		// check header
-		assert(req1.syn_ == req2.syn_);
-		assert(req1.len_ == req2.len_);
-		assert(req1.cmd_ == req2.cmd_);
-
-		assert(req1.addr_ == req2.addr_);
-		assert(req1.status_ == req2.status_);
+			end_idx += 2;	// skip ','
+			begin_idx = end_idx;
+			if (begin_idx >= id_list_len) {
+				break;
+			}
+		}
 	}
+}
+
+void test_other()
+{
+	std::vector<int> v;
+	bool rv = str2list("1,2,3,4,5", v);
+	assert(rv);
+}
+
+
+// "$div($1, 4)"
+class ZFormatter
+{
+ public:
+ 	bool compile(const char *script) {
+ 		if (!script) {
+ 			return false;
+ 		}
+
+ 		size_t script_len = strlen(script);
+ 		if (script_len <= 0) {
+ 			return false;
+ 		}
+
+ 		// S: ABABABBAABB...
+ 		// expr: string var string
+ 		// string:
+ 		size_t idx;
+ 		for (idx = 0; idx < script_len; ++idx) {
+ 			if (script[idx] == '$') {
+ 			} else {
+ 				//
+ 			}
+ 		}
+
+ 		// E = (A|B)*
+ 		const char *p = script;
+ 		size_t p_len = script_len;
+ 		do {
+ 			idx = str(p, p_len);
+ 			if (idx < 0) {	// error
+ 				break;
+ 			} else if (idx == 0) {
+ 				idx = var(p, p_len);
+ 			} else {
+ 				p += idx;
+ 				p_len -= idx;
+ 			}
+ 		} while (p_len > 0);
+
+ 		return true;
+ 	}
+
+ 	size_t str(const char *buf, size_t buf_len) {
+ 		size_t len = 0;
+ 		while (*buf != '$' && buf_len)
+ 		return 0;
+ 	}
+
+ 	size_t var(const char *buf, size_t buf_len) {
+ 		return 0;
+ 	}
+
+ 	void format(std::string &str) {
+ 	}
+
+ private:
+ 	char buf_[256];
+};
+
+void test_formatter()
+{
+}
+
+void test_zigbee_update()
+{
+	ZZBUpdateIdInfoReq req;
+	int rv;
+
+	char buf[1024];
+
+	// empty
+	rv = req.encode(buf, sizeof(buf));
+	assert(rv > 0);
+
+	trace_bin(buf, rv);
+
+	// 1 item
+	ItemIdInfo info;
+	info.id = 0x34;
+	info.name = "hello";
+	info.desc = "good";
+	info.type = 0x08;
+	info.formatter = "printf";
+
+	req.id_list_.push_back(info);
+	rv = req.encode(buf, sizeof(buf));
+	assert(rv > 0);
+
+	trace_bin(buf, rv);
 }
 
 int main(int argc, char *argv[])
@@ -358,7 +510,10 @@ int main(int argc, char *argv[])
 	// test_zigbee_message_set();
 	// test_zigbee_message_reg();
 	// test_json();
-	// return 0;
+	// test_util();
+	// test_other();
+	test_zigbee_update();
+	return 0;
 
 	struct event_base* base = event_base_new();
 	assert(base);
@@ -397,13 +552,28 @@ int main(int argc, char *argv[])
 		printf("failed to start serial.\n");
 		return FAIL;
 	}
-	
+
+	long begin_time = ZTime::getInMillisecond();
+	long end_time = 0;
+	long delta_time = 0;
+
 	// event_base_dispatch(base);
 	while (1) {
 		// printf("loop\n");
 		event_base_loop(base, EVLOOP_NONBLOCK);
-		ZDispatcher::instance()->routine();
+		ZDispatcher::instance()->routine(delta_time);
+
 		usleep(100 * 1000);	// 100 milliseconds
+
+		end_time = ZTime::getInMillisecond();
+		delta_time = end_time - begin_time;
+		begin_time = end_time;
+
+		// printf("delta_time: [%ld]\n", delta_time);
+		assert(delta_time > 0);
+		if (delta_time <= 0) {
+			delta_time = 100;
+		}
 	}
 
 	return 0;

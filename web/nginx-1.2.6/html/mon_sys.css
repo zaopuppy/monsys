@@ -16,10 +16,12 @@ input#console {
 
 	margin: 1px;
 	padding: 1px;
-	width: 800px;
-	height: 1000px;
+	width: 400px;
+	height: 400px;
 	border: 1px solid #000000;
 }
 
-
+textarea#user-input {
+	width: 400px;
+}
 

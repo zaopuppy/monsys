@@ -6,6 +6,7 @@
 #include <string>
 
 #include "zmsg.h"
+#include "zdevice.h"
 
 const uint8_t Z_ID_ZB_REG_REQ = 0x01;
 const uint8_t Z_ID_ZB_REG_RSP = 0x81;
@@ -15,6 +16,9 @@ const uint8_t Z_ID_ZB_GET_RSP = 0x82;
 
 const uint8_t Z_ID_ZB_SET_REQ = 0x03;
 const uint8_t Z_ID_ZB_SET_RSP = 0x83;
+
+const uint8_t Z_ID_ZB_QUERY_ID_REQ = 0x06;
+const uint8_t Z_ID_ZB_QUERY_ID_RSP = 0x86;
 
 struct ZItemPair {
 	uint8_t id;
@@ -31,6 +35,113 @@ typedef union {
 	char str_val[1];
 } zb_dev_item_val_t;
 
+struct ItemIdInfo {
+	uint8_t id;
+	std::string name;
+	std::string desc;
+	uint8_t type;		// 0: integer
+	std::string formatter;
+};
+
+template<>
+inline int encode(const ItemIdInfo &v, char *buf, uint32_t buf_len)
+{
+	int rv;
+	int len = 0;
+
+	// id
+	rv = encode(v.id, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// name
+	rv = encode(v.name, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// desc
+	rv = encode(v.desc, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// type
+	rv = encode(v.type, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// formatter
+	rv = encode(v.formatter, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	return len;
+}
+
+template<>
+inline int decode(ItemIdInfo &v, char *buf, uint32_t buf_len)
+{
+	int rv;
+	int len = 0;
+
+	// id
+	rv = decode(v.id, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// name
+	rv = decode(v.name, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// desc
+	rv = decode(v.desc, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// type
+	rv = decode(v.type, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	// formatter
+	rv = decode(v.formatter, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	return len;
+}
+
+template<>
+inline int getlen(const ItemIdInfo &v)
+{
+	return getlen(v.id)
+		+ getlen(v.name)
+		+ getlen(v.desc)
+		+ getlen(v.type)
+		+ getlen(v.formatter);
+}
+
+
 class ZZigBeeMsg : public ZMsg {
  public:
 	ZZigBeeMsg();
@@ -39,7 +150,11 @@ class ZZigBeeMsg : public ZMsg {
 	virtual int decode(char* buf, uint32_t buf_len);
 	
 	uint16_t getHeaderLen() {
-		return 1 + 2 + 1;
+		return getlen(syn_) +
+					 getlen(ver_) +
+					 getlen(len_) +
+					 getlen(cmd_) +
+					 getlen(addr_);
 	}
 	
  public:
@@ -52,9 +167,11 @@ class ZZigBeeMsg : public ZMsg {
 	}
 
  public:
-	uint8_t syn_;
+	uint8_t  syn_;
+	uint8_t  ver_;
 	uint16_t len_;
-	uint8_t cmd_;
+	uint8_t  cmd_;
+	uint16_t addr_;
 };
 
 //////////////////////////////////////////////////////////////////
@@ -76,12 +193,13 @@ class ZZBRegReq : public ZZigBeeMsg {
 	}
 	
 	uint16_t getBodyLen() {
-		return mac_.size();
+		return sizeof(mac_.data);
 	}
 
  public:
-	const uint16_t mac_len_;
-	std::string mac_;
+	// const uint16_t mac_len_;
+	// std::string mac_;
+	zb_mac_type_t mac_;
 };
 
 class ZZBRegRsp : public ZZigBeeMsg {
@@ -101,11 +219,11 @@ class ZZBRegRsp : public ZZigBeeMsg {
 	}
 	
 	uint16_t getBodyLen() {
-		return 1 + 1;
+		return getlen(status_);
 	}
 
  public:
-	uint8_t addr_;
+	// uint8_t addr_;
 	uint8_t status_;
 };
 
@@ -169,7 +287,7 @@ class ZZBSetReq : public ZZigBeeMsg {
 	typedef ZZigBeeMsg super_;
 
  public:
-	
+
 	virtual int encode(char* buf, uint32_t buf_len);
 	virtual int decode(char* buf, uint32_t buf_len);
 	
@@ -184,7 +302,7 @@ class ZZBSetReq : public ZZigBeeMsg {
 
  public:
 	// uint8_t itemCount_;
-	std::vector<struct ZItemPair> items_;
+	std::vector<ZItemPair> items_;
 };
 
 class ZZBSetRsp : public ZZigBeeMsg {
@@ -209,6 +327,33 @@ class ZZBSetRsp : public ZZigBeeMsg {
 
  public:
 	uint8_t status_;
+};
+
+
+//////////////////////////////////////////////////////////////////
+// Update
+class ZZBUpdateIdInfoReq : public ZZigBeeMsg {
+ public:
+	ZZBUpdateIdInfoReq();
+
+	typedef ZZigBeeMsg super_;
+
+ public:
+
+	virtual int encode(char *buf, uint32_t buf_len);
+	virtual int decode(char *buf, uint32_t buf_len);
+	
+	uint16_t getEncodeLen() {
+		return getHeaderLen()
+			+ getBodyLen();
+	}
+	
+	uint16_t getBodyLen() {
+		return 1 + id_list_.size() * (1 + 2);
+	}
+
+ public:
+	std::vector<ItemIdInfo> id_list_;
 };
 
 

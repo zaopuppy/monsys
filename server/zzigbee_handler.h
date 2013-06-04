@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <map>
+#include <assert.h>
 
 #include "zclient_handler.h"
 
@@ -10,53 +11,15 @@
 #include "zsession_ctrl.h"
 #include "zinner_message.h"
 #include "zmodule.h"
+#include "zlog.h"
+#include "zdevice.h"
 
-typedef struct {
-	char mac[8];
-	// uint8_t id;
-	int state;
-	// id-val pair map
-	std::map<uint8_t, uint16_t> id_val_map;
-} zb_dev_t;
-
-enum zb_dev_state {
-	zb_dev_state_invalid = 0,
-	zb_dev_state_active,
-	zb_dev_state_inactive,
-};
-
-const uint8_t DEV_LIST_LEN = 255;
-
-// class ZZBSession {
-//  public:
-// 	 virtual int event(ZMsg *msg) = 0;
-// 
-//  public:
-// 	ZInnerAddress src_addr_;
-// };
-
-// class ZZBInnerGetDevSession : public ZZBSession {
-//  public:
-// 	virtual int event(ZMsg *msg);
-// 
-//  public:
-// 	void setHandler(ZHandler *handler) {
-// 		handler_ = handler;
-// 	}
-// 
-//  private:
-// 	ZHandler *handler_;
-// };
-
-// class ZZigBeeHandler : public ZHandler {
 class ZZigBeeHandler : public ZClientHandler {
  public:
-	ZZigBeeHandler(): addr_(Z_MODULE_SERIAL, 0, -1)
-	{
-		for (uint8_t i = 0; i < DEV_LIST_LEN; ++i) {
-			initZBDevStruct(&zb_dev_list_[i]);
-		}
-	}
+ 	ZZigBeeHandler()
+ 	: addr_(Z_MODULE_SERIAL, 0, -1)
+ 	{
+ 	}
 
  public:
 	virtual int init();
@@ -67,21 +30,31 @@ class ZZigBeeHandler : public ZClientHandler {
 
 	virtual int send(const char *buf, uint32_t buf_len) {
 		// for serial device, use write only, don't use send
+		if (fd_ <= 0)
+		{
+			printf("Invalid fd, return\n");
+			return 0;
+		}
+
+		printf("now sending:\n");
+		trace_bin(buf, buf_len);
 		return ::write(fd_, buf, buf_len);
 	}
 
  private:
 	int processMsg(ZZBRegReq &msg);
-	int processMsg(ZZBGetReq &msg);
+	// int processMsg(ZZBGetReq &msg);
 	int processMsg(ZZBGetRsp &msg);
-	int processMsg(ZZBSetReq &msg);
+	// int processMsg(ZZBSetReq &msg);
 	int processMsg(ZZBSetRsp &msg);
 
+	int processMsg(ZInnerGetDevListReq *msg);
 	int processMsg(ZInnerGetDevInfoReq *msg);
+	int processMsg(ZInnerSetDevInfoReq *msg);
 
-	void initZBDevStruct(zb_dev_t *dev);
-	zb_dev_t* findDev(uint8_t id);
-	uint8_t genDevAddr();
+	// void initZBDevStruct(zb_dev_t *dev);
+	// ZZBDev* findDev(uint8_t id);
+	// uint8_t getDevAddr();
 	void printDevInfo();
 
 	// typedef std::list<zb_dev_t*> DEV_LIST_TYPE;
@@ -89,13 +62,12 @@ class ZZigBeeHandler : public ZClientHandler {
  private:
 	char buf_[1 << 10];
 	// the first one is not used, cause `0' means `all of them'
-	zb_dev_t zb_dev_list_[DEV_LIST_LEN];	// 1 ~ 255
-	// DEV_LIST_TYPE zb_dev_list_;
-	// uint8_t zb_dev_id_;
-	// ZSessionCtrl<uint8_t, ZZBSession> session_ctrl_;
+	// ZZBDev zb_dev_list_[DEV_LIST_LEN]; // 1 ~ 255
 	ZInnerAddress addr_;
+
+	ZDevManager dev_manager_;
+
 };
 
 #endif // _Z_ZIGBEE_HANDLER_H__
-
 

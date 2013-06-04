@@ -8,6 +8,8 @@
 // XXX
 #include "zzigbee_message.h"
 
+#include "zdevice.h"
+
 // --- temporary using
 struct ZData {
 	int data;
@@ -15,6 +17,9 @@ struct ZData {
 
 enum {
 	Z_INVALID = -1,
+
+	Z_ZB_GET_DEV_LIST_REQ,
+	Z_ZB_GET_DEV_LIST_RSP,
 
 	Z_ZB_GET_DEV_REQ,
 	Z_ZB_GET_DEV_RSP,
@@ -46,23 +51,7 @@ struct ZInnerAddress {
 	}
 };
 
-struct ZInnerMsgEx {
-	// dest address
-	ZInnerAddress srcAddr;
-	ZInnerAddress dstAddr;
-
-	// TODO: src address
-	// ZInnerAddress srcAddr;
-	// XXX: no delet method
-	void* data;
-	int msgType;
-
-	ZInnerMsgEx(int moduleType, int moduleId): data(NULL) {
-		srcAddr.moduleType = moduleType;
-		srcAddr.moduleId = moduleId;
-	}
-};
-
+/////////////////////////////////////////////////////
 class ZInnerMsg {
  public:
 	 ZInnerMsg(const ZInnerAddress &src_addr)
@@ -77,12 +66,44 @@ class ZInnerMsg {
 	 void setSeq(uint32_t seq) { seq_ = seq; }
 	 const ZInnerAddress& getSrcAddr() { return src_addr_; }
 
-	 // TODO: make it protected
+ // TODO: make it protected
  public:
 	ZInnerAddress src_addr_;
 	ZInnerAddress dst_addr_;
 	uint32_t msg_type_;
 	uint32_t seq_;
+};
+
+////////////////////////////////////////////////////
+// GetDevList
+class ZInnerGetDevListReq : public ZInnerMsg {
+ public:
+	ZInnerGetDevListReq(const ZInnerAddress &src_addr)
+		: ZInnerMsg(src_addr)
+	{
+		setMsgType(Z_ZB_GET_DEV_LIST_REQ);
+	}
+
+};
+
+class ZInnerGetDevListRsp : public ZInnerMsg {
+ public:
+ 	ZInnerGetDevListRsp(const ZInnerAddress &src_addr)
+ 		: ZInnerMsg(src_addr)
+ 	{
+ 		setMsgType(Z_ZB_GET_DEV_LIST_RSP);
+ 	}
+ 	~ZInnerGetDevListRsp()
+ 	{
+ 		// delete infos
+		for (uint32_t i = 0; i < info_list_.size(); ++i) {
+			delete info_list_[i];
+		}
+		info_list_.clear();
+ 	}
+
+ public:
+ 	std::vector<ZZBDevInfo*> info_list_;
 };
 
 ////////////////////////////////////////////////////
@@ -96,7 +117,7 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 	}
 
  public:
-	uint8_t dev_addr_;
+	uint16_t addr_;
 	std::vector<uint8_t> item_ids_;
 };
 
@@ -109,7 +130,7 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 	}
 
  public:
-	// uint8_t dev_addr_;
+	// uint16_t addr_;
 	// std::vector< std::vector<ZItemPair>* > dev_infos_;
 	std::vector<ZItemPair> dev_infos_;
 	// std::vector<uint8_t> item_ids_;
@@ -127,7 +148,7 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 	}
 
  public:
-	uint8_t dev_addr_;
+	uint16_t addr_;
 	std::vector<ZItemPair> dev_vals_;
 };
 

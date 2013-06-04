@@ -1,2 +1,11 @@
 [ ] better cleaning work, close and reset `fd_'
-
+[O] session time control
+[O] GetDevList
+[ ] GetDevInfo
+[ ] SetDevInfo
+[ ] {en,de}coding methods for inner messages(like ZInnerGetDevListReq, etc.)
+[ ] all error path response
+[ ] session timeout response
+[ ] interface
+	[ ] update id list
+	[ ] string parameter

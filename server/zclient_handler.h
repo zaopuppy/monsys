@@ -4,7 +4,8 @@
 #include "zhandler.h"
 
 class ZClientHandler : public ZHandler {
-//  public:
+ public:
+ 	ZClientHandler(): fd_(-1), read_event_(NULL) {}
 // 	virtual int init() = 0;
 // 	virtual int close() = 0;
 // 	virtual int event(char *buf, uint32_t buf_len) = 0;

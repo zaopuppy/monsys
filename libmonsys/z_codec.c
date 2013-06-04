@@ -30,7 +30,7 @@ z_decode_string(char **val, char *buf, uint32_t buf_len)
   }
 
   if (*p != 0x00) {
-    // reach end of buffer
+    // reach the end of buffer
     return -1;
   }
 

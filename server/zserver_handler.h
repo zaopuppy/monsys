@@ -7,6 +7,8 @@
 
 class ZServerHandler : public ZHandler {
  public:
+ 	ZServerHandler(): fd_(-1), read_event_(NULL) {}
+ public:
 	virtual int init() = 0;
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len) = 0;

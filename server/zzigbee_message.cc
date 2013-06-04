@@ -5,20 +5,84 @@
 
 #include "zmessage_codec.h"
 
+#define ZMSG_ENCODE_BEGIN() int rv, encode_len = 0
+#define ZMSG_ENCODE_END() return encode_len
+
+#define ZMSG_DECODE_BEGIN() int rv, decode_len = 0
+#define ZMSG_DECODE_END() return decode_len
+
+#define ZMSG_ENCODE(_field) \
+do { \
+	rv = ::encode(_field, buf, buf_len); \
+	if (rv < 0) { \
+		return rv; \
+	} \
+	buf += rv; \
+	buf_len -= rv; \
+	encode_len += rv; \
+} while (false)
+
+#define ZMSG_DECODE(_field) \
+do { \
+	rv = ::decode(_field, buf, buf_len); \
+	if (rv < 0) { \
+		return rv; \
+	} \
+	buf += rv; \
+	buf_len -= rv; \
+	decode_len += rv; \
+} while (false)
+
+///////////////////////////////////////////////////////////////
+ZZigBeeMsg::ZZigBeeMsg():	syn_(0xFF), ver_(1)
+{
+}
+
+int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
+{
+	// int rv;
+	// int encode_len = 0;
+	ZMSG_ENCODE_BEGIN();
+
+	// IMP
+	// child class must call getEncodeLen() to update length field
+
+	ZMSG_ENCODE(syn_);
+	ZMSG_ENCODE(ver_);
+	ZMSG_ENCODE(len_);
+	ZMSG_ENCODE(cmd_);
+	ZMSG_ENCODE(addr_);
+
+	ZMSG_ENCODE_END();
+}
+
+int ZZigBeeMsg::decode(char* buf, uint32_t buf_len)
+{
+	// int rv;
+	// int decode_len = 0;
+	ZMSG_DECODE_BEGIN();
+
+	ZMSG_DECODE(syn_);
+	ZMSG_DECODE(ver_);
+	ZMSG_DECODE(len_);
+	ZMSG_DECODE(cmd_);
+	ZMSG_DECODE(addr_);
+
+	ZMSG_DECODE_END();
+	// return decode_len;
+}
+
 ///////////////////////////////////////////////////////////////
 // REG req
-ZZBRegReq::ZZBRegReq() : ZZigBeeMsg(), mac_len_(8)
+ZZBRegReq::ZZBRegReq() : ZZigBeeMsg()
 {
 	cmd_ = Z_ID_ZB_REG_REQ;
+	memset(&mac_.data, 0x00, sizeof(mac_.data));
 }
 
 int ZZBRegReq::encode(char* buf, uint32_t buf_len)
 {
-	uint16_t enc_len = getEncodeLen();
-	if (buf_len < enc_len) {
-		return -1;
-	}
-
+	// update length field
 	len_ = getBodyLen();
 
 	int rv = super_::encode(buf, buf_len);
@@ -29,17 +93,20 @@ int ZZBRegReq::encode(char* buf, uint32_t buf_len)
 	buf += rv;
 	buf_len -= rv;
 
-	// check length
-	if (mac_.size() != mac_len_) {
+	int encode_len = rv;
+
+	if (sizeof(mac_.data) > buf_len) {
 		return -1;
 	}
 
 	// encode
-	memcpy(buf, mac_.c_str(), mac_len_);
-	buf += mac_len_;
-	buf_len -= mac_len_;
+	memcpy(buf, mac_.data, sizeof(mac_.data));
+	buf += sizeof(mac_.data);
+	buf_len -= sizeof(mac_.data);
 
-	return enc_len;
+	encode_len += sizeof(mac_.data);
+
+	return encode_len;
 }
 
 int ZZBRegReq::decode(char* buf, uint32_t buf_len)
@@ -59,14 +126,15 @@ int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 		return -1;
 	}
 
-	if (len_ != mac_len_) {
+	if (len_ != sizeof(mac_.data)) {
 		return -1;
 	}
 
-	mac_.assign(buf, mac_len_);
-	buf += mac_len_;
-	buf_len -= mac_len_;
-	len += mac_len_;
+	// mac_.assign(buf, mac_len_);
+	memcpy(&mac_.data, buf, sizeof(mac_.data));
+	buf += sizeof(mac_.data);
+	buf_len -= sizeof(mac_.data);
+	len += sizeof(mac_.data);
 
 	return len;
 }
@@ -92,14 +160,6 @@ int ZZBRegRsp::encode(char* buf, uint32_t buf_len)
 		return rv;
 	}
 
-	buf += rv;
-	buf_len -= rv;
-
-	// addr_
-	rv = z_encode_byte((char)addr_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
 	buf += rv;
 	buf_len -= rv;
 
@@ -133,89 +193,11 @@ int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
 		return -1;
 	}
 
-	// addr_
-	rv = z_decode_byte((char*)&addr_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-	len += rv;
-
 	// status_
 	rv = z_decode_byte((char*)&status_, buf, buf_len);
 	if (rv < 0) {
 		return rv;
 	}
-	buf += rv;
-	buf_len -= rv;
-	len += rv;
-
-	return len;
-}
-
-///////////////////////////////////////////////////////////////
-ZZigBeeMsg::ZZigBeeMsg():
-	syn_(0xFF)
-{
-}
-
-int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
-{
-	int enc_len = getHeaderLen();
-	if ((int)buf_len < enc_len) {
-		printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
-		return -1;
-	}
-
-	int rv;
-	rv = z_encode_byte(syn_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-
-	rv = z_encode_integer16(len_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-
-	rv = z_encode_byte(cmd_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-
-	return enc_len;
-}
-
-int ZZigBeeMsg::decode(char* buf, uint32_t buf_len)
-{
-	// XXX: assert(buf_len > 3)
-	int rv;
-	int len = 0;
-
-	rv = z_decode_byte((char*)&syn_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-	len += rv;
-
-	rv = z_decode_integer16(&len_, buf, buf_len);
-	if (rv < 0) {
-		return rv;
-	}
-	buf += rv;
-	buf_len -= rv;
-	len += rv;
-
-	rv = z_decode_byte((char*)&cmd_, buf, buf_len);
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
@@ -655,5 +637,31 @@ int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
 	len += rv;
 
 	return len;
+}
+
+//////////////////////////////////////////////////////////////////
+// Update
+ZZBUpdateIdInfoReq::ZZBUpdateIdInfoReq()
+: ZZigBeeMsg()
+{
+	cmd_ = Z_ID_ZB_QUERY_ID_REQ;
+}
+
+int ZZBUpdateIdInfoReq::encode(char *buf, uint32_t buf_len)
+{
+	ZMSG_ENCODE_BEGIN();
+
+	ZMSG_ENCODE(id_list_);
+
+	ZMSG_ENCODE_END();
+}
+
+int ZZBUpdateIdInfoReq::decode(char *buf, uint32_t buf_len)
+{
+	ZMSG_DECODE_BEGIN();
+
+	ZMSG_DECODE(id_list_);
+
+	ZMSG_DECODE_END();
 }
 
