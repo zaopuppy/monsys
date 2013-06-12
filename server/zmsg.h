@@ -171,6 +171,10 @@ inline int decode(std::vector<T> &v, char *buf, uint32_t buf_len)
 		return rv;
 	}
 
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
 	T t;
 	v.clear();
 	for (uint8_t i = 0; i < list_len; ++i)	{

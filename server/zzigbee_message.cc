@@ -644,12 +644,19 @@ int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
 ZZBUpdateIdInfoReq::ZZBUpdateIdInfoReq()
 : ZZigBeeMsg()
 {
-	cmd_ = Z_ID_ZB_QUERY_ID_REQ;
+	cmd_ = Z_ID_ZB_UPDATE_ID_REQ;
 }
 
 int ZZBUpdateIdInfoReq::encode(char *buf, uint32_t buf_len)
 {
 	ZMSG_ENCODE_BEGIN();
+
+	// TODO: clean it up
+	rv = super_::encode(buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	encode_len += rv;
 
 	ZMSG_ENCODE(id_list_);
 
@@ -660,7 +667,55 @@ int ZZBUpdateIdInfoReq::decode(char *buf, uint32_t buf_len)
 {
 	ZMSG_DECODE_BEGIN();
 
+	len_ = getBodyLen();
+
+	// TODO: clean it up
+	rv = super_::decode(buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	decode_len += rv;
+
 	ZMSG_DECODE(id_list_);
+
+	ZMSG_DECODE_END();
+}
+
+ZZBUpdateIdInfoRsp::ZZBUpdateIdInfoRsp()
+: ZZigBeeMsg()
+{
+	cmd_ = Z_ID_ZB_UPDATE_ID_RSP;
+}
+
+int ZZBUpdateIdInfoRsp::encode(char *buf, uint32_t buf_len)
+{
+	ZMSG_ENCODE_BEGIN();
+
+	// TODO: clean it up
+	rv = super_::encode(buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	encode_len += rv;
+	ZMSG_ENCODE(status_);
+
+	ZMSG_ENCODE_END();
+}
+
+int ZZBUpdateIdInfoRsp::decode(char *buf, uint32_t buf_len)
+{
+	ZMSG_DECODE_BEGIN();
+
+	len_ = getBodyLen();
+
+	// TODO: clean it up
+	rv = super_::decode(buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	decode_len += rv;
+
+	ZMSG_DECODE(status_);
 
 	ZMSG_DECODE_END();
 }

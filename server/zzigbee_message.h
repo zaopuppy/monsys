@@ -17,8 +17,16 @@ const uint8_t Z_ID_ZB_GET_RSP = 0x82;
 const uint8_t Z_ID_ZB_SET_REQ = 0x03;
 const uint8_t Z_ID_ZB_SET_RSP = 0x83;
 
-const uint8_t Z_ID_ZB_QUERY_ID_REQ = 0x06;
-const uint8_t Z_ID_ZB_QUERY_ID_RSP = 0x86;
+const uint8_t Z_ID_ZB_UPDATE_ID_REQ = 0x06;
+const uint8_t Z_ID_ZB_UPDATE_ID_RSP = 0x86;
+
+struct ZZBHeader {
+	uint8_t  syn_;
+	uint8_t  ver_;
+	uint16_t len_;
+	uint8_t  cmd_;
+	uint16_t addr_;
+};
 
 struct ZItemPair {
 	uint8_t id;
@@ -35,16 +43,18 @@ typedef union {
 	char str_val[1];
 } zb_dev_item_val_t;
 
-struct ItemIdInfo {
-	uint8_t id;
-	std::string name;
-	std::string desc;
-	uint8_t type;		// 0: integer
-	std::string formatter;
-};
+// struct zb_item_id_info_t {
+// 	uint8_t id;
+// 	std::string name;
+// 	std::string desc;
+// 	uint8_t type;		// 0: integer
+// 	std::string formatter;
+// };
 
+///////////////////////////////////////////////////////////////
+// zb_item_id_info_t
 template<>
-inline int encode(const ItemIdInfo &v, char *buf, uint32_t buf_len)
+inline int encode(const zb_item_id_info_t &v, char *buf, uint32_t buf_len)
 {
 	int rv;
 	int len = 0;
@@ -88,7 +98,7 @@ inline int encode(const ItemIdInfo &v, char *buf, uint32_t buf_len)
 }
 
 template<>
-inline int decode(ItemIdInfo &v, char *buf, uint32_t buf_len)
+inline int decode(zb_item_id_info_t &v, char *buf, uint32_t buf_len)
 {
 	int rv;
 	int len = 0;
@@ -132,7 +142,7 @@ inline int decode(ItemIdInfo &v, char *buf, uint32_t buf_len)
 }
 
 template<>
-inline int getlen(const ItemIdInfo &v)
+inline int getlen(const zb_item_id_info_t &v)
 {
 	return getlen(v.id)
 		+ getlen(v.name)
@@ -141,6 +151,93 @@ inline int getlen(const ItemIdInfo &v)
 		+ getlen(v.formatter);
 }
 
+///////////////////////////////////////////////////////////////
+// ZZBHeader
+template<>
+inline int encode(const ZZBHeader &v, char *buf, uint32_t buf_len)
+{
+	int rv, len = 0;
+
+	rv = encode(v.syn_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = encode(v.ver_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = encode(v.len_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = encode(v.cmd_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = encode(v.addr_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	return len;
+}
+
+template<>
+inline int decode(ZZBHeader &v, char *buf, uint32_t buf_len)
+{
+	int rv, len = 0;
+
+	rv = decode(v.syn_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = decode(v.ver_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = decode(v.len_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = decode(v.cmd_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	rv = decode(v.addr_, buf, buf_len);
+	if (rv < 0) return rv;
+	buf += rv;
+	buf_len -= rv;
+	len += rv;
+
+	return len;
+}
+
+template<>
+inline int getlen(const ZZBHeader &v)
+{
+	return getlen(v.syn_)
+		+ getlen(v.ver_)
+		+ getlen(v.len_)
+		+ getlen(v.cmd_)
+		+ getlen(v.addr_);
+}
 
 class ZZigBeeMsg : public ZMsg {
  public:
@@ -167,6 +264,7 @@ class ZZigBeeMsg : public ZMsg {
 	}
 
  public:
+ 	ZZBHeader hdr_;
 	uint8_t  syn_;
 	uint8_t  ver_;
 	uint16_t len_;
@@ -349,12 +447,37 @@ class ZZBUpdateIdInfoReq : public ZZigBeeMsg {
 	}
 	
 	uint16_t getBodyLen() {
-		return 1 + id_list_.size() * (1 + 2);
+		return getlen(id_list_);
 	}
 
  public:
-	std::vector<ItemIdInfo> id_list_;
+	std::vector<zb_item_id_info_t> id_list_;
 };
+
+class ZZBUpdateIdInfoRsp : public ZZigBeeMsg {
+ public:
+	ZZBUpdateIdInfoRsp();
+
+	typedef ZZigBeeMsg super_;
+
+ public:
+
+	virtual int encode(char *buf, uint32_t buf_len);
+	virtual int decode(char *buf, uint32_t buf_len);
+	
+	uint16_t getEncodeLen() {
+		return getHeaderLen()
+			+ getBodyLen();
+	}
+	
+	uint16_t getBodyLen() {
+		return getlen(status_);
+	}
+
+ public:
+	uint8_t status_;
+};
+
 
 
 #endif // _Z_ZIGBEE_MESSAGE_H__

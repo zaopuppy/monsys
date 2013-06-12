@@ -103,6 +103,19 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 			}
 			break;
 		}
+		case Z_ID_ZB_UPDATE_ID_REQ:
+		{
+			printf("Z_ID_ZB_UPDATE_ID_REQ\n");
+			ZZBUpdateIdInfoReq msg;
+			int rv = msg.decode(buf, buf_len);
+			if (rv < 0) {
+				printf("Failed to decode message\n");
+			} else {
+				printf("decoding success\n");
+				processMsg(msg);
+			}
+			break;
+		}
 	default:
 		{
 			printf("Unknow message: %u\n", hdr.cmd_);
@@ -270,6 +283,61 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 	}
 
 	trace_bin(buf_, rv);
+
+	rv = send(buf_, rv);
+	if (rv <= 0) {
+		perror("send");
+		printf("Failed to send\n");
+	} else {
+		printf("write over.\n");
+	}
+
+	return 0;
+}
+
+static void updateIdInfo(ZZBDevInfo &dev_info, zb_item_id_info_t &new_id_info)
+{
+	zb_item_id_info_t *id_info;
+
+	if (dev_info.id_info_list[new_id_info.id]) {
+		id_info = dev_info.id_info_list[new_id_info.id];
+	} else {
+		id_info = new zb_item_id_info_t;
+		dev_info.id_info_list[new_id_info.id] = id_info;
+	}
+
+	id_info->clone(new_id_info);
+
+	id_info->print();
+
+}
+
+int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
+{
+	printf("ZZigBeeHandler::processMsg(UpdateIdInfoReq)\n");
+
+	ZZBDevInfo *dev_info = dev_manager_.find(msg.addr_);
+	if (dev_info == NULL) {
+		printf("wrong address\n");
+		return -1;
+	}
+
+	size_t id_list_len = msg.id_list_.size();
+	for (size_t i = 0; i < id_list_len; ++i) {
+		updateIdInfo(*dev_info, msg.id_list_[i]);
+	}
+
+	ZZBUpdateIdInfoRsp rsp;
+	rsp.addr_ = msg.addr_;
+	rsp.status_ = 0x00;
+
+	int rv = rsp.encode(buf_, sizeof(buf_));
+	if (rv < 0) {
+		printf("Failed to encode rsp\n");
+		return -1;
+	}
+
+	// trace_bin(buf_, rv);
 
 	rv = send(buf_, rv);
 	if (rv <= 0) {

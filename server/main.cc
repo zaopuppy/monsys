@@ -19,6 +19,7 @@
 #include "ztime.h"
 #include "zzigbee_message.h"
 #include "zutil.h"
+#include "zformatter.h"
 
 using namespace std;
 
@@ -411,97 +412,199 @@ void test_other()
 	assert(rv);
 }
 
-
-// "$div($1, 4)"
-class ZFormatter
+class ZStream
 {
  public:
- 	bool compile(const char *script) {
- 		if (!script) {
- 			return false;
+ 	virtual int read(char *buf, uint32_t buf_len) = 0;
+ 	virtual int write(char *buf, uint32_t buf_len) = 0;
+ 	virtual void rewind() = 0;
+ 	virtual bool seek(uint32_t offset, int startpos) = 0;
+
+ 	virtual bool eof() = 0;
+
+ public:
+ 	enum SEEK_DIR {
+ 		SEEK_BEGINNING = -1,
+ 		SEEK_CURRENT,
+ 		SEEK_ENDING,
+ 	};
+};
+
+// Input String Stream
+class ZSStreamIn : public ZStream {
+ public:
+ 	ZSStreamIn(const char *str, uint32_t str_len)
+ 	: input_(str), input_len_(str_len), pos_(0)
+ 	{}
+
+ public:
+ 	virtual int read(char *buf, uint32_t buf_len) {
+ 		if (eof()) {
+ 			return 0;
  		}
 
- 		size_t script_len = strlen(script);
- 		if (script_len <= 0) {
- 			return false;
- 		}
+ 		uint32_t remain = input_len_ - pos_;
+ 		uint32_t len = remain > buf_len ? buf_len : remain;
 
- 		// S: ABABABBAABB...
- 		// expr: string var string
- 		// string:
- 		size_t idx;
- 		for (idx = 0; idx < script_len; ++idx) {
- 			if (script[idx] == '$') {
- 			} else {
- 				//
- 			}
- 		}
+ 		memcpy(buf, input_ + pos_, len);
 
- 		// E = (A|B)*
- 		const char *p = script;
- 		size_t p_len = script_len;
- 		do {
- 			idx = str(p, p_len);
- 			if (idx < 0) {	// error
- 				break;
- 			} else if (idx == 0) {
- 				idx = var(p, p_len);
- 			} else {
- 				p += idx;
- 				p_len -= idx;
- 			}
- 		} while (p_len > 0);
+ 		pos_ += len;
 
- 		return true;
+ 		return len;
  	}
 
- 	size_t str(const char *buf, size_t buf_len) {
- 		size_t len = 0;
- 		while (*buf != '$' && buf_len)
+ 	virtual int write(char *buf, uint32_t buf_len) {
+ 		// read only
  		return 0;
  	}
 
- 	size_t var(const char *buf, size_t buf_len) {
- 		return 0;
+ 	virtual void rewind() { pos_ = 0; }
+
+ 	virtual bool seek(uint32_t offset, int startpos) {
+ 		if (startpos == ZStream::SEEK_BEGINNING) {
+ 			if (offset > input_len_) {
+ 				return false;
+ 			}
+
+ 			pos_ = offset;
+ 		} else if (startpos == ZStream::SEEK_CURRENT) {
+ 			if ((pos_ + offset) >= input_len_) {
+ 				return false;
+ 			}
+
+ 			pos_ += offset;
+ 		} else if (startpos == ZStream::SEEK_ENDING) {
+ 			if (offset > input_len_) {
+ 				return false;
+ 			}
+
+ 			pos_ = input_len_ - offset;
+ 		} else {
+ 			return false;
+ 		}
  	}
 
- 	void format(std::string &str) {
+ 	char getc() {
+ 		if (pos_ < input_len_) {
+ 			return input_[pos_++];
+ 		}
+
+ 		return -1;
  	}
 
- private:
- 	char buf_[256];
+ 	char peekc() {
+ 		if (pos_ < input_len_) {
+ 			return input_[pos_];
+ 		}
+
+ 		return -1;
+ 	}
+
+
+ 	bool eof() { return pos_ >= input_len_; }
+
+ 	// for testing only
+ 	static void test() {
+ 		const char *script = "Hello, I'm Joey from China.";
+ 		uint32_t script_len = strlen(script);
+ 		ZSStreamIn in(script, script_len);
+
+ 		char buf[512];
+ 		int rv = in.read(buf, sizeof(buf));
+ 		buf[rv] = 0x00;
+ 		printf("rv: [%d], read: [%s]\n", rv, buf);
+
+ 		assert(in.eof());
+ 		while (!in.eof()) {
+ 			printf("%c", in.getc());
+ 		}
+ 	}
+ 	// for testing only
+
+ public:
+ 	const char *input_;
+ 	const uint32_t input_len_;
+ 	uint32_t pos_;
 };
 
 void test_formatter()
 {
+	ZFormatter formatter;
+	// const char *script = "hello, world, ${div($div(1,2), 2)}";
+	const char *script = "hello, world, $div($div($1, 3), 2)";
+
+	printf("input: [%s]\n", script);
+
+	assert(formatter.compile(script));
+
+	formatter.exe(4);
 }
 
 void test_zigbee_update()
 {
-	ZZBUpdateIdInfoReq req;
-	int rv;
+	// request
+	{
+		ZZBUpdateIdInfoReq req;
+		int rv;
 
-	char buf[1024];
+		char buf[1024];
 
-	// empty
-	rv = req.encode(buf, sizeof(buf));
-	assert(rv > 0);
+		// empty
+		rv = req.encode(buf, sizeof(buf));
+		assert(rv > 0);
 
-	trace_bin(buf, rv);
+		trace_bin(buf, rv);
 
-	// 1 item
-	ItemIdInfo info;
-	info.id = 0x34;
-	info.name = "hello";
-	info.desc = "good";
-	info.type = 0x08;
-	info.formatter = "printf";
+		// 1 item
+		// ItemIdInfo info;
+		zb_item_id_info_t info;
+		info.id = 0x34;
+		info.name = "hello";
+		info.desc = "good";
+		info.type = 0x08;
+		info.formatter = "printf";
 
-	req.id_list_.push_back(info);
-	rv = req.encode(buf, sizeof(buf));
-	assert(rv > 0);
+		req.id_list_.push_back(info);
+		rv = req.encode(buf, sizeof(buf));
+		assert(rv > 0);
 
-	trace_bin(buf, rv);
+		trace_bin(buf, rv);
+
+		ZZBUpdateIdInfoReq req1;
+
+		rv = req1.decode(buf, rv);
+		assert(rv > 0);
+
+		assert(req.id_list_.size() == req1.id_list_.size());
+		for (size_t i = 0; i < req.id_list_.size(); ++i) {
+			assert(req.id_list_[i].id        == req1.id_list_[i].id);
+			assert(req.id_list_[i].name      == req1.id_list_[i].name);
+			assert(req.id_list_[i].desc      == req1.id_list_[i].desc);
+			assert(req.id_list_[i].type      == req1.id_list_[i].type);
+			assert(req.id_list_[i].formatter == req1.id_list_[i].formatter);
+		}
+	}
+	// response
+	{
+		ZZBUpdateIdInfoRsp rsp;
+		int rv;
+
+		char buf[512];
+
+		rsp.status_ = 0xBB;
+
+		rv = rsp.encode(buf, sizeof(buf));
+		assert(rv > 0);
+
+		trace_bin(buf, rv);
+
+		ZZBUpdateIdInfoRsp rsp1;
+
+		rv = rsp1.decode(buf, rv);
+		assert(rv > 0);
+
+		assert(rsp.status_ == rsp1.status_);
+	}
 }
 
 int main(int argc, char *argv[])
@@ -512,8 +615,9 @@ int main(int argc, char *argv[])
 	// test_json();
 	// test_util();
 	// test_other();
-	test_zigbee_update();
-	return 0;
+	// test_formatter();
+	// test_zigbee_update();
+	// return 0;
 
 	struct event_base* base = event_base_new();
 	assert(base);

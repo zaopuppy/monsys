@@ -9,3 +9,4 @@
 [ ] interface
 	[ ] update id list
 	[ ] string parameter
+[ ] cupsole header field by using encode/decode/getlen

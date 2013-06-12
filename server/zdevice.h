@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 const uint32_t ZB_MAC_LEN = 8;
 
@@ -10,6 +11,31 @@ typedef uint16_t zb_addr_type_t;
 typedef struct {
 	char data[8];
 } zb_mac_type_t;
+
+// struct ItemIdInfo {
+typedef struct zb_item_id_info {
+	uint8_t id;
+	std::string name;
+	std::string desc;
+	uint8_t type;		// 0: integer
+	std::string formatter;
+
+	void clone(const zb_item_id_info &other) {
+		id = other.id;
+		name = other.name;
+		desc = other.desc;
+		type = other.type;
+		formatter = other.formatter;
+	}
+
+	void print() {
+		printf("id: [%u]\n", id);
+		printf("name: [%s]\n", name.c_str());
+		printf("desc: [%s]\n", desc.c_str());
+		printf("type: [%u]\n", type);
+		printf("formatter: [%s]\n", formatter.c_str());
+	}
+} zb_item_id_info_t;
 
 enum zb_dev_state {
 	zb_dev_state_invalid = -1,
@@ -43,6 +69,8 @@ class ZZBDevInfo {
 	int state;
 	// char mac[ZB_MAC_LEN];
 	zb_mac_type_t mac;
+	zb_item_id_info_t* id_info_list[256];
+	// std::vector<zb_item_id_info_t*> id_info_list;
 };
 
 class ZBMacComp {
