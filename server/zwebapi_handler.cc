@@ -52,17 +52,24 @@ int ZWebApiHandler::processMsg(ZInnerGetDevListRsp *msg)
 		json_t *jelem = json_object();
 
 		// addr
-		json_t *jaddr = json_integer(msg->info_list_[i]->addr);
+		json_t *jaddr = json_integer(msg->info_list_[i]->addr_);
 		json_object_set_new(jelem, "addr", jaddr);
 
 		// mac
 		// XXX
 
 		// state
-		json_t *jstate = json_integer(msg->info_list_[i]->state);
+		json_t *jstate = json_integer(msg->info_list_[i]->state_);
 		json_object_set_new(jelem, "state", jstate);
 
 		// name
+		json_t *jname = json_string(msg->info_list_[i]->name_.c_str());
+		json_object_set_new(jelem, "name", jname);
+
+		// id count
+		json_t *jidCount = json_integer(msg->info_list_[i]->id_count_);
+		json_object_set_new(jelem, "id-count", jidCount);
+
 		// XXX
 		json_array_append_new(jdevs, jelem);
 	}

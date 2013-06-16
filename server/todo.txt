@@ -10,3 +10,13 @@
 	[ ] update id list
 	[ ] string parameter
 [ ] cupsole header field by using encode/decode/getlen
+[ ] bluebooth support
+[ ] version control for id-info
+
+
+[ ] 接口变更:
+	[ ] 注册携带需要更新的ID个数
+	[ ] ID更新时, 携带更新时间, device-name
+	[ ] 客户端请求设备list时, 返回设备支持的id个数
+	[ ] 客户端新增ID更新请求, 支持cache, 请求携带最近一次更新时间, 如果服务端判断无需更新, 直接返回304
+

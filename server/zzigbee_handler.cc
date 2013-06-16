@@ -131,7 +131,7 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 	printf("ZZigBeeHandler::processMsg(RegReq)\n");
 
 	ZZBRegRsp rsp;
-	if (!dev_manager_.add(msg.mac_, msg.addr_)) {
+	if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", msg.id_count_)) {
 		printf("Failed to add device to device manager\n");
 		rsp.status_ = -1;
 	} else {
@@ -210,6 +210,21 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	ZInnerGetDevListRsp *rsp = new ZInnerGetDevListRsp(addr_);
 	ZZBDevInfo *info = NULL;
 
+	// --- for debugging only ---
+	{
+		char dev_name_buf[64];
+		for (int i = 0; i < 20; ++i) {
+			snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+			info = new ZZBDevInfo();
+			info->addr_ = i;
+			info->name_ = dev_name_buf;
+			info->state_ = i;
+			memset(&info->mac_, i, sizeof(info->mac_));
+			rsp->info_list_.push_back(info);
+		}
+	}
+	// --- for debugging only ---
+
 	const ZDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
 	ZDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
 	for (; iter != dev_map.end(); ++iter) {
@@ -232,6 +247,22 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 	ZZBGetReq req;
 	req.addr_ = msg->addr_;
 
+	// --- for debugging only ---
+	{
+		ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp(addr_);
+		ZItemPair pair;
+
+		for (uint32_t i = 0; i < msg->item_ids_.size(); ++i)
+		{
+			pair.id = i;
+			pair.val = i * 11;
+			rsp->dev_infos_.push_back(pair);
+		}
+
+		ZDispatcher::instance()->sendMsg(rsp);
+	}
+	// --- for debugging only ---
+
 	for (uint32_t i = 0; i < msg->item_ids_.size(); ++i) {
 		req.items_.push_back(msg->item_ids_[i]);
 	}
@@ -253,6 +284,7 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 	printf("ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq)\n");
 
 	// printDevInfo();
+
 	// // -- for debugging only --
 	// ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp(addr_);
 	// rsp->status_ = 0;
@@ -297,18 +329,20 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
 static void updateIdInfo(ZZBDevInfo &dev_info, zb_item_id_info_t &new_id_info)
 {
-	zb_item_id_info_t *id_info;
+	zb_item_id_info_t &id_info = dev_info.id_info_list_[new_id_info.id_];
 
-	if (dev_info.id_info_list[new_id_info.id]) {
-		id_info = dev_info.id_info_list[new_id_info.id];
-	} else {
-		id_info = new zb_item_id_info_t;
-		dev_info.id_info_list[new_id_info.id] = id_info;
-	}
+	id_info.clone(new_id_info);
 
-	id_info->clone(new_id_info);
+	// if (dev_info.id_info_list[new_id_info.id]) {
+	// 	id_info = dev_info.id_info_list[new_id_info.id];
+	// } else {
+	// 	id_info = new zb_item_id_info_t;
+	// 	dev_info.id_info_list[new_id_info.id] = id_info;
+	// }
 
-	id_info->print();
+	// id_info->clone(new_id_info);
+
+	id_info.print();
 
 }
 

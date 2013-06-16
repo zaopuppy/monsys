@@ -9,7 +9,25 @@
 {
 	"cmd": "get-dev-list-rsp",
 	"status": 0,
-	"devs": []
+	"devs": [
+		{ "addr": 1234, "name": "dev-name", "id-count": 5 },
+	]
+}
+
+// GetDevIdInfo
+{
+	"cmd": "get-id-info",
+	"uid": 1,
+	"addr": 1234,
+	"id-list": "0"	 // 0 for all
+}
+
+{
+	"cmd": "get-id-info-rsp",
+	"status": 0,
+	"id-infos": [
+		{ "id": 1, "name": "id-name", "desc": "id-desc", "type": 1, "formatter": "div($1, 2)", "last-update-time": 345321}
+	]
 }
 
 // GetDevInfo

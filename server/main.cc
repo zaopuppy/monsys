@@ -558,11 +558,12 @@ void test_zigbee_update()
 		// 1 item
 		// ItemIdInfo info;
 		zb_item_id_info_t info;
-		info.id = 0x34;
-		info.name = "hello";
-		info.desc = "good";
-		info.type = 0x08;
-		info.formatter = "printf";
+		info.id_ = 0x34;
+		info.name_ = "hello";
+		info.desc_ = "good";
+		info.type_ = 0x08;
+		info.formatter_ = "printf";
+		info.last_update_time_ = 123;
 
 		req.id_list_.push_back(info);
 		rv = req.encode(buf, sizeof(buf));
@@ -577,11 +578,11 @@ void test_zigbee_update()
 
 		assert(req.id_list_.size() == req1.id_list_.size());
 		for (size_t i = 0; i < req.id_list_.size(); ++i) {
-			assert(req.id_list_[i].id        == req1.id_list_[i].id);
-			assert(req.id_list_[i].name      == req1.id_list_[i].name);
-			assert(req.id_list_[i].desc      == req1.id_list_[i].desc);
-			assert(req.id_list_[i].type      == req1.id_list_[i].type);
-			assert(req.id_list_[i].formatter == req1.id_list_[i].formatter);
+			assert(req.id_list_[i].id_        == req1.id_list_[i].id_);
+			assert(req.id_list_[i].name_      == req1.id_list_[i].name_);
+			assert(req.id_list_[i].desc_      == req1.id_list_[i].desc_);
+			assert(req.id_list_[i].type_      == req1.id_list_[i].type_);
+			assert(req.id_list_[i].formatter_ == req1.id_list_[i].formatter_);
 		}
 	}
 	// response

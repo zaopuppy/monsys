@@ -60,35 +60,35 @@ inline int encode(const zb_item_id_info_t &v, char *buf, uint32_t buf_len)
 	int len = 0;
 
 	// id
-	rv = encode(v.id, buf, buf_len);
+	rv = encode(v.id_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// name
-	rv = encode(v.name, buf, buf_len);
+	rv = encode(v.name_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// desc
-	rv = encode(v.desc, buf, buf_len);
+	rv = encode(v.desc_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// type
-	rv = encode(v.type, buf, buf_len);
+	rv = encode(v.type_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// formatter
-	rv = encode(v.formatter, buf, buf_len);
+	rv = encode(v.formatter_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
@@ -104,35 +104,35 @@ inline int decode(zb_item_id_info_t &v, char *buf, uint32_t buf_len)
 	int len = 0;
 
 	// id
-	rv = decode(v.id, buf, buf_len);
+	rv = decode(v.id_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// name
-	rv = decode(v.name, buf, buf_len);
+	rv = decode(v.name_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// desc
-	rv = decode(v.desc, buf, buf_len);
+	rv = decode(v.desc_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// type
-	rv = decode(v.type, buf, buf_len);
+	rv = decode(v.type_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
 	len += rv;
 
 	// formatter
-	rv = decode(v.formatter, buf, buf_len);
+	rv = decode(v.formatter_, buf, buf_len);
 	if (rv < 0) return rv;
 	buf += rv;
 	buf_len -= rv;
@@ -144,11 +144,11 @@ inline int decode(zb_item_id_info_t &v, char *buf, uint32_t buf_len)
 template<>
 inline int getlen(const zb_item_id_info_t &v)
 {
-	return getlen(v.id)
-		+ getlen(v.name)
-		+ getlen(v.desc)
-		+ getlen(v.type)
-		+ getlen(v.formatter);
+	return getlen(v.id_)
+		+ getlen(v.name_)
+		+ getlen(v.desc_)
+		+ getlen(v.type_)
+		+ getlen(v.formatter_);
 }
 
 ///////////////////////////////////////////////////////////////
@@ -298,6 +298,7 @@ class ZZBRegReq : public ZZigBeeMsg {
 	// const uint16_t mac_len_;
 	// std::string mac_;
 	zb_mac_type_t mac_;
+	uint8_t id_count_;	// 1~255
 };
 
 class ZZBRegRsp : public ZZigBeeMsg {

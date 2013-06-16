@@ -5,35 +5,52 @@
 #include <map>
 #include <vector>
 
-const uint32_t ZB_MAC_LEN = 8;
+const uint32_t MAX_ID_PER_ZB_DEV = 256;
 
 typedef uint16_t zb_addr_type_t;
 typedef struct {
 	char data[8];
 } zb_mac_type_t;
 
+enum zb_item_id_type {
+	zb_item_id_type_invalid = 0,
+	zb_item_id_type_s8,
+};
+
 // struct ItemIdInfo {
 typedef struct zb_item_id_info {
-	uint8_t id;
-	std::string name;
-	std::string desc;
-	uint8_t type;		// 0: integer
-	std::string formatter;
+	uint8_t 			id_;					// 0x00 and 0xFF are special, never use it
+	std::string 	name_;
+	std::string 	desc_;
+	uint8_t 			type_;				// 0: invalid
+	std::string 	formatter_;
+	time_t 				last_update_time_;	// XXX: not using yet
 
 	void clone(const zb_item_id_info &other) {
-		id = other.id;
-		name = other.name;
-		desc = other.desc;
-		type = other.type;
-		formatter = other.formatter;
+		id_   						= other.id_;
+		name_ 						= other.name_;
+		desc_ 						= other.desc_;
+		type_ 						= other.type_;
+		formatter_ 				= other.formatter_;
+		last_update_time_ 	= other.last_update_time_;
+	}
+
+	void reset() {
+		id_ 							= 0;
+		name_ 						= "-";
+		desc_ 						= "-";
+		type_ 						= zb_item_id_type_invalid;
+		formatter_ 				= "";
+		last_update_time_ 	= 0;
 	}
 
 	void print() {
-		printf("id: [%u]\n", id);
-		printf("name: [%s]\n", name.c_str());
-		printf("desc: [%s]\n", desc.c_str());
-		printf("type: [%u]\n", type);
-		printf("formatter: [%s]\n", formatter.c_str());
+		printf("id:        [%u]\n", id_);
+		printf("name:      [%s]\n", name_.c_str());
+		printf("desc:      [%s]\n", desc_.c_str());
+		printf("type:      [%u]\n", type_);
+		printf("formatter: [%s]\n", formatter_.c_str());
+		printf("last_update_time: [%ld]\n", last_update_time_);
 	}
 } zb_item_id_info_t;
 
@@ -50,26 +67,33 @@ class ZZBDevInfo {
  	}
 
  	ZZBDevInfo(const ZZBDevInfo &other) {
- 		addr = other.addr;
- 		name = other.name;
- 		state = other.state;
- 		memcpy(&mac, &other.mac, sizeof(mac));
+ 		addr_ 		= other.addr_;
+ 		name_ 		= other.name_;
+ 		state_ 		= other.state_;
+ 		id_count_ = other.id_count_;
+ 		memcpy(&mac_, &other.mac_, sizeof(mac_));
+
+ 		for (uint32_t i = 0; i < MAX_ID_PER_ZB_DEV; ++i) {
+ 			id_info_list_[i].clone(other.id_info_list_[i]);
+ 		}
  	}
 
  	void reset() {
- 		addr = 0x00;
- 		name = "NA";
- 		state = zb_dev_state_invalid;
- 		memset(&mac, 0x00, sizeof(mac));
+ 		addr_ = 0x00;
+ 		name_ = "NA";
+ 		state_ = zb_dev_state_invalid;
+ 		id_count_ = 0;
+ 		memset(&mac_, 0x00, sizeof(mac_));
  	}
 
  public:
-	zb_addr_type_t addr;
-	std::string name;
-	int state;
+	zb_addr_type_t addr_;
+	std::string name_;
+	int state_;
 	// char mac[ZB_MAC_LEN];
-	zb_mac_type_t mac;
-	zb_item_id_info_t* id_info_list[256];
+	uint8_t id_count_;
+	zb_mac_type_t mac_;
+	zb_item_id_info_t id_info_list_[MAX_ID_PER_ZB_DEV];
 	// std::vector<zb_item_id_info_t*> id_info_list;
 };
 
@@ -115,9 +139,8 @@ class ZDevManager {
  		}
  		return iter->second;
  	}
-
  	// add or update
- 	bool add(zb_mac_type_t &mac, zb_addr_type_t addr);
+ 	bool add(zb_mac_type_t &mac, zb_addr_type_t addr, const char *name, uint8_t id_count);
 
  	const MAC_DEV_MAP_TYPE& getMacDevMap() { return mac_dev_map_; }
 
