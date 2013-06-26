@@ -233,6 +233,10 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 
 void ZSerial::scheduleReconnect()
 {
+	// --- for debugging only ---
+	return;
+	// --- for debugging only ---
+
 	printf("ZSerial::scheduleReconnect()\n");
 	close();
 	struct event* ev = evtimer_new(base_, SOCKET_CALLBACK, this);

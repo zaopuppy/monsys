@@ -6,9 +6,25 @@
 		<meta name="Keywords" content="Canvas" />
 		<meta name="Description" content="Testing code for Moniter System" />
 		<link rel="stylesheet" type="text/css" href="mon_sys.css" >
+		<script type="text/javascript" src="json2.js" ></script>
 		<script type="text/javascript" src="mon_sys.js" ></script>
 	</head>
 	<body>
+		<div id="light-control">
+			<!-- <textarea id="get-dev-list-input" rows="10" ></textarea> -->
+
+			<input type="button" onclick="get_dev_list()" value="get-dev-list" />
+
+			<select id="dev-list">
+				<!-- <option value="1">One</option> -->
+				<!-- <option value="2">Two</option> -->
+			</select><br/>
+
+			<input id="dev-switch" type="checkbox"/><br/>
+			<input id="light-level" type="range" min="0" max="255" step="1" /><br/>
+			<canvas id="main-canvas" width="480" height="320" style="border: 1px solid #000000;"></canvas>
+		</div>
+
 		<!--
 		<div id="main_div">
 			<canvas id="myCanvas" width="480" height="320" style="border: 1px solid #000000;" />
@@ -54,17 +70,14 @@
 		<input type="button" onclick="test004()" value="test004" />
 		<br/>
 		-->
-		<!-- get device list -->
-		<textarea id="get-dev-list-input" rows="10" ></textarea><br/>
-		<input type="button" onclick="get_dev_list()" value="get-dev-list" /><br/>
 
-		<!-- get device info -->
+		<!--
 		<textarea id="get-dev-info-input" rows="10" ></textarea><br/>
 		<input type="button" onclick="get_dev_info()" value="get-dev-info" /><br/>
 
-		<!-- set device info -->
 		<textarea id="set-dev-info-input" rows="10" ></textarea><br/>
 		<input type="button" onclick="set_dev_info()" value="set-dev-info" /><br/>
+		-->
 
 	</body>
 </html>

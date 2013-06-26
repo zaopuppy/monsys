@@ -15,7 +15,7 @@
 
 //////////////////////////////////////////////////////
 int ZWebApiHandler::init() {
-	printf("Oops, client's coming\n");
+	printf("[%p] Oops, client's coming\n", this);
 
 	return 0;
 }
