@@ -1,0 +1,33 @@
+
+
+
+
+REQUEST:
+
+(HTTP --> Inner)
+[Client] ->
+	WebApiServer(Module) ->
+		WebApiHandler(Handler) ->
+			Dispatcher ->
+
+Dispatcher ->
+	SerialModule(Module) ->
+		ZigBeeHandler(Handler) ->
+			send() -> [ZigBee]
+
+RESPONSE:
+
+(ZigBee --> Inner)
+[ZigBee] ->
+	ZigBeeHandler(Handler) ->
+		Dispatcher ->
+
+Dispatcher ->
+	WebApiServer(Module) ->
+		WebApiHandler(Handler) ->
+			send() -> [Client]
+
+
+
+
+

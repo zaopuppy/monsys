@@ -1,4 +1,5 @@
-
+#ifndef _Z_ERRNO_H__
+#define _Z_ERRNO_H__
 
 enum ERR_CODE {
 	OK = 0,
@@ -8,4 +9,5 @@ enum ERR_CODE {
 
 #define ECHECK(_rv, _code) assert((_rv) == (_code))
 
+#endif // _Z_ERRNO_H__
 

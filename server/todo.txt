@@ -1,3 +1,9 @@
+[ ] non-block main loop
+	solved by using PERSIST timeout event
+	here're new questions:
+	[ ] Is there any problem if I used too much time in timeout event? will it cause list overflow?
+[ ] unit test
+[ ] handle pool
 [ ] better cleaning work, close and reset `fd_'
 [O] session time control
 [O] GetDevList
@@ -12,6 +18,7 @@
 [ ] cupsole header field by using encode/decode/getlen
 [ ] bluebooth support
 [ ] version control for id-info
+[ ] does ZigBee message header need a sequence field?
 
 
 [ ] 接口变更:

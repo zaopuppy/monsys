@@ -29,42 +29,42 @@ enum {
 };
 
 struct ZInnerAddress {
-	int moduleType;
-	int moduleId;
-	int handlerId;
+	int module_type_;
+	int module_id_;	// not used
+	int handler_id_;
 
 	ZInnerAddress(int type, int id, int hid)
-		: moduleType(type), moduleId(id), handlerId(hid)
+		: module_type_(type), module_id_(id), handler_id_(hid)
 	{}
 
 	ZInnerAddress(const ZInnerAddress &addr)
-		: moduleType(addr.moduleType),
-		moduleId(addr.moduleId), handlerId(addr.handlerId)
+		: module_type_(addr.module_type_),
+		module_id_(addr.module_id_), handler_id_(addr.handler_id_)
 	{}
 
 	ZInnerAddress()
-		: moduleType(-1), moduleId(-1), handlerId(-1)
+		: module_type_(-1), module_id_(-1), handler_id_(-1)
 	{}
 
 	bool isValid() {
-		return (moduleType >= 0) && (moduleId >= 0) && (handlerId >= 0);
+		return (module_type_ >= 0) && (module_id_ >= 0) && (handler_id_ >= 0);
 	}
 };
 
 /////////////////////////////////////////////////////
 class ZInnerMsg {
  public:
-	 ZInnerMsg(const ZInnerAddress &src_addr)
-		 : src_addr_(src_addr), seq_(0)
+	 ZInnerMsg(const ZInnerAddress &src_addr, uint32_t msg_type)
+		 : src_addr_(src_addr), msg_type_(msg_type), seq_(0)
 	 {
 	 }
 
- public:
-	 uint32_t getMsgType() { return msg_type_; }
-	 void setMsgType(uint32_t msg_type) { msg_type_ = msg_type; }
-	 uint32_t getSeq() { return seq_; }
-	 void setSeq(uint32_t seq) { seq_ = seq; }
-	 const ZInnerAddress& getSrcAddr() { return src_addr_; }
+ // public:
+	//  uint32_t getMsgType() { return msg_type_; }
+	//  void setMsgType(uint32_t msg_type) { msg_type_ = msg_type; }
+	//  uint32_t getSeq() { return seq_; }
+	//  void setSeq(uint32_t seq) { seq_ = seq; }
+	//  const ZInnerAddress& getSrcAddr() { return src_addr_; }
 
  // TODO: make it protected
  public:
@@ -79,9 +79,8 @@ class ZInnerMsg {
 class ZInnerGetDevListReq : public ZInnerMsg {
  public:
 	ZInnerGetDevListReq(const ZInnerAddress &src_addr)
-		: ZInnerMsg(src_addr)
+		: ZInnerMsg(src_addr, Z_ZB_GET_DEV_LIST_REQ)
 	{
-		setMsgType(Z_ZB_GET_DEV_LIST_REQ);
 	}
 
 };
@@ -89,9 +88,8 @@ class ZInnerGetDevListReq : public ZInnerMsg {
 class ZInnerGetDevListRsp : public ZInnerMsg {
  public:
  	ZInnerGetDevListRsp(const ZInnerAddress &src_addr)
- 		: ZInnerMsg(src_addr)
+ 		: ZInnerMsg(src_addr, Z_ZB_GET_DEV_LIST_RSP)
  	{
- 		setMsgType(Z_ZB_GET_DEV_LIST_RSP);
  	}
  	~ZInnerGetDevListRsp()
  	{
@@ -111,9 +109,8 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
 class ZInnerGetDevInfoReq : public ZInnerMsg {
  public:
 	ZInnerGetDevInfoReq(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr)
+	  : ZInnerMsg(src_addr, Z_ZB_GET_DEV_REQ)
 	{
-		setMsgType(Z_ZB_GET_DEV_REQ);
 	}
 
  public:
@@ -124,9 +121,8 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 class ZInnerGetDevInfoRsp : public ZInnerMsg {
  public:
 	ZInnerGetDevInfoRsp(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr)
+	  : ZInnerMsg(src_addr, Z_ZB_GET_DEV_RSP)
 	{
-		setMsgType(Z_ZB_GET_DEV_RSP);
 	}
 
  public:
@@ -142,9 +138,8 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 class ZInnerSetDevInfoReq : public ZInnerMsg {
  public:
 	ZInnerSetDevInfoReq(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr)
+	  : ZInnerMsg(src_addr, Z_ZB_SET_DEV_REQ)
 	{
-		setMsgType(Z_ZB_SET_DEV_REQ);
 	}
 
  public:
@@ -155,9 +150,8 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 class ZInnerSetDevInfoRsp : public ZInnerMsg {
  public:
 	ZInnerSetDevInfoRsp(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr)
+	  : ZInnerMsg(src_addr, Z_ZB_SET_DEV_RSP)
 	{
-		setMsgType(Z_ZB_SET_DEV_RSP);
 	}
 
  public:

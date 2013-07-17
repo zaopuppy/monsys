@@ -11,7 +11,7 @@
 class ZServer : public ZModule {
  public:
 	ZServer(const char *ip, uint16_t port, event_base *base, Z_MODULE_TYPE type)
-		: ip_(ip), port_(port), base_(base), state_(STATE_INIT), type_(type) {
+		: ip_(ip), port_(port), base_(base), type_(type) {
 	}
 
 	typedef ZModule super_;
@@ -33,12 +33,12 @@ class ZServer : public ZModule {
  protected:
 	void acceptClient(evutil_socket_t fd, short events);
 
- private:
-	enum STATE {
-		STATE_INIT,
-		STATE_ACCEPTING,
-		STATE_FINISHED,
-	};
+ // private:
+	// enum STATE {
+	// 	STATE_INIT,
+	// 	STATE_ACCEPTING,
+	// 	STATE_FINISHED,
+	// };
 
  protected:
 	std::string ip_;
@@ -47,7 +47,7 @@ class ZServer : public ZModule {
 	// int type_;
 	evutil_socket_t fd_;
 	event_base *base_;
-	STATE state_;
+	// STATE state_;
 	Z_MODULE_TYPE type_;
 };
 

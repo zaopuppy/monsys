@@ -5,7 +5,7 @@ cd $(dirname $0)
 case $1 in
 	start)
 		echo "stopping...done"
-		./out/sbin/nginx -s stop
+		./out/sbin/nginx -s stop 2>&1 >/dev/null
 		echo "starting...done"
 		./out/sbin/nginx
 		;;

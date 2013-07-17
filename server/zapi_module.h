@@ -21,6 +21,7 @@ public:
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
 	virtual int getType() { return Z_MODULE_API; }
+	virtual void routine(long delta) {}
 
 	void event(evutil_socket_t fd, short events);
 

@@ -1,25 +1,21 @@
 #ifndef _ZWEBAPI_HANDLER_H__
 #define _ZWEBAPI_HANDLER_H__
 
-
 #include <map>
 
-#include "ztask.h"
-
 #include <event2/event.h>
-
 #include <jansson.h>
 
+#include "ztask.h"
 #include "zserver_handler.h"
-
 #include "zwebapi_session.h"
 #include "zinner_message.h"
 
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
 public:
-	ZWebApiHandler(event_base* base)
-		: addr_(Z_MODULE_WEBAPI, 0, -1)
+	ZWebApiHandler(event_base* base/*, int moduleType, int handlerId*/)
+	// 	: addr_(moduleType, 0, handlerId)
 	{
 	}
 
@@ -30,6 +26,7 @@ public:
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len);
 	virtual int onInnerMsg(ZInnerMsg *msg);
+	virtual void routine(long delta);
 
 	virtual int send(const char *buf, uint32_t buf_len) {
 		return ::send(fd_, buf, buf_len, 0);
@@ -46,6 +43,11 @@ private:
 	int processGetDevListReq(json_t *root);
 	int processGetDevInfoReq(json_t *root);
 	int processSetDevInfoReq(json_t *root);
+
+	ZInnerMsg* webMsg2InnerMsg(json_t *web_msg);
+	ZInnerMsg* convertGetDevListReq(json_t *jobj);
+	ZInnerMsg* convertGetDevInfoReq(json_t *jobj);
+	ZInnerMsg* convertSetDevInfoReq(json_t *jobj);
 
 	int processMsg(ZInnerGetDevListRsp *msg);
 	int processMsg(ZInnerGetDevInfoRsp *msg);

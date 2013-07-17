@@ -264,7 +264,7 @@ class ZZigBeeMsg : public ZMsg {
 	}
 
  public:
- 	ZZBHeader hdr_;
+ 	// ZZBHeader hdr_;
 	uint8_t  syn_;
 	uint8_t  ver_;
 	uint16_t len_;
@@ -291,14 +291,20 @@ class ZZBRegReq : public ZZigBeeMsg {
 	}
 	
 	uint16_t getBodyLen() {
-		return sizeof(mac_.data);
+		return sizeof(mac_.data)
+			+ getlen(dev_type_)
+		 	+ getlen(name_)
+		 	+ getlen(desc_);
 	}
 
  public:
 	// const uint16_t mac_len_;
 	// std::string mac_;
 	zb_mac_type_t mac_;
-	uint8_t id_count_;	// 1~255
+	// uint8_t id_count_;	// 1~255
+	uint16_t dev_type_;
+	std::string name_;
+	std::string desc_;
 };
 
 class ZZBRegRsp : public ZZigBeeMsg {

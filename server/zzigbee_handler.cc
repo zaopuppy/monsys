@@ -8,6 +8,7 @@
 #include "zmodule.h"
 #include "zdispatcher.h"
 #include "zerrno.h"
+#include "zzigbee_session.h"
 
 /////////////////////////////////////////////////////////////////////
 
@@ -47,6 +48,35 @@ int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
 		default:
 			printf("Unknown message type: %u", msg->msg_type_);
 			return -1;
+	}
+}
+
+void ZZigBeeHandler::routine(long delta)
+{
+	// printf("ZZigBeeHandler::routine()\n");
+
+	ZSession *session;
+
+	SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
+	SESSION_CTRL_TYPE::iterator tmp_iter;
+	// SESSION_CTRL_TYPE::iterator iter1;
+
+	while (iter != session_ctrl_.end()) {
+		session = iter->second;
+		session->doTimeout(delta);
+		if (session->isComplete()) {
+			tmp_iter = iter;
+			++iter;
+
+			// XXX:
+			// don't forget to erase another one first
+			// iter1 = session_ctrl_1_.find(session->);
+
+			session_ctrl_.erase(tmp_iter);
+
+		} else {
+			++iter;
+		}
 	}
 }
 
@@ -131,7 +161,8 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 	printf("ZZigBeeHandler::processMsg(RegReq)\n");
 
 	ZZBRegRsp rsp;
-	if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", msg.id_count_)) {
+	// if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", msg.id_count_)) {
+	if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", 1)) {
 		printf("Failed to add device to device manager\n");
 		rsp.status_ = -1;
 	} else {
@@ -177,7 +208,35 @@ int ZZigBeeHandler::processMsg(ZZBGetRsp &msg)
 		rsp->dev_infos_.push_back(pair);
 	}
 
-	ZDispatcher::instance()->sendMsg(rsp);
+	// ZDispatcher::instance()->sendMsg(rsp);
+	{
+		// FIXME: should zigbee message have a requence or not?
+		// if it doesn't, then we should have a queue for serial processing
+		// so, add one
+		ZZigBeeSession *session =
+				(ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
+		if (session == NULL) {
+			printf("No session found\n");
+			delete rsp;
+			return -1;
+		}
+
+		// if ((session != session1)
+		// 		|| ((session->extern_key_.u32 >> 16) != msg.addr_)) {
+		// 		assert(false);
+		// 	printf("two different session, how could it be possible...\n");
+		// 	return FAIL;
+		// }
+
+		rsp->dst_addr_ = session->src_addr_;
+
+		session_ctrl_.removeByKey1(session->getKey());
+		// session_ctrl_1_.remove(msg.addr_);
+
+		delete session;
+
+		ZDispatcher::instance()->sendDirect(rsp);
+	}
 
 	return 0;
 }
@@ -188,6 +247,35 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 
 	ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp(addr_);
 	rsp->status_ = msg.status_;
+
+	{
+		// FIXME: should zigbee message have a requence or not?
+		// if it doesn't, then we should have a queue for serial processing
+		// so, add one
+		ZZigBeeSession *session =
+				(ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
+		if (session == NULL) {
+			printf("No session found\n");
+			delete rsp;
+			return -1;
+		}
+
+		// if ((session != session1)
+		// 		|| ((session->extern_key_.u32 >> 16) != msg.addr_)) {
+		// 		assert(false);
+		// 	printf("two different session, how could it be possible...\n");
+		// 	return FAIL;
+		// }
+
+		rsp->dst_addr_ = session->src_addr_;
+
+		session_ctrl_.removeByKey1(session->getKey());
+		// session_ctrl_1_.remove(msg.addr_);
+
+		delete session;
+
+		// ZDispatcher::instance()->sendDirect(rsp);
+	}
 
 	ZDispatcher::instance()->sendMsg(rsp);
 
@@ -208,22 +296,25 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	printf("ZZigBeeHandler::processMsg(ZInnerGetDevListReq)\n");
 
 	ZInnerGetDevListRsp *rsp = new ZInnerGetDevListRsp(addr_);
+	rsp->dst_addr_ = msg->src_addr_;
+
 	ZZBDevInfo *info = NULL;
 
-	// // --- for debugging only ---
-	// {
-	// 	char dev_name_buf[64];
-	// 	for (int i = 0; i < 20; ++i) {
-	// 		snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
-	// 		info = new ZZBDevInfo();
-	// 		info->addr_ = i;
-	// 		info->name_ = dev_name_buf;
-	// 		info->state_ = i;
-	// 		memset(&info->mac_, i, sizeof(info->mac_));
-	// 		rsp->info_list_.push_back(info);
-	// 	}
-	// }
-	// // --- for debugging only ---
+	// --- for debugging only ---
+	{
+		char dev_name_buf[64];
+		for (int i = 0; i < 5; ++i) {
+			snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+			info = new ZZBDevInfo();
+			info->addr_ = i;
+			info->name_ = dev_name_buf;
+			info->state_ = i;
+			info->type_ = i;
+			memset(&info->mac_, i, sizeof(info->mac_));
+			rsp->info_list_.push_back(info);
+		}
+	}
+	// --- for debugging only ---
 
 	const ZDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
 	ZDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
@@ -233,7 +324,8 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 		rsp->info_list_.push_back(info);
 	}
 
-	ZDispatcher::instance()->sendMsg(rsp);
+	// ZDispatcher::instance()->sendMsg(rsp);
+	ZDispatcher::instance()->sendDirect(rsp);
 
 	return 0;
 }
@@ -242,7 +334,14 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 {
 	printf("ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq)\n");
 
-	// printDevInfo();
+	// check
+	{
+		ZSession *session = session_ctrl_.findByKey1(msg->seq_);
+		if (session) {
+			printf("Duplicated session: [%u]\n", msg->seq_);
+			return FAIL;
+		}
+	}
 
 	ZZBGetReq req;
 	req.addr_ = msg->addr_;
@@ -275,6 +374,19 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 
 	send(buf_, rv);
 
+	// save session
+	{
+		// TODO: get inner sequence from ZBGet
+		ZZigBeeSession *session = new ZZigBeeSession();
+		session->setKey(msg->seq_);
+		session->src_addr_ = msg->src_addr_;
+		session->dst_addr_ = msg->dst_addr_;
+		session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
+
+		session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
+		// session_ctrl_1_.add(msg->addr_, session);
+	}
+
 	return 0;
 }
 
@@ -284,6 +396,14 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 	printf("ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq)\n");
 
 	// printDevInfo();
+	// check
+	{
+		ZSession *session = session_ctrl_.findByKey1(msg->seq_);
+		if (session) {
+			printf("Duplicated session: [%u]\n", msg->seq_);
+			return FAIL;
+		}
+	}
 
 	// // -- for debugging only --
 	// ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp(addr_);
@@ -322,6 +442,18 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 		printf("Failed to send\n");
 	} else {
 		printf("write over.\n");
+		// save session
+		{
+			// TODO: get inner sequence from ZBGet
+			ZZigBeeSession *session = new ZZigBeeSession();
+			session->setKey(msg->seq_);
+			session->src_addr_ = msg->src_addr_;
+			session->dst_addr_ = msg->dst_addr_;
+			session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
+
+			session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
+			// session_ctrl_1_.add(msg->addr_, session);
+		}
 	}
 
 	return 0;
@@ -329,21 +461,20 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
 static void updateIdInfo(ZZBDevInfo &dev_info, zb_item_id_info_t &new_id_info)
 {
-	zb_item_id_info_t &id_info = dev_info.id_info_list_[new_id_info.id_];
+	// zb_item_id_info_t &id_info = dev_info.id_info_list_[new_id_info.id_];
 
-	id_info.clone(new_id_info);
+	// id_info.clone(new_id_info);
 
-	// if (dev_info.id_info_list[new_id_info.id]) {
-	// 	id_info = dev_info.id_info_list[new_id_info.id];
-	// } else {
-	// 	id_info = new zb_item_id_info_t;
-	// 	dev_info.id_info_list[new_id_info.id] = id_info;
-	// }
+	// // if (dev_info.id_info_list[new_id_info.id]) {
+	// // 	id_info = dev_info.id_info_list[new_id_info.id];
+	// // } else {
+	// // 	id_info = new zb_item_id_info_t;
+	// // 	dev_info.id_info_list[new_id_info.id] = id_info;
+	// // }
 
-	// id_info->clone(new_id_info);
+	// // id_info->clone(new_id_info);
 
-	id_info.print();
-
+	// id_info.print();
 }
 
 int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)

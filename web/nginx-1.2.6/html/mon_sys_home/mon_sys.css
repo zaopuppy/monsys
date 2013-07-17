@@ -1,0 +1,50 @@
+
+/*
+div#main_div {
+	margin: 0px;
+	padding: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 482px;
+	height: 322px;
+	border: 0px solid #FF0000;
+}
+*/
+
+/*
+div#light-control {
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+*/
+
+div#device-list {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table#device-table {
+	width: 100%;
+	/*border: 1px solid #000000;*/
+}
+
+/* ------------------------------- */
+/* for smart light */
+input#light-bright-level {
+	width: 800px;
+}
+
+canvas#light-color-picker {
+	width: 800px;
+	height: 600px;
+	border: 1px solid #000000;
+}
+
+/*如果你是针对高级浏览器写的话，建议百分比再加上min-width属性*/
+tr.device-record {
+	width: 100%;
+	/*border: 1px solid #000000;*/
+}
+

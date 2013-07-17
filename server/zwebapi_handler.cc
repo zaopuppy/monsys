@@ -13,9 +13,15 @@
 #include "zzigbee_message.h"
 #include "zjson_codec.h"
 
+#include "zroute.h"
+
 //////////////////////////////////////////////////////
 int ZWebApiHandler::init() {
 	printf("[%p] Oops, client's coming\n", this);
+
+	// init address here
+	addr_.module_type_ = getModuleType();
+	addr_.handler_id_ = getId();
 
 	return 0;
 }
@@ -24,6 +30,8 @@ void ZWebApiHandler::close() {
 	::close(fd_);
 	fd_ = -1;
 	event_del(read_event_);
+	// XXX: don't forget to delete ourself
+	// add to a free list, do it in routine
 }
 
 int ZWebApiHandler::processMsg(ZInnerGetDevListRsp *msg)
@@ -66,9 +74,13 @@ int ZWebApiHandler::processMsg(ZInnerGetDevListRsp *msg)
 		json_t *jname = json_string(msg->info_list_[i]->name_.c_str());
 		json_object_set_new(jelem, "name", jname);
 
-		// id count
-		json_t *jidCount = json_integer(msg->info_list_[i]->id_count_);
-		json_object_set_new(jelem, "id-count", jidCount);
+		// type
+		json_t *jtype = json_integer(msg->info_list_[i]->type_);
+		json_object_set_new(jelem, "type", jtype);
+
+		// // id count
+		// json_t *jidCount = json_integer(msg->info_list_[i]->id_count_);
+		// json_object_set_new(jelem, "id-count", jidCount);
 
 		// XXX
 		json_array_append_new(jdevs, jelem);
@@ -165,7 +177,8 @@ int ZWebApiHandler::processMsg(ZInnerSetDevInfoRsp *msg)
 	return 0;
 }
 
-int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg) {
+int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
+{
 	printf("ZWebApiHandler::onInnerMsg()\n");
 
 	switch (msg->msg_type_) {
@@ -186,11 +199,219 @@ int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg) {
 	}
 }
 
+void ZWebApiHandler::routine(long delta)
+{}
+
+
 void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 {
 	printf("ZWebApiHandler::sendRsp\n");
 	int rv = send(text_msg, strlen(text_msg));
 	printf("sent %d bytes\n", rv);
+}
+
+ZInnerMsg* ZWebApiHandler::convertGetDevListReq(json_t *jobj)
+{
+	printf("ZWebApiHandler::convertGetDevListReq()\n");
+	// cmd = get-dev-list;
+	json_t *jcmd = json_object_get(jobj, "cmd");
+	if (!jcmd || !json_is_string(jcmd)) {
+		printf("bad cmd field\n");
+		return NULL;
+	}
+
+	return new ZInnerGetDevListReq(addr_);
+}
+
+ZInnerMsg* ZWebApiHandler::convertGetDevInfoReq(json_t *jobj)
+{
+	printf("ZWebApiModule::convertGetDevInfoReq()\n");
+
+	////////////////////////////////////////////////////////
+	// command
+	json_t *jcmd = json_object_get(jobj, "cmd");
+	if (!jcmd || !json_is_string(jcmd)) {
+		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+		return NULL;
+	}
+
+	const char *cmd = json_string_value(jcmd);
+	if (strncmp(cmd, "get-dev-info", sizeof("get-dev-info") - 1)) {
+		printf("Unknown command\n");
+		sendRsp("Unknown command\n", 400);
+		return NULL;
+	}
+
+	////////////////////////////////////////////////////////
+	// uid
+	json_t *juid = json_object_get(jobj, "uid");
+	if (!juid || !json_is_integer(juid)) {
+		printf("uid is illegal\n");
+		sendRsp("uid is illegal\n", 400);
+		return NULL;
+	}
+	int uid = (int)json_integer_value(juid);
+
+	////////////////////////////////////////////////////////
+	// addr
+	json_t *jaddr = json_object_get(jobj, "addr");
+	if (!jaddr || !json_is_integer(jaddr))
+	{
+		printf("addr is illegal\n");
+		sendRsp("addr is illegal\n", 400);
+		return NULL;
+	}
+
+	int addr = (int)json_integer_value(jaddr);
+
+	printf("uid: %d, addr: 0x%X\n", uid, (uint32_t)addr);
+
+	if (uid < 0 || uid > 255) {
+		printf("Invalid uid or dev-id\n");
+		sendRsp("invalid uid or dev-id\n", 200);
+		return NULL;
+	}
+
+	////////////////////////////////////////////////////////
+	// id-list
+	json_t *jid_list = json_object_get(jobj, "id-list");
+	if (!jid_list || !json_is_string(jid_list)) {
+		printf("invalid id-list format\n");
+		sendRsp("invalid id-list format\n", 200);
+		return NULL;
+	}
+
+	const char *id_list = json_string_value(jid_list);
+	if (!id_list) {
+		printf("invalid id-list format\n");
+		sendRsp("invalid id-list format\n", 200);
+		return NULL;
+	}
+
+	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
+	// transfer from json to ZigBee message
+	ZInnerGetDevInfoReq *req = new ZInnerGetDevInfoReq(addr_);
+	req->addr_ = (uint32_t)(addr & 0xFFFF);
+
+	if (!str2list(id_list, req->item_ids_)) {
+		printf("failed to str2list: [%s]\n", id_list);
+		delete req;
+		req = NULL;
+		return NULL;
+	}
+
+	return req;
+}
+
+ZInnerMsg* ZWebApiHandler::convertSetDevInfoReq(json_t *jobj)
+{
+	printf("ZWebApiModule::convertSetDevInfoReq()\n");
+
+	json_t *cmd = json_object_get(jobj, "cmd");
+	if (!cmd || !json_is_string(cmd)) {
+		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+		return NULL;
+	}
+
+	const char *cmd_str = json_string_value(cmd);
+
+	if (strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
+		printf("Unknown command\n");
+		sendRsp("Unknown command\n", 400);
+		return NULL;
+	}
+
+	json_t *juid = json_object_get(jobj, "uid");
+	if (!juid || !json_is_integer(juid)) {
+		printf("uid is illegal\n");
+		sendRsp("uid is illegal\n", 400);
+		return NULL;
+	}
+
+	json_t *jaddr = json_object_get(jobj, "addr");
+	if (!jaddr || !json_is_integer(jaddr)) {
+		printf("addr is illegal\n");
+		sendRsp("addr is illegal\n", 400);
+		return NULL;
+	}
+
+	json_t *jvals = json_object_get(jobj, "vals");
+	if (!jvals || !json_is_array(jvals)) {
+		printf("vals is illeagl\n");
+		sendRsp("vals is illeagl\n", 400);
+		return NULL;
+	}
+
+	int uid = json_integer_value(juid);
+	int addr = json_integer_value(jaddr);
+
+	printf("uid: %d, addr: %d\n", uid, addr);
+	printf("Item valus:\n");
+
+	// new request
+	ZInnerSetDevInfoReq *req = new ZInnerSetDevInfoReq(addr_);
+	req->addr_ = addr;
+
+	ZItemPair pair;
+	json_t *elem;
+	json_t *jid;
+	json_t *jval;
+	for (uint32_t i = 0; i < json_array_size(jvals); ++i) {
+		// elem
+		elem = json_array_get(jvals, i);
+		if (elem == NULL) {
+			printf("bad element!\n");
+			delete req;
+			return NULL;
+		}
+		// id
+		jid = json_object_get(elem, "id");
+		if (jid == NULL || !json_is_integer(jid)) {
+			printf("[%u]bad id\n", i);
+			delete req;
+			return NULL;
+		}
+		pair.id = json_integer_value(jid);
+		// val
+		jval = json_object_get(elem, "val");
+		if (jval == NULL || !json_is_integer(jval)) {
+			printf("[%u, %d]bad val\n", i, pair.id);
+			delete req;
+			return NULL;
+		}
+		pair.val = json_integer_value(jval);
+
+		// print it out, for debugging only
+		printf("[%u] id=%d, val=%d\n", i, pair.id, pair.val);
+
+		req->dev_vals_.push_back(pair);
+	}
+
+	return req;
+}
+
+ZInnerMsg* ZWebApiHandler::webMsg2InnerMsg(json_t *web_msg)
+{
+	// 2. check `cmd' field
+	// (sequence value should allocate from server)
+	json_t *cmd = json_object_get(web_msg, "cmd");
+	if (!cmd || !json_is_string(cmd)) {
+		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+		sendRsp("Missing 'cmd' field, or 'cmd' is not a string\n", 400);
+		return NULL;
+	}
+
+	// 3. check session
+	const char *cmd_str = json_string_value(cmd);
+	if (!strncmp(cmd_str, "get-dev-list", sizeof("get-dev-list") - 1)) {
+		return convertGetDevListReq(web_msg);
+	} else if (!strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
+		return convertGetDevInfoReq(web_msg);
+	} else if (!strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
+		return convertSetDevInfoReq(web_msg);
+	} else {
+		return NULL;
+	}
 }
 
 int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
@@ -217,217 +438,232 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 			return -1;
 		}
 
-		// 2. check `cmd' field
-		// (sequence value should allocate from server)
-		json_t *cmd = json_object_get(jobj, "cmd");
-		if (!cmd || !json_is_string(cmd)) {
-			printf("Missing 'cmd' field, or 'cmd' is not a string\n");
-			sendRsp("Missing 'cmd' field, or 'cmd' is not a string\n", 400);
+		ZInnerMsg *inner_msg = webMsg2InnerMsg(jobj);
+		if (inner_msg == NULL) {
+			sendRsp("bad request\n", 400);
 			return -1;
 		}
 
-		// 3. check session
-		const char *cmd_str = json_string_value(cmd);
-		if (!strncmp(cmd_str, "get-dev-list", sizeof("get-dev-list") - 1)) {
-			return processGetDevListReq(jobj);
-		} else if (!strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
-			return processGetDevInfoReq(jobj);
-		} else if (!strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
-			return processSetDevInfoReq(jobj);
-		} else {
-			return -1;
-		}
+		// set destination address
+		inner_msg->dst_addr_.module_type_ = Z_MODULE_SERIAL;
+		inner_msg->dst_addr_.handler_id_ = ANY_ID;
+
+		// ZDispatcher::instance()->sendMsg(inner_msg);
+		ZDispatcher::instance()->sendDirect(inner_msg);
+
+		// // 2. check `cmd' field
+		// // (sequence value should allocate from server)
+		// json_t *cmd = json_object_get(jobj, "cmd");
+		// if (!cmd || !json_is_string(cmd)) {
+		// 	printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+		// 	sendRsp("Missing 'cmd' field, or 'cmd' is not a string\n", 400);
+		// 	return -1;
+		// }
+
+		// // 3. check session
+		// const char *cmd_str = json_string_value(cmd);
+		// if (!strncmp(cmd_str, "get-dev-list", sizeof("get-dev-list") - 1)) {
+		// 	return processGetDevListReq(jobj);
+		// } else if (!strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
+		// 	return processGetDevInfoReq(jobj);
+		// } else if (!strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
+		// 	return processSetDevInfoReq(jobj);
+		// } else {
+		// 	return -1;
+		// }
 	}
+
+	return 0;
 }
 
-int ZWebApiHandler::processGetDevListReq(json_t *root)
-{
-	printf("ZWebApiHandler::processGetDevListReq()\n");
-	// cmd = get-dev-list;
-	json_t *jcmd = json_object_get(root, "cmd");
-	if (!jcmd || !json_is_string(jcmd)) {
-		printf("bad cmd field\n");
-		return -1;
-	}
+// int ZWebApiHandler::processGetDevListReq(json_t *root)
+// {
+// 	printf("ZWebApiHandler::processGetDevListReq()\n");
+// 	// cmd = get-dev-list;
+// 	json_t *jcmd = json_object_get(root, "cmd");
+// 	if (!jcmd || !json_is_string(jcmd)) {
+// 		printf("bad cmd field\n");
+// 		return -1;
+// 	}
 
-	ZInnerGetDevListReq *req = new ZInnerGetDevListReq(addr_);
+// 	ZInnerGetDevListReq *req = new ZInnerGetDevListReq(addr_);
 
-	ZDispatcher::instance()->sendMsg(req);
+// 	ZDispatcher::instance()->sendMsg(req);
 	
-	return 0;
-}
+// 	return 0;
+// }
 
-int ZWebApiHandler::processGetDevInfoReq(json_t *root)
-{
-	printf("ZWebApiModule::processGetDevInfoReq()\n");
+// int ZWebApiHandler::processGetDevInfoReq(json_t *root)
+// {
+// 	printf("ZWebApiModule::processGetDevInfoReq()\n");
 
-	////////////////////////////////////////////////////////
-	// command
-	json_t *jcmd = json_object_get(root, "cmd");
-	if (!jcmd || !json_is_string(jcmd)) {
-		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
-		return -1;
-	}
+// 	////////////////////////////////////////////////////////
+// 	// command
+// 	json_t *jcmd = json_object_get(root, "cmd");
+// 	if (!jcmd || !json_is_string(jcmd)) {
+// 		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+// 		return -1;
+// 	}
 
-	const char *cmd = json_string_value(jcmd);
-	if (strncmp(cmd, "get-dev-info", sizeof("get-dev-info") - 1)) {
-		printf("Unknown command\n");
-		sendRsp("Unknown command\n", 400);
-		return -1;
-	}
+// 	const char *cmd = json_string_value(jcmd);
+// 	if (strncmp(cmd, "get-dev-info", sizeof("get-dev-info") - 1)) {
+// 		printf("Unknown command\n");
+// 		sendRsp("Unknown command\n", 400);
+// 		return -1;
+// 	}
 
-	////////////////////////////////////////////////////////
-	// uid
-	json_t *juid = json_object_get(root, "uid");
-	if (!juid || !json_is_integer(juid)) {
-		printf("uid is illegal\n");
-		sendRsp("uid is illegal\n", 400);
-		return -1;
-	}
-	int uid = (int)json_integer_value(juid);
+// 	////////////////////////////////////////////////////////
+// 	// uid
+// 	json_t *juid = json_object_get(root, "uid");
+// 	if (!juid || !json_is_integer(juid)) {
+// 		printf("uid is illegal\n");
+// 		sendRsp("uid is illegal\n", 400);
+// 		return -1;
+// 	}
+// 	int uid = (int)json_integer_value(juid);
 
-	////////////////////////////////////////////////////////
-	// addr
-	json_t *jaddr = json_object_get(root, "addr");
-	if (!jaddr || !json_is_integer(jaddr))
-	{
-		printf("addr is illegal\n");
-		sendRsp("addr is illegal\n", 400);
-		return -1;
-	}
+// 	////////////////////////////////////////////////////////
+// 	// addr
+// 	json_t *jaddr = json_object_get(root, "addr");
+// 	if (!jaddr || !json_is_integer(jaddr))
+// 	{
+// 		printf("addr is illegal\n");
+// 		sendRsp("addr is illegal\n", 400);
+// 		return -1;
+// 	}
 
-	int addr = (int)json_integer_value(jaddr);
+// 	int addr = (int)json_integer_value(jaddr);
 
-	printf("uid: %d, addr: 0x%X\n", uid, (uint32_t)addr);
+// 	printf("uid: %d, addr: 0x%X\n", uid, (uint32_t)addr);
 
-	if (uid < 0 || uid > 255) {
-		printf("Invalid uid or dev-id\n");
-		sendRsp("invalid uid or dev-id\n", 200);
-		return 0;
-	}
+// 	if (uid < 0 || uid > 255) {
+// 		printf("Invalid uid or dev-id\n");
+// 		sendRsp("invalid uid or dev-id\n", 200);
+// 		return 0;
+// 	}
 
-	////////////////////////////////////////////////////////
-	// id-list
-	json_t *jid_list = json_object_get(root, "id-list");
-	if (!jid_list || !json_is_string(jid_list)) {
-		printf("invalid id-list format\n");
-		sendRsp("invalid id-list format\n", 200);
-		return 0;
-	}
-	const char *id_list = json_string_value(jid_list);
-	if (!id_list) {
-		printf("invalid id-list format\n");
-		sendRsp("invalid id-list format\n", 200);
-		return 0;
-	}
+// 	////////////////////////////////////////////////////////
+// 	// id-list
+// 	json_t *jid_list = json_object_get(root, "id-list");
+// 	if (!jid_list || !json_is_string(jid_list)) {
+// 		printf("invalid id-list format\n");
+// 		sendRsp("invalid id-list format\n", 200);
+// 		return 0;
+// 	}
+// 	const char *id_list = json_string_value(jid_list);
+// 	if (!id_list) {
+// 		printf("invalid id-list format\n");
+// 		sendRsp("invalid id-list format\n", 200);
+// 		return 0;
+// 	}
 
-	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
-	// transfer from json to ZigBee message
-	ZInnerGetDevInfoReq *req = new ZInnerGetDevInfoReq(addr_);
-	req->addr_ = (uint32_t)(addr & 0xFFFF);
+// 	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
+// 	// transfer from json to ZigBee message
+// 	ZInnerGetDevInfoReq *req = new ZInnerGetDevInfoReq(addr_);
+// 	req->addr_ = (uint32_t)(addr & 0xFFFF);
 
-	if (!str2list(id_list, req->item_ids_)) {
-		printf("failed to str2list: [%s]\n", id_list);
-		delete req;
-		req = NULL;
-		return -1;
-	}
+// 	if (!str2list(id_list, req->item_ids_)) {
+// 		printf("failed to str2list: [%s]\n", id_list);
+// 		delete req;
+// 		req = NULL;
+// 		return -1;
+// 	}
 
-	ZDispatcher::instance()->sendMsg(req);
+// 	ZDispatcher::instance()->sendMsg(req);
 
-	return 0;
-}
+// 	return 0;
+// }
 
-int ZWebApiHandler::processSetDevInfoReq(json_t *root)
-{
-	printf("ZWebApiModule::processSetDevInfoReq()\n");
+// int ZWebApiHandler::processSetDevInfoReq(json_t *root)
+// {
+// 	printf("ZWebApiModule::processSetDevInfoReq()\n");
 
-	json_t *cmd = json_object_get(root, "cmd");
-	if (!cmd || !json_is_string(cmd)) {
-		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
-		return -1;
-	}
+// 	json_t *cmd = json_object_get(root, "cmd");
+// 	if (!cmd || !json_is_string(cmd)) {
+// 		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+// 		return -1;
+// 	}
 
-	const char *cmd_str = json_string_value(cmd);
+// 	const char *cmd_str = json_string_value(cmd);
 
-	if (strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
-		printf("Unknown command\n");
-		sendRsp("Unknown command\n", 400);
-		return -1;
-	}
+// 	if (strncmp(cmd_str, "set-dev-info", sizeof("set-dev-info") - 1)) {
+// 		printf("Unknown command\n");
+// 		sendRsp("Unknown command\n", 400);
+// 		return -1;
+// 	}
 
-	json_t *juid = json_object_get(root, "uid");
-	if (!juid || !json_is_integer(juid)) {
-		printf("uid is illegal\n");
-		sendRsp("uid is illegal\n", 400);
-		return -1;
-	}
+// 	json_t *juid = json_object_get(root, "uid");
+// 	if (!juid || !json_is_integer(juid)) {
+// 		printf("uid is illegal\n");
+// 		sendRsp("uid is illegal\n", 400);
+// 		return -1;
+// 	}
 
-	json_t *jaddr = json_object_get(root, "addr");
-	if (!jaddr || !json_is_integer(jaddr)) {
-		printf("addr is illegal\n");
-		sendRsp("addr is illegal\n", 400);
-		return -1;
-	}
+// 	json_t *jaddr = json_object_get(root, "addr");
+// 	if (!jaddr || !json_is_integer(jaddr)) {
+// 		printf("addr is illegal\n");
+// 		sendRsp("addr is illegal\n", 400);
+// 		return -1;
+// 	}
 
-	json_t *jvals = json_object_get(root, "vals");
-	if (!jvals || !json_is_array(jvals)) {
-		printf("vals is illeagl\n");
-		sendRsp("vals is illeagl\n", 400);
-		return -1;
-	}
+// 	json_t *jvals = json_object_get(root, "vals");
+// 	if (!jvals || !json_is_array(jvals)) {
+// 		printf("vals is illeagl\n");
+// 		sendRsp("vals is illeagl\n", 400);
+// 		return -1;
+// 	}
 
-	int uid = json_integer_value(juid);
-	int addr = json_integer_value(jaddr);
+// 	int uid = json_integer_value(juid);
+// 	int addr = json_integer_value(jaddr);
 
-	printf("uid: %d, addr: %d\n", uid, addr);
-	printf("Item valus:\n");
+// 	printf("uid: %d, addr: %d\n", uid, addr);
+// 	printf("Item valus:\n");
 
-	// new request
-	ZInnerSetDevInfoReq *req = new ZInnerSetDevInfoReq(addr_);
-	req->addr_ = addr;
+// 	// new request
+// 	ZInnerSetDevInfoReq *req = new ZInnerSetDevInfoReq(addr_);
+// 	req->addr_ = addr;
 
-	ZItemPair pair;
-	json_t *elem;
-	json_t *jid;
-	json_t *jval;
-	for (uint32_t i = 0; i < json_array_size(jvals); ++i) {
-		// elem
-		elem = json_array_get(jvals, i);
-		if (elem == NULL) {
-			printf("bad element!\n");
-			delete req;
-			return -1;
-		}
-		// id
-		jid = json_object_get(elem, "id");
-		if (jid == NULL || !json_is_integer(jid)) {
-			printf("[%u]bad id\n", i);
-			delete req;
-			return -1;
-		}
-		pair.id = json_integer_value(jid);
-		// val
-		jval = json_object_get(elem, "val");
-		if (jval == NULL || !json_is_integer(jval)) {
-			printf("[%u, %d]bad val\n", i, pair.id);
-			delete req;
-			return -1;
-		}
-		pair.val = json_integer_value(jval);
+// 	ZItemPair pair;
+// 	json_t *elem;
+// 	json_t *jid;
+// 	json_t *jval;
+// 	for (uint32_t i = 0; i < json_array_size(jvals); ++i) {
+// 		// elem
+// 		elem = json_array_get(jvals, i);
+// 		if (elem == NULL) {
+// 			printf("bad element!\n");
+// 			delete req;
+// 			return -1;
+// 		}
+// 		// id
+// 		jid = json_object_get(elem, "id");
+// 		if (jid == NULL || !json_is_integer(jid)) {
+// 			printf("[%u]bad id\n", i);
+// 			delete req;
+// 			return -1;
+// 		}
+// 		pair.id = json_integer_value(jid);
+// 		// val
+// 		jval = json_object_get(elem, "val");
+// 		if (jval == NULL || !json_is_integer(jval)) {
+// 			printf("[%u, %d]bad val\n", i, pair.id);
+// 			delete req;
+// 			return -1;
+// 		}
+// 		pair.val = json_integer_value(jval);
 
-		// print it out, for debugging only
-		printf("[%u] id=%d, val=%d\n", i, pair.id, pair.val);
+// 		// print it out, for debugging only
+// 		printf("[%u] id=%d, val=%d\n", i, pair.id, pair.val);
 
-		req->dev_vals_.push_back(pair);
-	}
+// 		req->dev_vals_.push_back(pair);
+// 	}
 
-	ZDispatcher::instance()->sendMsg(req);
+// 	ZDispatcher::instance()->sendMsg(req);
 
-	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
-	// sendRsp("request has been sent\n", 200);
+// 	// sendRsp("uid is good, dev-id is good, everything is good:)\n", 200);
+// 	// sendRsp("request has been sent\n", 200);
 
-	return 0;
-}
+// 	return 0;
+// }
 
 

@@ -70,19 +70,21 @@ class ZZBDevInfo {
  		addr_ 		= other.addr_;
  		name_ 		= other.name_;
  		state_ 		= other.state_;
- 		id_count_ = other.id_count_;
+ 		type_ 		= other.type_;
+
+ 		// id_count_ = other.id_count_;
  		memcpy(&mac_, &other.mac_, sizeof(mac_));
 
- 		for (uint32_t i = 0; i < MAX_ID_PER_ZB_DEV; ++i) {
- 			id_info_list_[i].clone(other.id_info_list_[i]);
- 		}
+ 		// for (uint32_t i = 0; i < MAX_ID_PER_ZB_DEV; ++i) {
+ 		// 	id_info_list_[i].clone(other.id_info_list_[i]);
+ 		// }
  	}
 
  	void reset() {
  		addr_ = 0x00;
  		name_ = "NA";
  		state_ = zb_dev_state_invalid;
- 		id_count_ = 0;
+ 		// id_count_ = 0;
  		memset(&mac_, 0x00, sizeof(mac_));
  	}
 
@@ -91,10 +93,11 @@ class ZZBDevInfo {
 	std::string name_;
 	int state_;
 	// char mac[ZB_MAC_LEN];
-	uint8_t id_count_;
+	// uint8_t id_count_;
 	zb_mac_type_t mac_;
-	zb_item_id_info_t id_info_list_[MAX_ID_PER_ZB_DEV];
+	// zb_item_id_info_t id_info_list_[MAX_ID_PER_ZB_DEV];
 	// std::vector<zb_item_id_info_t*> id_info_list;
+	uint16_t type_;
 };
 
 class ZBMacComp {
@@ -140,7 +143,7 @@ class ZDevManager {
  		return iter->second;
  	}
  	// add or update
- 	bool add(zb_mac_type_t &mac, zb_addr_type_t addr, const char *name, uint8_t id_count);
+ 	bool add(zb_mac_type_t &mac, zb_addr_type_t addr, const char *name, uint16_t type/*uint8_t id_count*/);
 
  	const MAC_DEV_MAP_TYPE& getMacDevMap() { return mac_dev_map_; }
 

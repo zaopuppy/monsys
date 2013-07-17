@@ -18,6 +18,7 @@ class ZApiServer : public ZServer {
 		virtual void close();
 		// virtual void doTimeout();
 		virtual int onInnerMsg(ZInnerMsg *msg);
+		virtual void routine(long delta) {}
 
 	protected:
 		virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port);

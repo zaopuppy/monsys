@@ -9,6 +9,7 @@
 #include "zlog.h"
 
 #include <stdio.h>
+#include <stdarg.h>
 
 char printable_char(char c)
 {
@@ -143,4 +144,16 @@ void trace_bin(const char* data, uint32_t len)
 		printf("%s\n", line_buf);
 	}
 }
+
+// void zlog(const char *log_level, const char *format, ...)
+void zlog(const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+
+	vprintf(format, args);
+
+	va_end(args);
+}
+
 

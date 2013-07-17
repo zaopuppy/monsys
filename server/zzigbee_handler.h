@@ -13,6 +13,7 @@
 #include "zmodule.h"
 #include "zlog.h"
 #include "zdevice.h"
+#include "zsession.h"
 
 class ZZigBeeHandler : public ZClientHandler {
  public:
@@ -41,6 +42,8 @@ class ZZigBeeHandler : public ZClientHandler {
 		return ::write(fd_, buf, buf_len);
 	}
 
+	virtual void routine(long delta);
+
  private:
 	int processMsg(ZZBRegReq &msg);
 	// int processMsg(ZZBGetReq &msg);
@@ -59,6 +62,7 @@ class ZZigBeeHandler : public ZClientHandler {
 	void printDevInfo();
 
 	// typedef std::list<zb_dev_t*> DEV_LIST_TYPE;
+	typedef ZSessionCtrl2Key<uint32_t, uint32_t, ZSession> SESSION_CTRL_TYPE;
 
  private:
 	char buf_[1 << 10];
@@ -67,6 +71,10 @@ class ZZigBeeHandler : public ZClientHandler {
 	ZInnerAddress addr_;
 
 	ZDevManager dev_manager_;
+
+	// TODO: they are bound, make it better for management
+	SESSION_CTRL_TYPE session_ctrl_;
+	// SESSION_CTRL_TYPE session_ctrl_1_;
 
 };
 

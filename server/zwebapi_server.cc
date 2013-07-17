@@ -6,12 +6,12 @@
 #include "zerrno.h"
 #include "zhandler.h"
 
-static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
-{
-	assert(arg);
-	ZWebApiHandler *h = (ZWebApiHandler*)arg;
-	h->event(fd, events);
-}
+// static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
+// {
+// 	assert(arg);
+// 	ZWebApiHandler *h = (ZWebApiHandler*)arg;
+// 	h->event(fd, events);
+// }
 
 int ZWebApiServer::init()
 {
@@ -27,24 +27,76 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZWebApiServer::onInnerMsg()\n");
 
-	handler_->onInnerMsg(msg);
+	int handler_id = msg->dst_addr_.handler_id_;
+	if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
+		printf("Bad handler id: %d\n", handler_id);
+		return -1;
+	}
 
+	// if (ANY_ID == handler_id) {
+	// 	// TODO:
+	// 	// XXX: should do load-balancing, current just use the first one
+	// 	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+	// 	if (iter == handler_map_.end()) {
+	// 		printf("Empty handler map...:(\n");
+	// 		return;
+	// 	}
+	// 	iter->second->onInnerMsg(msg);
+	// } else if (BROADCAST_ID = handler_id) {
+	// 	// TODO:
+	// } else {
+		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
+		if (iter == handler_map_.end()) {
+			printf("No such handler: %d\n", handler_id);
+			return -1;
+		}
+
+		iter->second->onInnerMsg(msg);
+	// }
 	return 0;
+}
+
+void ZWebApiServer::routine(long delta)
+{
+	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+	for (; iter != handler_map_.end(); ++iter) {
+		iter->second->routine(delta);
+	}
 }
 
 void ZWebApiServer::onAccept(
 		evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)
 {
-	// ZWebApiHandler *h = new ZWebApiHandler(base_);
-	handler_ = new ZWebApiHandler(base_);
-	assert(handler_);
+	int handler_id = genHandlerId();
+	if (handler_id == INVALID_ID) {
+		printf("Failed to generate handler id, handler full?\n");
+		return;
+	}
 
-	handler_->read_event_ =
-		event_new(base_, fd, EV_READ|EV_PERSIST, SOCKET_CALLBACK, handler_);
+	ZServerHandler *h = new ZWebApiHandler(base_);
+	assert(h);
 
-	assert(handler_->init() == OK);
+	h->setId(handler_id);
+	h->setModuleType(Z_MODULE_WEBAPI);
 
-	event_add(handler_->read_event_, NULL);
+	h->read_event_ =
+		event_new(base_, fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
+
+	assert(h->init() == OK);
+
+	event_add(h->read_event_, NULL);
+
+	// add to handler map
+	handler_map_[h->getId()] = h;
 }
 
+int ZWebApiServer::genHandlerId()
+{
+	static int id = MIN_HANDLER_ID;
+	if (id > MAX_HANDLER_ID) {
+		id = MIN_HANDLER_ID;
+	}
+
+	return id++;
+}
 

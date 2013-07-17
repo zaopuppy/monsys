@@ -24,6 +24,7 @@ class ZSerial : public ZModule {
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
 	virtual int getType() { return Z_MODULE_SERIAL; }
+  virtual void routine(long delta) { handler_->routine(delta); }
 
   int event(evutil_socket_t fd, short events);
 

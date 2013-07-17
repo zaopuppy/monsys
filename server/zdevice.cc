@@ -22,7 +22,7 @@ void ZDevManager::reset()
 }
 
 bool ZDevManager::add(zb_mac_type_t &mac,
-	zb_addr_type_t addr, const char *name, uint8_t id_count)
+	zb_addr_type_t addr, const char *name, uint16_t type/*uint8_t id_count*/)
 {
 	printf("ZDevManager::add(%u)\n", addr);
 
@@ -32,7 +32,8 @@ bool ZDevManager::add(zb_mac_type_t &mac,
 	if (info_from_mac && !info_from_addr) {
 
 		info_from_mac->name_ = name;
-		info_from_mac->id_count_ = id_count;
+		// info_from_mac->id_count_ = id_count;
+		info_from_mac->type_ = type;
 
 		// addr changed, check and update
 		ADDR_DEV_MAP_TYPE::iterator iter = addr_dev_map_.find(info_from_mac->addr_);
@@ -59,7 +60,8 @@ bool ZDevManager::add(zb_mac_type_t &mac,
 
 		// exist, check and update
 		info_from_mac->name_ = name;
-		info_from_mac->id_count_ = id_count;
+		info_from_mac->type_ = type;
+		// info_from_mac->id_count_ = id_count;
 
 		return true;
 
@@ -69,7 +71,8 @@ bool ZDevManager::add(zb_mac_type_t &mac,
 		info_from_mac = new ZZBDevInfo();
 		info_from_mac->addr_ = addr;
 		info_from_mac->name_ = name;
-		info_from_mac->id_count_ = id_count;
+		info_from_mac->type_ = type;
+		// info_from_mac->id_count_ = id_count;
 		memcpy(&info_from_mac->mac_, &mac, sizeof(mac));
 
 		// don't update state

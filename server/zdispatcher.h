@@ -22,10 +22,12 @@ class ZDispatcher {
  public:
 	int registerModule(ZModule *module);
 	int sendMsg(ZInnerMsg *msg);
+	int sendDirect(ZInnerMsg *msg);
 	void routine(time_t delta);
 
  private:
-	ZModule* findModule(int moduleType, int moduleId);
+	// ZModule* findModule(int moduleType, int moduleId);
+	ZModule* findModule(int moduleType);
 
 	void processMsg(ZInnerGetDevListReq *msg);
 	void processMsg(ZInnerGetDevListRsp *msg);
@@ -35,9 +37,11 @@ class ZDispatcher {
 	void processMsg(ZInnerSetDevInfoRsp *msg);
 
 	void processInnerMsg(ZInnerMsg *msg);
+	void processInnerMsgEx(ZInnerMsg *msg);
 
 	void consumeMsg();
-	void checkTimeout(time_t delta);
+	void checkTimeout(long delta);
+	void moduleRoutine(long delta);
 
  private:
 	typedef std::list<ZModule*> MODULE_LIST_TYPE;

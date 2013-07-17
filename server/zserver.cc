@@ -33,14 +33,16 @@ int ZServer::onInnerMsg(ZInnerMsg *msg)
 }
 
 int ZServer::init() {
-	if (state_ != STATE_INIT) {
-		// can only be initialized once
-		return -1;
-	}
+	// if (state_ != STATE_INIT) {
+	// 	// can only be initialized once
+	// 	return -1;
+	// }
 
 	int rv;
 
-	ZDispatcher::instance()->registerModule(this);
+	if (ZDispatcher::instance()->registerModule(this) != OK) {
+		return FAIL;
+	}
 	
 	fd_ = socket(AF_INET, SOCK_STREAM, 0);
 	assert(fd_ >= 0);
@@ -78,26 +80,28 @@ int ZServer::init() {
 
 	event_add(listen_event, NULL);
 
-	state_ = STATE_ACCEPTING;
+	// state_ = STATE_ACCEPTING;
 
 	return OK;
 }
 
 void ZServer::close() {
+	// XXX: use event_del to remove event
 	::close(fd_);
 	fd_ = -1;
-	state_ = STATE_FINISHED;
+	// state_ = STATE_FINISHED;
 }
 
 void ZServer::event(evutil_socket_t fd, short events) {
-	switch (state_) {
-		case STATE_ACCEPTING:
-			acceptClient(fd, events);
-			break;
-		default:
-			close();
-			break;
-	}
+	acceptClient(fd, events);
+	// switch (state_) {
+	// 	case STATE_ACCEPTING:
+	// 		acceptClient(fd, events);
+	// 		break;
+	// 	default:
+	// 		close();
+	// 		break;
+	// }
 }
 
 void ZServer::acceptClient(evutil_socket_t fd, short events) {
@@ -123,132 +127,4 @@ void ZServer::acceptClient(evutil_socket_t fd, short events) {
 		onAccept(clifd, addr, port);
 	}
 }
-
-
-
-///////////////////////////////////////////////
-
-// static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
-// {
-// 	assert(arg);
-// 	ZTask* task = (ZTask*)arg;
-// 	task->event(fd, events);
-// }
-// 
-// int ZServer::init() {
-// 	int rv = super_::init();
-// 	if (rv != 0) {
-// 		return rv;
-// 	}
-// 
-// 	fd_ = socket(AF_INET, SOCK_STREAM, 0);
-// 	assert(fd_ >= 0);
-// 
-// 	evutil_make_socket_nonblocking(fd_);
-// 
-// #ifndef WIN32
-// 	{
-// 		int one = 1;
-// 		setsockopt(fd_, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
-// 	}
-// #endif // WIN32
-// 
-// 	struct sockaddr_in sin;
-// 	sin.sin_family = AF_INET;
-// 	// sin.sin_addr.s_addr = 0; // Listen IP
-// 	inet_aton(ip_.c_str(), &sin.sin_addr);
-// 	sin.sin_port = htons(port_);
-// 
-// 	rv = bind(fd_, (struct sockaddr*) (&sin), sizeof(sin));
-// 	if (rv < 0) {
-// 		perror("bind");
-// 		return FAIL;
-// 	}
-// 
-// 	rv = listen(fd_, 16);
-// 	if (rv < 0) {
-// 		perror("listen");
-// 		return FAIL;
-// 	}
-// 
-// 	struct event* listen_event =
-// 		event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
-// 	assert(listen_event);
-// 
-// 	event_add(listen_event, NULL);
-// 
-// 	state_ = STATE_ACCEPTING;
-// 
-// 	return OK;
-// }
-// 
-// void ZServer::close() {
-// 	::close(fd_);
-// 	fd_ = -1;
-// 	state_ = STATE_FINISHED;
-// }
-// 
-// void ZServer::event(evutil_socket_t fd, short events) {
-// 	switch (state_) {
-// 		case STATE_ACCEPTING:
-// 			acceptClient(fd, events);
-// 			break;
-// 		default:
-// 			close();
-// 			break;
-// 	}
-// }
-// 
-// void ZServer::doTimeout() {
-// }
-// 
-// bool ZServer::isComplete() {
-// 	return (state_ == STATE_FINISHED);
-// }
-// 
-// int ZServer::onInnerMsg(ZInnerMsg *msg) {
-// 	printf("ZServer::onInnerMsg()");
-// 	return 0;
-// }
-// 
-// // static ZTask*
-// // getAcceptedSession(int type, event_base* base) {
-// // 	switch (type) {
-// // 		case ZServer::TYPE_ZIGBEE:
-// // 			return new ZZigBeeModule(base);
-// // 		case ZServer::TYPE_APICLIENT:
-// // 			return new ZApiModule(base);
-// // 		// case ZServer::TYPE_WEBCLIENT:
-// // 		// 	return new ZWebApiModule(base);
-// // 		default:
-// // 			printf("Unknown server type\n");
-// // 			assert(false);
-// // 			return NULL;
-// // 	}
-// // }
-// 
-// void ZServer::acceptClient(evutil_socket_t fd, short events) {
-// 	printf("ZServer::accept()\n");
-// 
-// 	struct sockaddr_storage ss;
-// 	socklen_t slen = sizeof(ss);
-// 	int clifd = accept(fd, (struct sockaddr*) (&ss), &slen);
-// 	if (clifd < 0) {           // XXX EAGAIN?
-// 		perror("accept");
-// 	} else if (clifd > FD_SETSIZE) {
-// 		printf("Maximum size of fd has reached.\n");
-// 		::close(clifd); // XXX evutil_closesocket
-// 	} else {
-// 		//
-// 		struct sockaddr_in* addr = (struct sockaddr_in*)(&ss);
-// 		unsigned short port = ntohs(addr->sin_port);
-// 		printf("accepted connection from: %s:%u\n",
-// 				inet_ntoa(addr->sin_addr), port);
-// 
-// 		evutil_make_socket_nonblocking(clifd);
-// 
-// 		onAccept(clifd, addr, port);
-// 	}
-// }
-
 

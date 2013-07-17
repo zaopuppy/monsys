@@ -1,6 +1,8 @@
 #ifndef _Z_SERVER_HANDLER_H__
 #define _Z_SERVER_HANDLER_H__
 
+#include <assert.h>
+
 #include <event2/event.h>
 
 #include "zhandler.h"
@@ -8,6 +10,14 @@
 class ZServerHandler : public ZHandler {
  public:
  	ZServerHandler(): fd_(-1), read_event_(NULL) {}
+
+ public:
+ 	static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg) {
+ 		assert(arg);
+ 		ZServerHandler *h = (ZServerHandler*)arg;
+ 		h->event(fd, events);
+ 	}
+
  public:
 	virtual int init() = 0;
 	virtual void close();

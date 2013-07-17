@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Moniter System</title>
+		<meta charset="utf-8" />
+		<meta name="Keywords" content="Canvas" />
+		<meta name="Description" content="Testing code for Moniter System" />
+		<link rel="stylesheet" type="text/css" href="mon_sys.css" >
+		<script type="text/javascript" src="jquery-1.10.1.js" ></script>
+		<script type="text/javascript" src="json2.js" ></script>
+		<script type="text/javascript" src="common.js"></script>
+		<script type="text/javascript" src="main_ctrl.js"></script>
+		<script type="text/javascript" src="smart_light.js"></script>
+		<script type="text/javascript" src="mon_sys.js"></script>
+	</head>
+	<body>
+
+		<input type="button" onclick="show_main_control_panel()" value="back" />
+
+		<!-- main-control-panel -->
+		<div id="main-control-panel">
+			<!--
+			<input type="button" onclick="get_dev_list()" value="get-dev-list" />
+			-->
+			<div id="progress-bar"></div>
+			<div id="device-list">
+				<table id="device-table" ></table>
+			</div>
+		</div>
+
+		<!-- for light controlling -->
+		<div id="light-control-panel">
+			<!-- -->
+			<input id="light-switch" type="checkbox" >Switch</input><br/>
+			<input id="light-bright-level" type="range" min="0" max="255" step="1" /><br/>
+			<canvas id="light-color-picker" ></canvas>
+		</div>
+
+		<!-- for unknown devices -->
+		<div id="unknwon-device-panel">
+			<p>Sorry, this device is not supported currently.</p>
+		</div>
+
+	</body>
+</html>
+

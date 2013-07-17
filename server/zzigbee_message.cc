@@ -106,12 +106,16 @@ int ZZBRegReq::encode(char* buf, uint32_t buf_len)
 
 	encode_len += sizeof(mac_.data);
 
+	ZMSG_ENCODE(dev_type_);
+	ZMSG_ENCODE(name_);
+	ZMSG_ENCODE(desc_);
+
 	return encode_len;
 }
 
 int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 {
-	int len = 0;
+	int decode_len = 0;
 
 	int rv = super_::decode(buf, buf_len);
 	if (rv < 0) {
@@ -120,13 +124,13 @@ int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 
 	buf += rv;
 	buf_len -= rv;
-	len += rv;
+	decode_len += rv;
 
 	if (buf_len < len_) {
 		return -1;
 	}
 
-	if (len_ != sizeof(mac_.data)) {
+	if (len_ < sizeof(mac_.data)) {
 		return -1;
 	}
 
@@ -134,9 +138,13 @@ int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 	memcpy(&mac_.data, buf, sizeof(mac_.data));
 	buf += sizeof(mac_.data);
 	buf_len -= sizeof(mac_.data);
-	len += sizeof(mac_.data);
+	decode_len += sizeof(mac_.data);
 
-	return len;
+	ZMSG_DECODE(dev_type_);
+	ZMSG_DECODE(name_);
+	ZMSG_DECODE(desc_);
+
+	return decode_len;
 }
 
 ///////////////////////////////////////////////////////////////

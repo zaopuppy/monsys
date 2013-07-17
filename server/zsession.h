@@ -22,8 +22,8 @@ class ZSession {
 			return false;
 		}
 
-		// printf("session complete: %p\n", this);
-		// printf("touch_time_: [%ld], timeout_: [%ld]\n", touch_time_, timeout_);
+		printf("session complete: %p\n", this);
+		printf("touch_time_: [%ld], timeout_: [%ld]\n", touch_time_, timeout_);
 
 		return true;
 	}
