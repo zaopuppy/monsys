@@ -65,17 +65,15 @@ function Monsys() {
     this.xml_http.send(raw_text);
   };
 
-  // FIXME: too ugly...
   this.get_dev_info = function(uid, dev_id, addr) {
-    // TODO:
-    // var req_obj = {
-    //  "cmd": "get-dev-info",
-    //  "uid": "uid001",
-    //  "dev-id": "5000",
-    // };
-    var req_obj = "{ \"cmd\": \"get-dev-info\", \"uid\": " + uid + ", \"dev-id\": " + dev_id + ", \"addr\": " + addr + " }";
+    var jreq = {
+      "cmd": "get-dev-info",
+      "uid": uid,
+      "dev-id": dev_id,
+      "addr": addr
+    };
     this.xml_http.open("POST", "monsys", true);
-    this.xml_http.send(req_obj);
+    this.xml_http.send_json(jreq);
   };
 
   this.set_dev_info = function(uid, addr, dev_ids, dev_vals) {
