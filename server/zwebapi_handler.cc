@@ -4,12 +4,11 @@
 #include <assert.h>
 #include <errno.h>
 
-#include "zerrno.h"
-#include "zlog.h"
-#include "zdispatcher.h"
-#include "zutil.h"
+#include "zframework.h"
 
-#include "zmodule.h"
+#include "zlog.h"
+#include "zutil.h"
+#include "zmodule_ex.h"
 #include "zzigbee_message.h"
 #include "zjson_codec.h"
 

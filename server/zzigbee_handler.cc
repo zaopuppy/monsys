@@ -5,9 +5,8 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include "zmodule.h"
-#include "zdispatcher.h"
-#include "zerrno.h"
+#include "zframework.h"
+
 #include "zzigbee_session.h"
 
 /////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 #ifndef _Z_CLIENT_HANDLER_H__
 #define _Z_CLIENT_HANDLER_H__
 
-#include "zhandler.h"
+#include "zframework.h"
 
 class ZClientHandler : public ZHandler {
  public:

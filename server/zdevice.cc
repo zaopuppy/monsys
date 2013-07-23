@@ -1,6 +1,7 @@
 #include "zdevice.h"
 
 #include <assert.h>
+#include <stdlib.h>
 
 void ZDevManager::reset()
 {

@@ -1,11 +1,9 @@
 #ifndef _ZSERVER_SESSION_H__
 #define _ZSERVER_SESSION_H__
 
-#include "ztask.h"
-
 #include <iostream>
 
-#include "zmodule.h"
+#include "zframework.h"
 
 class ZServerModule : public ZTask {
 public:

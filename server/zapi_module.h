@@ -1,12 +1,10 @@
 #ifndef _ZAPI_MODULE_H__
 #define _ZAPI_MODULE_H__
 
-#include "ztask.h"
-
 #include <event2/event.h>
 
 
-#include "zmodule.h"
+#include "zmodule_ex.h"
 
 class ZApiModule : public ZModule {
 public:

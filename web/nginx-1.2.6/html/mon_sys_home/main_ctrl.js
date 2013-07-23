@@ -8,6 +8,9 @@ function MainCtrl() {
   this.xml_http = null;
 
   this.init = function() {
+  	// --- for debugging only ---
+  	this.update_list_box(null);
+  	// --- for debugging only ---
   }
 
   this.show = function() {
@@ -33,6 +36,13 @@ function MainCtrl() {
 	}
 
 	this.update_list_box = function(dev_info_list) {
+
+		this.clear_device_list_box();
+
+		// --- for debugging only ---
+		dev_info_list = {"cmd": "get-dev-list-rsp", "devs": [{"type": 0, "addr": 0, "name": "dev-00", "state": 0}, {"type": 1, "addr": 1, "name": "dev-01", "state": 1}, {"type": 2, "addr": 2, "name": "dev-02", "state": 2}, {"type": 3, "addr": 3, "name": "dev-03", "state": 3}, {"type": 4, "addr": 4, "name": "dev-04", "state": 4}], "status": 0};
+		// --- for debugging only ---
+
 		// refresh
 		// TODO: should do it at the very beginning
 		// if (jobj.hasOwnProperty("devs"))
@@ -45,44 +55,52 @@ function MainCtrl() {
 			return;
 		}
 
-		var tbl = $('<table id="device-table"></table>');
+		// var tbl = $('<table id="device-table"></table>');
+		var tbl = $('<ul id="device-table"></ul>');
 		for (var i = 0; i < devs.length; ++i) {
-			var row = $('<tr class="device-record"></tr>');
+			var row = $('<li class="device-record"></li>');
+			// var row = $('<tr class="device-record"></tr>');
 
 			// Image, name, desc, state, operate
-			var imageCell = $('<td></td>');
-			var nameCell = $('<td></td>');
-			var descCell = $('<td></td>');
-			var operaCell = $('<td></td>');
+			// var imageCell = $('<td></td>');
+			// var nameCell = $('<td></td>');
+			// var descCell = $('<td></td>');
+			// var operaCell = $('<td></td>');
+			var imageCell = $('<span class="image"></span>');
+			var nameCell = $('<span class="name"></span>');
 
 			// image
 			// var img = document.createElement("img");
 			var img = this.get_icon_by_type(devs[i]["type"]);
 			// img.src = "Safari_Agua.png";
 			// can't use img's width, for async loading...
-			imageCell.width(48);
+			// imageCell.width(48);
 			imageCell.append(img);
 			// name
-			nameCell.text(devs[i]["name"]);
-			nameCell.width(80);
+			// nameCell.text(devs[i]["name"]);
+			// nameCell.width(80);
+			// XXX
+			// nameCell.width($('#device-list').width() - imageCell.width() - 48);
 			// desc
-			descCell.text(devs[i]["desc"]);
-			descCell.width(400);
+			// descCell.text(devs[i]["desc"]);
+			// descCell.width(400);
 			// opera
-			var btn = $('<input type="button" value="opera"></input>');
+			var btn = $('<input type="button"></input>');
+			btn.val(devs[i]["name"]);
 			btn.click(function(addr, type) {
 				return function() {
 					console.log("operation on device: addr=" + addr + ", type=" + type);
 					do_opera_device(addr, type);
 				}
 			}(devs[i]["addr"], devs[i]["type"]));
-			operaCell.append(btn);
+			// operaCell.append(btn);
+			nameCell.append(btn);
 
 			// append all elements
 			row.append(imageCell);
 			row.append(nameCell);
-			row.append(descCell);
-			row.append(operaCell);
+			// row.append(descCell);
+			// row.append(operaCell);
 			tbl.append(row);
 		}
 

@@ -4,16 +4,17 @@
 #include <stdint.h>
 #include <map>
 #include <assert.h>
+#include <unistd.h>
+
+#include "zframework.h"
 
 #include "zclient_handler.h"
 
 #include "zzigbee_message.h"
-#include "zsession_ctrl.h"
-#include "zinner_message.h"
-#include "zmodule.h"
+#include "zinner_message_ex.h"
+#include "zmodule_ex.h"
 #include "zlog.h"
 #include "zdevice.h"
-#include "zsession.h"
 
 class ZZigBeeHandler : public ZClientHandler {
  public:

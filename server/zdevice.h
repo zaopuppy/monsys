@@ -4,6 +4,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <stdint.h>
+#include <string.h>
 
 const uint32_t MAX_ID_PER_ZB_DEV = 256;
 

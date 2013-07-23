@@ -1,11 +1,13 @@
 #ifndef _Z_WEBAPI_SERVER_H__
 #define _Z_WEBAPI_SERVER_H__
 
-#include "zserver.h"
-
 #include <event2/event.h>
+#include <map>
+
+#include "zframework.h"
 
 #include "zserver_handler.h"
+#include "zmodule_ex.h"
 
 class ZWebApiServer : public ZServer {
  public:

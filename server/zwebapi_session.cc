@@ -1,5 +1,7 @@
 #include "zwebapi_session.h"
 
+#include <string.h>
+
 uint32_t ZWebApiSession::sequence_ = 0x00;
 
 int ZWebApiSession::event(evutil_socket_t fd, char *buf, uint32_t buf_len)

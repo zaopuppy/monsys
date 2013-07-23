@@ -84,7 +84,7 @@ function show_unknown_device_panel(addr) {
 function onGetDevListRsp(jobj) {
 	console.log("onGetDevListRsp()");
 
-	g_main_ctrl.clear_device_list_box();
+	// g_main_ctrl.clear_device_list_box();
 	g_main_ctrl.update_list_box(jobj);
 }
 

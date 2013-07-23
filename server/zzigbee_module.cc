@@ -4,7 +4,8 @@
 #include <assert.h>
 #include <errno.h>
 
-#include "zerrno.h"
+#include "zframework.h"
+
 #include "zlog.h"
 
 static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)

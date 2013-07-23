@@ -6,10 +6,9 @@
 #include <event2/event.h>
 #include <jansson.h>
 
-#include "ztask.h"
 #include "zserver_handler.h"
 #include "zwebapi_session.h"
-#include "zinner_message.h"
+#include "zinner_message_ex.h"
 
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
