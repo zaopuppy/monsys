@@ -1,7 +1,7 @@
 #ifndef _ZCLIENT_MODULE_H__
 #define _ZCLIENT_MODULE_H__
 
-#include "zframework.h"
+#include "framework/zframework.h"
 
 class ZClientModule : public ZTask {
 public:

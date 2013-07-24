@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include "zframework.h"
+#include "framework/zframework.h"
 
 #include "zzigbee_session.h"
 

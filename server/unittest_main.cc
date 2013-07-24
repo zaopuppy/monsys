@@ -3,7 +3,7 @@
 
 #include <jansson.h>
 
-#include "zframework.h"
+#include "framework/zframework.h"
 
 #include "zlog.h"
 #include "zzigbee_message.h"

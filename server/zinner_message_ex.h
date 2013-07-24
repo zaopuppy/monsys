@@ -1,7 +1,7 @@
 #ifndef Z__INNER_MESSAGE_EX_H__
 #define Z__INNER_MESSAGE_EX_H__
 
-#include "zinner_message.h"
+#include "framework/zframework.h"
 
 #include "zzigbee_message.h"
 

@@ -3,7 +3,8 @@
 
 #include <map>
 
-#include "zframework.h"
+#include "framework/zframework.h"
+
 #include "zzigbee_message.h"
 #include "zzigbee_handler.h"
 

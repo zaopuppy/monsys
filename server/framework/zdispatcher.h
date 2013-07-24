@@ -26,20 +26,9 @@ class ZDispatcher {
 	void routine(time_t delta);
 
  private:
-	// ZModule* findModule(int moduleType, int moduleId);
 	ZModule* findModule(int moduleType);
 
-	// void processMsg(ZInnerGetDevListReq *msg);
-	// void processMsg(ZInnerGetDevListRsp *msg);
-	// void processMsg(ZInnerGetDevInfoReq *msg);
-	// void processMsg(ZInnerGetDevInfoRsp *msg);
-	// void processMsg(ZInnerSetDevInfoReq *msg);
-	// void processMsg(ZInnerSetDevInfoRsp *msg);
-
-	void processInnerMsg(ZInnerMsg *msg);
-	void processInnerMsgEx(ZInnerMsg *msg);
-
-	void consumeMsg();
+	// void consumeMsg();
 	void checkTimeout(long delta);
 	void moduleRoutine(long delta);
 

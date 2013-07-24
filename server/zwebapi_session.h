@@ -7,7 +7,7 @@
 
 #include <jansson.h>
 
-#include "zframework.h"
+#include "framework/zframework.h"
 
 class ZWebApiSession {
  public:
