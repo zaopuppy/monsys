@@ -29,33 +29,6 @@ bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
 	return true;
 }
 
-// bool start_api_server(const char* ip, uint16_t port, event_base* base)
-// {
-// 	ZModule *module = new ZApiServer(ip, port, base);
-// 	if (module->init() != OK) {
-// 		printf("Failed to initialize server.\n");
-// 		return false;
-// 	}
-
-// 	return true;
-// }
-
-// bool start_client(event_base *base)
-// {
-// 	int count = 1;
-
-// 	ZModule *m;
-// 	for (int i = 0; i < count; ++i) {
-// 	  m = new ZClient(base);
-// 		if (m->init() != OK) {
-// 			printf("Failed to init client: %d\n", i);
-// 			return false;
-// 		}
-// 	}
-
-// 	return true;
-// }
-
 bool start_serial(event_base *base)
 {
 	// const char* serial_dev = "/dev/tty.usbmodemfd141";

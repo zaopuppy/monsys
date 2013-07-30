@@ -6,7 +6,8 @@
 #include <event2/event.h>
 #include <jansson.h>
 
-#include "zserver_handler.h"
+#include "framework/zframework.h"
+
 #include "zwebapi_session.h"
 #include "zinner_message_ex.h"
 

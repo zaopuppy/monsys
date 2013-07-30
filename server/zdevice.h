@@ -7,54 +7,9 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "zzigbee_message.h"
+
 const uint32_t MAX_ID_PER_ZB_DEV = 256;
-
-typedef uint16_t zb_addr_type_t;
-typedef struct {
-	char data[8];
-} zb_mac_type_t;
-
-enum zb_item_id_type {
-	zb_item_id_type_invalid = 0,
-	zb_item_id_type_s8,
-};
-
-// struct ItemIdInfo {
-typedef struct zb_item_id_info {
-	uint8_t 			id_;					// 0x00 and 0xFF are special, never use it
-	std::string 	name_;
-	std::string 	desc_;
-	uint8_t 			type_;				// 0: invalid
-	std::string 	formatter_;
-	time_t 				last_update_time_;	// XXX: not using yet
-
-	void clone(const zb_item_id_info &other) {
-		id_   						= other.id_;
-		name_ 						= other.name_;
-		desc_ 						= other.desc_;
-		type_ 						= other.type_;
-		formatter_ 				= other.formatter_;
-		last_update_time_ 	= other.last_update_time_;
-	}
-
-	void reset() {
-		id_ 							= 0;
-		name_ 						= "-";
-		desc_ 						= "-";
-		type_ 						= zb_item_id_type_invalid;
-		formatter_ 				= "";
-		last_update_time_ 	= 0;
-	}
-
-	void print() {
-		printf("id:        [%u]\n", id_);
-		printf("name:      [%s]\n", name_.c_str());
-		printf("desc:      [%s]\n", desc_.c_str());
-		printf("type:      [%u]\n", type_);
-		printf("formatter: [%s]\n", formatter_.c_str());
-		printf("last_update_time: [%ld]\n", last_update_time_);
-	}
-} zb_item_id_info_t;
 
 enum zb_dev_state {
 	zb_dev_state_invalid = -1,

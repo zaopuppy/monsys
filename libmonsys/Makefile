@@ -1,6 +1,7 @@
 
-CC  := /usr/bin/gcc
-AR  := /usr/bin/ar
+CC  := gcc
+CXX := g++
+AR  := ar
 
 
 CFLAGS  := -g -Wall
@@ -9,10 +10,13 @@ ARFLAGS := -r
 
 TARGET  := libmonsys.a
 
-CFILES := main.c zlog.c zmessage_codec.c z_codec.c zb_msg.c
+CFILES := main.c zlog.c \
+	zmessage_codec.c z_codec.c zb_msg.c
 
-OBJFILES := $(CFILES:.c=.o)
-DEPFILES := $(OBJFILES:.o=.d)
+CXXFILES := zzigbee_message.cc
+
+OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
+DEPFILES := $(OBJFILES:%.o=%.d)
 
 $(TARGET) : $(OBJFILES)
 	rm -f $@
@@ -22,9 +26,17 @@ $(TARGET) : $(OBJFILES)
 	rm -f $@
 	$(CC) $(CFLAGS) -MM -o $@ -c $<
 
+%.d : %.cc
+	rm -f $@
+	$(CXX) $(CFLAGS) -MM -o $@ -c $<
+
 %.o : %.c
 	rm -f $@
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+%.o : %.cc
+	rm -f $@
+	$(CXX) $(CFLAGS) -o $@ -c $<
 
 include $(DEPFILES)
 

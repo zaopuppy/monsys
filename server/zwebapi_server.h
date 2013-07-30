@@ -6,7 +6,6 @@
 
 #include "framework/zframework.h"
 
-#include "zserver_handler.h"
 #include "zmodule_ex.h"
 
 class ZWebApiServer : public ZServer {

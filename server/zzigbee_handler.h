@@ -8,8 +8,6 @@
 
 #include "framework/zframework.h"
 
-#include "zclient_handler.h"
-
 #include "zzigbee_message.h"
 #include "zinner_message_ex.h"
 #include "zmodule_ex.h"

@@ -5,7 +5,7 @@
 
 #include <event2/event.h>
 
-#include "framework/zframework.h"
+#include "zhandler.h"
 
 class ZServerHandler : public ZHandler {
  public:

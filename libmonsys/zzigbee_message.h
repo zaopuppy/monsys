@@ -6,7 +6,7 @@
 #include <string>
 
 #include "zmsg.h"
-#include "zdevice.h"
+// #include "zdevice.h"
 
 const uint8_t Z_ID_ZB_REG_REQ = 0x01;
 const uint8_t Z_ID_ZB_REG_RSP = 0x81;
@@ -42,6 +42,53 @@ typedef union {
 	uint16_t int_val;
 	char str_val[1];
 } zb_dev_item_val_t;
+
+typedef uint16_t zb_addr_type_t;
+typedef struct {
+	char data[8];
+} zb_mac_type_t;
+
+enum zb_item_id_type {
+	zb_item_id_type_invalid = 0,
+	zb_item_id_type_s8,
+};
+
+// struct ItemIdInfo {
+typedef struct zb_item_id_info {
+	uint8_t 			id_;					// 0x00 and 0xFF are special, never use it
+	std::string 	name_;
+	std::string 	desc_;
+	uint8_t 			type_;				// 0: invalid
+	std::string 	formatter_;
+	time_t 				last_update_time_;	// XXX: not using yet
+
+	void clone(const zb_item_id_info &other) {
+		id_   						= other.id_;
+		name_ 						= other.name_;
+		desc_ 						= other.desc_;
+		type_ 						= other.type_;
+		formatter_ 				= other.formatter_;
+		last_update_time_ 	= other.last_update_time_;
+	}
+
+	void reset() {
+		id_ 							= 0;
+		name_ 						= "-";
+		desc_ 						= "-";
+		type_ 						= zb_item_id_type_invalid;
+		formatter_ 				= "";
+		last_update_time_ 	= 0;
+	}
+
+	void print() {
+		printf("id:        [%u]\n", id_);
+		printf("name:      [%s]\n", name_.c_str());
+		printf("desc:      [%s]\n", desc_.c_str());
+		printf("type:      [%u]\n", type_);
+		printf("formatter: [%s]\n", formatter_.c_str());
+		printf("last_update_time: [%ld]\n", last_update_time_);
+	}
+} zb_item_id_info_t;
 
 // struct zb_item_id_info_t {
 // 	uint8_t id;
