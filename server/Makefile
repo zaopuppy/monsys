@@ -9,11 +9,9 @@ CFILES :=
 CXXFILES := main.cc \
 	zutil.cc \
 	zmodule_ex.cc \
-	zserver_handler.cc \
 	zapi_module.cc \
 	zzigbee_module.cc \
 	zserial.cc \
-	zzigbee_message.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
 	zapi_server.cc \
@@ -26,7 +24,8 @@ CXXFILES := main.cc \
 CXXFILES += \
 	framework/zdispatcher.cc \
 	framework/zclient.cc \
-	framework/zserver.cc
+	framework/zserver.cc \
+	framework/zserver_handler.cc
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

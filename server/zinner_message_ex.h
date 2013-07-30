@@ -4,6 +4,7 @@
 #include "framework/zframework.h"
 
 #include "zzigbee_message.h"
+#include "zdevice.h"
 
 enum {
 	Z_INVALID = -1,
