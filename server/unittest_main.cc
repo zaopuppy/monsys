@@ -3,10 +3,11 @@
 
 #include <jansson.h>
 
-#include "framework/zframework.h"
+#include "libframework/zframework.h"
 
-#include "zlog.h"
-#include "zzigbee_message.h"
+#include "libbase/zlog.h"
+
+#include "libzigbee/zzigbee_message.h"
 #include "zutil.h"
 #include "zformatter.h"
 #include "unittest_main.h"
@@ -51,15 +52,14 @@ void test_json()
 	}
 
 	{
-		int rv;
 		json_t *jobj = json_object();
 		assert(jobj);
 		
 		json_t *cmd = json_string("get-dev-info-rsp");
-		rv = json_object_set_new(jobj, "cmd", cmd);
+		json_object_set_new(jobj, "cmd", cmd);
 
 		json_t *code = json_integer(-4);
-		rv = json_object_set_new(jobj, "code", code);
+		json_object_set_new(jobj, "code", code);
 		
 		json_t *info = json_array();
 		// 1

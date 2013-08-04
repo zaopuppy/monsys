@@ -1,7 +1,7 @@
 #ifndef _Z_ZIGBEE_SESSION_H__
 #define _Z_ZIGBEE_SESSION_H__
 
-#include "framework/zframework.h"
+#include "libframework/zframework.h"
 
 class ZZigBeeSession : public ZSession {
  public:

@@ -8,11 +8,10 @@
 
 #include "libbase/zlog.h"
 #include "zutil.h"
-#include "zmodule_ex.h"
+#include "module.h"
 #include "libzigbee/zzigbee_message.h"
-// #include "zjson_codec.h"
 
-#include "zroute.h"
+// #include "zroute.h"
 
 //////////////////////////////////////////////////////
 int ZWebApiHandler::init() {
@@ -47,8 +46,7 @@ int ZWebApiHandler::processMsg(ZInnerGetDevListRsp *msg)
 	json_t *jcmd = json_string("get-dev-list-rsp");
 	rv = json_object_set_new(jobj, "cmd", jcmd);
 	if (rv != 0) {
-		printf("Failed to set 'cmd'\n");
-		return FAIL;
+		return rv;
 	}
 
 	// status
@@ -56,8 +54,7 @@ int ZWebApiHandler::processMsg(ZInnerGetDevListRsp *msg)
 	jstatus = json_integer(0);
 	rv = json_object_set_new(jobj, "status", jstatus);
 	if (rv != 0) {
-		printf("Failed to set 'status'\n");
-		return FAIL;
+		return rv;
 	}
 
 	// dev array
@@ -120,8 +117,7 @@ int ZWebApiHandler::processMsg(ZInnerGetDevInfoRsp *msg)
 	json_t *cmd = json_string("get-dev-info-rsp");
 	rv = json_object_set_new(jobj, "cmd", cmd);
 	if (rv != 0) {
-		printf("Failed to set 'cmd'\n");
-		return FAIL;
+		return rv;
 	}
 
 	json_t *code;
@@ -132,6 +128,9 @@ int ZWebApiHandler::processMsg(ZInnerGetDevInfoRsp *msg)
 	}
 
 	rv = json_object_set_new(jobj, "code", code);
+	if (rv != 0) {
+		return rv;
+	}
 
 	json_t *info = json_array();
 
@@ -175,15 +174,13 @@ int ZWebApiHandler::processMsg(ZInnerSetDevInfoRsp *msg)
 	json_t *jcmd = json_string("set-dev-info-rsp");
 	rv = json_object_set_new(jroot, "cmd", jcmd);
 	if (rv != 0) {
-		printf("Failed to set 'cmd'\n");
-		return FAIL;
+		return rv;
 	}
 
 	json_t *jstatus = json_integer(msg->status_);
 	rv = json_object_set_new(jroot, "status", jstatus);
 	if (rv != 0) {
-		printf("Failed to set 'status'\n");
-		return FAIL;
+		return rv;
 	}
 
 	char *str_dump = json_dumps(jroot, 0);
@@ -464,7 +461,8 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 		}
 
 		// set destination address
-		inner_msg->dst_addr_.module_type_ = Z_MODULE_SERIAL;
+		// XXX
+		inner_msg->dst_addr_.module_type_ = 0;
 		inner_msg->dst_addr_.handler_id_ = ANY_ID;
 
 		// ZDispatcher::instance()->sendMsg(inner_msg);

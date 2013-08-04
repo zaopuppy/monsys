@@ -6,13 +6,14 @@
 #include <assert.h>
 #include <unistd.h>
 
-#include "framework/zframework.h"
+#include "libbase/zlog.h"
+#include "libframework/zframework.h"
+#include "libzigbee/zzigbee_message.h"
+#include "libzigbee/zbdefines.h"
+#include "libzigbee/zbdevice_manager.h"
 
-#include "zzigbee_message.h"
 #include "zinner_message_ex.h"
 #include "zmodule_ex.h"
-#include "zlog.h"
-#include "zdevice.h"
 
 class ZZigBeeHandler : public ZClientHandler {
  public:
@@ -69,7 +70,7 @@ class ZZigBeeHandler : public ZClientHandler {
 	// ZZBDev zb_dev_list_[DEV_LIST_LEN]; // 1 ~ 255
 	ZInnerAddress addr_;
 
-	ZDevManager dev_manager_;
+	ZZBDevManager dev_manager_;
 
 	// TODO: they are bound, make it better for management
 	SESSION_CTRL_TYPE session_ctrl_;

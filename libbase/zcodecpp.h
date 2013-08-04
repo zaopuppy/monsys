@@ -20,8 +20,10 @@
 // template
 template<typename T>
 inline int encode(const T &v, char *buf, uint32_t buf_len);
+
 template<typename T>
 inline int decode(      T &v, char *buf, uint32_t buf_len);
+
 template<typename T>
 inline int getlen(const T &v);
 

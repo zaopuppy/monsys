@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+#include "fgw_server.h"
+
 int FGWHandler::init()
 {
 	return OK;
@@ -11,6 +13,7 @@ int FGWHandler::init()
 void FGWHandler::close()
 {
 	super_::close();
+	server_->removeHandler(this);
 }
 
 int FGWHandler::onRead(char *buf, uint32_t buf_len)

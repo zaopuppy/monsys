@@ -77,7 +77,7 @@ void ZWebApiServer::onAccept(
 	assert(h);
 
 	h->setId(handler_id);
-	h->setModuleType(Z_MODULE_WEBAPI);
+	h->setModuleType(getType());
 
 	h->read_event_ =
 		event_new(base_, fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);

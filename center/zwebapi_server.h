@@ -6,12 +6,12 @@
 
 #include "libframework/zframework.h"
 
-#include "zmodule_ex.h"
+#include "module.h"
 
 class ZWebApiServer : public ZServer {
  public:
 	ZWebApiServer(const char *ip, uint16_t port, event_base *base)
-		: ZServer(ip, port, base, Z_MODULE_WEBAPI) {
+		: ZServer(ip, port, base, MODULE_WEBAPI_SERVER) {
 	}
 
 	typedef ZServer super_;

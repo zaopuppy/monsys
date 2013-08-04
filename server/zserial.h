@@ -3,9 +3,9 @@
 
 #include <map>
 
-#include "framework/zframework.h"
+#include "libframework/zframework.h"
 
-#include "zzigbee_message.h"
+#include "libzigbee/zzigbee_message.h"
 #include "zzigbee_handler.h"
 
 class ZSerial : public ZModule {

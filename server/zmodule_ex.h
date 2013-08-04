@@ -1,7 +1,7 @@
 #ifndef _Z_MODULE_H_EX_H__
 #define _Z_MODULE_H_EX_H__
 
-#include "framework/zframework.h"
+#include "libframework/zframework.h"
 
 enum Z_MODULE_TYPE {
 	Z_MODULE_UNKNOWN = 0,

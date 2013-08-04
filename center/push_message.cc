@@ -4,7 +4,7 @@
 
 #include <jansson.h>
 
-#include "zlog.h"
+#include "libbase/zlog.h"
 
 // { "cmd": "HB" }
 ZInnerMsg* convertHB(json_t *jroot)

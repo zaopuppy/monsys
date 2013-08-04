@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include "framework/zframework.h"
+#include "libframework/zframework.h"
 
 #include "zzigbee_session.h"
 
@@ -315,8 +315,8 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	}
 	// --- for debugging only ---
 
-	const ZDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
-	ZDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
+	const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
+	ZZBDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
 	for (; iter != dev_map.end(); ++iter) {
 		printf("count\n");
 		info = new ZZBDevInfo(*(iter->second));
