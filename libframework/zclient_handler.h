@@ -1,7 +1,7 @@
 #ifndef _Z_CLIENT_HANDLER_H__
 #define _Z_CLIENT_HANDLER_H__
 
-#include "zclient_handler.h"
+#include "zhandler.h"
 
 class ZClientHandler : public ZHandler {
  public:
@@ -10,6 +10,10 @@ class ZClientHandler : public ZHandler {
 // 	virtual int close() = 0;
 // 	virtual int event(char *buf, uint32_t buf_len) = 0;
 // 	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
+
+ public:
+ 	virtual void onConnected() = 0;
+ 	// virtual void onDisconnected() = 0;
 
  public:
 	evutil_socket_t fd_;

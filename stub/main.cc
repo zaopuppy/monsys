@@ -4,15 +4,24 @@
 
 #include <event2/event.h>
 
-#include "fgw_server.h"
+#include "fgw_client.h"
 
 using namespace std;
 
-ZServer *g_server = NULL;
-
 static void routine(evutil_socket_t fd, short events, void *arg)
 {
-	g_server->routine(500);
+}
+
+int connectToServer(const char *ip, short port, event_base *base)
+{
+	FGWClient *client = new FGWClient(base);
+	client->setServerAddress(ip, port);
+	if (0 != client->init()) {
+		Z_LOG_E("Failed to initialize fgw client\n");
+		return -1;
+	}
+
+	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -20,10 +29,15 @@ int main(int argc, char *argv[])
 	struct event_base* base = event_base_new();
 	assert(base);
 
-	g_server = new FGWServer("0.0.0.0", 1983, base);
-	if (OK != g_server->init()) {
-		Z_LOG_E("Failed to start FGW Server, quit\n");
-		return -1;
+	// g_server = new FGWServer("0.0.0.0", 1983, base);
+	// if (OK != g_server->init()) {
+	// 	Z_LOG_E("Failed to start FGW Server, quit\n");
+	// 	return -1;
+	// }
+	for (int i = 0; i < 1000; ++i) {
+		if (0 != connectToServer("127.0.0.1", 1983, base)) {
+			return -1;
+		}
 	}
 
 	{

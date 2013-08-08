@@ -8,6 +8,8 @@
 
 #include "zerrno.h"
 
+#include "libbase/zlog.h"
+
 
 // TODO: server wait timeout
 // static const struct timeval SERVER_WAIT_TIMEOUT = { 20, 0 };
@@ -81,8 +83,8 @@ int ZClient::connect() {
 
 	struct sockaddr_in sin;
 	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = inet_addr("127.0.0.1");
-	sin.sin_port = 1983;
+	sin.sin_addr.s_addr = inet_addr(server_ip_.c_str());
+	sin.sin_port = htons(server_port_);
 
 	// connect(int socket, const struct sockaddr *address, socklen_t address_len);
 	rv = ::connect(fd_, (struct sockaddr*) (&sin), sizeof(sin));
@@ -134,7 +136,7 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 	socklen_t val_len = sizeof(val);
 	int rv = getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &val_len);
 	if (rv == 0 && val == 0) {
-		printf("Connected\n");
+		printf("Connected: %p\n", this);
 		// event_free(write_event_);
 		// write_event_ = NULL;
 		read_event_ =
@@ -142,8 +144,19 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 		event_add(read_event_, NULL);
 
 		state_ = STATE_CONNECTED;
+		if (handler_) {
+			handler_->onConnected();
+		}
+	// XXX: why sometimes this fail?
+	// } else if (rv == 0 && errno == EINPROGRESS) {
+	// 	Z_LOG_W("still connecting: %p\n", this);
+	// 	// one shot event
+	// 	struct event* ev =
+	// 		event_new(base_, fd_, EV_WRITE, SOCKET_CALLBACK, (void*)this);
+	// 	event_add(ev, NULL);
 	} else {
-		printf("Failed to connect\n");
+		printf("Failed to connect, rv=%d, val=%d, errno=%d\n",
+			rv, val, errno);
 		// event_free(read_event_);
 		// read_event_ = NULL;
 		// event_free(write_event_);
@@ -182,15 +195,18 @@ void ZClient::onConnected(evutil_socket_t fd, short events) {
 		scheduleReconnect();
 		return;
 	}
-	
-	// == for DEBUGGING only ==
-	if (rv >= (int)sizeof(buf_)) {
-		buf_[sizeof(buf_) - 1] = 0x00;
-	} else {
-		buf_[rv] = 0x00;
+
+	if (handler_) {
+		handler_->onRead(buf_, rv);
 	}
-	printf("Received: %s\n", buf_);
-	// == for DEBUGGING only ==
+	// // == for DEBUGGING only ==
+	// if (rv >= (int)sizeof(buf_)) {
+	// 	buf_[sizeof(buf_) - 1] = 0x00;
+	// } else {
+	// 	buf_[rv] = 0x00;
+	// }
+	// printf("Received: %s\n", buf_);
+	// // == for DEBUGGING only ==
 }
 
 int ZClient::onDisconnected(evutil_socket_t fd, short events) {
@@ -205,6 +221,9 @@ int ZClient::onDisconnected(evutil_socket_t fd, short events) {
 				read_event_ =
 					event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
 				event_add(read_event_, NULL);
+				if (handler_) {
+					handler_->onConnected();
+				}
 				break;
 			}
 		case ERR_IO_PENDING:

@@ -51,7 +51,6 @@ int ZSerial::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZSerial::onInnerMsg()\n");
 
-
 	return handler_->onInnerMsg(msg);
 }
 
@@ -177,8 +176,6 @@ int ZSerial::connect()
 		tcsetattr(fd_, TCSANOW, &opts);
 	}
 
-	state_ = STATE_CONNECTED;
-
 	printf("serial port initialized.\n");
 
 	read_event_ =
@@ -194,7 +191,11 @@ int ZSerial::connect()
 		return FAIL;
 	}
 
+	state_ = STATE_CONNECTED;
+
 	handler_->fd_  = fd_;
+
+	handler_->onConnected();
 
 	return OK;
 }

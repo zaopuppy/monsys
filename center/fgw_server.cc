@@ -2,13 +2,15 @@
 
 #include "libbase/zlog.h"
 
+// FIXME: "W|id[1426196784] doesn't exist"
+// happens when lots of client comes
 void FGWServer::removeHandler(ZServerHandler *h)
 {
 	MAP_TYPE::iterator iter = handler_map_.find(h->getId());
 	if (iter != handler_map_.end()) {
 		handler_map_.erase(iter);
 	} else {
-		Z_LOG_W("id[%d] doesn't exist");
+		Z_LOG_W("id[%d] doesn't exist\n");
 		// no, we can't return, this handler must be deleted
 		// return;
 	}
@@ -18,7 +20,7 @@ void FGWServer::removeHandler(ZServerHandler *h)
 
 void FGWServer::routine(long delta)
 {
-	Z_LOG_D("FGWServer::routine()\n");
+	// Z_LOG_D("FGWServer::routine()\n");
 
 	deleteClosedHandlers();
 }
@@ -27,7 +29,7 @@ void FGWServer::deleteClosedHandlers()
 {
 	size_t list_len = delete_handler_list_.size();
 	for (size_t i = 0; i < list_len; ++i) {
-		Z_LOG_D("deleting: %p\n", delete_handler_list_[i]);
+		// Z_LOG_D("deleting: %p\n", delete_handler_list_[i]);
 		delete delete_handler_list_[i];
 	}
 
@@ -62,7 +64,23 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 
 handler_id_t FGWServer::genHandlerId()
 {
-	return 0;
+	static handler_id_t s_id = 0;
+	static const handler_id_t MAX_HANDLER_NUM = 0xFFFFF; // > 100w
+
+	MAP_TYPE::iterator iter;
+	handler_id_t old_id = s_id;
+	do {
+		iter = handler_map_.find(s_id);
+		if (iter == handler_map_.end()) {
+			return s_id++;
+		}
+		++s_id;
+		if (s_id > MAX_HANDLER_NUM) {
+			s_id = 0;
+		}
+	} while (s_id != old_id);
+
+	return -1;
 }
 
 

@@ -44,6 +44,8 @@ class ZZigBeeHandler : public ZClientHandler {
 
 	virtual void routine(long delta);
 
+	virtual void onConnected();
+
  private:
 	int processMsg(ZZBRegReq &msg);
 	// int processMsg(ZZBGetReq &msg);

@@ -79,6 +79,12 @@ void ZZigBeeHandler::routine(long delta)
 	}
 }
 
+void ZZigBeeHandler::onConnected()
+{
+	Z_LOG_D("ZZigBeeHandler::onConnected()");
+}
+
+
 int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 {
 	printf("ZZigBeeHandler::onRead()\n");

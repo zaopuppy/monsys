@@ -19,6 +19,7 @@
 [ ] bluebooth support
 [ ] version control for id-info
 [ ] does ZigBee message header need a sequence field?
+[ ] use smart pointer instead of raw pointer
 
 
 [ ] 接口变更:
