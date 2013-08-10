@@ -26,6 +26,7 @@ GTAGS
 *.d
 
 bak
+ts
 
 3rd/libevent-2.0/Makefile
 3rd/libevent-2.0/config.h
@@ -59,7 +60,6 @@ bak
 3rd/libevent-2.0/test/test-ratelim
 3rd/libevent-2.0/test/test-time
 3rd/libevent-2.0/test/test-weof
-Makefile
 libs/
 server/obj/
 server/t.pcap

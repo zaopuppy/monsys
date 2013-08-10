@@ -8,6 +8,8 @@
 
 using namespace std;
 
+std::vector<FGWClient*> g_client_list;
+
 static void routine(evutil_socket_t fd, short events, void *arg)
 {
 }
@@ -15,11 +17,19 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 int connectToServer(const char *ip, short port, event_base *base)
 {
 	FGWClient *client = new FGWClient(base);
+	if (!client) {
+		Z_LOG_E("client == NULL\n");
+		exit(-1);
+	}
 	client->setServerAddress(ip, port);
 	if (0 != client->init()) {
 		Z_LOG_E("Failed to initialize fgw client\n");
 		return -1;
 	}
+
+	g_client_list.push_back(client);
+
+	Z_LOG_D("current %u clients\n", g_client_list.size());
 
 	return 0;
 }
@@ -34,8 +44,11 @@ int main(int argc, char *argv[])
 	// 	Z_LOG_E("Failed to start FGW Server, quit\n");
 	// 	return -1;
 	// }
-	for (int i = 0; i < 1000; ++i) {
-		if (0 != connectToServer("127.0.0.1", 1983, base)) {
+
+	const int client_count = 1;
+	for (int i = 0; i < client_count; ++i) {
+		// if (0 != connectToServer("127.0.0.1", 1983, base)) {
+		if (0 != connectToServer("10.34.45.45", 1983, base)) {
 			return -1;
 		}
 	}
@@ -51,10 +64,10 @@ int main(int argc, char *argv[])
 	// basicly equals to event_base_loop()
 	// event_base_dispatch(base);
 	while (1) {
-		printf("beginning of loop\n");
+		Z_LOG_D("beginning of loop\n");
 		// event_base_loop(base, EVLOOP_NONBLOCK);
 		event_base_loop(base, 0);
-		printf("end of loop\n");
+		Z_LOG_D("end of loop\n");
 
 	}
 

@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <time.h>
+#include <assert.h>
 
 char printable_char(char c)
 {
@@ -151,7 +153,23 @@ void zlog(const char *format, ...)
 	va_list args;
 	va_start(args, format);
 
-	vprintf(format, args);
+	// timestamp
+	struct tm tm_v;
+	time_t clock = time(NULL);
+	gmtime_r(&clock, &tm_v);
+
+	char format_buf[1024];
+
+	size_t offset = strftime(format_buf, sizeof(format_buf), "%Y-%m-%d_%H:%M:%S", &tm_v);
+	assert(offset <= sizeof(format_buf));
+
+	// remove ending '\0'
+	// offset -= 1;
+
+	snprintf(format_buf + offset, sizeof(format_buf) - offset, "|%s", format);
+
+	// vprintf(format, args);
+	vprintf(format_buf, args);
 
 	va_end(args);
 }

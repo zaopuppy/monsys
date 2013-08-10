@@ -11,7 +11,11 @@
 class ZClient : public ZModule {
  public:
 	ZClient(event_base *base, int type)
-		: base_(base), fd_(-1), type_(type), server_ip_("0.0.0.0"), server_port_(0)
+		: base_(base), fd_(-1)
+		, read_event_(NULL), write_event_(NULL), timeout_event_(NULL)
+		, type_(type)
+		, server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
+		, timeout_(5)
 	{
 	}
 
@@ -25,7 +29,7 @@ class ZClient : public ZModule {
 	virtual int getType() { return type_; }
 
 	// XXX: use `timeout event' instead of freqent timeout check
-	// virtual void doTimeout();
+	virtual void doTimeout();
 	// virtual bool isComplete();
 
 	void event(evutil_socket_t fd, short events);
@@ -41,6 +45,7 @@ class ZClient : public ZModule {
 	int onDisconnected(evutil_socket_t fd, short events);
 
 	int connect();
+	void disconnect();
 	void scheduleReconnect();
 
  private:
@@ -54,7 +59,9 @@ class ZClient : public ZModule {
  private:
 	event_base *base_;
 	evutil_socket_t fd_;
-	struct event* read_event_;
+	struct event *read_event_;
+	struct event *write_event_;
+	struct event *timeout_event_;
 	STATE state_;
 	char buf_[1 << 10];
 	int type_;
@@ -62,6 +69,8 @@ class ZClient : public ZModule {
 	unsigned short server_port_;
 
 	ZClientHandler *handler_;
+
+	time_t timeout_;	// in seconds
 };
 
 #endif // _ZCLIENT_H__

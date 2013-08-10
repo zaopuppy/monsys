@@ -24,14 +24,14 @@ int ZServerHandler::event(evutil_socket_t fd, short events)
 			buf_idx += len;
 	} while (buf_idx <= sizeof(buf_) && len > 0);
 
-	printf("len: %ld\n", len);
+	// Z_LOG_D("len: %ld\n", len);
 	if (len < 0 && errno != EAGAIN) {
 		perror("recv");
 		// freeSession(session);
 		close();
 		return -1;
 	} else if (len == 0) {
-		printf("peer closed.\n");
+		// Z_LOG_D("peer closed.\n");
 		close();
 		return -1;
 	}else {
