@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 
 	const int client_count = 1;
 	for (int i = 0; i < client_count; ++i) {
-		// if (0 != connectToServer("127.0.0.1", 1983, base)) {
-		if (0 != connectToServer("10.34.45.45", 1983, base)) {
+		if (0 != connectToServer("127.0.0.1", 1983, base)) {
+		// if (0 != connectToServer("10.34.45.45", 1983, base)) {
 			return -1;
 		}
 	}

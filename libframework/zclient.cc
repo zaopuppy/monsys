@@ -6,9 +6,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include "zerrno.h"
-
 #include "libbase/zlog.h"
+#include "zerrno.h"
 
 
 // TODO: server wait timeout
@@ -17,7 +16,7 @@ static const struct timeval RETRY_INTERVAL = { 5, 0 };
 
 static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 {
-	// Z_LOG_D("SOCKET_CALLBACK\n");
+	Z_LOG_D("SOCKET_CALLBACK(%d, %d)\n", fd, events);
 	assert(arg);
 	ZClient *m = (ZClient*)arg;
 	m->event(fd, events);
@@ -25,7 +24,7 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 
 static void TIMEOUT_CALLBACK(evutil_socket_t fd, short events, void *arg)
 {
-	// Z_LOG_D("SOCKET_CALLBACK\n");
+	Z_LOG_D("TIMEOUT_CALLBACK(%d, %d)\n", fd, events);
 	assert(arg);
 	ZClient *m = (ZClient*)arg;
 	m->doTimeout();
@@ -35,9 +34,12 @@ void ZClient::doTimeout()
 {
 	Z_LOG_D("ZClient::doTimeout()\n");
 
-	timeout_event_ = NULL;
-	disconnect();
-	scheduleReconnect();
+	// XXX: temporary solution
+	if (state_ == STATE_CONNECTED) {
+		timeout_event_ = NULL;
+		disconnect();
+	}
+	// scheduleReconnect();
 }
 
 int ZClient::init() {
@@ -67,6 +69,7 @@ void ZClient::disconnect() {
 		fd_ = -1;
 	}
 
+	// XXX: damn it, it doesn't work
 	if (write_event_) {
 		event_free(write_event_);
 		write_event_ = NULL;
@@ -86,7 +89,10 @@ int ZClient::connect() {
 	disconnect();
 
 	fd_ = socket(AF_INET, SOCK_STREAM, 0);
-	assert(fd_ >= 0);
+	if (fd_ < 0) {
+		Z_LOG_E("failed to get new socket file descriptor\n");
+		return FAIL;
+	}
 
 	evutil_make_socket_nonblocking(fd_);
 
@@ -135,7 +141,7 @@ int ZClient::connect() {
 				timeout_event_ = NULL;
 			}
 			const struct timeval timeout_val = { timeout_, 0 };
-			struct event *timeout_ev = event_new(base_, -1, 0, TIMEOUT_CALLBACK, (void*)this);
+			struct event *timeout_ev = evtimer_new(base_, TIMEOUT_CALLBACK, (void*)this);
 			event_add(timeout_ev, &timeout_val);
 			return ERR_IO_PENDING;
 		}
@@ -174,6 +180,15 @@ void ZClient::event(evutil_socket_t fd, short events) {
 
 int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 	Z_LOG_D("ZClient::onWaitingForConnect(%d, %d)\n", fd, events);
+
+	// clear timer event first
+	if (timeout_event_) {
+		event_del(timeout_event_);
+		// event_remove_timer(timeout_event_);
+		event_free(timeout_event_);
+		timeout_event_ = NULL;
+	}
+
 	int val = -1;
 	socklen_t val_len = sizeof(val);
 	int rv = getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &val_len);
@@ -181,10 +196,6 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 		Z_LOG_D("Connected: %p\n", this);
 		// event_free(write_event_);
 		// write_event_ = NULL;
-		if (timeout_event_) {
-			event_free(timeout_event_);
-			timeout_event_ = NULL;
-		}
 		read_event_ =
 			event_new(base_, fd, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
 		event_add(read_event_, NULL);
@@ -228,6 +239,7 @@ void ZClient::scheduleReconnect() {
 
 void ZClient::onConnected(evutil_socket_t fd, short events) {
 	assert(fd >= 0);
+
 	int rv = recv(fd, buf_, sizeof(buf_), 0);
 	if (rv == 0) {
 		Z_LOG_D("peer closed\n");

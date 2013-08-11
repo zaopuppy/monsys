@@ -13,7 +13,7 @@
 #include "libzigbee/zbdevice_manager.h"
 
 #include "zinner_message_ex.h"
-#include "zmodule_ex.h"
+#include "module.h"
 
 class ZZigBeeHandler : public ZClientHandler {
  public:

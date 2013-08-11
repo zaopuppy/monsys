@@ -8,7 +8,7 @@ TARGET := ts
 CFILES :=
 CXXFILES := main.cc \
 	zutil.cc \
-	zmodule_ex.cc \
+	module.cc \
 	zzigbee_module.cc \
 	zserial.cc \
 	zwebapi_server.cc \
@@ -16,7 +16,9 @@ CXXFILES := main.cc \
 	zwebapi_session.cc \
 	zzigbee_handler.cc \
 	zformatter.cc \
-	unittest_main.cc
+	unittest_main.cc \
+	fgw_client.cc \
+	fgw_client_handler.cc
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

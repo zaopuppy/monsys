@@ -1,4 +1,4 @@
-#include "zmodule_ex.h"
+#include "module.h"
 
 const char* moduleType2string(int moduleType) {
 	switch (moduleType) {

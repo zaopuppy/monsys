@@ -8,7 +8,7 @@
 
 #include "libbase/zlog.h"
 #include "zutil.h"
-#include "zmodule_ex.h"
+#include "module.h"
 #include "libzigbee/zzigbee_message.h"
 // #include "zjson_codec.h"
 

@@ -3,7 +3,7 @@
 
 #include <event2/event.h>
 
-#include "zmodule_ex.h"
+#include "module.h"
 
 class ZZigBeeModule : public ZModule {
 public:

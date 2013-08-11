@@ -1,5 +1,5 @@
-#ifndef _Z_MODULE_H_EX_H__
-#define _Z_MODULE_H_EX_H__
+#ifndef _MODULE_H__
+#define _MODULE_H__
 
 #include "libframework/zframework.h"
 
@@ -15,4 +15,4 @@ enum Z_MODULE_TYPE {
 
 const char* moduleType2string(int moduleType);
 
-#endif // _Z_MODULE_H_EX_H__
+#endif // _MODULE_H__
