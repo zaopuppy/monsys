@@ -18,8 +18,14 @@ class ZModule {
 	virtual void close() = 0;
 	virtual int sendMsg(ZInnerMsg *msg) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
-	virtual int getType() = 0;
 	virtual void routine(long delta) = 0;
+
+ public:
+	int getType() { return type_; }
+	void setType(int type) { type_ = type; }
+
+ private:
+ 	int type_;
 };
 
 #endif // _Z_MODULE_H__

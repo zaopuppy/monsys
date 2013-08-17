@@ -13,10 +13,10 @@ class ZClient : public ZModule {
 	ZClient(event_base *base, int type)
 		: base_(base), fd_(-1)
 		, read_event_(NULL), write_event_(NULL), timeout_event_(NULL)
-		, type_(type)
 		, server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
 		, timeout_(5)
 	{
+		ZModule::setType(type);
 	}
 
 	typedef ZModule super_;
@@ -26,7 +26,7 @@ class ZClient : public ZModule {
 	virtual void close();
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	virtual int getType() { return type_; }
+	// virtual int getType() { return type_; }
 
 	// XXX: use `timeout event' instead of freqent timeout check
 	virtual void doTimeout();
@@ -48,6 +48,8 @@ class ZClient : public ZModule {
 	void disconnect();
 	void scheduleReconnect();
 
+	void setHandler(ZClientHandler *handler) { handler_ = handler; }
+
  private:
 	enum STATE {
 		STATE_WAITING_FOR_CONNECT,
@@ -64,7 +66,7 @@ class ZClient : public ZModule {
 	struct event *timeout_event_;
 	STATE state_;
 	char buf_[1 << 10];
-	int type_;
+	// int type_;
 	std::string server_ip_;
 	unsigned short server_port_;
 

@@ -14,8 +14,8 @@ class FGWServer : public ZServer {
 	~FGWServer() {}
 
  public:
+	virtual int onInnerMsg(ZInnerMsg *msg);
  	virtual void routine(long delta);
-
 
  public:
  	void removeHandler(ZServerHandler *h);

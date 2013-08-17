@@ -7,13 +7,8 @@
 
 class ZHandler {
  public:
- 	// ZHandler(): fd_(-1), read_event_(NULL) {}
- 	// virtual ~ZHandler() {}
-
- public:
 	virtual int init() = 0;
 	virtual void close() = 0;
-	// virtual int event(evutil_socket_t fd, short events) = 0;
 	virtual int onRead(char *buf, uint32_t buf_len) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
 	virtual void routine(long delta) = 0;
@@ -25,8 +20,7 @@ class ZHandler {
  	void setId(int id) { id_ = id; }
  	int getModuleType() { return module_type_; }
  	void setModuleType(int type) { module_type_ = type; }
-	// evutil_socket_t fd_;
-	// struct event *read_event_;
+
  private:
  	int id_;
  	int module_type_;

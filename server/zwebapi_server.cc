@@ -6,13 +6,6 @@
 
 #include "zwebapi_handler.h"
 
-// static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
-// {
-// 	assert(arg);
-// 	ZWebApiHandler *h = (ZWebApiHandler*)arg;
-// 	h->event(fd, events);
-// }
-
 int ZWebApiServer::init()
 {
 	return super_::init();
@@ -27,24 +20,24 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZWebApiServer::onInnerMsg()\n");
 
-	int handler_id = msg->dst_addr_.handler_id_;
-	if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-		printf("Bad handler id: %d\n", handler_id);
-		return -1;
-	}
+	handler_id_t handler_id = msg->dst_addr_.handler_id_;
+	// if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
+	// 	printf("Bad handler id: %d\n", handler_id);
+	// 	return FAIL;
+	// }
 
-	// if (ANY_ID == handler_id) {
-	// 	// TODO:
-	// 	// XXX: should do load-balancing, current just use the first one
-	// 	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
-	// 	if (iter == handler_map_.end()) {
-	// 		printf("Empty handler map...:(\n");
-	// 		return;
-	// 	}
-	// 	iter->second->onInnerMsg(msg);
+	if (ANY_ID == handler_id) {
+		// TODO:
+		// XXX: should do load-balancing, current just use the first one
+		HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+		if (iter == handler_map_.end()) {
+			printf("Empty handler map...:(\n");
+			return FAIL;
+		}
+		iter->second->onInnerMsg(msg);
 	// } else if (BROADCAST_ID = handler_id) {
 	// 	// TODO:
-	// } else {
+	} else {
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
 		if (iter == handler_map_.end()) {
 			printf("No such handler: %d\n", handler_id);
@@ -52,8 +45,8 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 		}
 
 		iter->second->onInnerMsg(msg);
-	// }
-	return 0;
+	}
+	return OK;
 }
 
 void ZWebApiServer::routine(long delta)
@@ -77,7 +70,7 @@ void ZWebApiServer::onAccept(
 	assert(h);
 
 	h->setId(handler_id);
-	h->setModuleType(Z_MODULE_WEBAPI);
+	h->setModuleType(getType());
 
 	h->read_event_ =
 		event_new(base_, fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);

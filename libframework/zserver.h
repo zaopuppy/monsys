@@ -9,7 +9,9 @@
 class ZServer : public ZModule {
  public:
 	ZServer(const char *ip, uint16_t port, event_base *base, int type)
-		: ip_(ip), port_(port), base_(base), type_(type) {
+		: ip_(ip), port_(port), base_(base)
+	{
+		ZModule::setType(type);
 	}
 
 	typedef ZModule super_;
@@ -19,7 +21,6 @@ class ZServer : public ZModule {
 	virtual void close();
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	virtual int getType() { return type_; }
 
  public:
 	void event(evutil_socket_t fd, short events);
@@ -36,7 +37,6 @@ class ZServer : public ZModule {
 
 	evutil_socket_t fd_;
 	event_base *base_;
-	int type_;
 };
 
 

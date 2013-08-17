@@ -24,8 +24,15 @@ class FGWClientHandler : public ZClientHandler {
 
 	virtual void onConnected();
 
+ protected:
+	void sendRsp(const char *text_msg, int status);
+
  private:
- 	// ZClientHandler *handler_;
+	char buf_[512 << 10];
+	char out_buf_[512 << 10];
+	// std::map<uint32_t, ZWebApiSession*> session_map_;
+
+	ZInnerAddress addr_;
 };
 
 #endif // _FGW_CLIENT_HANDLER_H__

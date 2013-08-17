@@ -61,7 +61,7 @@ class ZZigBeeHandler : public ZClientHandler {
 	// void initZBDevStruct(zb_dev_t *dev);
 	// ZZBDev* findDev(uint8_t id);
 	// uint8_t getDevAddr();
-	void printDevInfo();
+	// void printDevInfo();
 
 	// typedef std::list<zb_dev_t*> DEV_LIST_TYPE;
 	typedef ZSessionCtrl2Key<uint32_t, uint32_t, ZSession> SESSION_CTRL_TYPE;

@@ -5,12 +5,14 @@
 
 enum Z_MODULE_TYPE {
 	Z_MODULE_UNKNOWN = 0,
-	Z_MODULE_SERVER,				// for servers
+	Z_MODULE_SERVER,
 	Z_MODULE_CLIENT,
 	Z_MODULE_ZIGBEE,				// for zigbee modules
 	Z_MODULE_API,						// for clients
 	Z_MODULE_WEBAPI,				// for http-like request
 	Z_MODULE_SERIAL, 				// for serial ports
+	MODULE_FGW_SERVER,
+	MODULE_FGW_CLIENT,
 };
 
 const char* moduleType2string(int moduleType);

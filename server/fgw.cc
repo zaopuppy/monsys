@@ -12,6 +12,7 @@
 #include "zwebapi_server.h"
 #include "libbase/zlog.h"
 #include "zserial.h"
+#include "fgw_client.h"
 
 
 using namespace std;
@@ -65,6 +66,12 @@ int main(int argc, char *argv[])
 	struct event_base* base = event_base_new();
 	assert(base);
 	
+	FGWClient *client = new FGWClient(base);
+	client->setServerAddress("127.0.0.1", 1984);
+	if (OK != client->init()) {
+		Z_LOG_E("Failed to initialize fgw client\n");
+		return -1;
+	}
 	// if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
 	// 	printf("failed to start server: (0.0.0.0, 1983).\n");
 	// 	return -1;
@@ -80,10 +87,10 @@ int main(int argc, char *argv[])
 	// 	return -1;
 	// }
 
-	if (!start_webapi_server("0.0.0.0", 1983, base)) {
-		printf("failed to start server: (0.0.0.0, 1983).\n");
-		return -1;
-	}
+	// if (!start_webapi_server("0.0.0.0", 1983, base)) {
+	// 	printf("failed to start server: (0.0.0.0, 1983).\n");
+	// 	return -1;
+	// }
 
 	// if (!start_api_server("0.0.0.0", 1984, base)) {
 	// 	printf("failed to start server: (0.0.0.0, 1983).\n");

@@ -26,6 +26,18 @@ struct ZInnerAddress {
 	bool isValid() {
 		return (module_type_ >= 0) && (module_id_ >= 0) && (handler_id_ >= 0);
 	}
+
+	ZInnerAddress& operator=(const ZInnerAddress &other) {
+		if (&other == this) {
+			return *this;
+		}
+
+		module_type_ = other.module_type_;
+		module_id_ = other.module_id_;
+		handler_id_ = other.handler_id_;
+
+		return *this;
+	}
 };
 
 /////////////////////////////////////////////////////
@@ -33,11 +45,11 @@ class ZInnerMsg {
  public:
  	 ZInnerMsg(uint32_t msg_type): msg_type_(msg_type), seq_(0)
  	 {}
+
  	 // TODO: delete it
 	 ZInnerMsg(const ZInnerAddress &src_addr, uint32_t msg_type)
 		 : src_addr_(src_addr), msg_type_(msg_type), seq_(0)
-	 {
-	 }
+	 {}
 
  // public:
 	//  uint32_t getMsgType() { return msg_type_; }

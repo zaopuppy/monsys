@@ -8,12 +8,12 @@
 
 #include "libframework/zframework.h"
 
-#include "zwebapi_session.h"
+// #include "zwebapi_session.h"
 #include "zinner_message_ex.h"
 
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
-public:
+ public:
 	ZWebApiHandler(event_base* base/*, int moduleType, int handlerId*/)
 	// 	: addr_(moduleType, 0, handlerId)
 	{
@@ -21,7 +21,7 @@ public:
 
 	typedef ZHandler super_;
 
-public:
+ public:
 	virtual int init();
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len);
@@ -34,32 +34,32 @@ public:
 
 	// XXX
 	// int event(evutil_socket_t fd, short events);
-private:
+ private:
 
 	// void onConnected(evutil_socket_t fd, short events);
 	// int onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 	void sendRsp(const char *text_msg, int status);
 
-	int processGetDevListReq(json_t *root);
-	int processGetDevInfoReq(json_t *root);
-	int processSetDevInfoReq(json_t *root);
+	// int processGetDevListReq(json_t *root);
+	// int processGetDevInfoReq(json_t *root);
+	// int processSetDevInfoReq(json_t *root);
 
-	ZInnerMsg* webMsg2InnerMsg(json_t *web_msg);
-	ZInnerMsg* convertGetDevListReq(json_t *jobj);
-	ZInnerMsg* convertGetDevInfoReq(json_t *jobj);
-	ZInnerMsg* convertSetDevInfoReq(json_t *jobj);
+	// ZInnerMsg* webMsg2InnerMsg(json_t *web_msg);
+	// ZInnerMsg* convertGetDevListReq(json_t *jobj);
+	// ZInnerMsg* convertGetDevInfoReq(json_t *jobj);
+	// ZInnerMsg* convertSetDevInfoReq(json_t *jobj);
 
-	int processMsg(ZInnerGetDevListRsp *msg);
-	int processMsg(ZInnerGetDevInfoRsp *msg);
-	int processMsg(ZInnerSetDevInfoRsp *msg);
+	// int processMsg(ZInnerGetDevListRsp *msg);
+	// int processMsg(ZInnerGetDevInfoRsp *msg);
+	// int processMsg(ZInnerSetDevInfoRsp *msg);
 
-private:
+ private:
 	// ZSocket server_;
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];
 	// evutil_socket_t fd_;
 
-	std::map<uint32_t, ZWebApiSession*> session_map_;
+	// std::map<uint32_t, ZWebApiSession*> session_map_;
 
 	// XXX
 	ZInnerAddress addr_;

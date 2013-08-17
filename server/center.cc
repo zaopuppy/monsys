@@ -5,6 +5,7 @@
 #include <event2/event.h>
 
 #include "fgw_server.h"
+#include "zwebapi_server.h"
 
 using namespace std;
 
@@ -20,9 +21,17 @@ int main(int argc, char *argv[])
 	struct event_base* base = event_base_new();
 	assert(base);
 
-	g_server = new FGWServer("0.0.0.0", 1983, base);
+	// push server
+	g_server = new FGWServer("0.0.0.0", 1984, base);
 	if (OK != g_server->init()) {
 		Z_LOG_E("Failed to start FGW Server, quit\n");
+		return -1;
+	}
+
+	// webapi server
+	ZServer *webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
+	if (OK != webapi_server->init()) {
+		Z_LOG_E("Failed to start WEBAPI Server, quit\n");
 		return -1;
 	}
 

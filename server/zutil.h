@@ -57,6 +57,47 @@ inline bool str2list(const char *str, T_List &list)
 	return true;
 }
 
+class CharBuffer {
+ public:
+ 	CharBuffer(uint32_t len): data_() {
+ 		data_ = new char[len];
+ 		capacity_ = len;
+ 		clear();
+ 	}
+ 	// wrap
+ 	CharBuffer(char *data, uint32_t data_len) {
+ 		data_ = data;
+ 		capacity_ = data_len;
+ 		clear();
+ 	}
+ 	~CharBuffer() {
+ 		delete []data_;
+ 	}
+
+ public:
+ 	void put(char *data, uint32_t data_len) {
+ 	}
+ 	void get(char *data, uint32_t data_len) {
+ 	}
+ 	void flip() {
+ 		limit_ = pos_;
+ 		pos_ = 0;
+ 	}
+ 	void clear() {
+ 		pos_ = 0;
+ 		limit_ = capacity_;
+ 	}
+ 	bool hasRemaining() {
+ 		return limit_ > pos_;
+ 	}
+
+ private:
+ 	char *data_;
+
+ 	uint32_t pos_;
+ 	uint32_t limit_;
+ 	uint32_t capacity_;
+};
 
 #endif // _Z_UTIL_H__
 

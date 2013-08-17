@@ -8,8 +8,14 @@
 class FGWClient : public ZClient {
  public:
 	FGWClient(event_base *base)
-	: ZClient(base, 0) {
+	: ZClient(base, MODULE_FGW_CLIENT) {
+		handler_ = new FGWClientHandler();
+		handler_->setModuleType(MODULE_FGW_CLIENT);
+		handler_->setId(1);
+		ZClient::setHandler(handler_);
 	}
+
+	typedef ZClient super;
 
 	virtual ~FGWClient() {}
 
@@ -17,7 +23,7 @@ class FGWClient : public ZClient {
 	virtual void routine(long delta);
 
  private:
- 	// ZClientHandler *handler_;
+ 	FGWClientHandler *handler_;
 };
 
 #endif // _FGW_CLIENT_H__

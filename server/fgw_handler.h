@@ -22,6 +22,7 @@ class FGWHandler : public ZServerHandler {
 
  private:
  	FGWServer *server_;
+
 };
 
 #endif // _FGW_HANDLER_H__

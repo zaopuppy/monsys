@@ -202,7 +202,7 @@ int ZZigBeeHandler::processMsg(ZZBGetRsp &msg)
 
 	printf("rsp item count: %ld\n", msg.items_.size());
 
-	ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp(addr_);
+	ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp();
 	ZItemPair pair;
 
 	for (uint32_t i = 0; i < msg.items_.size(); ++i) {
@@ -250,7 +250,7 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 {
 	printf("rsp status: %d\n", msg.status_);
 
-	ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp(addr_);
+	ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp();
 	rsp->status_ = msg.status_;
 
 	{
@@ -287,20 +287,20 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 	return 0;
 }
 
-void ZZigBeeHandler::printDevInfo()
-{
-	// for (int i = 1; i < DEV_LIST_LEN; ++i) {
-	// 	if (zb_dev_list_[i].info.state == zb_dev_state_active) {
-	// 		printf("idx: %d\n", i);
-	// 	}
-	// }
-}
+// void ZZigBeeHandler::printDevInfo()
+// {
+// 	// for (int i = 1; i < DEV_LIST_LEN; ++i) {
+// 	// 	if (zb_dev_list_[i].info.state == zb_dev_state_active) {
+// 	// 		printf("idx: %d\n", i);
+// 	// 	}
+// 	// }
+// }
 
 int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 {
 	printf("ZZigBeeHandler::processMsg(ZInnerGetDevListReq)\n");
 
-	ZInnerGetDevListRsp *rsp = new ZInnerGetDevListRsp(addr_);
+	ZInnerGetDevListRsp *rsp = new ZInnerGetDevListRsp();
 	rsp->dst_addr_ = msg->src_addr_;
 
 	ZZBDevInfo *info = NULL;

@@ -14,9 +14,9 @@ class ZSession {
 
  public:
 	virtual void doTimeout(long delta) {
-		// printf("touch_time_: [%ld]\n", touch_time_);
-		// printf("timeout_: [%ld]\n", timeout_);
-		// printf("delta: [%ld]\n", delta);
+		// Z_LOG_D("touch_time_: [%ld]\n", touch_time_);
+		// Z_LOG_D("timeout_: [%ld]\n", timeout_);
+		// Z_LOG_D("delta: [%ld]\n", delta);
 		touch_time_ += delta;
 	}
 
@@ -25,8 +25,8 @@ class ZSession {
 			return false;
 		}
 
-		printf("session complete: %p\n", this);
-		printf("touch_time_: [%ld], timeout_: [%ld]\n", touch_time_, timeout_);
+		Z_LOG_D("session complete: %p\n", this);
+		Z_LOG_D("touch_time_: [%ld], timeout_: [%ld]\n", touch_time_, timeout_);
 
 		return true;
 	}

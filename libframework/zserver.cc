@@ -18,13 +18,13 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 
 int ZServer::sendMsg(ZInnerMsg *msg)
 {
-	printf("ZServer::sendMsg\n");
+	Z_LOG_D("ZServer::sendMsg\n");
 	return onInnerMsg(msg);
 }
 
 int ZServer::onInnerMsg(ZInnerMsg *msg)
 {
-	printf("ZServer::onInnerMsg\n");
+	Z_LOG_D("ZServer::onInnerMsg\n");
 	return 0;
 }
 
@@ -87,7 +87,7 @@ void ZServer::event(evutil_socket_t fd, short events) {
 }
 
 void ZServer::acceptClient(evutil_socket_t fd, short events) {
-	printf("ZServer::accept()\n");
+	Z_LOG_D("ZServer::accept()\n");
 
 	struct sockaddr_storage ss;
 	socklen_t slen = sizeof(ss);
@@ -95,13 +95,13 @@ void ZServer::acceptClient(evutil_socket_t fd, short events) {
 	if (clifd < 0) {           // XXX EAGAIN?
 		perror("accept");
 	} else if (clifd > FD_SETSIZE) {
-		printf("Maximum size of fd has reached.\n");
+		Z_LOG_D("Maximum size of fd has reached.\n");
 		::close(clifd); // XXX evutil_closesocket
 	} else {
 		//
 		struct sockaddr_in* addr = (struct sockaddr_in*)(&ss);
 		unsigned short port = ntohs(addr->sin_port);
-		printf("accepted connection from: %s:%u\n",
+		Z_LOG_D("accepted connection from: %s:%u\n",
 				inet_ntoa(addr->sin_addr), port);
 
 		evutil_make_socket_nonblocking(clifd);

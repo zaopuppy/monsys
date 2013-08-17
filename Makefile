@@ -8,9 +8,9 @@ include config.mk
 
 .PHONY: libbase libzigbee libframework
 
-.PHONY: server center stub
+.PHONY: server stub
 
-all: libbase libzigbee libframework center server stub
+all: libbase libzigbee libframework server stub
 
 libevent:
 	cd 3rd/libevent-2.0/ && \
@@ -26,9 +26,6 @@ libzigbee: libbase
 libframework: libbase
 	make -C $@
 
-center:
-	make -C $@
-
 server:
 	make -C $@
 
@@ -40,7 +37,6 @@ clean:
 	make -C libzigbee clean
 	make -C libframework clean
 	make -C server clean
-	make -C center clean
 	make -C stub clean
 
 

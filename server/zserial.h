@@ -13,7 +13,11 @@ class ZSerial : public ZModule {
   ZSerial(event_base* base, const char *serial_dev)
     : base_(base), fd_(-1), serial_dev_(serial_dev)
   {
+    ZModule::setType(Z_MODULE_SERIAL);
+
 		handler_ = new ZZigBeeHandler();
+    handler_->setModuleType(getType());
+    handler_->setId(1);
   }
 
   typedef ZModule super_;
@@ -23,7 +27,6 @@ class ZSerial : public ZModule {
   virtual void close();
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	virtual int getType() { return Z_MODULE_SERIAL; }
   virtual void routine(long delta) { handler_->routine(delta); }
 
   int event(evutil_socket_t fd, short events);

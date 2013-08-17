@@ -8,7 +8,7 @@
 
 #include "libbase/zlog.h"
 #include "zerrno.h"
-
+#include "zdispatcher.h"
 
 // TODO: server wait timeout
 // static const struct timeval SERVER_WAIT_TIMEOUT = { 20, 0 };
@@ -35,7 +35,7 @@ void ZClient::doTimeout()
 	Z_LOG_D("ZClient::doTimeout()\n");
 
 	// XXX: temporary solution
-	if (state_ == STATE_CONNECTED) {
+	if (state_ != STATE_CONNECTED) {
 		timeout_event_ = NULL;
 		disconnect();
 	}
@@ -43,10 +43,16 @@ void ZClient::doTimeout()
 }
 
 int ZClient::init() {
+	if (ZDispatcher::instance()->registerModule(this) != OK) {
+		return FAIL;
+	}
+
 	int rv = onDisconnected(-1, 0);
 	if (rv != OK && rv != ERR_IO_PENDING) {
 		return FAIL;
 	}
+
+	handler_->init();
 
 	return OK;
 }
@@ -54,6 +60,7 @@ int ZClient::init() {
 int ZClient::sendMsg(ZInnerMsg *msg)
 {
 	Z_LOG_D("ZClient::sendMsg(%p)\n", msg);
+	handler_->onInnerMsg(msg);
 	return 0;
 }
 
@@ -202,6 +209,8 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 
 		state_ = STATE_CONNECTED;
 		if (handler_) {
+			Z_LOG_D("handler_->fd_ = %d\n", fd);
+			handler_->fd_ = fd;
 			handler_->onConnected();
 		}
 	// XXX: why sometimes this fail?
@@ -282,6 +291,8 @@ int ZClient::onDisconnected(evutil_socket_t fd, short events) {
 					event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
 				event_add(read_event_, NULL);
 				if (handler_) {
+					Z_LOG_D("handler_->fd_ = %d\n", fd);
+					handler_->fd_ = fd;
 					handler_->onConnected();
 				}
 				break;

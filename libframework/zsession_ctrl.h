@@ -101,7 +101,7 @@ class ZSessionCtrl2Key {
  	T_Session* findByKey2(const T_Key2 &key2) {
  		T_Key1 key1;
  		if (!getKey1ByKey2(key2, key1)) {
- 			printf("Failed to get key1 by using key2\n");
+ 			Z_LOG_D("Failed to get key1 by using key2\n");
  			return NULL;
  		}
 
@@ -115,7 +115,7 @@ class ZSessionCtrl2Key {
  		for (size_t i = key_map_.size(); i > 0; --i) {
  			if (key_map_[i].key1 == key1 || key_map_[i].key2) {
  				// duplicated record
- 				printf("duplicated record at index %ld\n", i);
+ 				Z_LOG_D("duplicated record at index %ld\n", i);
  				return false;
  			}
  		}
@@ -163,7 +163,7 @@ class ZSessionCtrl2Key {
  	T_Session* removeByKey2(const T_Key2 key2) {
  		T_Key1 key1;
  		if (!getKey1ByKey2(key2, key1)) {
- 			printf("Failed to get key1 by using key2\n");
+ 			Z_LOG_D("Failed to get key1 by using key2\n");
  			return NULL;
  		}
 

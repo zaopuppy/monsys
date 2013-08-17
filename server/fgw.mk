@@ -4,16 +4,22 @@ CPP    := gcc
 LEX    := flex
 YACC   := bison
 
-TARGET := ts
+TARGET := fgw
 CFILES :=
-CXXFILES := main.cc \
-	fgw_server.cc \
-	fgw_handler.cc \
-	push_message.cc \
+CXXFILES := fgw.cc \
+	zutil.cc \
+	module.cc \
+	zzigbee_module.cc \
+	zserial.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
 	zwebapi_session.cc \
-	zutil.cc
+	zzigbee_handler.cc \
+	zformatter.cc \
+	unittest_main.cc \
+	push_message.cc \
+	fgw_client.cc \
+	fgw_client_handler.cc
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

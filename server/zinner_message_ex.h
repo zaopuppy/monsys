@@ -9,6 +9,8 @@
 enum {
 	Z_INVALID = -1,
 
+	Z_TRANSPORT_MSG,
+
 	Z_ZB_GET_DEV_LIST_REQ,
 	Z_ZB_GET_DEV_LIST_RSP,
 
@@ -20,11 +22,42 @@ enum {
 };
 
 ////////////////////////////////////////////////////
+// Transport
+class ZTransportMsg : public ZInnerMsg {
+ public:
+ 	ZTransportMsg()
+ 		: ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL)
+	{
+	}
+	~ZTransportMsg() {
+		if (data_) {
+			delete []data_;
+			data_ = NULL;
+		}
+	}
+
+ public:
+ 	void set(char *data, uint32_t data_len) {
+ 		if (data_) {
+ 			delete []data_;
+ 			data_ = NULL;
+ 		}
+ 		data_len_ = data_len;
+ 		data_ = new char[data_len_];
+ 		memcpy(data_, data, data_len_);
+ 	}
+
+ public:
+ 	char *data_;
+ 	uint32_t data_len_;
+};
+
+////////////////////////////////////////////////////
 // GetDevList
 class ZInnerGetDevListReq : public ZInnerMsg {
  public:
-	ZInnerGetDevListReq(const ZInnerAddress &src_addr)
-		: ZInnerMsg(src_addr, Z_ZB_GET_DEV_LIST_REQ)
+	ZInnerGetDevListReq()
+		: ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ)
 	{
 	}
 
@@ -32,8 +65,8 @@ class ZInnerGetDevListReq : public ZInnerMsg {
 
 class ZInnerGetDevListRsp : public ZInnerMsg {
  public:
- 	ZInnerGetDevListRsp(const ZInnerAddress &src_addr)
- 		: ZInnerMsg(src_addr, Z_ZB_GET_DEV_LIST_RSP)
+ 	ZInnerGetDevListRsp()
+ 		: ZInnerMsg(Z_ZB_GET_DEV_LIST_RSP)
  	{
  	}
  	~ZInnerGetDevListRsp()
@@ -53,8 +86,8 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
 // GetDevInfo
 class ZInnerGetDevInfoReq : public ZInnerMsg {
  public:
-	ZInnerGetDevInfoReq(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr, Z_ZB_GET_DEV_REQ)
+	ZInnerGetDevInfoReq()
+	  : ZInnerMsg(Z_ZB_GET_DEV_REQ)
 	{
 	}
 
@@ -65,8 +98,8 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 
 class ZInnerGetDevInfoRsp : public ZInnerMsg {
  public:
-	ZInnerGetDevInfoRsp(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr, Z_ZB_GET_DEV_RSP)
+	ZInnerGetDevInfoRsp()
+	  : ZInnerMsg(Z_ZB_GET_DEV_RSP)
 	{
 	}
 
@@ -82,8 +115,8 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 // SetDevInfo
 class ZInnerSetDevInfoReq : public ZInnerMsg {
  public:
-	ZInnerSetDevInfoReq(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr, Z_ZB_SET_DEV_REQ)
+	ZInnerSetDevInfoReq()
+	  : ZInnerMsg(Z_ZB_SET_DEV_REQ)
 	{
 	}
 
@@ -94,8 +127,8 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 
 class ZInnerSetDevInfoRsp : public ZInnerMsg {
  public:
-	ZInnerSetDevInfoRsp(const ZInnerAddress &src_addr)
-	  : ZInnerMsg(src_addr, Z_ZB_SET_DEV_RSP)
+	ZInnerSetDevInfoRsp()
+	  : ZInnerMsg(Z_ZB_SET_DEV_RSP)
 	{
 	}
 
