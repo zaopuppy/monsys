@@ -18,7 +18,9 @@ int FGWHandler::init()
 void FGWHandler::close()
 {
 	super_::close();
-	server_->removeHandler(this);
+	// XXX
+	// server_->removeHandler(this);
+	((FGWServer*)getModule())->removeHandler(this);
 }
 
 int FGWHandler::onRead(char *buf, uint32_t buf_len)
@@ -28,7 +30,7 @@ int FGWHandler::onRead(char *buf, uint32_t buf_len)
 
 	ZTransportMsg *m = new ZTransportMsg();
 	m->set(buf, buf_len);
-	m->dst_addr_.module_type_ = Z_MODULE_WEBAPI;
+	m->dst_addr_.module_type_ = MODULE_WEBAPI;
 	m->dst_addr_.module_id_ = ANY_ID;
 	m->dst_addr_.handler_id_ = ANY_ID;
 

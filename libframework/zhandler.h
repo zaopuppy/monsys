@@ -1,11 +1,19 @@
 #ifndef _Z_HANDLER_H__
 #define _Z_HANDLER_H__
 
+#include <assert.h>
+
 #include <event2/event.h>
 
+#include "zmodule.h"
 #include "zinner_message.h"
 
 class ZHandler {
+ public:
+ 	ZHandler(int id, ZModule *module)
+ 		: module_(module), id_(id)
+ 	{}
+
  public:
 	virtual int init() = 0;
 	virtual void close() = 0;
@@ -17,13 +25,12 @@ class ZHandler {
 
  public:
  	int getId() { return id_; }
- 	void setId(int id) { id_ = id; }
- 	int getModuleType() { return module_type_; }
- 	void setModuleType(int type) { module_type_ = type; }
+ 	ZModule* getModule() { return module_; }
+ 	int getModuleType() { return module_->getType(); }
 
  private:
- 	int id_;
- 	int module_type_;
+ 	ZModule *module_;
+ 	const int id_;
 };
 
 

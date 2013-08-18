@@ -9,9 +9,9 @@
 class ZServer : public ZModule {
  public:
 	ZServer(const char *ip, uint16_t port, event_base *base, int type)
-		: ip_(ip), port_(port), base_(base)
+		: ZModule(type)
+		, ip_(ip), port_(port), base_(base)
 	{
-		ZModule::setType(type);
 	}
 
 	typedef ZModule super_;
@@ -24,14 +24,15 @@ class ZServer : public ZModule {
 
  public:
 	void event(evutil_socket_t fd, short events);
+	event_base* getBase() { return base_; }
 
  protected:
 	virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port) = 0;
 
- protected:
+ private:
 	void acceptClient(evutil_socket_t fd, short events);
 
- protected:
+ private:
 	std::string ip_;
 	uint16_t port_;
 

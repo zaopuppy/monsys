@@ -9,9 +9,7 @@ class FGWClient : public ZClient {
  public:
 	FGWClient(event_base *base)
 	: ZClient(base, MODULE_FGW_CLIENT) {
-		handler_ = new FGWClientHandler();
-		handler_->setModuleType(MODULE_FGW_CLIENT);
-		handler_->setId(1);
+		handler_ = new FGWClientHandler(1, this);
 		ZClient::setHandler(handler_);
 	}
 

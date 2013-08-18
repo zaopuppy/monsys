@@ -7,7 +7,9 @@
 
 class FGWClientHandler : public ZClientHandler {
  public:
-	// FGWClientHandler(event_base *base)
+	FGWClientHandler(int id, ZModule *module)
+		: ZClientHandler(id, module)
+	{}
 	// : ZClient(base, MODULE_FGW_CLIENT), handler_(NULL) {
 	// 	handler_ = new FGWClientHandler();
 	// }

@@ -9,7 +9,6 @@ CFILES :=
 CXXFILES := fgw.cc \
 	zutil.cc \
 	module.cc \
-	zzigbee_module.cc \
 	zserial.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \

@@ -11,13 +11,10 @@
 class ZSerial : public ZModule {
  public:
   ZSerial(event_base* base, const char *serial_dev)
-    : base_(base), fd_(-1), serial_dev_(serial_dev)
+    : ZModule(MODULE_SERIAL)
+    , base_(base), fd_(-1), serial_dev_(serial_dev)
   {
-    ZModule::setType(Z_MODULE_SERIAL);
-
-		handler_ = new ZZigBeeHandler();
-    handler_->setModuleType(getType());
-    handler_->setId(1);
+		handler_ = new ZZigBeeHandler(1, this);
   }
 
   typedef ZModule super_;

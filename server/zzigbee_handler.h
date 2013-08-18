@@ -17,8 +17,9 @@
 
 class ZZigBeeHandler : public ZClientHandler {
  public:
- 	ZZigBeeHandler()
- 	: addr_(Z_MODULE_SERIAL, 0, -1)
+ 	ZZigBeeHandler(int id, ZModule *module)
+	 	: ZClientHandler(id, module)
+	 	, addr_(MODULE_SERIAL, 0, -1)
  	{
  	}
 

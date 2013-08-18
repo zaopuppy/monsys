@@ -14,6 +14,9 @@ const handler_id_t MAX_HANDLER_ID = 0xFFFFF; // don't let it overflow
 
 class ZModule {
  public:
+ 	ZModule(int type): type_(type) {}
+
+ public:
 	virtual int init() = 0;
 	virtual void close() = 0;
 	virtual int sendMsg(ZInnerMsg *msg) = 0;
@@ -22,10 +25,10 @@ class ZModule {
 
  public:
 	int getType() { return type_; }
-	void setType(int type) { type_ = type; }
+	// void setType(int type) { type_ = type; }
 
  private:
- 	int type_;
+ 	const int type_;
 };
 
 #endif // _Z_MODULE_H__

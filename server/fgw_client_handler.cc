@@ -47,7 +47,7 @@ int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 		inner_msg->src_addr_ = addr_;
 
 		// set destination address
-		inner_msg->dst_addr_.module_type_ = Z_MODULE_SERIAL;
+		inner_msg->dst_addr_.module_type_ = MODULE_SERIAL;
 		inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
 
 		// ZDispatcher::instance()->sendMsg(inner_msg);

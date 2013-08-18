@@ -11,12 +11,12 @@
 class ZClient : public ZModule {
  public:
 	ZClient(event_base *base, int type)
-		: base_(base), fd_(-1)
+		: ZModule(type)
+		, base_(base), fd_(-1)
 		, read_event_(NULL), write_event_(NULL), timeout_event_(NULL)
 		, server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
 		, timeout_(5)
 	{
-		ZModule::setType(type);
 	}
 
 	typedef ZModule super_;

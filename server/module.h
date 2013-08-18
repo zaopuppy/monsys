@@ -3,14 +3,14 @@
 
 #include "libframework/zframework.h"
 
-enum Z_MODULE_TYPE {
-	Z_MODULE_UNKNOWN = 0,
-	Z_MODULE_SERVER,
-	Z_MODULE_CLIENT,
-	Z_MODULE_ZIGBEE,				// for zigbee modules
-	Z_MODULE_API,						// for clients
-	Z_MODULE_WEBAPI,				// for http-like request
-	Z_MODULE_SERIAL, 				// for serial ports
+enum MODULE_TYPE {
+	MODULE_UNKNOWN = 0,
+	MODULE_SERVER,
+	MODULE_CLIENT,
+	MODULE_ZIGBEE,				// for zigbee modules
+	MODULE_API,						// for clients
+	MODULE_WEBAPI,				// for http-like request
+	MODULE_SERIAL, 				// for serial ports
 	MODULE_FGW_SERVER,
 	MODULE_FGW_CLIENT,
 };

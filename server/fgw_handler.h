@@ -7,7 +7,10 @@ class FGWServer;
 
 class FGWHandler : public ZServerHandler {
  public:
-	FGWHandler(FGWServer *server): server_(server) {}
+	FGWHandler(int id, ZModule *module)
+		: ZServerHandler(id, module)
+		// , server_(server)
+	{}
 	~FGWHandler() {}
 
 	typedef ZServerHandler super_;
@@ -20,8 +23,8 @@ class FGWHandler : public ZServerHandler {
 
 	virtual int send(const char *buf, uint32_t buf_len);
 
- private:
- 	FGWServer *server_;
+ // private:
+ // 	FGWServer *server_;
 
 };
 

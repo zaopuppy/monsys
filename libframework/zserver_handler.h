@@ -9,7 +9,9 @@
 
 class ZServerHandler : public ZHandler {
  public:
- 	ZServerHandler(): fd_(-1), read_event_(NULL) {}
+ 	ZServerHandler(int id, ZModule *module)
+ 		: ZHandler(id, module)
+ 		, fd_(-1), read_event_(NULL) {}
  	virtual ~ZServerHandler() {}
 
  public:

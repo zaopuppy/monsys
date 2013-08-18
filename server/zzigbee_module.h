@@ -16,7 +16,6 @@ public:
 	virtual void close();
 	virtual int sendMsg(ZInnerMsg *msg) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	virtual int getType() { return Z_MODULE_ZIGBEE; }
 
 	void event(evutil_socket_t fd, short events);
 	virtual int onTimer();

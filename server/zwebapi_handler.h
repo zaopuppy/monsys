@@ -14,10 +14,9 @@
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
  public:
-	ZWebApiHandler(event_base* base/*, int moduleType, int handlerId*/)
-	// 	: addr_(moduleType, 0, handlerId)
-	{
-	}
+	ZWebApiHandler(event_base* base, int id, ZModule *module)
+		: ZServerHandler(id, module)
+	{}
 
 	typedef ZHandler super_;
 
@@ -32,26 +31,9 @@ class ZWebApiHandler : public ZServerHandler {
 		return ::send(fd_, buf, buf_len, 0);
 	}
 
-	// XXX
-	// int event(evutil_socket_t fd, short events);
  private:
 
-	// void onConnected(evutil_socket_t fd, short events);
-	// int onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 	void sendRsp(const char *text_msg, int status);
-
-	// int processGetDevListReq(json_t *root);
-	// int processGetDevInfoReq(json_t *root);
-	// int processSetDevInfoReq(json_t *root);
-
-	// ZInnerMsg* webMsg2InnerMsg(json_t *web_msg);
-	// ZInnerMsg* convertGetDevListReq(json_t *jobj);
-	// ZInnerMsg* convertGetDevInfoReq(json_t *jobj);
-	// ZInnerMsg* convertSetDevInfoReq(json_t *jobj);
-
-	// int processMsg(ZInnerGetDevListRsp *msg);
-	// int processMsg(ZInnerGetDevInfoRsp *msg);
-	// int processMsg(ZInnerSetDevInfoRsp *msg);
 
  private:
 	// ZSocket server_;

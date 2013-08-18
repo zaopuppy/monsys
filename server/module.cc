@@ -2,17 +2,17 @@
 
 const char* moduleType2string(int moduleType) {
 	switch (moduleType) {
-		case Z_MODULE_SERVER:
+		case MODULE_SERVER:
 			return "SERVER";
-		case Z_MODULE_CLIENT:
+		case MODULE_CLIENT:
 			return "CLIENT";
-		case Z_MODULE_ZIGBEE:
+		case MODULE_ZIGBEE:
 			return "ZIGBEE";
-		case Z_MODULE_API:
+		case MODULE_API:
 			return "API";
-		case Z_MODULE_WEBAPI:
+		case MODULE_WEBAPI:
 			return "WEBAPI";
-		case Z_MODULE_SERIAL:
+		case MODULE_SERIAL:
 			return "SERIAL";
 		default:
 			return "UNKNOWN";
