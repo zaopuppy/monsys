@@ -8,14 +8,57 @@
 #include "zinner_message.h"
 #include "zclient_handler.h"
 
+// XXX: add timer identifier
+class ZEventProxy {
+ 	typedef void (*callback_t)(evutil_socket_t, short, void*);
+
+ public:
+ 	ZEventProxy(event_base *base, callback_t callback)
+ 		: callback_(callback)
+ 		, base_(base)
+ 		, ev_(NULL)
+ 		// , timeout_(timeout)
+ 	{}
+ 	~ZEventProxy() {
+ 		cancel();
+ 	}
+
+ public:
+ 	void registerEvents(evutil_socket_t fd, short events, void* arg, const struct timeval *timeout) {
+ 		cancel();
+
+ 		assert(ev_ == NULL);
+ 		ev_ = event_new(base_, fd, events, callback_, arg);
+ 		assert(ev_ != NULL);
+ 		event_add(ev_, timeout);
+ 	}
+
+ 	void cancel() {
+ 		if (ev_) {
+ 			event_free(ev_);
+ 			ev_ = NULL;
+ 		}
+ 	}
+
+ private:
+ 	callback_t callback_;
+ 	struct event_base *base_;
+ 	struct event *ev_;
+ 	// TODO: as an argument of `registerEvents'?
+ 	// struct timeval *timeout_;
+};
+
 class ZClient : public ZModule {
  public:
 	ZClient(event_base *base, int type)
 		: ZModule(type)
 		, base_(base), fd_(-1)
-		, read_event_(NULL), write_event_(NULL), timeout_event_(NULL)
+		, socket_event_proxy_(base, ZClient::socket_callback)
+		, timeout_event_proxy_(base, ZClient::timeout_callback)
+		// , socket_event_(NULL), timeout_event_(NULL)
+		// , timeout_event_(NULL)
 		, server_ip_("0.0.0.0"), server_port_(0), handler_(NULL)
-		, timeout_(5)
+		// , timeout_(5)
 	{
 	}
 
@@ -26,7 +69,6 @@ class ZClient : public ZModule {
 	virtual void close();
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	// virtual int getType() { return type_; }
 
 	// XXX: use `timeout event' instead of freqent timeout check
 	virtual void doTimeout();
@@ -50,6 +92,9 @@ class ZClient : public ZModule {
 
 	void setHandler(ZClientHandler *handler) { handler_ = handler; }
 
+	static void socket_callback(evutil_socket_t fd, short events, void *arg);
+	static void timeout_callback(evutil_socket_t fd, short events, void *arg);
+
  private:
 	enum STATE {
 		STATE_WAITING_FOR_CONNECT,
@@ -61,9 +106,10 @@ class ZClient : public ZModule {
  private:
 	event_base *base_;
 	evutil_socket_t fd_;
-	struct event *read_event_;
-	struct event *write_event_;
-	struct event *timeout_event_;
+	// struct event *socket_event_;
+	ZEventProxy socket_event_proxy_;
+	// struct event *timeout_event_;
+	ZEventProxy timeout_event_proxy_;
 	STATE state_;
 	char buf_[1 << 10];
 	// int type_;
@@ -72,7 +118,7 @@ class ZClient : public ZModule {
 
 	ZClientHandler *handler_;
 
-	time_t timeout_;	// in seconds
+	// time_t timeout_;	// in seconds
 };
 
 #endif // _ZCLIENT_H__

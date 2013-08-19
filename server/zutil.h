@@ -99,6 +99,9 @@ class CharBuffer {
  	uint32_t capacity_;
 };
 
+
+
+
 #endif // _Z_UTIL_H__
 
 
