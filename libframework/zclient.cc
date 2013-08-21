@@ -39,7 +39,7 @@ void ZClient::doTimeout()
 
 	switch (state_) {
 		case STATE_WAITING_FOR_CONNECT:
-			Z_LOG_I("connecting timeout, abort, waiting for reconnect: %p", this);
+			Z_LOG_I("connecting timeout, abort, waiting for reconnect: %p\n", this);
 			disconnect();
 			break;
 		case STATE_DISCONNECTED:
@@ -52,6 +52,7 @@ void ZClient::doTimeout()
 }
 
 int ZClient::init() {
+	Z_LOG_I("ZClient::init(): %p\n", this);
 	// XXX
 	ZDispatcher::instance()->registerModule(this);
 	// if (ZDispatcher::instance()->registerModule(this) != OK) {
@@ -207,7 +208,7 @@ int ZClient::onWaitingForConnect(evutil_socket_t fd, short events) {
 		// one shot event
 		socket_event_proxy_.registerSocket(fd, EV_WRITE, this, NULL);
 	} else {
-		Z_LOG_D("Failed to connect, rv=%d, val=%d, errno=%d\n", rv, val, errno);
+		Z_LOG_I("Failed to connect, rv=%d, val=%d, errno=%d: %p\n", rv, val, errno, this);
 
 		::close(fd_);
 		fd_ = -1;

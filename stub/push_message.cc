@@ -34,7 +34,7 @@ ZInnerMsg* decodePushMsg(char *buf, uint32_t buf_len)
 	json_error_t jerror;
 	json_t *jroot = json_loadb(buf, buf_len, 0, &jerror);
 	if (jroot == NULL || !json_is_object(jroot)) {
-		Z_LOG_E("Bad request");
+		Z_LOG_E("Bad request\n");
 		return NULL;
 	}
 

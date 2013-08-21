@@ -23,7 +23,7 @@ extern "C" {
 
 // modify this macro for different log level
 // #define LOG_LVL 	LOG_INFO
-#define LOG_LVL 	LOG_INFO
+#define LOG_LVL 	LOG_DEBUG
 
 #if (LOG_LVL >= LOG_ERROR)
 	#define Z_LOG_E(format, ...)		zlog("E|" __FILE__ "|" format, ##__VA_ARGS__)
