@@ -16,7 +16,8 @@ CFILES :=
 CXXFILES := zclient.cc \
 	zdispatcher.cc \
 	zserver.cc \
-	zserver_handler.cc
+	zserver_handler.cc \
+	zutil.cc
 
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)

@@ -5,12 +5,14 @@
 #include <event2/event.h>
 
 #include "zmodule.h"
+#include "zutil.h"
 
 class ZServer : public ZModule {
  public:
 	ZServer(const char *ip, uint16_t port, event_base *base, int type)
 		: ZModule(type)
 		, ip_(ip), port_(port), base_(base)
+		, socket_event_proxy_(base, socket_callback)
 	{
 	}
 
@@ -32,12 +34,16 @@ class ZServer : public ZModule {
  private:
 	void acceptClient(evutil_socket_t fd, short events);
 
+	static void socket_callback(evutil_socket_t fd, short events, void *arg);
+
  private:
 	std::string ip_;
 	uint16_t port_;
 
 	evutil_socket_t fd_;
 	event_base *base_;
+
+	ZEventProxy socket_event_proxy_;
 };
 
 

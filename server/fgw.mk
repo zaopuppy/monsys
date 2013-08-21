@@ -7,7 +7,6 @@ YACC   := bison
 TARGET := fgw
 CFILES :=
 CXXFILES := fgw.cc \
-	zutil.cc \
 	module.cc \
 	zserial.cc \
 	zwebapi_server.cc \

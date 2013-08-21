@@ -8,7 +8,6 @@
 #include "libbase/zlog.h"
 
 #include "libzigbee/zzigbee_message.h"
-#include "zutil.h"
 #include "zformatter.h"
 #include "unittest_main.h"
 

@@ -18,10 +18,11 @@ extern "C" {
 #define LOG_NONE		0
 #define LOG_ERROR		1
 #define LOG_WARN		2
-#define LOG_DEBUG		3
-#define LOG_INFO		4
+#define LOG_INFO		3
+#define LOG_DEBUG		4
 
 // modify this macro for different log level
+// #define LOG_LVL 	LOG_INFO
 #define LOG_LVL 	LOG_INFO
 
 #if (LOG_LVL >= LOG_ERROR)

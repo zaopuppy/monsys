@@ -66,7 +66,7 @@ void FGWServer::removeHandler(ZServerHandler *h)
 
 	delete_handler_list_.push_back(h);
 
-	Z_LOG_D("%u clients\n", handler_map_.size());
+	Z_LOG_I("%u clients\n", handler_map_.size());
 }
 
 void FGWServer::routine(long delta)
@@ -113,7 +113,7 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 
 	handler_map_[h->getId()] = h;
 
-	Z_LOG_D("%u clients\n", handler_map_.size());
+	Z_LOG_I("%u clients\n", handler_map_.size());
 }
 
 handler_id_t FGWServer::genHandlerId()

@@ -12,8 +12,7 @@ CXXFILES := center.cc \
 	push_message.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
-	zwebapi_session.cc \
-	zutil.cc
+	zwebapi_session.cc
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)

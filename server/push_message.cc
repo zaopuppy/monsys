@@ -5,10 +5,7 @@
 #include <jansson.h>
 
 #include "libbase/zlog.h"
-
 #include "zinner_message_ex.h"
-
-#include "zutil.h"
 
 // { "cmd": "HB" }
 ZInnerMsg* json2InnerHB(json_t *jroot)

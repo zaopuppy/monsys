@@ -7,46 +7,7 @@
 #include "zmodule.h"
 #include "zinner_message.h"
 #include "zclient_handler.h"
-
-// XXX: add timer identifier
-class ZEventProxy {
- 	typedef void (*callback_t)(evutil_socket_t, short, void*);
-
- public:
- 	ZEventProxy(event_base *base, callback_t callback)
- 		: callback_(callback)
- 		, base_(base)
- 		, ev_(NULL)
- 		// , timeout_(timeout)
- 	{}
- 	~ZEventProxy() {
- 		cancel();
- 	}
-
- public:
- 	void registerEvents(evutil_socket_t fd, short events, void* arg, const struct timeval *timeout) {
- 		cancel();
-
- 		assert(ev_ == NULL);
- 		ev_ = event_new(base_, fd, events, callback_, arg);
- 		assert(ev_ != NULL);
- 		event_add(ev_, timeout);
- 	}
-
- 	void cancel() {
- 		if (ev_) {
- 			event_free(ev_);
- 			ev_ = NULL;
- 		}
- 	}
-
- private:
- 	callback_t callback_;
- 	struct event_base *base_;
- 	struct event *ev_;
- 	// TODO: as an argument of `registerEvents'?
- 	// struct timeval *timeout_;
-};
+#include "zutil.h"
 
 class ZClient : public ZModule {
  public:
@@ -106,9 +67,7 @@ class ZClient : public ZModule {
  private:
 	event_base *base_;
 	evutil_socket_t fd_;
-	// struct event *socket_event_;
 	ZEventProxy socket_event_proxy_;
-	// struct event *timeout_event_;
 	ZEventProxy timeout_event_proxy_;
 	STATE state_;
 	char buf_[1 << 10];

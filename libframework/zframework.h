@@ -11,6 +11,7 @@
 #include "zinner_message.h"
 #include "zserver_handler.h"
 #include "zclient_handler.h"
+#include "zutil.h"
 
 #endif // _Z_FRAMEWORK_H__
 

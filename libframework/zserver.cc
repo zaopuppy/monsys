@@ -9,7 +9,8 @@
 #include "zerrno.h"
 #include "zdispatcher.h"
 
-static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
+// static
+void ZServer::socket_callback(evutil_socket_t fd, short events, void *arg)
 {
 	assert(arg);
 	ZServer *p = (ZServer*)arg;
@@ -65,11 +66,12 @@ int ZServer::init() {
 		return FAIL;
 	}
 
-	struct event* listen_event =
-		event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
-	assert(listen_event);
+	socket_event_proxy_.registerSocket(fd_, EV_READ|EV_PERSIST, this, NULL);
+	// struct event* listen_event =
+	// 	event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
+	// assert(listen_event);
 
-	event_add(listen_event, NULL);
+	// event_add(listen_event, NULL);
 
 	// state_ = STATE_ACCEPTING;
 

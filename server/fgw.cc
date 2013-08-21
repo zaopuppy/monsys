@@ -112,13 +112,16 @@ int main(int argc, char *argv[])
 	// long delta_time = 0;
 
 	// setup timeout
-	{
-		const struct timeval ROUTINE_INTERVAL = { 0, 500 * 1000 };
-		// struct event *timeout_ev = evtimer_new(base, routine, NULL);
-		// XXX: don't use EV_PEERSIST, time-cost routine may be dangerous
-		struct event *timeout_ev = event_new(base, -1, EV_PERSIST, routine, NULL);
-		event_add(timeout_ev, &ROUTINE_INTERVAL);
-	}
+	const struct timeval ROUTINE_INTERVAL = { 0, 500 * 1000 };
+	ZEventProxy routine_timer(base, routine);
+	routine_timer.registerPersistTimeout(NULL, &ROUTINE_INTERVAL);
+	// {
+	// 	const struct timeval ROUTINE_INTERVAL = { 0, 500 * 1000 };
+	// 	// struct event *timeout_ev = evtimer_new(base, routine, NULL);
+	// 	// XXX: don't use EV_PEERSIST, time-cost routine may be dangerous
+	// 	struct event *timeout_ev = event_new(base, -1, EV_PERSIST, routine, NULL);
+	// 	event_add(timeout_ev, &ROUTINE_INTERVAL);
+	// }
 
 	// basicly equals to event_base_loop()
 	// event_base_dispatch(base);
