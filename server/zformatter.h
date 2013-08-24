@@ -1,9 +1,10 @@
 #ifndef Z_FORMATER_H__
 #define Z_FORMATER_H__
 
-#include <vector>
+#include <stdio.h>
 #include <iostream>
 #include <string.h>
+#include <vector>
 #include <assert.h>
 
 #include "stdint.h"

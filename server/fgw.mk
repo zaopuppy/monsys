@@ -26,19 +26,17 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -Wall -g \
 	-I../ \
-	-I../libs/include/ \
-	-I/Volumes/Data/workspaces/jansson/out/include/
+	-I../libs/include/
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
-	-L../libbase -lbase \
 	-L../libzigbee -lzb \
+	-L../libbase -lbase \
 	-L../libframework -lframework \
-	-L../libs/lib -levent_core \
-	-L/Volumes/Data/workspaces/jansson/out/lib -ljansson
+	-L../libs/lib -levent_core -ljansson
 
 $(TARGET) : $(OBJFILES)
-	$(CXX) $(LDFLAGS) -o $@ $(OBJFILES)
+	$(CXX) -o $@ $(OBJFILES) $(LDFLAGS)
 
 %.d : %.cc
 	$(CXX) $(CFLAGS) -MT $(@:%.d=%.o) -MM -o $@ $<

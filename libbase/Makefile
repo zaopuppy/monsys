@@ -45,7 +45,7 @@ include $(DEPFILES)
 all: $(TARGET)
 
 ts: main.cc $(TARGET)
-	g++ -L. -lbase $< -o $@
+	g++ $< -o $@ -L. -lbase
 
 clean:
 	rm -f $(OBJFILES) $(DEPFILES)

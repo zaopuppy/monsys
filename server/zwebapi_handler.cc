@@ -26,7 +26,7 @@ int ZWebApiHandler::init() {
 void ZWebApiHandler::close() {
 	::close(fd_);
 	fd_ = -1;
-	event_del(read_event_);
+	event_free(read_event_);
 	read_event_ = NULL;
 	// XXX: don't forget to delete ourself
 	// add to a free list, do it in routine

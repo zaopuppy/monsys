@@ -1,5 +1,7 @@
 #include "zformatter.h"
 
+#include <stdlib.h>
+
 void ZFormatter::exe(int32_t v)
 {
 	// printf("ZFormatter::exe()\n");

@@ -8,7 +8,8 @@ void ZServerHandler::close()
 {
 	::close(fd_);
 	fd_ = -1;
-	event_del(read_event_);
+	event_free(read_event_);
+	read_event_ = NULL;
 }
 
 int ZServerHandler::event(evutil_socket_t fd, short events)

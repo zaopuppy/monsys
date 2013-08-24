@@ -49,7 +49,7 @@ include $(DEPFILES)
 all: $(TARGET)
 
 ts: main.cc $(TARGET)
-	$(CXX) $(CFLAGS) $(LDFLAGS) $< -o $@
+	$(CXX) $< -o $@ $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f $(OBJFILES) $(DEPFILES)

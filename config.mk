@@ -1,6 +1,7 @@
 
 
 
+MONSYS_ROOT_DIR=$(PWD)
 
 
 

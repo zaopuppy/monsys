@@ -45,7 +45,7 @@ include $(DEPFILES)
 all: $(TARGET)
 
 ts: main.cc $(TARGET)
-	$(CXX) $(CFLAGS) $(LDFLAGS) -L../libbase -lbase -L. -lzb $< -o $@
+	$(CXX) $< -o $@ $(CFLAGS) $(LDFLAGS) -L../libbase -lbase -L. -lzb
 
 clean:
 	rm -f $(OBJFILES) $(DEPFILES)

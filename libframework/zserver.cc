@@ -67,13 +67,6 @@ int ZServer::init() {
 	}
 
 	socket_event_proxy_.registerSocket(fd_, EV_READ|EV_PERSIST, this, NULL);
-	// struct event* listen_event =
-	// 	event_new(base_, fd_, EV_READ|EV_PERSIST, SOCKET_CALLBACK, (void*)this);
-	// assert(listen_event);
-
-	// event_add(listen_event, NULL);
-
-	// state_ = STATE_ACCEPTING;
 
 	return OK;
 }
@@ -96,9 +89,11 @@ void ZServer::acceptClient(evutil_socket_t fd, short events) {
 	int clifd = accept(fd, (struct sockaddr*) (&ss), &slen);
 	if (clifd < 0) {           // XXX EAGAIN?
 		perror("accept");
-	} else if (clifd > FD_SETSIZE) {
-		Z_LOG_D("Maximum size of fd has reached.\n");
-		::close(clifd); // XXX evutil_closesocket
+		::close(clifd);
+		return;
+	// } else if (clifd > FD_SETSIZE) {
+	// 	Z_LOG_D("Maximum size of fd has reached.\n");
+	// 	::close(clifd); // XXX evutil_closesocket
 	} else {
 		//
 		struct sockaddr_in* addr = (struct sockaddr_in*)(&ss);

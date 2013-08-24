@@ -111,7 +111,13 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 
 	event_add(h->read_event_, NULL);
 
-	handler_map_[h->getId()] = h;
+	// handler_map_[h->getId()] = h;
+	bool result = handler_map_.insert(std::pair<handler_id_t, ZServerHandler*>(h->getId(), h)).second;
+	if (!result) {
+		Z_LOG_E("Failed to insert handler into handler map\n");
+		h->close();
+		delete h;
+	}
 
 	Z_LOG_I("%u clients\n", handler_map_.size());
 }
