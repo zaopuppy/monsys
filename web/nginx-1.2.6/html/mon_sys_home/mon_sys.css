@@ -8,6 +8,7 @@ body {
 	position: fixed;
 	top: 0;
 	height: 100px;
+	height: 110px;
 	width: 100%;
 	border: 1px solid red;
 }
@@ -21,21 +22,26 @@ body {
 	list-style: none;
 }
 
-.device-record{
+.device-record {
 	height:48px;
-	line-height:48px;
-	width:100%;
+	/*line-height:48px;*/
+	/*width:100%;*/
 	border:1px solid red;
 	margin:5px 0;
 }
 
-.device-record span{ display:block; height:48px; line-height:48px; float:left;}
+.device-record span {
+	display: block;
+	height: 48px;
+	line-height: 48px;
+	float: left;
+}
 
-.device-record span.image { height:48px; width:48px;}
+/* .device-record span.image { height:48px; width:48px;} */
 
-.device-record span.name { height:48px; line-height:48px; width: 100%; float:right;}
+.device-record span.name { height:48px; line-height:48px; width: 552px; float:right;}
 
-.device-record span input { height:100%; width:100%;}
+/* .device-record span input { height:100%; width:100%;} */
 
 /* ---  end  --- yuusa modified */
 
@@ -63,8 +69,7 @@ canvas#light-color-picker {
 }
 
 /*如果你是针对高级浏览器写的话，建议百分比再加上min-width属性*/
-tr.device-record {
+/*tr.device-record {
 	width: 100%;
-	/*border: 1px solid #000000;*/
 }
-
+*/
