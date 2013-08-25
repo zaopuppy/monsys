@@ -107,8 +107,8 @@ int ZZBRegReq::encode(char* buf, uint32_t buf_len)
 	encode_len += sizeof(mac_.data);
 
 	ZMSG_ENCODE(dev_type_);
-	ZMSG_ENCODE(name_);
-	ZMSG_ENCODE(desc_);
+	// ZMSG_ENCODE(name_);
+	// ZMSG_ENCODE(desc_);
 
 	return encode_len;
 }
@@ -141,8 +141,8 @@ int ZZBRegReq::decode(char* buf, uint32_t buf_len)
 	decode_len += sizeof(mac_.data);
 
 	ZMSG_DECODE(dev_type_);
-	ZMSG_DECODE(name_);
-	ZMSG_DECODE(desc_);
+	// ZMSG_DECODE(name_);
+	// ZMSG_DECODE(desc_);
 
 	return decode_len;
 }

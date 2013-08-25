@@ -20,7 +20,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 	}
 
 	if (ANY_ID == handler_id) {
-		MAP_TYPE::iterator iter = handler_map_.begin();
+		HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 		if (iter == handler_map_.end()) {
 			Z_LOG_E("No such handler: %d\n", handler_id);
 			return FAIL;
@@ -38,7 +38,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 	// } else if (BROADCAST_ID = handler_id) {
 	// 	// TODO:
 	} else {
-		MAP_TYPE::iterator iter = handler_map_.find(handler_id);
+		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
 		if (iter == handler_map_.end()) {
 			printf("No such handler: %d\n", handler_id);
 			return FAIL;
@@ -55,7 +55,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 // happens when lots of client comes
 void FGWServer::removeHandler(ZServerHandler *h)
 {
-	MAP_TYPE::iterator iter = handler_map_.find(h->getId());
+	HANDLER_MAP_TYPE::iterator iter = handler_map_.find(h->getId());
 	if (iter != handler_map_.end()) {
 		handler_map_.erase(iter);
 	} else {
@@ -72,6 +72,10 @@ void FGWServer::removeHandler(ZServerHandler *h)
 void FGWServer::routine(long delta)
 {
 	// Z_LOG_D("FGWServer::routine()\n");
+	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+	for (; iter != handler_map_.end(); ++iter) {
+		iter->second->routine(delta);
+	}
 
 	deleteClosedHandlers();
 }
@@ -98,10 +102,10 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 		return;
 	}
 
-	ZServerHandler *h = new FGWHandler(handler_id, this);
+	ZServerHandler *h = new FGWHandler(handler_id, fd, this);
 	assert(h);
 
-	h->fd_ = fd;
+	// h->fd_ = fd;
 	// h->setId(handler_id);
 	// h->setModuleType(0);	// should be Z_MODULE_FGW
 	h->read_event_ =
@@ -128,7 +132,7 @@ handler_id_t FGWServer::genHandlerId()
 	// XXX: use defined max_handler_id in module.h
 	static const handler_id_t MAX_HANDLER_NUM = 0xFFFFF; // > 100w
 
-	MAP_TYPE::iterator iter;
+	HANDLER_MAP_TYPE::iterator iter;
 	handler_id_t old_id = s_id;
 	do {
 		iter = handler_map_.find(s_id);

@@ -10,7 +10,7 @@ int FGWHandler::init()
 	// addr_.module_type_ = getModuleType();
 	// addr_.handler_id_ = getId();
 	Z_LOG_D("FGWHandler::init()\n");
-	Z_LOG_D("fd: %d\n", fd_);
+	Z_LOG_D("fd: %d\n", getFd());
 	return OK;
 }
 
@@ -20,6 +20,7 @@ void FGWHandler::close()
 	super_::close();
 	// XXX
 	// server_->removeHandler(this);
+	// XXX: remove it to upper class
 	((FGWServer*)getModule())->removeHandler(this);
 }
 
@@ -60,8 +61,8 @@ void FGWHandler::routine(long delta)
 
 int FGWHandler::send(const char *buf, uint32_t buf_len)
 {
-	Z_LOG_D("FGWHandler::send(%d)\n", fd_);
-	int rv = ::send(fd_, buf, buf_len, 0);
+	Z_LOG_D("FGWHandler::send(%d)\n", getFd());
+	int rv = ::send(getFd(), buf, buf_len, 0);
 	Z_LOG_D("rv: %d\n", rv);
 	return OK;
 }

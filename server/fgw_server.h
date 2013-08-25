@@ -27,10 +27,10 @@ class FGWServer : public ZServer {
 	handler_id_t genHandlerId();
 	void deleteClosedHandlers();
 
-	typedef std::map<handler_id_t, ZServerHandler*> MAP_TYPE;
+	typedef std::map<handler_id_t, ZServerHandler*> HANDLER_MAP_TYPE;
 
  private:
- 	MAP_TYPE handler_map_;
+ 	HANDLER_MAP_TYPE handler_map_;
  	std::vector<ZServerHandler*> delete_handler_list_;
 };
 

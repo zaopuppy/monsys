@@ -47,7 +47,7 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 {
 	// printf("routine()\n");
 	// sleep(2);
-	ZDispatcher::instance()->routine(5000);
+	ZDispatcher::instance()->routine(100);
 }
 
 int main(int argc, char *argv[])

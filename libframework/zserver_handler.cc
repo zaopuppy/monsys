@@ -1,11 +1,14 @@
 #include "zserver_handler.h"
 
-#include "errno.h"
+#include <errno.h>
 
-#include "unistd.h"
+#include <unistd.h>
+
+#include "libbase/zlog.h"
 
 void ZServerHandler::close()
 {
+	Z_LOG_D("ZServerHandler::close()\n");
 	::close(fd_);
 	fd_ = -1;
 	event_free(read_event_);
@@ -14,6 +17,7 @@ void ZServerHandler::close()
 
 int ZServerHandler::event(evutil_socket_t fd, short events)
 {
+	Z_LOG_D("ZServerHandler::event(fd=%d)\n", fd);
 	fd_ = fd;
 
 	unsigned int buf_idx = 0;
@@ -32,7 +36,7 @@ int ZServerHandler::event(evutil_socket_t fd, short events)
 		close();
 		return -1;
 	} else if (len == 0) {
-		// Z_LOG_D("peer closed.\n");
+		Z_LOG_D("peer closed.\n");
 		close();
 		return -1;
 	}else {

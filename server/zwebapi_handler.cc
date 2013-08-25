@@ -11,6 +11,7 @@
 #include "module.h"
 
 #include "push_message.h"
+#include "zwebapi_server.h"
 
 //////////////////////////////////////////////////////
 int ZWebApiHandler::init() {
@@ -24,12 +25,9 @@ int ZWebApiHandler::init() {
 }
 
 void ZWebApiHandler::close() {
-	::close(fd_);
-	fd_ = -1;
-	event_free(read_event_);
-	read_event_ = NULL;
-	// XXX: don't forget to delete ourself
-	// add to a free list, do it in routine
+	super_::close();
+	// XXX: remove it to upper class
+	((ZWebApiServer*)getModule())->removeHandler(this);
 }
 
 int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
@@ -39,8 +37,10 @@ int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
 	switch (msg->msg_type_) {
 		case Z_TRANSPORT_MSG:
 			{
+				Z_LOG_D("Z_TRANSPORT_MSG\n");
 				ZTransportMsg *m = (ZTransportMsg*)msg;
-				send(m->data_, m->data_len_);
+				int rv = send(m->data_, m->data_len_);
+				Z_LOG_D("Sent %d bytes\n", rv);
 				break;
 			}
 		default:
@@ -65,7 +65,7 @@ void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 
 int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 {
-	printf("ZWebApiModule::onRead()\n");
+	printf("ZWebApiModule::onRead(fd_=%d)\n", getFd());
 
 	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 		printf("empty message\n");

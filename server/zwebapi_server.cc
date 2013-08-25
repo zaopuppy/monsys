@@ -16,6 +16,32 @@ void ZWebApiServer::close()
 	super_::close();
 }
 
+void ZWebApiServer::removeHandler(ZServerHandler *h)
+{
+	HANDLER_MAP_TYPE::iterator iter = handler_map_.find(h->getId());
+	if (iter != handler_map_.end()) {
+		handler_map_.erase(iter);
+	} else {
+		Z_LOG_W("id[%d] doesn't exist\n");
+		// no, we can't return, this handler must be deleted
+		// return;
+	}
+
+	delete_handler_list_.push_back(h);
+
+	Z_LOG_I("%u clients\n", handler_map_.size());
+}
+
+void ZWebApiServer::deleteClosedHandlers()
+{
+	size_t list_len = delete_handler_list_.size();
+	for (size_t i = 0; i < list_len; ++i) {
+		delete delete_handler_list_[i];
+	}
+
+	delete_handler_list_.clear();
+}
+
 int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 {
 	printf("ZWebApiServer::onInnerMsg()\n");
@@ -55,18 +81,22 @@ void ZWebApiServer::routine(long delta)
 	for (; iter != handler_map_.end(); ++iter) {
 		iter->second->routine(delta);
 	}
+
+	deleteClosedHandlers();
 }
 
 void ZWebApiServer::onAccept(
 		evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)
 {
+	Z_LOG_D("ZWebApiServer::onAccept(fd=%d)\n", fd);
+
 	int handler_id = genHandlerId();
 	if (handler_id == INVALID_ID) {
 		printf("Failed to generate handler id, handler full?\n");
 		return;
 	}
 
-	ZServerHandler *h = new ZWebApiHandler(getBase(), handler_id, this);
+	ZServerHandler *h = new ZWebApiHandler(getBase(), handler_id, fd, this);
 	assert(h);
 
 	h->read_event_ =

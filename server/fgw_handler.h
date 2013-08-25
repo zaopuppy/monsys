@@ -7,8 +7,8 @@ class FGWServer;
 
 class FGWHandler : public ZServerHandler {
  public:
-	FGWHandler(int id, ZModule *module)
-		: ZServerHandler(id, module)
+	FGWHandler(int id, evutil_socket_t fd, ZModule *module)
+		: ZServerHandler(id, fd, module)
 		// , server_(server)
 	{}
 	~FGWHandler() {}

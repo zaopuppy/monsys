@@ -63,9 +63,9 @@ class ZZBRegReq : public ZZigBeeMsg {
 	
 	uint16_t getBodyLen() {
 		return sizeof(mac_.data)
-			+ getlen(dev_type_)
-		 	+ getlen(name_)
-		 	+ getlen(desc_);
+			+ getlen(dev_type_);
+		 	// + getlen(name_)
+		 	// + getlen(desc_);
 	}
 
  public:

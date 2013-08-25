@@ -14,11 +14,12 @@
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
  public:
-	ZWebApiHandler(event_base* base, int id, ZModule *module)
-		: ZServerHandler(id, module)
-	{}
+	ZWebApiHandler(event_base* base, int id, evutil_socket_t fd, ZModule *module)
+		: ZServerHandler(id, fd, module)
+	{
+	}
 
-	typedef ZHandler super_;
+	typedef ZServerHandler super_;
 
  public:
 	virtual int init();
@@ -28,7 +29,8 @@ class ZWebApiHandler : public ZServerHandler {
 	virtual void routine(long delta);
 
 	virtual int send(const char *buf, uint32_t buf_len) {
-		return ::send(fd_, buf, buf_len, 0);
+		Z_LOG_D("ZWebApiHandler::send(fd=%d)\n", getFd());
+		return ::send(getFd(), buf, buf_len, 0);
 	}
 
  private:

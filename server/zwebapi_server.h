@@ -22,6 +22,9 @@ class ZWebApiServer : public ZServer {
 	virtual int onInnerMsg(ZInnerMsg *msg);
 	virtual void routine(long delta);
 
+ public:
+ 	void removeHandler(ZServerHandler *h);
+
 	typedef std::map<int, ZServerHandler*> HANDLER_MAP_TYPE;
 
  protected:
@@ -29,11 +32,11 @@ class ZWebApiServer : public ZServer {
 
  private:
  	int genHandlerId();
+	void deleteClosedHandlers();
 
  private:
-	// XXX
-	// ZServerHandler *handler_;
-	std::map<int, ZServerHandler*> handler_map_;
+	HANDLER_MAP_TYPE handler_map_;
+ 	std::vector<ZServerHandler*> delete_handler_list_;
 };
 
 #endif // _Z_WEBAPI_SERVER_H__

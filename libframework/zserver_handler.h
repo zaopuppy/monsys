@@ -9,9 +9,11 @@
 
 class ZServerHandler : public ZHandler {
  public:
- 	ZServerHandler(int id, ZModule *module)
+ 	ZServerHandler(int id, evutil_socket_t fd, ZModule *module)
  		: ZHandler(id, module)
- 		, fd_(-1), read_event_(NULL) {}
+ 		, read_event_(NULL)
+		,	fd_(fd)
+	{}
  	virtual ~ZServerHandler() {}
 
  public:
@@ -26,15 +28,16 @@ class ZServerHandler : public ZHandler {
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len) = 0;
 	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
+	evutil_socket_t getFd() { return fd_; }
 
  public:
 	virtual int event(evutil_socket_t fd, short events);
 
  public:
-	evutil_socket_t fd_;
 	struct event *read_event_;
 
  private:
+	evutil_socket_t fd_;
 	char buf_[1 << 10];
 };
 

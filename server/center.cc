@@ -10,11 +10,13 @@
 
 using namespace std;
 
-ZServer *g_server = NULL;
+ZServer *g_fgw_server = NULL;
+ZServer *g_webapi_server = NULL;
 
 static void routine(evutil_socket_t fd, short events, void *arg)
 {
-	g_server->routine(500);
+	g_fgw_server->routine(500);
+	g_webapi_server->routine(500);
 }
 
 int main(int argc, char *argv[])
@@ -23,15 +25,15 @@ int main(int argc, char *argv[])
 	assert(base);
 
 	// push server
-	g_server = new FGWServer("0.0.0.0", 1984, base);
-	if (OK != g_server->init()) {
+	g_fgw_server = new FGWServer("0.0.0.0", 1984, base);
+	if (OK != g_fgw_server->init()) {
 		Z_LOG_E("Failed to start FGW Server, quit\n");
 		return -1;
 	}
 
 	// webapi server
-	ZServer *webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
-	if (OK != webapi_server->init()) {
+	ZServer *g_webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
+	if (OK != g_webapi_server->init()) {
 		Z_LOG_E("Failed to start WEBAPI Server, quit\n");
 		return -1;
 	}
