@@ -104,4 +104,4 @@
 104: State not recoverable
 105: Previous owner died
 106: Interface output queue is full
-107: Unknown error: 107
+107: Unknown error
