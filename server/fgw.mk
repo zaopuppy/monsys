@@ -15,7 +15,7 @@ CXXFILES := fgw.cc \
 	zzigbee_handler.cc \
 	zformatter.cc \
 	unittest_main.cc \
-	push_message.cc \
+	webapi_msg.cc \
 	fgw_client.cc \
 	fgw_client_handler.cc
 

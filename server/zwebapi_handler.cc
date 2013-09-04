@@ -10,12 +10,12 @@
 
 #include "module.h"
 
-#include "push_message.h"
+#include "webapi_msg.h"
 #include "zwebapi_server.h"
 
 //////////////////////////////////////////////////////
 int ZWebApiHandler::init() {
-	printf("[%p] Oops, client's coming\n", this);
+	Z_LOG_D("[%p] Oops, client's coming", this);
 
 	// init address here
 	addr_.module_type_ = getModuleType();
@@ -32,19 +32,19 @@ void ZWebApiHandler::close() {
 
 int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
 {
-	printf("ZWebApiHandler::onInnerMsg()\n");
+	Z_LOG_D("ZWebApiHandler::onInnerMsg()");
 
 	switch (msg->msg_type_) {
 		case Z_TRANSPORT_MSG:
 			{
-				Z_LOG_D("Z_TRANSPORT_MSG\n");
+				Z_LOG_D("Z_TRANSPORT_MSG");
 				ZTransportMsg *m = (ZTransportMsg*)msg;
 				int rv = send(m->data_, m->data_len_);
-				Z_LOG_D("Sent %d bytes\n", rv);
+				Z_LOG_D("Sent %d bytes", rv);
 				break;
 			}
 		default:
-			Z_LOG_E("Unknow message type: %d\n", msg->msg_type_);
+			Z_LOG_E("Unknow message type: %d", msg->msg_type_);
 			return -1;
 	}
 
@@ -55,20 +55,50 @@ void ZWebApiHandler::routine(long delta)
 {
 }
 
-
 void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 {
-	printf("ZWebApiHandler::sendRsp\n");
+	Z_LOG_D("ZWebApiHandler::sendRsp");
 	int rv = send(text_msg, strlen(text_msg));
-	printf("sent %d bytes\n", rv);
+	Z_LOG_D("sent %d bytes", rv);
 }
 
 int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 {
-	printf("ZWebApiModule::onRead(fd_=%d)\n", getFd());
+	// Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
+	// if (buf_len <= 0) { // MIN_MSG_LEN(header length)
+	// 	Z_LOG_D("empty message");
+
+	// 	sendRsp("empty message", 404);
+
+	// 	return -1;
+	// }
+
+	// trace_bin(buf, buf_len);
+
+	// {
+	// 	// ZInnerMsg *inner_msg = webMsg2InnerMsg(jobj);
+	// 	ZInnerMsg *inner_msg = decodePushMsg(buf, buf_len);
+	// 	if (inner_msg == NULL) {
+	// 		sendRsp("bad request", 400);
+	// 		return -1;
+	// 	}
+
+	// 	// set source address
+	// 	inner_msg->src_addr_ = addr_;
+
+	// 	// set destination address
+	// 	inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
+	// 	inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
+
+	// 	ZDispatcher::instance()->sendDirect(inner_msg);
+	// }
+
+	// return 0;
+
+	Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
 
 	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
-		printf("empty message\n");
+		Z_LOG_D("empty message");
 
 		sendRsp("empty message\n", 404);
 
@@ -83,31 +113,14 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 		inner_msg->data_len_ = buf_len;
 		memcpy(inner_msg->data_, buf, buf_len);
 
-		// set destination address
+		// set source and destination address
+		inner_msg->src_addr_ = addr_;
 		inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
-		inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
+		inner_msg->dst_addr_.handler_id_ = ANY_ID;
 
 		ZDispatcher::instance()->sendDirect(inner_msg);
 
 	}
-	// {
-	// 	// ZInnerMsg *inner_msg = webMsg2InnerMsg(jobj);
-	// 	ZInnerMsg *inner_msg = decodePushMsg(buf, buf_len);
-	// 	if (inner_msg == NULL) {
-	// 		sendRsp("bad request\n", 400);
-	// 		return -1;
-	// 	}
-
-	// 	// set source address
-	// 	inner_msg->src_addr_ = addr_;
-
-	// 	// set destination address
-	// 	inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
-	// 	inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
-
-	// 	// ZDispatcher::instance()->sendMsg(inner_msg);
-	// 	ZDispatcher::instance()->sendDirect(inner_msg);
-	// }
 
 	return 0;
 }

@@ -1,5 +1,54 @@
 
 
+Center:
+{
+	WebApi:
+	{
+		WebApi Message (JSON): "seq"
+		Inner Message: sequence
+	}
+
+	ZDispatcher:
+	{
+		Inner Message
+	}
+
+	FGWServer(session):
+	{
+		Inner Message: sequence(key)
+		WebApi Message (JSON): "seq"
+	}
+}
+
+
+
+FGW:
+{
+	FGWClient(session):
+	{
+		WebApi Message (JSON): "seq"
+		Inner Message: sequence(key)
+	}
+
+	ZDispatcher:
+	{
+		Inner Message
+	}
+
+	ZigBeeModule(session):
+	{
+		Inner Message: sequence(key)
+		ZigBee Message: address
+	}
+}
+
+
+
+
+
+
+
+
 
 
 REQUEST:

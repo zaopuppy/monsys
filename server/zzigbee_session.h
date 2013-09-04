@@ -3,7 +3,7 @@
 
 #include "libframework/zframework.h"
 
-class ZZigBeeSession : public ZSession {
+class ZZigBeeSession : public ZSession<uint32_t> {
  public:
  	ZZigBeeSession() {
  		setTimeout(1000);
@@ -11,15 +11,15 @@ class ZZigBeeSession : public ZSession {
 
  	typedef ZSession super;
 
- 	union common_data {
- 		uint32_t u32;
- 		uint16_t u16;
- 	};
+ 	// union common_data {
+ 	// 	uint32_t u32;
+ 	// 	uint16_t u16;
+ 	// };
 
  public:
  	ZInnerAddress src_addr_;
  	ZInnerAddress dst_addr_;
- 	union common_data extern_key_;
+ 	// union common_data extern_key_;
 };
 
 

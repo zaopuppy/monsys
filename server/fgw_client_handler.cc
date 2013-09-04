@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "push_message.h"
+#include "webapi_msg.h"
 
 int FGWClientHandler::init()
 {
@@ -23,100 +23,166 @@ void FGWClientHandler::close()
 
 int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 {
-	Z_LOG_D("FGWClientHandler::onRead()\n");
+	Z_LOG_D("FGWClientHandler::onRead()");
 
 	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
-		Z_LOG_D("empty message\n");
+		Z_LOG_D("empty message");
 
-		sendRsp("empty message\n", 404);
+		sendRsp("empty message", 404);
 
 		return -1;
 	}
 
+	Z_LOG_D("Received message from FGW server");
 	trace_bin(buf, buf_len);
 
-	{
-		// ZInnerMsg *inner_msg = webMsg2InnerMsg(jobj);
-		ZInnerMsg *inner_msg = decodePushMsg(buf, buf_len);
-		if (inner_msg == NULL) {
-			sendRsp("bad request\n", 400);
-			return -1;
-		}
-
-		// set source address
-		inner_msg->src_addr_ = addr_;
-
-		// set destination address
-		inner_msg->dst_addr_.module_type_ = MODULE_SERIAL;
-		inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
-
-		// ZDispatcher::instance()->sendMsg(inner_msg);
-		ZDispatcher::instance()->sendDirect(inner_msg);
+	// decode
+	json_t* jmsg = decodeWebApiMsg(buf, buf_len);
+	// check sequence
+	json_t *jseq = json_object_get(jmsg, "seq");
+	if (jseq == NULL || !json_is_integer(jseq)) {
+		Z_LOG_E("Field seq is not in request message, ignore");
+		return FAIL;
 	}
+	uint32_t seq = (uint32_t)json_integer_value(jseq);
+	Z_LOG_D("push msg sequence id: %u", seq);
+
+	// check duplicated session
+	FGWClientSession *session =	(FGWClientSession*)session_ctrl_.findByKey2(seq);
+	if (session != NULL) {
+		Z_LOG_E("Duplicated session: [%u]", seq);
+		return FAIL;
+	}
+
+	// everything is OK, now doing the convert
+	ZInnerMsg *inner_msg = json2Inner(jmsg);
+	if (inner_msg == NULL) {
+		sendRsp("bad request", 400);
+		return -1;
+	}
+
+	// set source address
+	inner_msg->src_addr_ = addr_;
+
+	// set destination address
+	inner_msg->dst_addr_.module_type_ = MODULE_SERIAL;
+	inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
+
+	// save session
+	{
+		FGWClientSession *session = new FGWClientSession();
+		session->setKey(inner_msg->seq_);
+		session->webapi_seq = seq;
+
+		session_ctrl_.add(inner_msg->seq_, seq, session);
+ 		Z_LOG_D("Added: key1=%u, key2=%u", inner_msg->seq_, seq);
+	}
+
+	ZDispatcher::instance()->sendDirect(inner_msg);
 
 	return 0;
 }
 
 int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
 {
-	Z_LOG_D("FGWClientHandler::onInnerMsg\n");
+	Z_LOG_D("FGWClientHandler::onInnerMsg");
 
-	json_t *jobj = NULL;
+	// find session first
+	FGWClientSession *session = session_ctrl_.findByKey1(msg->seq_);
+	if (session == NULL) {
+		Z_LOG_D("No session was found for key: %u", msg->seq_);
+		return FAIL;
+	}
+
+	json_t *jmsg = NULL;
 
 	switch (msg->msg_type_) {
 		case Z_ZB_GET_DEV_LIST_RSP:
 			{
-				jobj = inner2Json((ZInnerGetDevListRsp*)msg);
+				jmsg = inner2Json((ZInnerGetDevListRsp*)msg);
 				break;
 			}
 		case Z_ZB_GET_DEV_RSP:
 			{
-				jobj = inner2Json((ZInnerGetDevInfoRsp*)msg);
+				jmsg = inner2Json((ZInnerGetDevInfoRsp*)msg);
 				break;
 			}
 		case Z_ZB_SET_DEV_RSP:
 			{
-				jobj = inner2Json((ZInnerSetDevInfoRsp*)msg);
+				jmsg = inner2Json((ZInnerSetDevInfoRsp*)msg);
 				break;
 			}
 		default:
-			Z_LOG_E("Unknown message type: %d\n", msg->msg_type_);
+			Z_LOG_E("Unknown message type: %d", msg->msg_type_);
 			return -1;
 	}
 
-	if (!jobj) {
+	if (!jmsg) {
 		Z_LOG_D("Failed to convert ");
 		return FAIL;
 	}
 
-	char *str_dump = json_dumps(jobj, 0);
+	// add "seq" field from saved seq
+	uint32_t seq = session->webapi_seq;
+	json_t *jseq = json_integer(seq);
+	int rv = json_object_set_new(jmsg, "seq", jseq);
+	if (rv != 0) {
+		json_decref(jmsg);
+		return FAIL;
+	}
+
+	char *str_dump = json_dumps(jmsg, 0);
 	sendRsp(str_dump, 200);
 	free(str_dump);
-	json_decref(jobj);
+	json_decref(jmsg);
+
+	// delete session
+	session_ctrl_.removeByKey1(session->getKey());
+	delete session;
 
 	return OK;
 }
 
 void FGWClientHandler::routine(long delta)
 {
+	FGWClientSession *session;
+
+	SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
+	SESSION_CTRL_TYPE::iterator tmp_iter;
+
+	while (iter != session_ctrl_.end()) {
+		session = iter->second;
+		session->doTimeout(delta);
+		if (session->isComplete()) {
+			tmp_iter = iter;
+			++iter;
+
+			delete tmp_iter->second;
+			session_ctrl_.erase(tmp_iter);
+
+		} else {
+			++iter;
+		}
+	}
+
 }
 
 int FGWClientHandler::send(const char *buf, uint32_t buf_len)
 {
-	Z_LOG_D("FGWClientHandler::send(%d)\n", fd_);
+	Z_LOG_D("FGWClientHandler::send(%d)", fd_);
 	return ::send(fd_, buf, buf_len, 0);
 }
 
 void FGWClientHandler::onConnected()
 {
-	Z_LOG_D("FGWClientHandler::onConnected()\n");
+	Z_LOG_D("FGWClientHandler::onConnected()");
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)
 {
-	Z_LOG_D("FGWClientHandler::sendRsp\n");
+	Z_LOG_D("FGWClientHandler::sendRsp");
 	int rv = send(text_msg, strlen(text_msg));
-	Z_LOG_D("sent %d bytes\n", rv);
+	Z_LOG_D("sent %d bytes", rv);
 }
 
 

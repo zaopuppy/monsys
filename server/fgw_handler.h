@@ -2,6 +2,7 @@
 #define _FGW_HANDLER_H__
 
 #include "libframework/zframework.h"
+#include "fgw_session.h"
 
 class FGWServer;
 
@@ -23,8 +24,15 @@ class FGWHandler : public ZServerHandler {
 
 	virtual int send(const char *buf, uint32_t buf_len);
 
- // private:
- // 	FGWServer *server_;
+	typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWSession> SESSION_CTRL_TYPE;
+	// typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
+
+ protected:
+ 	bool checkSessionBySequence(uint32_t sequence);
+
+ private:
+ 	// <sequence, fgw_id>
+ 	SESSION_CTRL_TYPE session_ctrl_;
 
 };
 

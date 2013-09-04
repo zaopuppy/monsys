@@ -5,24 +5,25 @@
 // XXX: this kind of code should be moved to upper class
 int FGWServer::onInnerMsg(ZInnerMsg *msg)
 {
-	Z_LOG_D("FGWServer::onInnerMsg\n");
+	Z_LOG_D("FGWServer::onInnerMsg");
 
 	handler_id_t handler_id = msg->dst_addr_.handler_id_;
 
 	// if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-	// 	printf("Bad handler id: %d\n", handler_id);
+	// 	printf("Bad handler id: %d", handler_id);
 	// 	return FAIL;
 	// }
 
 	if (handler_map_.size() == 0) {
-		Z_LOG_W("no client is connecting\n");
+		Z_LOG_W("no client is connecting");
 		return FAIL;
 	}
 
 	if (ANY_ID == handler_id) {
+		Z_LOG_D("ANY_ID");
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 		if (iter == handler_map_.end()) {
-			Z_LOG_E("No such handler: %d\n", handler_id);
+			Z_LOG_E("Empty handler map: %d", handler_id);
 			return FAIL;
 		}
 
@@ -31,7 +32,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 	// 	// XXX: should do load-balancing, current just use the first one
 	// 	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 	// 	if (iter == handler_map_.end()) {
-	// 		printf("Empty handler map...:(\n");
+	// 		printf("Empty handler map...:(");
 	// 		return;
 	// 	}
 	// 	iter->second->onInnerMsg(msg);
@@ -40,7 +41,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 	} else {
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
 		if (iter == handler_map_.end()) {
-			printf("No such handler: %d\n", handler_id);
+			printf("No such handler: %d", handler_id);
 			return FAIL;
 		}
 
@@ -55,23 +56,24 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 // happens when lots of client comes
 void FGWServer::removeHandler(ZServerHandler *h)
 {
+	Z_LOG_D("FGWServer::removeHandler(%p)", h);
 	HANDLER_MAP_TYPE::iterator iter = handler_map_.find(h->getId());
 	if (iter != handler_map_.end()) {
 		handler_map_.erase(iter);
 	} else {
-		Z_LOG_W("id[%d] doesn't exist\n");
+		Z_LOG_W("id[%d] doesn't exist");
 		// no, we can't return, this handler must be deleted
 		// return;
 	}
 
 	delete_handler_list_.push_back(h);
 
-	Z_LOG_I("%u clients\n", handler_map_.size());
+	Z_LOG_I("%u clients", handler_map_.size());
 }
 
 void FGWServer::routine(long delta)
 {
-	// Z_LOG_D("FGWServer::routine()\n");
+	// Z_LOG_D("FGWServer::routine()");
 	HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 	for (; iter != handler_map_.end(); ++iter) {
 		iter->second->routine(delta);
@@ -84,7 +86,7 @@ void FGWServer::deleteClosedHandlers()
 {
 	size_t list_len = delete_handler_list_.size();
 	for (size_t i = 0; i < list_len; ++i) {
-		// Z_LOG_D("deleting: %p\n", delete_handler_list_[i]);
+		Z_LOG_D("deleting: %p", delete_handler_list_[i]);
 		delete delete_handler_list_[i];
 	}
 
@@ -94,7 +96,7 @@ void FGWServer::deleteClosedHandlers()
 
 void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)
 {
-	Z_LOG_D("FGWServer::onAccept\n");
+	Z_LOG_D("FGWServer::onAccept");
 
 	handler_id_t handler_id = genHandlerId();
 	if (handler_id == INVALID_ID) {
@@ -118,12 +120,12 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 	// handler_map_[h->getId()] = h;
 	bool result = handler_map_.insert(std::pair<handler_id_t, ZServerHandler*>(h->getId(), h)).second;
 	if (!result) {
-		Z_LOG_E("Failed to insert handler into handler map\n");
+		Z_LOG_E("Failed to insert handler into handler map");
 		h->close();
 		delete h;
 	}
 
-	Z_LOG_I("%u clients\n", handler_map_.size());
+	Z_LOG_I("%u clients", handler_map_.size());
 }
 
 handler_id_t FGWServer::genHandlerId()

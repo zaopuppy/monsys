@@ -14,6 +14,8 @@
 
 #include "zinner_message_ex.h"
 #include "module.h"
+#include "zzigbee_session.h"
+
 
 class ZZigBeeHandler : public ZClientHandler {
  public:
@@ -59,13 +61,8 @@ class ZZigBeeHandler : public ZClientHandler {
 	int processMsg(ZInnerGetDevInfoReq *msg);
 	int processMsg(ZInnerSetDevInfoReq *msg);
 
-	// void initZBDevStruct(zb_dev_t *dev);
-	// ZZBDev* findDev(uint8_t id);
-	// uint8_t getDevAddr();
-	// void printDevInfo();
-
-	// typedef std::list<zb_dev_t*> DEV_LIST_TYPE;
-	typedef ZSessionCtrl2Key<uint32_t, uint32_t, ZSession> SESSION_CTRL_TYPE;
+	// <senquence, addr>
+	typedef ZSessionCtrl2Key<uint32_t, uint32_t, ZZigBeeSession> SESSION_CTRL_TYPE;
 
  private:
 	char buf_[1 << 10];

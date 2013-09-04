@@ -34,13 +34,13 @@ class ZDispatcher {
 
  private:
 	typedef std::list<ZModule*> MODULE_LIST_TYPE;
-	typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
+	// typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
 
  private:
 	// TODO: use hash map instead of list
 	MODULE_LIST_TYPE module_list_;
 	std::list<ZInnerMsg*> msg_list_;
-	SESSION_CTRL_TYPE session_ctrl_;
+	// SESSION_CTRL_TYPE session_ctrl_;
 };
 
 #endif

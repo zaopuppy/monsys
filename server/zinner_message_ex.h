@@ -26,9 +26,7 @@ enum {
 class ZTransportMsg : public ZInnerMsg {
  public:
  	ZTransportMsg()
- 		: ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL)
-	{
-	}
+ 		: ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL) { }
 	~ZTransportMsg() {
 		if (data_) {
 			delete []data_;
@@ -57,18 +55,13 @@ class ZTransportMsg : public ZInnerMsg {
 class ZInnerGetDevListReq : public ZInnerMsg {
  public:
 	ZInnerGetDevListReq()
-		: ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ)
-	{
-	}
-
+		: ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ) { }
 };
 
 class ZInnerGetDevListRsp : public ZInnerMsg {
  public:
  	ZInnerGetDevListRsp()
- 		: ZInnerMsg(Z_ZB_GET_DEV_LIST_RSP)
- 	{
- 	}
+ 		: ZInnerMsg(Z_ZB_GET_DEV_LIST_RSP) { }
  	~ZInnerGetDevListRsp()
  	{
  		// delete infos
@@ -87,9 +80,7 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
 class ZInnerGetDevInfoReq : public ZInnerMsg {
  public:
 	ZInnerGetDevInfoReq()
-	  : ZInnerMsg(Z_ZB_GET_DEV_REQ)
-	{
-	}
+	  : ZInnerMsg(Z_ZB_GET_DEV_REQ) { }
 
  public:
 	uint16_t addr_;
@@ -99,16 +90,10 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 class ZInnerGetDevInfoRsp : public ZInnerMsg {
  public:
 	ZInnerGetDevInfoRsp()
-	  : ZInnerMsg(Z_ZB_GET_DEV_RSP)
-	{
-	}
+	  : ZInnerMsg(Z_ZB_GET_DEV_RSP) { }
 
  public:
-	// uint16_t addr_;
-	// std::vector< std::vector<ZItemPair>* > dev_infos_;
 	std::vector<ZItemPair> dev_infos_;
-	// std::vector<uint8_t> item_ids_;
-	// std::vector<uint16_t> item_vals_;
 };
 
 ////////////////////////////////////////////////////
@@ -116,9 +101,7 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 class ZInnerSetDevInfoReq : public ZInnerMsg {
  public:
 	ZInnerSetDevInfoReq()
-	  : ZInnerMsg(Z_ZB_SET_DEV_REQ)
-	{
-	}
+	  : ZInnerMsg(Z_ZB_SET_DEV_REQ) { }
 
  public:
 	uint16_t addr_;
@@ -128,9 +111,7 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 class ZInnerSetDevInfoRsp : public ZInnerMsg {
  public:
 	ZInnerSetDevInfoRsp()
-	  : ZInnerMsg(Z_ZB_SET_DEV_RSP)
-	{
-	}
+	  : ZInnerMsg(Z_ZB_SET_DEV_RSP) { }
 
  public:
 	uint8_t status_;

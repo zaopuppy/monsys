@@ -1,8 +1,10 @@
 #ifndef _Z_SESSION_CTRL_H__
 #define _Z_SESSION_CTRL_H__
 
-#include <map>
 #include <stdint.h>
+#include <assert.h>
+#include <map>
+#include <vector>
 
 #include "libbase/zlog.h"
 
@@ -100,6 +102,7 @@ class ZSessionCtrl2Key {
  	}
 
  	T_Session* findByKey2(const T_Key2 &key2) {
+ 	// T_Session* findByKey2(const T_Key2 key2) {
  		T_Key1 key1;
  		if (!getKey1ByKey2(key2, key1)) {
  			Z_LOG_D("Failed to get key1 by using key2\n");
@@ -113,7 +116,7 @@ class ZSessionCtrl2Key {
  	{
  		key_pair_t pair(key1, key2);
  		// check if there's already one in there
- 		for (size_t i = key_map_.size(); i > 0; --i) {
+ 		for (size_t i = 0; i < key_map_.size(); ++i) {
  			if (key_map_[i].key1 == key1 || key_map_[i].key2) {
  				// duplicated record
  				Z_LOG_D("duplicated record at index %ld\n", i);
@@ -151,6 +154,7 @@ class ZSessionCtrl2Key {
 	 		typename KEY_MAP_TYPE::iterator iter = key_map_.begin();
 	 		for (; iter != key_map_.end(); ++iter) {
 	 			if ((*iter).key1 == key1) {	// difference
+	 				found = true;
 	 				key_map_.erase(iter);
 	 				break;
 	 			}
@@ -172,7 +176,7 @@ class ZSessionCtrl2Key {
  	}
 
  	bool getKey1ByKey2(const T_Key2 &key2, T_Key1 &key1) {
- 		for (size_t i = key_map_.size(); i > 0; --i) {
+ 		for (size_t i = 0; i < key_map_.size(); ++i) {
  			if (key_map_[i].key2 == key2) {
  				key1 = key_map_[i].key1;
  				return true;
@@ -183,7 +187,7 @@ class ZSessionCtrl2Key {
  	}
 
  	bool getKey2ByKey1(const T_Key1 &key1, T_Key2 &key2) {
- 		for (size_t i = key_map_.size(); i > 0; --i) {
+ 		for (size_t i = 0; i < key_map_.size(); ++i) {
  			if (key_map_[i].key1 == key1) {
  				key2 = key_map_[i].key2;
  				return true;

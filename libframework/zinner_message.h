@@ -43,20 +43,15 @@ struct ZInnerAddress {
 /////////////////////////////////////////////////////
 class ZInnerMsg {
  public:
- 	 ZInnerMsg(uint32_t msg_type): msg_type_(msg_type), seq_(0)
- 	 {}
-
- 	 // TODO: delete it
-	 ZInnerMsg(const ZInnerAddress &src_addr, uint32_t msg_type)
-		 : src_addr_(src_addr), msg_type_(msg_type), seq_(0)
-	 {}
-
- // public:
-	//  uint32_t getMsgType() { return msg_type_; }
-	//  void setMsgType(uint32_t msg_type) { msg_type_ = msg_type; }
-	//  uint32_t getSeq() { return seq_; }
-	//  void setSeq(uint32_t seq) { seq_ = seq; }
-	//  const ZInnerAddress& getSrcAddr() { return src_addr_; }
+	ZInnerMsg(uint32_t msg_type): msg_type_(msg_type)
+	{
+		// TODO:
+		static uint32_t sequence = 1;
+		seq_ = sequence++;
+		if (sequence > 0xFFFFFFF) {
+			sequence = 1;
+		}
+	}
 
  // TODO: make it protected
  public:

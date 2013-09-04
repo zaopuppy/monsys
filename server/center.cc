@@ -21,20 +21,21 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 
 int main(int argc, char *argv[])
 {
+	Z_LOG_I("Starting center...");
 	struct event_base* base = event_base_new();
 	assert(base);
 
 	// push server
 	g_fgw_server = new FGWServer("0.0.0.0", 1984, base);
 	if (OK != g_fgw_server->init()) {
-		Z_LOG_E("Failed to start FGW Server, quit\n");
+		Z_LOG_E("Failed to start FGW Server, quit");
 		return -1;
 	}
 
 	// webapi server
-	ZServer *g_webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
+	g_webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
 	if (OK != g_webapi_server->init()) {
-		Z_LOG_E("Failed to start WEBAPI Server, quit\n");
+		Z_LOG_E("Failed to start WEBAPI Server, quit");
 		return -1;
 	}
 
@@ -44,10 +45,10 @@ int main(int argc, char *argv[])
 	// basicly equals to event_base_loop()
 	event_base_dispatch(base);
 	// while (1) {
-	// 	printf("beginning of loop\n");
+	// 	printf("beginning of loop");
 	// 	// event_base_loop(base, EVLOOP_NONBLOCK);
 	// 	event_base_loop(base, 0);
-	// 	printf("end of loop\n");
+	// 	printf("end of loop");
 
 	// }
 

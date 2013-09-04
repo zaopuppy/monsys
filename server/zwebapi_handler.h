@@ -29,7 +29,7 @@ class ZWebApiHandler : public ZServerHandler {
 	virtual void routine(long delta);
 
 	virtual int send(const char *buf, uint32_t buf_len) {
-		Z_LOG_D("ZWebApiHandler::send(fd=%d)\n", getFd());
+		Z_LOG_D("ZWebApiHandler::send(fd=%d)", getFd());
 		return ::send(getFd(), buf, buf_len, 0);
 	}
 

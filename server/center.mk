@@ -9,7 +9,7 @@ CFILES :=
 CXXFILES := center.cc \
 	fgw_server.cc \
 	fgw_handler.cc \
-	push_message.cc \
+	webapi_msg.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
 	zwebapi_session.cc

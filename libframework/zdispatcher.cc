@@ -13,12 +13,14 @@ int ZDispatcher::sendDirect(ZInnerMsg *msg)
 		return FAIL;
 	}
 
+	// XXX: Don't forget to delete msg in sendMsg
 	module->sendMsg(msg);
 
 	return OK;
 }
 
-// we handle the memory
+// XXX: this mothod should not used currently, use message queue depends on
+// the implement of message loop, which will be a performance problem
 int ZDispatcher::sendMsg(ZInnerMsg *msg)
 {
 	if (!msg->src_addr_.isValid()) {
@@ -66,25 +68,25 @@ void ZDispatcher::checkTimeout(long delta)
 {
 	// Z_LOG_D("ZDispatcher::checkTimeout\n");
 
-	ZSession *session;
+	// ZSession *session;
 
-	SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
-	SESSION_CTRL_TYPE::iterator tmp_iter;
+	// SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
+	// SESSION_CTRL_TYPE::iterator tmp_iter;
 
-	while (iter != session_ctrl_.end()) {
-		// Z_LOG_D("while loop\n");
-		session = iter->second;
-		session->doTimeout(delta);
-		if (session->isComplete())	{
-			// Z_LOG_D("delta: [%ld]\n", delta);
-			// Z_LOG_D("timeout: [%ld]\n", session->getTimeout());
-			tmp_iter = iter;
-			++iter;
-			session_ctrl_.erase(tmp_iter);
-		} else {
-			++iter;
-		}
-	}
+	// while (iter != session_ctrl_.end()) {
+	// 	// Z_LOG_D("while loop\n");
+	// 	session = iter->second;
+	// 	session->doTimeout(delta);
+	// 	if (session->isComplete())	{
+	// 		// Z_LOG_D("delta: [%ld]\n", delta);
+	// 		// Z_LOG_D("timeout: [%ld]\n", session->getTimeout());
+	// 		tmp_iter = iter;
+	// 		++iter;
+	// 		session_ctrl_.erase(tmp_iter);
+	// 	} else {
+	// 		++iter;
+	// 	}
+	// }
 }
 
 void ZDispatcher::moduleRoutine(long delta)

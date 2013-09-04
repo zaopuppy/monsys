@@ -7,13 +7,11 @@
 
 #include "libframework/zframework.h"
 
-#include "zzigbee_session.h"
-
 /////////////////////////////////////////////////////////////////////
 
 int ZZigBeeHandler::init()
 {
-	Z_LOG_D("fd_: %d\n", fd_);
+	Z_LOG_D("fd_: %d", fd_);
 	return 0;
 }
 
@@ -23,13 +21,7 @@ void ZZigBeeHandler::close()
 
 int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
 {
-	Z_LOG_D("ZZigBeeHandler::onInnerMsg(%p)\n", msg);
-
-	// Z_LOG_D("fd_: %d\n", fd_);
-	// if (fd_ < 0) {
-	// 	Z_LOG_D("Invalid fd, not connected?\n");
-	// 	return -1;
-	// }
+	Z_LOG_D("ZZigBeeHandler::onInnerMsg(%p)", msg);
 
 	switch (msg->msg_type_) {
 		case Z_ZB_GET_DEV_LIST_REQ:
@@ -52,13 +44,12 @@ int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
 
 void ZZigBeeHandler::routine(long delta)
 {
-	// Z_LOG_D("ZZigBeeHandler::routine()\n");
+	// Z_LOG_D("ZZigBeeHandler::routine()");
 
-	ZSession *session;
+	ZZigBeeSession *session;
 
 	SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
 	SESSION_CTRL_TYPE::iterator tmp_iter;
-	// SESSION_CTRL_TYPE::iterator iter1;
 
 	while (iter != session_ctrl_.end()) {
 		session = iter->second;
@@ -67,10 +58,7 @@ void ZZigBeeHandler::routine(long delta)
 			tmp_iter = iter;
 			++iter;
 
-			// XXX:
-			// don't forget to erase another one first
-			// iter1 = session_ctrl_1_.find(session->);
-
+			delete tmp_iter->second;
 			session_ctrl_.erase(tmp_iter);
 
 		} else {
@@ -87,12 +75,12 @@ void ZZigBeeHandler::onConnected()
 
 int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 {
-	Z_LOG_D("ZZigBeeHandler::onRead()\n");
+	Z_LOG_D("ZZigBeeHandler::onRead()");
 
 	ZZigBeeMsg hdr;
 	int rv = hdr.decode(buf, buf_len);
 	if (rv < 0) {
-		Z_LOG_D("Failed to decode header\n");
+		Z_LOG_D("Failed to decode header");
 		return -1;
 	}
 
@@ -101,59 +89,59 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 	switch (hdr.cmd_) {
 		case Z_ID_ZB_REG_REQ:
 			{
-				Z_LOG_D("Z_ID_ZB_REG_REQ\n");
+				Z_LOG_D("Z_ID_ZB_REG_REQ");
 				ZZBRegReq msg;
 				int rv = msg.decode(buf, buf_len);
 				if (rv < 0) {
-					Z_LOG_D("Failed to decode message\n");
+					Z_LOG_D("Failed to decode message");
 				} else {
-					Z_LOG_D("decoding success\n");
+					Z_LOG_D("decoding success");
 					processMsg(msg);
 				}
 				break;
 			}
 	case Z_ID_ZB_GET_RSP:
 		{
-			Z_LOG_D("Z_ID_ZB_GET_RSP\n");
+			Z_LOG_D("Z_ID_ZB_GET_RSP");
 			ZZBGetRsp msg;
 			int rv = msg.decode(buf, buf_len);
 			if (rv < 0) {
-				Z_LOG_D("Failed to decode message\n");
+				Z_LOG_D("Failed to decode message");
 			} else {
-				Z_LOG_D("decoding success\n");
+				Z_LOG_D("decoding success");
 				processMsg(msg);
 			}
 			break;
 		}
 	case Z_ID_ZB_SET_RSP:
 		{
-			Z_LOG_D("Z_ID_ZB_SET_RSP\n");
+			Z_LOG_D("Z_ID_ZB_SET_RSP");
 			ZZBSetRsp msg;
 			int rv = msg.decode(buf, buf_len);
 			if (rv < 0) {
-				Z_LOG_D("Failed to decode message\n");
+				Z_LOG_D("Failed to decode message");
 			} else {
-				Z_LOG_D("decoding success\n");
+				Z_LOG_D("decoding success");
 				processMsg(msg);
 			}
 			break;
 		}
 		case Z_ID_ZB_UPDATE_ID_REQ:
 		{
-			Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ\n");
+			Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
 			ZZBUpdateIdInfoReq msg;
 			int rv = msg.decode(buf, buf_len);
 			if (rv < 0) {
-				Z_LOG_D("Failed to decode message\n");
+				Z_LOG_D("Failed to decode message");
 			} else {
-				Z_LOG_D("decoding success\n");
+				Z_LOG_D("decoding success");
 				processMsg(msg);
 			}
 			break;
 		}
 	default:
 		{
-			Z_LOG_D("Unknow message: %u\n", hdr.cmd_);
+			Z_LOG_D("Unknow message: %u", hdr.cmd_);
 			break;
 		}
 	}
@@ -163,15 +151,15 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 
 int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 {
-	Z_LOG_D("ZZigBeeHandler::processMsg(RegReq)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(RegReq)");
 
 	ZZBRegRsp rsp;
 	// if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", msg.id_count_)) {
 	if (!dev_manager_.add(msg.mac_, msg.addr_, "dev-xxx", 1)) {
-		Z_LOG_D("Failed to add device to device manager\n");
+		Z_LOG_D("Failed to add device to device manager");
 		rsp.status_ = -1;
 	} else {
-		Z_LOG_D("Added/Updated into device manager\n");
+		Z_LOG_D("Added/Updated into device manager");
 		rsp.status_ = 0;
 	}
 
@@ -179,7 +167,7 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 
 	int rv = rsp.encode(buf_, sizeof(buf_));
 	if (rv < 0) {
-		Z_LOG_D("failed to encode register response\n");
+		Z_LOG_D("failed to encode register response");
 		return -1;
 	}
 
@@ -198,58 +186,48 @@ int ZZigBeeHandler::processMsg(ZZBRegReq &msg)
 
 int ZZigBeeHandler::processMsg(ZZBGetRsp &msg)
 {
-	Z_LOG_D("ZZigBeeHandler::processMsg(ZZBGetRsp)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(ZZBGetRsp)");
 
-	Z_LOG_D("rsp item count: %ld\n", msg.items_.size());
+	Z_LOG_D("rsp item count: %ld", msg.items_.size());
 
 	ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp();
 	ZItemPair pair;
 
 	for (uint32_t i = 0; i < msg.items_.size(); ++i) {
-		Z_LOG_D("items.id[%d]: 0x%02X\n", i, msg.items_[i].id);
-		Z_LOG_D("items.val[%d]: 0x%02X\n", i, msg.items_[i].val);
+		Z_LOG_D("items.id[%d]: 0x%02X", i, msg.items_[i].id);
+		Z_LOG_D("items.val[%d]: 0x%02X", i, msg.items_[i].val);
 		pair.id = msg.items_[i].id;
 		pair.val = msg.items_[i].val;
 		rsp->dev_infos_.push_back(pair);
 	}
 
-	// ZDispatcher::instance()->sendMsg(rsp);
 	{
 		// FIXME: should zigbee message have a requence or not?
 		// if it doesn't, then we should have a queue for serial processing
 		// so, add one
-		Z_LOG_D("tring to find session by key2: 0x%X\n", (msg.addr_ << 16));
+		Z_LOG_D("tring to find session by key2: 0x%X", (msg.addr_ << 16));
 		ZZigBeeSession *session =
 				(ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
 		if (session == NULL) {
-			Z_LOG_D("No session found\n");
+			Z_LOG_D("No session is found");
 			delete rsp;
 			return -1;
 		}
 
-		// if ((session != session1)
-		// 		|| ((session->extern_key_.u32 >> 16) != msg.addr_)) {
-		// 		assert(false);
-		// 	Z_LOG_D("two different session, how could it be possible...\n");
-		// 	return FAIL;
-		// }
-
 		rsp->dst_addr_ = session->src_addr_;
 
 		session_ctrl_.removeByKey1(session->getKey());
-		// session_ctrl_1_.remove(msg.addr_);
-
 		delete session;
-
-		ZDispatcher::instance()->sendDirect(rsp);
 	}
+
+	ZDispatcher::instance()->sendDirect(rsp);
 
 	return 0;
 }
 
 int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 {
-	Z_LOG_D("rsp status: %d\n", msg.status_);
+	Z_LOG_D("rsp status: %d", msg.status_);
 
 	ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp();
 	rsp->status_ = msg.status_;
@@ -258,32 +236,19 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 		// FIXME: should zigbee message have a requence or not?
 		// if it doesn't, then we should have a queue for serial processing
 		// so, add one
-		Z_LOG_D("tring to find session by key2: 0x%X\n", (msg.addr_ << 16));
-		uint32_t key2 = (((uint32_t)msg.addr_) << 16);
+		Z_LOG_D("tring to find session by key2: 0x%X", (msg.addr_ << 16));
 		ZZigBeeSession *session =
-				(ZZigBeeSession*)session_ctrl_.findByKey2(key2);
-				// (ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
+				(ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
 		if (session == NULL) {
-			Z_LOG_D("No session found\n");
+			Z_LOG_D("No session is found");
 			delete rsp;
 			return -1;
 		}
 
-		// if ((session != session1)
-		// 		|| ((session->extern_key_.u32 >> 16) != msg.addr_)) {
-		// 		assert(false);
-		// 	Z_LOG_D("two different session, how could it be possible...\n");
-		// 	return FAIL;
-		// }
-
 		rsp->dst_addr_ = session->src_addr_;
 
 		session_ctrl_.removeByKey1(session->getKey());
-		// session_ctrl_1_.remove(msg.addr_);
-
 		delete session;
-
-		// ZDispatcher::instance()->sendDirect(rsp);
 	}
 
 	ZDispatcher::instance()->sendMsg(rsp);
@@ -295,16 +260,17 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
 // {
 // 	// for (int i = 1; i < DEV_LIST_LEN; ++i) {
 // 	// 	if (zb_dev_list_[i].info.state == zb_dev_state_active) {
-// 	// 		Z_LOG_D("idx: %d\n", i);
+// 	// 		Z_LOG_D("idx: %d", i);
 // 	// 	}
 // 	// }
 // }
 
 int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 {
-	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerGetDevListReq)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerGetDevListReq)");
 
 	ZInnerGetDevListRsp *rsp = new ZInnerGetDevListRsp();
+	rsp->seq_ = msg->seq_;
 	rsp->dst_addr_ = msg->src_addr_;
 
 	ZZBDevInfo *info = NULL;
@@ -328,7 +294,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
 	ZZBDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
 	for (; iter != dev_map.end(); ++iter) {
-		Z_LOG_D("count\n");
+		Z_LOG_D("count");
 		info = new ZZBDevInfo(*(iter->second));
 		rsp->info_list_.push_back(info);
 	}
@@ -341,13 +307,13 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 
 int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 {
-	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq)");
 
 	// check
 	{
-		ZSession *session = session_ctrl_.findByKey1(msg->seq_);
+		ZZigBeeSession *session = (ZZigBeeSession*)session_ctrl_.findByKey1(msg->seq_);
 		if (session) {
-			Z_LOG_D("Duplicated session: [%u]\n", msg->seq_);
+			Z_LOG_D("Duplicated session: [%u]", msg->seq_);
 			return FAIL;
 		}
 	}
@@ -377,7 +343,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 
 	int rv = req.encode(buf_, sizeof(buf_));
 	if (rv < 0) {
-		Z_LOG_D("Failed to encode GetReq\n");
+		Z_LOG_D("Failed to encode GetReq");
 		return -1;
 	}
 
@@ -390,7 +356,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 		session->setKey(msg->seq_);
 		session->src_addr_ = msg->src_addr_;
 		session->dst_addr_ = msg->dst_addr_;
-		session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
+		// session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
 
 		session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
 		// session_ctrl_1_.add(msg->addr_, session);
@@ -402,14 +368,14 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
 int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 {
 	// [ {"id":1, "val":4}, {"id":2, "val":5} ]
-	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq)");
 
 	// printDevInfo();
 	// check
 	{
-		ZSession *session = session_ctrl_.findByKey1(msg->seq_);
+		ZZigBeeSession *session = (ZZigBeeSession*)session_ctrl_.findByKey1(msg->seq_);
 		if (session) {
-			Z_LOG_D("Duplicated session: [%u]\n", msg->seq_);
+			Z_LOG_D("Duplicated session: [%u]", msg->seq_);
 			return FAIL;
 		}
 	}
@@ -423,11 +389,11 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
 	// // set all device
 	// if (msg->addr_ == 0) {
-	// 	Z_LOG_D("Trying to set all devices\n");
+	// 	Z_LOG_D("Trying to set all devices");
 	// }
 	ZZBDevInfo *dev_info = dev_manager_.find(msg->addr_);
 	if (dev_info == NULL) {
-		Z_LOG_D("wrong address\n");
+		Z_LOG_D("wrong address");
 		return -1;
 	}
 
@@ -439,7 +405,7 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
 	int rv = req.encode(buf_, sizeof(buf_));
 	if (rv < 0) {
-		Z_LOG_D("Failed to encode ZZBSetReq\n");
+		Z_LOG_D("Failed to encode ZZBSetReq");
 		return -1;
 	}
 
@@ -448,9 +414,9 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 	rv = send(buf_, rv);
 	if (rv <= 0) {
 		perror("send");
-		Z_LOG_D("Failed to send\n");
+		Z_LOG_D("Failed to send");
 	} else {
-		Z_LOG_D("write over.\n");
+		Z_LOG_D("write over.");
 		// save session
 		{
 			// TODO: get inner sequence from ZBGet
@@ -458,12 +424,10 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 			session->setKey(msg->seq_);
 			session->src_addr_ = msg->src_addr_;
 			session->dst_addr_ = msg->dst_addr_;
-			session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
 
 			session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
 
-			Z_LOG_D("session added: key1=%u, key2=0x%X\n", msg->seq_, (req.addr_ << 16));
-			// session_ctrl_1_.add(msg->addr_, session);
+			Z_LOG_D("session added: key1=%u, key2=0x%X", msg->seq_, (req.addr_ << 16));
 		}
 	}
 
@@ -490,11 +454,11 @@ static void updateIdInfo(ZZBDevInfo &dev_info, zb_item_id_info_t &new_id_info)
 
 int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
 {
-	Z_LOG_D("ZZigBeeHandler::processMsg(UpdateIdInfoReq)\n");
+	Z_LOG_D("ZZigBeeHandler::processMsg(UpdateIdInfoReq)");
 
 	ZZBDevInfo *dev_info = dev_manager_.find(msg.addr_);
 	if (dev_info == NULL) {
-		Z_LOG_D("wrong address\n");
+		Z_LOG_D("wrong address");
 		return -1;
 	}
 
@@ -509,7 +473,7 @@ int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
 
 	int rv = rsp.encode(buf_, sizeof(buf_));
 	if (rv < 0) {
-		Z_LOG_D("Failed to encode rsp\n");
+		Z_LOG_D("Failed to encode rsp");
 		return -1;
 	}
 
@@ -518,9 +482,9 @@ int ZZigBeeHandler::processMsg(ZZBUpdateIdInfoReq &msg)
 	rv = send(buf_, rv);
 	if (rv <= 0) {
 		perror("send");
-		Z_LOG_D("Failed to send\n");
+		Z_LOG_D("Failed to send");
 	} else {
-		Z_LOG_D("write over.\n");
+		Z_LOG_D("write over.");
 	}
 
 	return 0;

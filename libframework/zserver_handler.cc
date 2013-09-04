@@ -8,7 +8,7 @@
 
 void ZServerHandler::close()
 {
-	Z_LOG_D("ZServerHandler::close()\n");
+	Z_LOG_D("ZServerHandler::close()");
 	::close(fd_);
 	fd_ = -1;
 	event_free(read_event_);
@@ -17,7 +17,7 @@ void ZServerHandler::close()
 
 int ZServerHandler::event(evutil_socket_t fd, short events)
 {
-	Z_LOG_D("ZServerHandler::event(fd=%d)\n", fd);
+	Z_LOG_D("ZServerHandler::event(fd=%d)", fd);
 	fd_ = fd;
 
 	unsigned int buf_idx = 0;
@@ -29,14 +29,14 @@ int ZServerHandler::event(evutil_socket_t fd, short events)
 			buf_idx += len;
 	} while (buf_idx <= sizeof(buf_) && len > 0);
 
-	// Z_LOG_D("len: %ld\n", len);
+	// Z_LOG_D("len: %ld", len);
 	if (len < 0 && errno != EAGAIN) {
 		perror("recv");
 		// freeSession(session);
 		close();
 		return -1;
 	} else if (len == 0) {
-		Z_LOG_D("peer closed.\n");
+		Z_LOG_D("peer closed.");
 		close();
 		return -1;
 	}else {

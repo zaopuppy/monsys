@@ -4,16 +4,13 @@
 #include "libframework/zframework.h"
 
 #include "module.h"
+#include "fgw_client_session.h"
 
 class FGWClientHandler : public ZClientHandler {
  public:
 	FGWClientHandler(int id, ZModule *module)
 		: ZClientHandler(id, module)
 	{}
-	// : ZClient(base, MODULE_FGW_CLIENT), handler_(NULL) {
-	// 	handler_ = new FGWClientHandler();
-	// }
-	// ~FGWClientHandler() {}
 
  public:
 	virtual int init();
@@ -29,12 +26,15 @@ class FGWClientHandler : public ZClientHandler {
  protected:
 	void sendRsp(const char *text_msg, int status);
 
+	typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWClientSession> SESSION_CTRL_TYPE;
+
  private:
 	char buf_[512 << 10];
 	char out_buf_[512 << 10];
-	// std::map<uint32_t, ZWebApiSession*> session_map_;
 
 	ZInnerAddress addr_;
+
+ 	SESSION_CTRL_TYPE session_ctrl_;
 };
 
 #endif // _FGW_CLIENT_HANDLER_H__

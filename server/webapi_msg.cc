@@ -1,4 +1,4 @@
-#include "push_message.h"
+#include "webapi_msg.h"
 
 #include <string.h>
 
@@ -7,11 +7,11 @@
 #include "libbase/zlog.h"
 #include "zinner_message_ex.h"
 
-// { "cmd": "HB" }
-ZInnerMsg* json2InnerHB(json_t *jroot)
-{
-	return new ZPushHBMsg();
-}
+// // { "cmd": "HB" }
+// ZInnerMsg* json2InnerHB(json_t *jroot)
+// {
+// 	return new ZPushHBMsg();
+// }
 
 ZInnerMsg* json2InnerGetDevListReq(json_t *jobj)
 {
@@ -193,9 +193,9 @@ ZInnerMsg* json2Inner(json_t *jroot)
 
 	// 3. check session
 	const char *cmd_str = json_string_value(jcmd);
-	if (!strncmp(cmd_str, "HB", sizeof("HB") - 1)) {
+	/* if (!strncmp(cmd_str, "HB", sizeof("HB") - 1)) {
 		return json2InnerHB(jroot);
-	}	else if (!strncmp(cmd_str, "get-dev-list", sizeof("get-dev-list") - 1)) {
+	}	else */if (!strncmp(cmd_str, "get-dev-list", sizeof("get-dev-list") - 1)) {
 		return json2InnerGetDevListReq(jroot);
 	} else if (!strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
 		return json2InnerGetDevInfoReq(jroot);
@@ -346,16 +346,29 @@ json_t* inner2Json(ZInnerSetDevInfoRsp *msg)
 	return jroot;
 }
 
+// 
 ZInnerMsg* decodePushMsg(char *buf, uint32_t buf_len)
 {
 	json_error_t jerror;
 	json_t *jroot = json_loadb(buf, buf_len, 0, &jerror);
 	if (jroot == NULL || !json_is_object(jroot)) {
-		Z_LOG_E("Bad request");
+		Z_LOG_E("Bad request\n");
 		return NULL;
 	}
 
 	return json2Inner(jroot);
+}
+
+json_t* decodeWebApiMsg(char *buf, uint32_t buf_len)
+{
+	json_error_t jerror;
+	json_t *jmsg = json_loadb(buf, buf_len, 0, &jerror);
+	if (jmsg == NULL || !json_is_object(jmsg)) {
+		Z_LOG_E("Bad request\n");
+		return NULL;
+	}
+
+	return jmsg;
 }
 
 

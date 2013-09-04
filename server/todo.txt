@@ -20,6 +20,7 @@
 [ ] version control for id-info
 [ ] does ZigBee message header need a sequence field?
 [ ] use smart pointer instead of raw pointer
+[ ] release session
 
 
 [ ] 接口变更:

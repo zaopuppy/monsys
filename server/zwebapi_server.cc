@@ -22,20 +22,21 @@ void ZWebApiServer::removeHandler(ZServerHandler *h)
 	if (iter != handler_map_.end()) {
 		handler_map_.erase(iter);
 	} else {
-		Z_LOG_W("id[%d] doesn't exist\n");
+		Z_LOG_W("id[%d] doesn't exist");
 		// no, we can't return, this handler must be deleted
 		// return;
 	}
 
 	delete_handler_list_.push_back(h);
 
-	Z_LOG_I("%u clients\n", handler_map_.size());
+	Z_LOG_I("%u clients", handler_map_.size());
 }
 
 void ZWebApiServer::deleteClosedHandlers()
 {
 	size_t list_len = delete_handler_list_.size();
 	for (size_t i = 0; i < list_len; ++i) {
+		Z_LOG_D("deleting: %p", delete_handler_list_[i]);
 		delete delete_handler_list_[i];
 	}
 
@@ -44,11 +45,11 @@ void ZWebApiServer::deleteClosedHandlers()
 
 int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 {
-	printf("ZWebApiServer::onInnerMsg()\n");
+	printf("ZWebApiServer::onInnerMsg()");
 
 	handler_id_t handler_id = msg->dst_addr_.handler_id_;
 	// if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-	// 	printf("Bad handler id: %d\n", handler_id);
+	// 	printf("Bad handler id: %d", handler_id);
 	// 	return FAIL;
 	// }
 
@@ -57,7 +58,7 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 		// XXX: should do load-balancing, current just use the first one
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 		if (iter == handler_map_.end()) {
-			printf("Empty handler map...:(\n");
+			printf("Empty handler map...:(");
 			return FAIL;
 		}
 		iter->second->onInnerMsg(msg);
@@ -66,7 +67,7 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 	} else {
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
 		if (iter == handler_map_.end()) {
-			printf("No such handler: %d\n", handler_id);
+			printf("No such handler: %lu, %d", handler_map_.size(), handler_id);
 			return -1;
 		}
 
@@ -88,11 +89,11 @@ void ZWebApiServer::routine(long delta)
 void ZWebApiServer::onAccept(
 		evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port)
 {
-	Z_LOG_D("ZWebApiServer::onAccept(fd=%d)\n", fd);
+	Z_LOG_D("ZWebApiServer::onAccept(fd=%d)", fd);
 
 	int handler_id = genHandlerId();
 	if (handler_id == INVALID_ID) {
-		printf("Failed to generate handler id, handler full?\n");
+		printf("Failed to generate handler id, handler full?");
 		return;
 	}
 
@@ -110,6 +111,7 @@ void ZWebApiServer::onAccept(
 	handler_map_[h->getId()] = h;
 }
 
+/// XXX: 
 int ZWebApiServer::genHandlerId()
 {
 	static int id = MIN_HANDLER_ID;
