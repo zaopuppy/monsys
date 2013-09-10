@@ -7,6 +7,10 @@
 
 #include <event2/event.h>
 
+#include "libbase/ztypes.h"
+
+/////////////////////////////////////////////////
+// an encapsulation of libevent event
 class ZEventProxy {
  	typedef void (*callback_t)(evutil_socket_t, short, void*);
 
@@ -53,6 +57,7 @@ class ZEventProxy {
  	struct event *ev_;
 };
 
+/////////////////////////////////////////////////
 
 bool isBlank(const char *str, uint32_t str_len);
 
@@ -107,48 +112,131 @@ inline bool str2list(const char *str, T_List &list)
 	return true;
 }
 
-class CharBuffer {
+///////////////////////////////////////////////////////////////////////
+// initial:
+//  (pos=0)         
+// 		+-------------------------+
+//   pos = 0;
+//	 limit = capability = size
+//   remaining = limit - pos = size;
+//
+//  put 1 data
+//    (pos = 1)      (limit = capability = size)
+// 		+-+-----------------------+
+//   pos = 1;
+//	 limit = capability = size
+//   remaining = limit - pos = size - 1;
+//
+template <typename T>
+class ZDataBuffer {
  public:
- 	CharBuffer(uint32_t len): data_() {
- 		data_ = new char[len];
- 		capacity_ = len;
- 		clear();
+ 	ZDataBuffer(int size)
+    : buf_size_(size), release_(true), pos_(0), limit_(size)
+  {
+ 		buf_ = new T[size];
  	}
- 	// wrap
- 	CharBuffer(char *data, uint32_t data_len) {
- 		data_ = data;
- 		capacity_ = data_len;
- 		clear();
- 	}
- 	~CharBuffer() {
- 		delete []data_;
- 	}
+  ZDataBuffer(const T *data, int size)
+    : buf_size_(size), release_(false), pos_(0), limit_(size)
+  {
+    memcpy(buf_, data, size);
+  }
+  ZDataBuffer(T *data, int size, bool release)
+    : buf_size_(size), release_(true), pos_(0), limit_(size)
+  {
+    memcpy(buf_, data, size);
+  }
+  ~ZDataBuffer() {
+    if (buf_ != NULL && release_) {
+      delete []buf_;
+      buf_ = NULL;
+    }
+  }
 
  public:
- 	void put(char *data, uint32_t data_len) {
- 	}
- 	void get(char *data, uint32_t data_len) {
- 	}
- 	void flip() {
- 		limit_ = pos_;
- 		pos_ = 0;
- 	}
- 	void clear() {
- 		pos_ = 0;
- 		limit_ = capacity_;
- 	}
- 	bool hasRemaining() {
- 		return limit_ > pos_;
- 	}
+ 	int pos() { return pos_; }
+ 	void setPos(int pos) { pos_ = pos; }
+
+ 	int limit() { return limit_; }
+ 	void setLimit(int limit) { limit_ = limit; }
+
+  int capability() { return buf_size_; }
+
+ 	bool hasRemaining() { return limit_ > pos_; }
+ 	int remaining() { return limit_ - pos_; }
+
+  int put(const T &v) {
+  	if (!hasRemaining()) {
+  		return 0;
+  	}
+
+  	buf_[pos_] = v;
+  	++pos_;
+
+  	return 1;
+  }
+  int put(const T *v, int len) {
+  	int remain = remaining();
+  	if (remain <= 0) {
+  		// completely empty
+  		return 0;
+  	}
+
+  	int put_len = remain < len ? remain : len;
+
+  	// TODO: POD only!!
+  	memcpy(buf_ + pos_, v, put_len);
+  	pos_ += put_len;
+
+  	return put_len;
+  }
+  int put(const T *v, int start, int len) {
+  	return put(v + start, len);
+  }
+
+  T get() {
+  	if (!hasRemaining()) {
+  		// XXX: damn...I hate exception
+  		// just give him the last one...
+  		return buf_[pos_];
+  	}
+
+  	return buf_[pos_++];
+  }
+  // in Java version of ByteBuffer, get() return 'this'
+  int get(T *v, int len) {
+  	int remain = remaining();
+  	if (remaining() < 0) {
+  		return 0;
+  	}
+
+  	int get_len = remain < len ? remain : len;
+
+  	memcpy(v, buf_ + pos_, get_len);
+  	pos_ += get_len;
+
+  	return get_len;
+  }
+  int get(T *v, int start, int len) {
+  	return get(v + start, len);
+  }
+
+  void clear() {
+    pos_ = 0;
+    limit_ = buf_size_;
+  }
+
+  void flip() {
+    limit_ = pos_;
+    pos_ = 0;
+  }
 
  private:
- 	char *data_;
-
- 	uint32_t pos_;
- 	uint32_t limit_;
- 	uint32_t capacity_;
+ 	T *buf_;
+ 	const int buf_size_;
+  const bool release_;
+ 	int pos_;
+ 	int limit_;
 };
-
 
 
 

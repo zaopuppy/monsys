@@ -10,7 +10,9 @@
       "sublimeclang_options":
       [
 		      "-I${folder:${project_path:monsys.sublime-project}}/",
-		      "-I${folder:${project_path:monsys.sublime-project}}/libs/include"
+		      "-I${folder:${project_path:monsys.sublime-project}}/libs/include",
+          "-I${folder:${project_path:monsys.sublime-project}}/3rd/gmock-1.6.0/include",
+          "-I${folder:${project_path:monsys.sublime-project}}/3rd/gmock-1.6.0/gtest/include"
       ]
   }
 }

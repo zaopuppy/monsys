@@ -105,7 +105,7 @@ class ZSessionCtrl2Key {
  	// T_Session* findByKey2(const T_Key2 key2) {
  		T_Key1 key1;
  		if (!getKey1ByKey2(key2, key1)) {
- 			Z_LOG_D("Failed to get key1 by using key2\n");
+ 			// Z_LOG_D("Failed to get key1 by using key2\n");
  			return NULL;
  		}
 

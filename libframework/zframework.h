@@ -12,6 +12,7 @@
 #include "zserver_handler.h"
 #include "zclient_handler.h"
 #include "zutil.h"
+#include "zstream.h"
 
 #endif // _Z_FRAMEWORK_H__
 
