@@ -34,10 +34,6 @@ do { \
 } while (false)
 
 ///////////////////////////////////////////////////////////////
-ZZigBeeMsg::ZZigBeeMsg():	syn_(0xFF), ver_(1)
-{
-}
-
 int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
 {
 	// int rv;
@@ -47,7 +43,7 @@ int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
 	// IMP
 	// child class must call getEncodeLen() to update length field
 
-	ZMSG_ENCODE(syn_);
+	// ZMSG_ENCODE(syn_);
 	ZMSG_ENCODE(ver_);
 	ZMSG_ENCODE(len_);
 	ZMSG_ENCODE(cmd_);
@@ -62,7 +58,7 @@ int ZZigBeeMsg::decode(char* buf, uint32_t buf_len)
 	// int decode_len = 0;
 	ZMSG_DECODE_BEGIN();
 
-	ZMSG_DECODE(syn_);
+	// ZMSG_DECODE(syn_);
 	ZMSG_DECODE(ver_);
 	ZMSG_DECODE(len_);
 	ZMSG_DECODE(cmd_);

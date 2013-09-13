@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <vector>
+#include <assert.h>
 #include <iostream>
 
 #include "ztypes.h"
@@ -135,6 +136,63 @@ inline int getlen(const std::string &v)
 {
 	return 1 + v.size();
 }
+
+//
+// fixed-length binary
+
+// TODO: not good, user must manage memory by theirself
+// rewrite a better version
+typedef struct {
+	char *data;	// don't forget to free memory
+	uint32_t len;
+} fixed_binary_t;
+
+template<>
+inline int encode(const fixed_binary_t &v, char *buf, uint32_t buf_len)
+{
+	assert(v.len > 0);
+	assert(v.data != NULL);
+
+	// length header
+	uint16_t len = v.len;
+
+	// no enough buffer
+	if (buf_len < len) {
+		return -1;
+	}
+
+	// string
+	memcpy(buf, v.data, len);
+	buf[len] = 0x00;
+
+	return len;
+}
+
+template<>
+inline int decode(fixed_binary_t &v, char *buf, uint32_t buf_len)
+{
+	assert(v.len > 0);
+	assert(v.data != NULL);
+
+	uint16_t len = v.len;
+
+	if (buf_len < len) {
+		return -1;
+	}
+
+	memcpy(v.data, buf, len);
+
+	return len;
+}
+
+template<>
+inline int getlen(const fixed_binary_t &v)
+{
+	assert(v.len > 0);
+	assert(v.data != NULL);
+	return v.len;
+}
+
 
 //////////////////////////////////////////////////////////////
 // here is a different template

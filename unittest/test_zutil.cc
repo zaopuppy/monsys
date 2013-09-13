@@ -2,74 +2,70 @@
 #include "libframework/zframework.h"
 
 #include <string.h>
-#include <assert.h>
 
-void test_case01()
+#include "gtest/gtest.h"
+
+TEST(ZDataBufferTest, TestCase01)
 {
   int rv;
   ZDataBuffer<char> buffer(10);
-  // printf("----------------\n");
-  // printf("before\n");
-  // printf("pos: %d\n", buffer.pos());
-  // printf("limit: %d\n", buffer.limit());
-  // printf("cap: %d\n", buffer.capability());
 
-  assert(buffer.pos() == 0);
-  assert(buffer.limit() == 10);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(0, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 
   buffer.put(0x13);
 
-  assert(buffer.pos() == 1);
-  assert(buffer.limit() == 10);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(1, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 
   rv = buffer.put("1234", 4);
 
-  assert(rv == 4);
-  assert(buffer.pos() == 5);
-  assert(buffer.limit() == 10);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(4, rv);
+  EXPECT_EQ(5, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 
   rv = buffer.put("very long string........", 10);
 
-  assert(rv == (10 - 1 - 4));
-  assert(buffer.pos() == 10);
-  assert(buffer.limit() == 10);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(10 - 1- 4, rv);
+  EXPECT_EQ(10, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 
   buffer.clear();
-  assert(buffer.pos() == 0);
-  assert(buffer.limit() == 10);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(0, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 }
 
-void test_case02()
+TEST(ZDataBufferTest, TestCase02)
 {
-  const char *str = "hello, girl";
+  char str[32] = "hello, girl";
   int rv, str_len;
 
   str_len = (int)strlen(str);
   ZDataBuffer<char> buffer(str, str_len);
 
-  assert(buffer.pos() == 0);
-  assert(buffer.limit() == str_len);
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(0, buffer.pos());
+  EXPECT_EQ(str_len, buffer.limit());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
   
   char buf[32];
 
   rv = buffer.get(buf, sizeof(buf));
 
-  assert(rv == str_len);
-  assert(buffer.pos() == str_len);
-  assert(buffer.limit() == buffer.pos());
-  assert(buffer.limit() == buffer.capability());
+  EXPECT_EQ(str_len, rv);
+  EXPECT_EQ(str_len, buffer.pos());
+  EXPECT_EQ(buffer.limit(), buffer.pos());
+  EXPECT_EQ(buffer.limit(), buffer.capability());
 
   rv = memcmp(buf, str, str_len);
-  assert(rv == 0);
+  EXPECT_EQ(0, rv);
 }
 
-void test_case03()
+TEST(ZDataBufferTest, TestCase03)
 {
   int rv;
   ZDataBuffer<char> buffer(10);
@@ -78,31 +74,31 @@ void test_case03()
 
   buffer.put(c);
 
-  assert(buffer.pos() == 1);
-  assert(buffer.limit() == 10);
-  assert(buffer.capability() == buffer.limit());
+  EXPECT_EQ(1, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.capability(), buffer.limit());
 
   buffer.flip();
 
-  assert(buffer.pos() == 0);
-  assert(buffer.limit() == 1);
-  assert(buffer.capability() == 10);
+  EXPECT_EQ(0, buffer.pos());
+  EXPECT_EQ(1, buffer.limit());
+  EXPECT_EQ(10, buffer.capability());
 
   buffer.clear();
 
-  assert(buffer.pos() == 0);
-  assert(buffer.limit() == 10);
-  assert(buffer.capability() == buffer.limit());
+  EXPECT_EQ(0, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(buffer.capability(), buffer.limit());
 
   const char *str = "one little two little three little endian";
   int str_len = (int)strlen(str);
 
   rv = buffer.put(str, str_len);
 
-  assert(rv == 10);
-  assert(buffer.pos() == 10);
-  assert(buffer.limit() == 10);
-  assert(buffer.capability() == 10);
+  EXPECT_EQ(10, rv);
+  EXPECT_EQ(10, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
+  EXPECT_EQ(10, buffer.capability());
 
   buffer.flip();
 
@@ -110,12 +106,12 @@ void test_case03()
 
   rv = buffer.get(buf, sizeof(buf));
 
-  assert(rv == 10);
-  assert(buffer.pos() == 10);
-  assert(buffer.limit() == 10);
+  EXPECT_EQ(10, rv);
+  EXPECT_EQ(10, buffer.pos());
+  EXPECT_EQ(10, buffer.limit());
 
   rv = memcmp(buf, str, rv);
-  assert(rv == 0);
+  EXPECT_EQ(0, rv);
 }
 
 

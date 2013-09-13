@@ -193,7 +193,7 @@ done
 
 # These have defaults filled in by the configure script but can also be
 # overridden by environment variables or command line parameters.
-prefix="${GMOCK_PREFIX:-/Volumes/Data/workspaces/monsys/libs}"
+prefix="${GMOCK_PREFIX:-/usr/local}"
 exec_prefix="${GMOCK_EXEC_PREFIX:-${prefix}}"
 libdir="${GMOCK_LIBDIR:-${exec_prefix}/lib}"
 includedir="${GMOCK_INCLUDEDIR:-${prefix}/include}"

@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+#include "libbase/zlog.h"
 #include "libbase/zcodecpp.h"
 
 #include "zbdefines.h"
@@ -12,13 +13,24 @@
 
 class ZZigBeeMsg{
  public:
-	ZZigBeeMsg();
+	ZZigBeeMsg():	ver_(1)
+	{
+		// syn_.len = 8;
+		// syn_.data = new char[8];
+		// Z_LOG_D("constructor: &data: %p", syn_.data);
+	}
+	virtual ~ZZigBeeMsg()
+	{
+		// Z_LOG_D("destructor: &data: %p", syn_.data);
+		// delete []syn_.data;
+		// syn_.data = NULL;
+	}
 	
-	virtual int encode(char* buf, uint32_t buf_len);
-	virtual int decode(char* buf, uint32_t buf_len);
+	virtual int encode(char *buf, uint32_t buf_len);
+	virtual int decode(char *buf, uint32_t buf_len);
 	
 	uint16_t getHeaderLen() {
-		return getlen(syn_) +
+		return /* getlen(syn_) + */
 					 getlen(ver_) +
 					 getlen(len_) +
 					 getlen(cmd_) +
@@ -26,17 +38,39 @@ class ZZigBeeMsg{
 	}
 	
  public:
-	static uint8_t getMsgType(char* buf, uint32_t buf_len) {
-		if (buf_len < 4) {
+ 	static uint32_t getMinimumLen() {
+ 		return /* 8 + // synchronize bytes */
+ 	         1 + // ver
+ 	         2 + // len
+ 	         1 + // cmd
+ 	         2;
+ 	}
+	static uint8_t getMsgType(char *buf, uint32_t buf_len) {
+		if (buf_len < getMinimumLen()) {
 			return 0;
 		}
 
-		return (uint8_t)buf[3];
+		return (uint8_t)buf[1];
+	}
+
+	static uint16_t getMsgLen(char *buf, uint32_t buf_len) {
+		if (buf_len < getMinimumLen()) {
+			return 0;
+		}
+
+		uint16_t len;
+		int rv = ::decode(len, buf, buf_len);
+		if (rv < 0) {
+			return 0;
+		}
+
+		return len;
 	}
 
  public:
  	// ZZBHeader hdr_;
-	uint8_t  syn_;
+ 	// fixed_binary_t syn_;
+	// uint8_t  syn_;
 	uint8_t  ver_;
 	uint16_t len_;
 	uint8_t  cmd_;

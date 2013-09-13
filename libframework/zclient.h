@@ -7,7 +7,7 @@
 #include "zmodule.h"
 #include "zinner_message.h"
 #include "zclient_handler.h"
-#include "zutil.h"
+#include "zevent_proxy.h"
 
 class ZClient : public ZModule {
  public:

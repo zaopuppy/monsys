@@ -7,15 +7,17 @@ AR		 := ar
 
 TARGET := unittest
 CFILES :=
-CXXFILES := unittest.cc \
-	test_zutil.cc
+CXXFILES := $(wildcard *.cc)
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
 
-CFLAGS := -Wall -g \
+GMOCK_DIR := ../3rd/gmock-1.6.0
+GTEST_DIR := ${GMOCK_DIR}/gtest/
+
+CFLAGS := -g \
 	-I../ \
 	-I../libs/include/ \
 	-I${GTEST_DIR}/include \
@@ -28,13 +30,12 @@ LDFLAGS := \
 	-L../libframework -lframework \
 	-L../libs/lib -levent_core -ljansson
 
+
 $(TARGET) : $(OBJFILES) libgmock.a
-	$(CXX) -o $@ $(OBJFILES) $(LDFLAGS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # ------------------------------
 # --- BEGIN --- for google mock
-GMOCK_DIR := ../3rd/gmock-1.6.0
-GTEST_DIR := ${GMOCK_DIR}/gtest/
 libgmock.a: ${GTEST_DIR}/src/gtest-all.cc ${GMOCK_DIR}/src/gmock-all.cc
 	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gtest-all.o -c ${GTEST_DIR}/src/gtest-all.cc
 	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gmock-all.o -c ${GMOCK_DIR}/src/gmock-all.cc

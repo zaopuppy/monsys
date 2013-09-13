@@ -5,7 +5,7 @@
 #include <event2/event.h>
 
 #include "zmodule.h"
-#include "zutil.h"
+#include "zevent_proxy.h"
 
 class ZServer : public ZModule {
  public:

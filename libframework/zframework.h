@@ -13,6 +13,8 @@
 #include "zclient_handler.h"
 #include "zutil.h"
 #include "zstream.h"
+#include "zdata_buffer.h"
+#include "zevent_proxy.h"
 
 #endif // _Z_FRAMEWORK_H__
 
