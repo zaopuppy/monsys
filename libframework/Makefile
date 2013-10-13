@@ -52,7 +52,7 @@ ts: main.cc $(TARGET)
 	$(CXX) $< -o $@ $(CFLAGS) $(LDFLAGS)
 
 clean:
-	rm -f $(OBJFILES) $(DEPFILES)
+	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
 test: build
 	./$(TARGET)

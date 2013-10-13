@@ -21,6 +21,8 @@
 [ ] does ZigBee message header need a sequence field?
 [ ] use smart pointer instead of raw pointer
 [ ] release session
+[ ] better string search algorithm
+[ ] how to test a random generating algorithm? or a simpler one, how to test a function which will randomly return you one of the element from a set
 
 
 [ ] 接口变更:

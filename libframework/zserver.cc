@@ -32,7 +32,8 @@ int ZServer::onInnerMsg(ZInnerMsg *msg)
 int ZServer::init() {
 	int rv;
 
-	if (ZDispatcher::instance()->registerModule(this) != OK) {
+	rv = ZDispatcher::instance()->registerModule(this);
+	if (rv != OK) {
 		return FAIL;
 	}
 	

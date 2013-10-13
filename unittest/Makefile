@@ -63,7 +63,7 @@ include $(DEPFILES)
 # 	if [ ! -d obj ]; then rm -rf obj; mkdir obj; fi
 
 clean :
-	rm -f $(OBJFILES) $(DEPFILES)
+	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
 rebuild : clean $(TARGET)
 

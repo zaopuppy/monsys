@@ -52,17 +52,6 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 
 int main(int argc, char *argv[])
 {
-	// test_zigbee_message_get();
-	// test_zigbee_message_set();
-	// test_zigbee_message_reg();
-	// test_json();
-	// test_util();
-	// test_other();
-	// test_formatter();
-	// test_zigbee_update();
-	// Z_LOG_E("hello");
-	// return 0;
-
 	struct event_base* base = event_base_new();
 	assert(base);
 	

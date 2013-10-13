@@ -48,7 +48,7 @@ ts: main.cc $(TARGET)
 	$(CXX) $< -o $@ $(CFLAGS) $(LDFLAGS) -L../libbase -lbase -L. -lzb
 
 clean:
-	rm -f $(OBJFILES) $(DEPFILES)
+	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
 test: build
 	./$(TARGET)

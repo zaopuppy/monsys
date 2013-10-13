@@ -1,7 +1,6 @@
 #ifndef _Z_TYPES_H__
 #define _Z_TYPES_H__
 
-// template<typename T1, typename T2>
 #ifndef WIN
 
 #include <stdint.h>

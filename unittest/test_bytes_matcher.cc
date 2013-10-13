@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "server/zb_stream.h"
+#include "server/syn_byte_matcher.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -14,6 +14,7 @@ TEST(SynBytesMatcherTest, TestCase01)
 
   ASSERT_FALSE(matcher.finished());
   ASSERT_EQ(syn_bytes_len, matcher.remaining());
+  ASSERT_EQ(0, matcher.feeded());
 
   uint32_t rv;
 
@@ -21,16 +22,19 @@ TEST(SynBytesMatcherTest, TestCase01)
 
   ASSERT_FALSE(matcher.finished());
   ASSERT_EQ(syn_bytes_len - 2, matcher.remaining());
+  ASSERT_EQ(2, matcher.feeded());
   ASSERT_EQ(2, rv);
 
   rv = matcher.feed("ZZZZZZ", 6);
   ASSERT_TRUE(matcher.finished());
   ASSERT_EQ(0, matcher.remaining());
+  ASSERT_EQ(syn_bytes_len, matcher.feeded());
   ASSERT_EQ(6, rv);
 
   rv = matcher.feed("asdfasdf", 6);
   ASSERT_TRUE(matcher.finished());
   ASSERT_EQ(0, matcher.remaining());
+  ASSERT_EQ(syn_bytes_len, matcher.feeded());
   ASSERT_EQ(0, rv);
 
 }

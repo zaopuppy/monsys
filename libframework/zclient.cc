@@ -53,13 +53,15 @@ void ZClient::doTimeout()
 
 int ZClient::init() {
 	Z_LOG_I("ZClient::init(): %p", this);
-	// XXX
-	ZDispatcher::instance()->registerModule(this);
-	// if (ZDispatcher::instance()->registerModule(this) != OK) {
-	// 	return FAIL;
-	// }
 
-	int rv = onDisconnected(-1, 0);
+	int rv;
+
+	rv = ZDispatcher::instance()->registerModule(this);
+	if (rv != OK) {
+		return FAIL;
+	}
+
+	rv = onDisconnected(-1, 0);
 	if (rv != OK && rv != ERR_IO_PENDING) {
 		return FAIL;
 	}

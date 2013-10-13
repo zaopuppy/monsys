@@ -24,9 +24,14 @@ static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg)
 
 int ZSerial::init()
 {
-	ZDispatcher::instance()->registerModule(this);
+	int rv;
 
-	int rv = onDisconnected(-1, 0);
+	rv = ZDispatcher::instance()->registerModule(this);
+	if (rv != OK) {
+		return FAIL;
+	}
+
+	rv = onDisconnected(-1, 0);
 	if (rv != OK && rv != ERR_IO_PENDING) {
 		return FAIL;
 	}
@@ -229,7 +234,23 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 	printf("ZSerial::onRead\n");
 
 	// TODO: should be a loop...
-	handler_->onRead(buf, buf_len);
+	// handler_->onRead(buf, buf_len);
+
+  int rv;
+	rv = stream_.feed(buf, buf_len);
+
+	// should not use assert
+	assert(rv == (int)buf_len);
+
+	while (true) {
+		rv = stream_.read(buf_, sizeof(buf_));
+		Z_LOG_D("%d bytes read", rv);
+		if (rv <= 0) {
+			break;
+		}
+
+		handler_->onRead(buf_, rv);
+	}
 }
 
 void ZSerial::scheduleReconnect()

@@ -2,6 +2,7 @@
 #define _Z_ZIGBEE_CODEC_H__
 
 #include "libbase/ztypes.h"
+#include "libbase/zcodecpp.h"
 
 #include "zbdefines.h"
 

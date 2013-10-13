@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include "libbase/ztypes.h"
+#include "libbase/algorithm/zstring_search.h"
 
 /////////////////////////////////////////////////
 
@@ -19,6 +20,12 @@ class ZStringUtil
  	static bool startWith(const char *target, uint32_t target_len, const char *str, uint32_t str_len);
  	static bool endWith(const char *target, const char *str);
  	static bool endWith(const char *target, uint32_t target_len, const char *str, uint32_t str_len);
+ 	static bool contains(const char *target, uint32_t target_len, const char *str, uint32_t str_len) {
+		return indexOf(target, target_len, str, str_len) >= 0;
+ 	}
+ 	static int indexOf(const char *target, uint32_t target_len, const char *str, uint32_t str_len) {
+		return simple_string_search(target, target_len, str, str_len);
+ 	}
 };
 
 // a,b,c,d
@@ -65,7 +72,6 @@ inline bool str2list(const char *str, T_List &list)
 
 	return true;
 }
-
 
 #endif // _Z_UTIL_H__
 

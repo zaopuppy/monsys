@@ -4,9 +4,14 @@ CPP    := gcc
 LEX    := flex
 YACC   := bison
 
+ifeq ($(ut), 1)
+TARGET := fgw_ut
+else
 TARGET := fgw
+endif
+
 CFILES :=
-CXXFILES := fgw.cc \
+CXXFILES := \
 	module.cc \
 	zserial.cc \
 	zwebapi_server.cc \
@@ -16,16 +21,36 @@ CXXFILES := fgw.cc \
 	zformatter.cc \
 	webapi_msg.cc \
 	fgw_client.cc \
-	fgw_client_handler.cc
+	fgw_client_handler.cc \
+	msg_factory.cc \
+	zb_stream.cc
+
+ifeq ($(ut), 1)
+CXXFILES += test_zbstream.cc
+CXXFILES += unittest.cc
+else
+CXXFILES += fgw.cc
+endif
+
+GMOCK_DIR := ../3rd/gmock-1.6.0
+GTEST_DIR := ${GMOCK_DIR}/gtest/
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
 
-CFLAGS := -Wall -g \
+CFLAGS := -g \
 	-I../ \
-	-I../libs/include/
+	-I../libs/include/ \
+	-I${GTEST_DIR}/include \
+	-I${GMOCK_DIR}/include
+
+ifeq ($(ut), 1)
+# don't add -Wall
+else
+CFLAGS += -Wall
+endif
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
@@ -34,8 +59,21 @@ LDFLAGS := \
 	-L../libframework -lframework \
 	-L../libs/lib -levent_core -ljansson
 
+ifeq ($(ut), 1)
+$(TARGET) : $(OBJFILES) libgmock.a
+	$(CXX) -o $@ $^ $(LDFLAGS)
+else
 $(TARGET) : $(OBJFILES)
-	$(CXX) -o $@ $(OBJFILES) $(LDFLAGS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+endif
+# ------------------------------
+# --- BEGIN --- for google mock
+libgmock.a: ${GTEST_DIR}/src/gtest-all.cc ${GMOCK_DIR}/src/gmock-all.cc
+	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gtest-all.o -c ${GTEST_DIR}/src/gtest-all.cc
+	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gmock-all.o -c ${GMOCK_DIR}/src/gmock-all.cc
+	$(AR) -rv libgmock.a gtest-all.o gmock-all.o
+# ---  END  --- for google mock
+# ------------------------------
 
 %.d : %.cc
 	$(CXX) $(CFLAGS) -MT $(@:%.d=%.o) -MM -o $@ $<
@@ -57,7 +95,7 @@ include $(DEPFILES)
 # 	if [ ! -d obj ]; then rm -rf obj; mkdir obj; fi
 
 clean :
-	rm -f $(OBJFILES) $(DEPFILES)
+	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
 rebuild : clean $(TARGET)
 

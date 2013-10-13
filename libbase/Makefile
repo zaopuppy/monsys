@@ -10,10 +10,9 @@ ARFLAGS := -r
 
 TARGET  := libbase.a
 
-CFILES := zlog.c \
-	zcodec.c
+CFILES := $(wildcard *.c)
 
-CXXFILES := 
+CXXFILES := $(wildcard *.cc) $(wildcard algorithm/*.cc)
 
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
@@ -48,7 +47,7 @@ ts: main.cc $(TARGET)
 	g++ $< -o $@ -L. -lbase
 
 clean:
-	rm -f $(OBJFILES) $(DEPFILES)
+	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
 test: build
 	./$(TARGET)

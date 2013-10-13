@@ -11,7 +11,7 @@
 #include "zbdefines.h"
 #include "zzigbee_codec.h"
 
-class ZZigBeeMsg{
+class ZZigBeeMsg {
  public:
 	ZZigBeeMsg():	ver_(1)
 	{

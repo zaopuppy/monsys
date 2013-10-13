@@ -7,6 +7,7 @@
 
 #include "libzigbee/zzigbee_message.h"
 #include "zzigbee_handler.h"
+#include "zb_stream.h"
 
 class ZSerial : public ZModule {
  public:
@@ -53,8 +54,9 @@ class ZSerial : public ZModule {
 	char buf_out_[1 << 10];
 	ZZigBeeHandler *handler_;
 
-	// std::map<std::string, zb_dev_info_t*> dev_addr_map_;
   std::string serial_dev_;
+
+  ZBStream stream_;
 };
 
 
