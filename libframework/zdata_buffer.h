@@ -2,6 +2,7 @@
 #define _Z_DATA_BUFFER_H__
 
 #include <stdlib.h>
+#include <string.h>
 
 ///////////////////////////////////////////////////////////////////////
 // initial:
@@ -40,6 +41,9 @@ class ZDataBuffer {
   }
 
  public:
+  // --------------------------------------------
+  T* getArray() { return buf_; }
+
   int pos() { return pos_; }
   void setPos(int pos) { pos_ = pos; }
 
@@ -51,6 +55,7 @@ class ZDataBuffer {
   bool hasRemaining() { return limit_ > pos_; }
   int remaining() { return limit_ - pos_; }
 
+  // --------------------------------------------
   int put(const T &v) {
     if (!hasRemaining()) {
       return 0;
@@ -80,6 +85,7 @@ class ZDataBuffer {
     return put(v + start, len);
   }
 
+  // --------------------------------------------
   T get() {
     if (!hasRemaining()) {
       // XXX: damn...I hate exception

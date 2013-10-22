@@ -17,7 +17,8 @@ CXXFILES := zclient.cc \
 	zdispatcher.cc \
 	zserver.cc \
 	zserver_handler.cc \
-	zutil.cc
+	zutil.cc \
+	zbyte_buffer.cc
 
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)

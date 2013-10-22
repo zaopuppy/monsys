@@ -23,10 +23,12 @@ CXXFILES := \
 	fgw_client.cc \
 	fgw_client_handler.cc \
 	msg_factory.cc \
-	zb_stream.cc
+	zb_stream.cc \
+	push_msg.cc
 
 ifeq ($(ut), 1)
-CXXFILES += test_zbstream.cc
+CXXFILES += test_zbstream.cc \
+						test_push_msg.cc
 CXXFILES += unittest.cc
 else
 CXXFILES += fgw.cc
