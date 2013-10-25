@@ -38,6 +38,9 @@ TEST(TestPushMsg, TestCase02)
 
   data.putByte(5);
   ASSERT_EQ(5, data.getByte());
+
+  data.putInt32(0x12345678);
+  ASSERT_EQ(0x12345678, data.getInt32());
 }
 
 TEST(TestPushMsg, TestCase03)
@@ -70,7 +73,7 @@ TEST(TestPushMsg, TestCase03)
     ASSERT_EQ(rv, 0);
   }
 
-  // int16
+  // String
   {
     push::TLV tlv1, tlv2;
     z::ZByteBuffer buf(1024);
@@ -98,4 +101,192 @@ TEST(TestPushMsg, TestCase03)
     ASSERT_EQ(rv, 0);
   }
 }
+
+TEST(TestPushMsg, TestCase04)
+{
+  push::GetReq msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x00;
+    msg1.id_list_.push_back(4);
+    msg1.id_list_.push_back(7);
+    msg1.id_list_.push_back(18);
+    msg1.id_list_.push_back(44);
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
+  ASSERT_EQ(msg1.id_list_.size(), msg2.id_list_.size());
+
+  for (int i = 0; i < msg1.id_list_.size(); ++i) {
+    ASSERT_EQ(msg1.id_list_[i], msg2.id_list_[i]);
+  }
+}
+
+TEST(TestPushMsg, TestCase05)
+{
+  push::GetRsp msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x00;
+    push::TLV *tlv;
+
+    tlv = new push::TLV();
+    tlv->setTag(0x01);
+    tlv->getValue().putInt32(0x5678);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x02);
+    tlv->getValue().putInt32(0xAAAA);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x03);
+    tlv->getValue().putInt32(0xBBBB);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x04);
+    tlv->getValue().putInt32(0xCCCC);
+    msg1.value_list_.push_back(tlv);
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  Z_LOG_E("GetRsp");
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
+  ASSERT_EQ(msg1.value_list_.size(), msg2.value_list_.size());
+
+  int rv;
+  for (int i = 0; i < msg1.value_list_.size(); ++i) {
+    ASSERT_EQ(msg1.value_list_[i]->getTag(),
+      msg2.value_list_[i]->getTag());
+    const push::VData &data1 = msg1.value_list_[i]->getValue();
+    const push::VData &data2 = msg2.value_list_[i]->getValue();
+    ASSERT_EQ(data1.getType(), data2.getType());
+    ASSERT_EQ(data1.getDataLen(), data2.getDataLen());
+    const char* ptr1 = data1.getData();
+    const char* ptr2 = data2.getData();
+    rv = memcmp(ptr1, ptr2, data1.getDataLen());
+    ASSERT_EQ(rv, 0);
+  }
+}
+
+TEST(TestPushMsg, TestCase06)
+{
+  push::SetReq msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x00;
+    push::TLV *tlv;
+
+    tlv = new push::TLV();
+    tlv->setTag(0x01);
+    tlv->getValue().putInt32(0x5678);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x02);
+    tlv->getValue().putInt32(0xAAAA);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x03);
+    tlv->getValue().putInt32(0xBBBB);
+    msg1.value_list_.push_back(tlv);
+
+    tlv = new push::TLV();
+    tlv->setTag(0x04);
+    tlv->getValue().putInt32(0xCCCC);
+    msg1.value_list_.push_back(tlv);
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  Z_LOG_E("GetRsp");
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
+  ASSERT_EQ(msg1.value_list_.size(), msg2.value_list_.size());
+
+  int rv;
+  for (int i = 0; i < msg1.value_list_.size(); ++i) {
+    ASSERT_EQ(msg1.value_list_[i]->getTag(),
+      msg2.value_list_[i]->getTag());
+    const push::VData &data1 = msg1.value_list_[i]->getValue();
+    const push::VData &data2 = msg2.value_list_[i]->getValue();
+    ASSERT_EQ(data1.getType(), data2.getType());
+    ASSERT_EQ(data1.getDataLen(), data2.getDataLen());
+    const char* ptr1 = data1.getData();
+    const char* ptr2 = data2.getData();
+    rv = memcmp(ptr1, ptr2, data1.getDataLen());
+    ASSERT_EQ(rv, 0);
+  }
+}
+
+TEST(TestPushMsg, TestCase07)
+{
+  push::SetRsp msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x47;
+    msg1.header_.type = 0x89;
+    msg1.status_ = 0xAB;
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  Z_LOG_E("SetRsp");
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
+  ASSERT_EQ(msg1.status_, msg2.status_);
+}
+
 

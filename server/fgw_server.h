@@ -3,7 +3,7 @@
 
 #include "libframework/zframework.h"
 #include "module.h"
-#include "fgw_handler.h"
+#include "fgw_server_handler.h"
 
 // FGW is short for "Family gateway"
 class FGWServer : public ZServer {

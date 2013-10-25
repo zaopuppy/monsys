@@ -8,7 +8,7 @@ TARGET := center
 CFILES :=
 CXXFILES := center.cc \
 	fgw_server.cc \
-	fgw_handler.cc \
+	fgw_server_handler.cc \
 	webapi_msg.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \

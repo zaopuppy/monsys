@@ -1,5 +1,5 @@
-#ifndef _FGW_HANDLER_H__
-#define _FGW_HANDLER_H__
+#ifndef _FGW_SERVER_HANDLER_H__
+#define _FGW_SERVER_HANDLER_H__
 
 #include "libframework/zframework.h"
 #include "fgw_session.h"
@@ -36,5 +36,5 @@ class FGWHandler : public ZServerHandler {
 
 };
 
-#endif // _FGW_HANDLER_H__
+#endif // _FGW_SERVER_HANDLER_H__
 

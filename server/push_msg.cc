@@ -23,7 +23,7 @@ inline int encode(const TLV &v, z::ZByteBuffer &buf)
       if (buf.putInt16(v.getValue().getInt16()) < 0) { return -1; }
       break;
     case VData::TYPE_INT32:
-      if (buf.put(v.getValue().getInt32()) < 0) { return -1; }
+      if (buf.putInt32(v.getValue().getInt32()) < 0) { return -1; }
       break;
     case VData::TYPE_STR:
     // {
@@ -248,6 +248,73 @@ int GetRsp::decode(z::ZByteBuffer &buf)
 
 /////////////////////////////////////////////////
 // Set
+// request
+int SetReq::encode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
 
+  if (super_::encode(buf) < 0) { return -1; }
+  // if (push::encode(id_list_, buf) < 0) { return -1; }
+
+  // id_list_
+  int rv;
+  uint16_t len = (uint16_t)value_list_.size();
+  rv = push::encode(len, buf);
+  if (rv < 0) { return -1; }
+
+  TLV *tlv = NULL;
+  for (uint16_t i = 0; i < len; ++i) {
+    tlv = value_list_[i];
+    rv = push::encode(*tlv, buf);
+    if (rv < 0) { return -1; }
+  }
+
+  return remain_before - buf.remaining();
+}
+
+int SetReq::decode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::decode(buf) < 0) { return -1; }
+
+  // id_list_
+  int rv;
+  uint16_t len;
+  rv = push::decode(len, buf);
+  if (rv < 0) { return -1; }
+
+  TLV *tlv = NULL;
+  value_list_.clear();
+  for (uint16_t i = 0; i < len; ++i) {
+    tlv = new TLV();
+    rv = push::decode(*tlv, buf);
+    if (rv < 0) { return -1; }
+    value_list_.push_back(tlv);
+  }
+
+  return remain_before - buf.remaining();
+}
+
+// response
+int SetRsp::encode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::encode(buf) < 0) { return -1; }
+  if (push::encode(status_, buf) < 0) { return -1; }
+
+  return remain_before - buf.remaining();
+}
+
+int SetRsp::decode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::decode(buf) < 0) { return -1; }
+  if (push::decode(status_, buf) < 0) { return -1; }
+
+  return remain_before - buf.remaining();
+}
 
 }

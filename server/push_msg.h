@@ -55,6 +55,9 @@ class VData {
 
   void putByte(int8_t v) {
     resize(1);
+
+    type_ = TYPE_INT8;
+
     *data_ = v;
   }
 
@@ -226,6 +229,7 @@ class SetReq : public Msg {
   virtual int decode(z::ZByteBuffer &buf);
 
  public:
+  std::vector<TLV*> value_list_;
 };
 
 class SetRsp : public Msg {
@@ -239,6 +243,8 @@ class SetRsp : public Msg {
   virtual int decode(z::ZByteBuffer &buf);
 
  public:
+  uint16_t status_;
+  // TODO: error for every single field
 };
 
 
