@@ -106,6 +106,55 @@ inline int decode(TLV &v, z::ZByteBuffer &buf)
 
   return before_remain - buf.remaining();
 }
+/////////////////////////////////////////////////
+// dev_info_t
+// typedef struct {
+//   int32_t     addr;
+//   std::string name;
+//   int32_t     state;
+//   int32_t     type;
+// } dev_info_t;
+template<>
+inline int encode(const dev_info_t &v, z::ZByteBuffer &buf)
+{
+  int before_remain = buf.remaining();
+
+  // address
+  if (buf.putInt32(v.addr) < 0) { return -1; }
+  // string
+  // head
+  uint16_t len = v.name.size();
+  if (buf.putInt16(len) < 0) { return -1; }
+  if (buf.put(v.name.c_str(), len) < 0) { return -1; }
+  // state
+  if (buf.putInt32(v.state) < 0) { return -1; }
+  // type
+  if (buf.putInt32(v.type) < 0) { return -1; }
+
+  return before_remain - buf.remaining();
+}
+
+template<>
+inline int decode(dev_info_t &v, z::ZByteBuffer &buf)
+{
+  int before_remain = buf.remaining();
+
+  // address
+  if (buf.getInt32(v.addr) < 0) { return -1; }
+  // string
+  // head
+  uint16_t len;
+  if (buf.getInt16(len) < 0) { return -1; }
+  if (buf.remaining() < len) { return -1; }
+  v.name.assign(buf.getArray() + buf.pos(), len);
+  buf.setPos(buf.pos() + len);
+  // state
+  if (buf.getInt32(v.state) < 0) { return -1; }
+  // type
+  if (buf.getInt32(v.type) < 0) { return -1; }
+
+  return before_remain - buf.remaining();
+}
 
 
 /////////////////////////////////////////////////
@@ -145,6 +194,70 @@ int Heartbeat::decode(z::ZByteBuffer &buf)
   int remain_before = buf.remaining();
 
   if (super_::decode(buf) < 0) { return -1; }
+
+  return remain_before - buf.remaining();
+}
+
+/////////////////////////////////////////////////
+// GetDevList
+int GetDevListReq::encode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::encode(buf) < 0) { return -1; }
+
+  return remain_before - buf.remaining();
+}
+
+int GetDevListReq::decode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::decode(buf) < 0) { return -1; }
+
+  return remain_before - buf.remaining();
+}
+
+int GetDevListRsp::encode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::encode(buf) < 0) { return -1; }
+
+  // info_list_
+  uint16_t len = (uint16_t)info_list_.size();
+  if (push::encode(len, buf) < 0) { return -1; }
+
+  dev_info_t *dev_info;
+  for (uint16_t i = 0; i < len; ++i) {
+    dev_info = info_list_[i];
+    if (push::encode(*dev_info, buf) < 0) { return -1; }
+  }
+
+  return remain_before - buf.remaining();
+}
+
+int GetDevListRsp::decode(z::ZByteBuffer &buf)
+{
+  int remain_before = buf.remaining();
+
+  if (super_::decode(buf) < 0) { return -1; }
+
+  // info_list_
+  uint16_t len;
+  if (buf.getInt16(len) < 0) { return -1; }
+
+  // TODO: memory leak
+  dev_info_t *dev_info = NULL;
+  for (uint16_t i = 0; i < len; ++i) {
+    dev_info = new dev_info_t;
+    if (push::decode(*dev_info, buf) < 0) {
+      delete dev_info;
+      dev_info = NULL;
+      return -1;
+    }
+    info_list_.push_back(dev_info);
+  }
 
   return remain_before - buf.remaining();
 }

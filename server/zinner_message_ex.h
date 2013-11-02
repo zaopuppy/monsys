@@ -9,6 +9,7 @@
 enum {
 	Z_INVALID = -1,
 
+	// TODO: remove it
 	Z_TRANSPORT_MSG,
 
 	Z_ZB_GET_DEV_LIST_REQ,

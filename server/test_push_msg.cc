@@ -30,6 +30,7 @@ TEST(TestPushMsg, TestCase01)
   // header
   ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
   ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
 }
 
 TEST(TestPushMsg, TestCase02)
@@ -287,6 +288,98 @@ TEST(TestPushMsg, TestCase07)
   ASSERT_EQ(msg1.header_.type, msg2.header_.type);
 
   ASSERT_EQ(msg1.status_, msg2.status_);
+}
+
+TEST(TestPushMsg, TestCase08)
+{
+  push::GetDevListReq msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x47;
+    msg1.header_.type = 0x89;
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  Z_LOG_E("SetRsp");
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+}
+
+TEST(TestPushMsg, TestCase09)
+{
+  push::GetDevListRsp msg1, msg2;
+  int rv1, rv2;
+
+  {
+    msg1.header_.seq = 0x47;
+    msg1.header_.type = 0x89;
+
+    push::dev_info_t *dev_info = NULL;
+
+    // 1
+    dev_info = new push::dev_info_t;
+    dev_info->addr = 0x41;
+    dev_info->name = "41";
+    dev_info->state = 0x31;
+    dev_info->type = 0x01;
+    msg1.info_list_.push_back(dev_info);
+
+    // 2
+    dev_info = new push::dev_info_t;
+    dev_info->addr = 0x42;
+    dev_info->name = "42";
+    dev_info->state = 0x32;
+    dev_info->type = 0x02;
+    msg1.info_list_.push_back(dev_info);
+
+    // 3
+    dev_info = new push::dev_info_t;
+    dev_info->addr = 0x43;
+    dev_info->name = "43";
+    dev_info->state = 0x33;
+    dev_info->type = 0x03;
+    msg1.info_list_.push_back(dev_info);
+  }
+
+  z::ZByteBuffer buf(1024);
+
+  rv1 = msg1.encode(buf);
+  buf.flip();
+  Z_LOG_E("SetRsp");
+  trace_bin(buf.getArray(), buf.limit());
+  ASSERT_GT(rv1, 0);
+
+  rv2 = msg2.decode(buf);
+  ASSERT_EQ(rv1, rv2);
+
+  //
+  ASSERT_EQ(msg1.header_.seq, msg2.header_.seq);
+  ASSERT_EQ(msg1.header_.type, msg2.header_.type);
+
+  ASSERT_EQ(msg1.info_list_.size(), msg2.info_list_.size());
+
+  uint32_t list_len = msg1.info_list_.size();
+  push::dev_info_t *info1 = NULL;
+  push::dev_info_t *info2 = NULL;
+  for (uint32_t i = 0; i < list_len; ++i) {
+    info1 = msg1.info_list_[i];
+    info2 = msg1.info_list_[i];
+    ASSERT_EQ(info1->addr, info2->addr);
+    ASSERT_TRUE(info1->name == info2->name);
+    ASSERT_EQ(info1->state, info2->state);
+    ASSERT_EQ(info1->type, info2->type);
+  }
 }
 
 

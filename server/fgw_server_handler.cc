@@ -2,8 +2,6 @@
 
 #include <unistd.h>
 
-#include <jansson.h>
-
 #include "zinner_message_ex.h"
 #include "fgw_server.h"
 #include "webapi_msg.h"
@@ -77,6 +75,11 @@ bool FGWHandler::checkSessionBySequence(uint32_t sequence)
 	}
 
 	return false;
+}
+
+int FGWHandler::onInnerMsgEx(ZInnerMsg *msg)
+{
+	return OK;
 }
 
 int FGWHandler::onInnerMsg(ZInnerMsg *msg)
@@ -173,4 +176,47 @@ int FGWHandler::send(const char *buf, uint32_t buf_len)
 	int rv = ::send(getFd(), buf, buf_len, 0);
 	Z_LOG_D("rv: %d", rv);
 	return OK;
+}
+
+static push::Msg* inner2pushGetDevList(ZInnerMsg *innerMsg)
+{
+	return NULL;
+}
+
+static push::Msg* inner2pushGetDev(ZInnerMsg *innerMsg)
+{
+	return NULL;
+}
+
+static push::Msg* inner2pushSetDev(ZInnerMsg *innerMsg)
+{
+	return NULL;
+}
+
+push::Msg* FGWHandler::inner2push(ZInnerMsg *innerMsg)
+{
+	Z_LOG_D("FGWHandler::inner2push(%p)", innerMsg);
+
+	push::Msg *pushMsg;
+	switch (innerMsg->msg_type_) {
+		case Z_ZB_GET_DEV_LIST_REQ:
+			pushMsg = inner2pushGetDevList(innerMsg);
+			break;
+		case Z_ZB_GET_DEV_REQ:
+			pushMsg = inner2pushGetDev(innerMsg);
+			break;
+		case Z_ZB_SET_DEV_REQ:
+			pushMsg = inner2pushSetDev(innerMsg);
+			break;
+		default:
+			break;
+	}
+
+	return NULL;
+}
+
+ZInnerMsg* FGWHandler::push2inner(push::Msg *pushMsg)
+{
+	Z_LOG_D("FGWHandler::push2inner()");
+	return NULL;
 }

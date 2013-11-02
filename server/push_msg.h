@@ -10,20 +10,28 @@
 namespace push {
 
 // message types
-const uint32_t INVALID    = 0xFFFFFFFF;
-const uint32_t HEARTBEAT  = 0x00FF;
-const uint32_t REG_REQ    = 0x0001;
-const uint32_t REG_RSP    = 0x8001;
-const uint32_t GET_REQ    = 0x0002;
-const uint32_t GET_RSP    = 0x8002;
-const uint32_t SET_REQ    = 0x0003;
-const uint32_t SET_RSP    = 0x8003;
+const uint32_t INVALID          = 0xFFFFFFFF;
+const uint32_t HEARTBEAT        = 0x00FF;
+const uint32_t REG_DEV_LIST_REQ = 0x0001;
+const uint32_t REG_DEV_LIST_RSP = 0x8001;
+const uint32_t REG_REQ          = 0x0002;
+const uint32_t REG_RSP          = 0x8002;
+const uint32_t GET_REQ          = 0x0003;
+const uint32_t GET_RSP          = 0x8003;
+const uint32_t SET_REQ          = 0x0004;
+const uint32_t SET_RSP          = 0x8004;
 
 typedef struct {
   uint32_t seq;
   uint32_t type;
 } header_t;
 
+typedef struct {
+  uint32_t     addr;
+  std::string name;
+  uint32_t     state;
+  uint32_t     type;
+} dev_info_t;
 
 class VData {
  public:
@@ -161,6 +169,7 @@ class TLV {
   VData value_;
 };
 
+/////////////////////////////////////////////////
 class Msg {
  public:
   Msg(uint32_t type) {
@@ -177,6 +186,7 @@ class Msg {
   header_t header_;
 };
 
+/////////////////////////////////////////////////
 class Heartbeat : public Msg {
  public:
   Heartbeat(): Msg(HEARTBEAT) {
@@ -190,6 +200,34 @@ class Heartbeat : public Msg {
  public:
 };
 
+/////////////////////////////////////////////////
+class GetDevListReq : public Msg {
+ public:
+  GetDevListReq(): Msg(REG_DEV_LIST_REQ) {
+  }
+
+  typedef Msg super_;
+
+  virtual int encode(z::ZByteBuffer &buf);
+  virtual int decode(z::ZByteBuffer &buf);
+ public:
+};
+
+class GetDevListRsp : public Msg {
+ public:
+  GetDevListRsp(): Msg(REG_DEV_LIST_RSP) {
+  }
+
+  typedef Msg super_;
+
+  virtual int encode(z::ZByteBuffer &buf);
+  virtual int decode(z::ZByteBuffer &buf);
+ public:
+  // TODO: memory leak
+  std::vector<dev_info_t*> info_list_;
+};
+
+/////////////////////////////////////////////////
 class GetReq : public Msg {
  public:
   GetReq(): Msg(GET_REQ) {
@@ -218,6 +256,7 @@ class GetRsp : public Msg {
   std::vector<TLV*> value_list_;
 };
 
+/////////////////////////////////////////////////
 class SetReq : public Msg {
  public:
   SetReq(): Msg(GET_REQ) {

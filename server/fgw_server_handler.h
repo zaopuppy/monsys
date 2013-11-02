@@ -3,6 +3,8 @@
 
 #include "libframework/zframework.h"
 #include "fgw_session.h"
+#include "push_msg.h"
+#include <jansson.h>
 
 class FGWServer;
 
@@ -20,6 +22,7 @@ class FGWHandler : public ZServerHandler {
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len);
 	virtual int onInnerMsg(ZInnerMsg *msg);
+	virtual int onInnerMsgEx(ZInnerMsg *msg);
 	virtual void routine(long delta);
 
 	virtual int send(const char *buf, uint32_t buf_len);
@@ -29,6 +32,9 @@ class FGWHandler : public ZServerHandler {
 
  protected:
  	bool checkSessionBySequence(uint32_t sequence);
+
+ 	push::Msg* inner2push(ZInnerMsg *innerMsg);
+ 	ZInnerMsg* push2inner(push::Msg *pushMsg);
 
  private:
  	// <sequence, fgw_id>
