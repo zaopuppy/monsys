@@ -1,9 +1,9 @@
 
 CC  := clang
 CXX := clang++
-# CC  := $(CROSS_CHAIN)gcc
-# CXX := $(CROSS_CHAIN)g++
-# AR  := $(CROSS_CHAIN)ar
+# CC  := gcc
+# CXX := g++
+# AR  := ar
 # AR  := ar
 
 
