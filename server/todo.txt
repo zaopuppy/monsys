@@ -23,6 +23,7 @@
 [ ] release session
 [ ] better string search algorithm
 [ ] how to test a random generating algorithm? or a simpler one, how to test a function which will randomly return you one of the element from a set
+[ ] memory leakage!
 
 
 [ ] 接口变更:

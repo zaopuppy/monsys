@@ -1,14 +1,14 @@
 
-CC  := gcc
-CXX := g++
-AR  := ar
+CC  := clang
+CXX := clang++
+# AR  := ar
 
 
 CFLAGS  := -g -Wall -I../
-LDFLAGS := -L../libbase
-ARFLAGS := -r
+LDFLAGS := -L../libbase -lbase
+# ARFLAGS := -r
 
-TARGET  := libzb.a
+TARGET  := libzb.so
 
 CFILES := 
 
@@ -20,7 +20,8 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 $(TARGET) : $(OBJFILES)
 	rm -f $@
-	$(AR) $(ARFLAGS) $@ $^
+	$(CXX) $(LDFLAGS) -shared -o $@ $^
+#$(AR) $(ARFLAGS) $@ $^
 
 %.d : %.c
 	rm -f $@
@@ -43,9 +44,6 @@ include $(DEPFILES)
 .PHONY : build clean test
 
 all: $(TARGET)
-
-ts: main.cc $(TARGET)
-	$(CXX) $< -o $@ $(CFLAGS) $(LDFLAGS) -L../libbase -lbase -L. -lzb
 
 clean:
 	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)

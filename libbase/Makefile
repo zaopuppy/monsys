@@ -1,14 +1,17 @@
 
-CC  := gcc
-CXX := g++
-AR  := ar
+CC  := clang
+CXX := clang++
+# CC  := $(CROSS_CHAIN)gcc
+# CXX := $(CROSS_CHAIN)g++
+# AR  := $(CROSS_CHAIN)ar
+# AR  := ar
 
 
 CFLAGS  := -g -Wall
 LDFLAGS :=
-ARFLAGS := -r
+# ARFLAGS := -r
 
-TARGET  := libbase.a
+TARGET  := libbase.so
 
 CFILES := $(wildcard *.c)
 
@@ -19,7 +22,8 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 $(TARGET) : $(OBJFILES)
 	rm -f $@
-	$(AR) $(ARFLAGS) $@ $^
+	$(CXX) -shared -o $@ $^
+# $(AR) $(ARFLAGS) $@ $^
 
 %.d : %.c
 	rm -f $@
@@ -42,9 +46,6 @@ include $(DEPFILES)
 .PHONY : build clean test
 
 all: $(TARGET)
-
-ts: main.cc $(TARGET)
-	g++ $< -o $@ -L. -lbase
 
 clean:
 	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)

@@ -57,6 +57,8 @@ class ZInnerGetDevListReq : public ZInnerMsg {
  public:
 	ZInnerGetDevListReq()
 		: ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ) { }
+ public:
+ 	std::string uid_;
 };
 
 class ZInnerGetDevListRsp : public ZInnerMsg {
@@ -73,6 +75,7 @@ class ZInnerGetDevListRsp : public ZInnerMsg {
  	}
 
  public:
+ 	int32_t status_;
  	std::vector<ZZBDevInfo*> info_list_;
 };
 
@@ -84,6 +87,7 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
 	  : ZInnerMsg(Z_ZB_GET_DEV_REQ) { }
 
  public:
+ 	std::string uid_;
 	uint16_t addr_;
 	std::vector<uint8_t> item_ids_;
 };
@@ -94,6 +98,7 @@ class ZInnerGetDevInfoRsp : public ZInnerMsg {
 	  : ZInnerMsg(Z_ZB_GET_DEV_RSP) { }
 
  public:
+ 	int32_t status_;
 	std::vector<ZItemPair> dev_infos_;
 };
 
@@ -105,6 +110,7 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
 	  : ZInnerMsg(Z_ZB_SET_DEV_REQ) { }
 
  public:
+ 	std::string uid_;
 	uint16_t addr_;
 	std::vector<ZItemPair> dev_vals_;
 };

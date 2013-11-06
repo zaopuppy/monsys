@@ -26,7 +26,7 @@ libzigbee: libbase
 libframework: libbase
 	make -C $@
 
-server:
+server: libzigbee libbase
 	make -C $@
 
 stub:

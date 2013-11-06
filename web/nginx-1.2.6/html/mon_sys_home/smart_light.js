@@ -98,7 +98,7 @@ function SmartLightControl() {
 		console.log("R: " + p[0] + ", G: " + p[1] + ", B: " + p[2]);
 
 		// R, G, B
-		g_monsys.set_dev_info(44, this.addr_, [11, 12, 13], [p[0], p[1], p[2]]);
+		g_monsys.set_dev_info("44", this.addr_, [11, 12, 13], [p[0], p[1], p[2]]);
 	}
 
 	this.on_image_loaded = function() {
@@ -147,16 +147,16 @@ function SmartLightControl() {
 		console.log("light changed: " + this.light_level_.value);
 
 		var v = parseInt(this.light_level_.value);
-		g_monsys.set_dev_info(44, this.addr_, [11, 12, 13], [v, v, v]);
+		g_monsys.set_dev_info("44", this.addr_, [11, 12, 13], [v, v, v]);
 	}
 
 	this.on_switch_changed = function() {
 		console.log("switch changed: " + this.switch_.checked);
 
 		if (this.switch_.checked) {
-			g_monsys.set_dev_info(44, this.addr_, [4], [1]);
+			g_monsys.set_dev_info("44", this.addr_, [4], [1]);
 		} else {
-			g_monsys.set_dev_info(44, this.addr_, [4], [0]);
+			g_monsys.set_dev_info("44", this.addr_, [4], [0]);
 		}
 	}
 

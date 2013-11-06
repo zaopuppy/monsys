@@ -86,6 +86,7 @@ int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
 {
 	Z_LOG_D("FGWClientHandler::onInnerMsg");
+	Z_LOG_D("inner message type: %d", msg->msg_type_);
 
 	// find session first
 	FGWClientSession *session = session_ctrl_.findByKey1(msg->seq_);
@@ -133,6 +134,8 @@ int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
 
 	char *str_dump = json_dumps(jmsg, 0);
 	sendRsp(str_dump, 200);
+	trace_bin(str_dump, strlen(str_dump));
+
 	free(str_dump);
 	json_decref(jmsg);
 

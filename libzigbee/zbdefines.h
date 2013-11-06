@@ -136,7 +136,7 @@ class ZZBDevInfo {
 
 class ZBMacComp {
  public:
- 	bool operator()(const zb_mac_type_t &v1, const zb_mac_type_t &v2) {
+ 	bool operator()(const zb_mac_type_t &v1, const zb_mac_type_t &v2) const {
  		for (unsigned int i = 0; i < sizeof(v1.data); ++i)	{
  			if (v1.data[i] < v2.data[i]) {
  				return true;

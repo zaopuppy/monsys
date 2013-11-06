@@ -1,13 +1,15 @@
 
-CC  := gcc
-CXX := g++
-AR  := ar
+CC  := clang
+CXX := clang++
+# AR  := ar
 
 
 CFLAGS  := -g -Wall \
 	-I../ -I../libs/include
-LDFLAGS := -L../libbase -lbase -L../libzigbee -lzb
-ARFLAGS := -r
+LDFLAGS := -L../libbase -lbase \
+           -L../libzigbee -lzb \
+					 -L../libs/lib -levent
+# ARFLAGS := -r
 
 TARGET  := libframework.a
 
@@ -25,7 +27,8 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 $(TARGET) : $(OBJFILES)
 	rm -f $@
-	$(AR) $(ARFLAGS) $@ $^
+	$(CXX) $(LDFLAGS) -shared -o $@ $^
+# $(AR) $(ARFLAGS) $@ $^
 
 %.d : %.c
 	rm -f $@

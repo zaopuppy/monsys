@@ -21,9 +21,16 @@
 //  	}
 //  };
 
+json_t* inner2Json(ZInnerMsg *innerMsg);
+
+json_t* inner2Json(ZInnerGetDevListReq *msg);
 json_t* inner2Json(ZInnerGetDevListRsp *msg);
+
+json_t* inner2Json(ZInnerGetDevInfoReq *msg);
 json_t* inner2Json(ZInnerGetDevInfoRsp *msg);
+
 json_t* inner2Json(ZInnerSetDevInfoRsp *msg);
+json_t* inner2Json(ZInnerSetDevInfoReq *msg);
 
 // deprecated
 ZInnerMsg* decodePushMsg(char *buf, uint32_t buf_len);

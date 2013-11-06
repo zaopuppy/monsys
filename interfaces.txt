@@ -35,14 +35,14 @@
 	"cmd": "get-dev-info",
 	"uid": 1,
 	"addr": 1234,
-	"id-list": "1,2,3,4"
+	"id-list": [1, 2, 3, 4]
 }
 
 {
 	"cmd": "get-dev-info-rsp",
 	"code": -4,
 	"info": [
-		{ "id": 1, "status": 2, "desc": "OK0" },
+		{ "id": 1, "value": 2 },
 		{ "id": 2, "status": 3, "desc": "OK1" },
 		{ "id": 3, "status": 4, "desc": "OK3" }
 	]

@@ -32,23 +32,47 @@ void ZWebApiHandler::close() {
 
 int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
 {
-	Z_LOG_D("ZWebApiHandler::onInnerMsg()");
+	{
+		Z_LOG_D("ZWebApiHandler::onInnerMsg()");
 
-	switch (msg->msg_type_) {
-		case Z_TRANSPORT_MSG:
-			{
-				Z_LOG_D("Z_TRANSPORT_MSG");
-				ZTransportMsg *m = (ZTransportMsg*)msg;
-				int rv = send(m->data_, m->data_len_);
-				Z_LOG_D("Sent %d bytes", rv);
-				break;
-			}
-		default:
-			Z_LOG_E("Unknow message type: %d", msg->msg_type_);
-			return -1;
+		json_t *web_msg = inner2Json(msg);
+		if (web_msg == NULL) {
+			Z_LOG_E("Failed to convert inner message to web message");
+			return FAIL;
+		}
+
+		char *str_dump = json_dumps(web_msg, 0);
+
+		send(str_dump, strlen(str_dump));
+
+		Z_LOG_D("Message sent");
+		trace_bin(str_dump, strlen(str_dump));
+
+		free(str_dump);
+		json_decref(web_msg);
+
+		return OK;
 	}
 
-	return OK;
+	{
+		// Z_LOG_D("ZWebApiHandler::onInnerMsg()");
+
+		// switch (msg->msg_type_) {
+		// 	case Z_TRANSPORT_MSG:
+		// 		{
+		// 			Z_LOG_D("Z_TRANSPORT_MSG");
+		// 			ZTransportMsg *m = (ZTransportMsg*)msg;
+		// 			int rv = send(m->data_, m->data_len_);
+		// 			Z_LOG_D("Sent %d bytes", rv);
+		// 			break;
+		// 		}
+		// 	default:
+		// 		Z_LOG_E("Unknow message type: %d", msg->msg_type_);
+		// 		return -1;
+		// }
+
+		// return OK;
+	}
 }
 
 void ZWebApiHandler::routine(long delta)
@@ -64,65 +88,73 @@ void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 
 int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 {
-	// Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
-	// if (buf_len <= 0) { // MIN_MSG_LEN(header length)
-	// 	Z_LOG_D("empty message");
-
-	// 	sendRsp("empty message", 404);
-
-	// 	return -1;
-	// }
-
-	// trace_bin(buf, buf_len);
-
-	// {
-	// 	// ZInnerMsg *inner_msg = webMsg2InnerMsg(jobj);
-	// 	ZInnerMsg *inner_msg = decodePushMsg(buf, buf_len);
-	// 	if (inner_msg == NULL) {
-	// 		sendRsp("bad request", 400);
-	// 		return -1;
-	// 	}
-
-	// 	// set source address
-	// 	inner_msg->src_addr_ = addr_;
-
-	// 	// set destination address
-	// 	inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
-	// 	inner_msg->dst_addr_.handler_id_ = ANY_ID;	// should have only one
-
-	// 	ZDispatcher::instance()->sendDirect(inner_msg);
-	// }
-
-	// return 0;
-
-	Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
-
-	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
-		Z_LOG_D("empty message");
-
-		sendRsp("empty message\n", 404);
-
-		return -1;
-	}
-
-	trace_bin(buf, buf_len);
-
 	{
-		ZTransportMsg *inner_msg = new ZTransportMsg();
-		inner_msg->data_ = new char[buf_len];
-		inner_msg->data_len_ = buf_len;
-		memcpy(inner_msg->data_, buf, buf_len);
+		Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
 
-		// set source and destination address
+		if (buf_len <= 0) { // MIN_MSG_LEN(header length)
+			Z_LOG_D("empty message");
+			sendRsp("empty message\n", 404);
+			return -1;
+		}
+
+		trace_bin(buf, buf_len);
+
+		// decode first
+		json_error_t jerror;
+		json_t *jmsg = json_loadb(buf, buf_len, 0, &jerror);
+		if (jmsg == NULL || !json_is_object(jmsg)) {
+			Z_LOG_D("Failed to decode web message");
+			return FAIL;
+		}
+
+		// convert to inner message
+		ZInnerMsg *inner_msg = json2Inner(jmsg);
+		if (inner_msg == NULL) {
+			Z_LOG_D("Failed to convert web message to inner message");
+			return FAIL;
+		}
+
+		// add 'seq' field
+		inner_msg->seq_ = getId();
+
 		inner_msg->src_addr_ = addr_;
 		inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
 		inner_msg->dst_addr_.handler_id_ = ANY_ID;
 
 		ZDispatcher::instance()->sendDirect(inner_msg);
 
+		return 0;
 	}
+	{
+		// Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
 
-	return 0;
+		// if (buf_len <= 0) { // MIN_MSG_LEN(header length)
+		// 	Z_LOG_D("empty message");
+
+		// 	sendRsp("empty message\n", 404);
+
+		// 	return -1;
+		// }
+
+		// trace_bin(buf, buf_len);
+
+		// {
+		// 	ZTransportMsg *inner_msg = new ZTransportMsg();
+		// 	inner_msg->data_ = new char[buf_len];
+		// 	inner_msg->data_len_ = buf_len;
+		// 	memcpy(inner_msg->data_, buf, buf_len);
+
+		// 	// set source and destination address
+		// 	inner_msg->src_addr_ = addr_;
+		// 	inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
+		// 	inner_msg->dst_addr_.handler_id_ = ANY_ID;
+
+		// 	ZDispatcher::instance()->sendDirect(inner_msg);
+
+		// }
+
+		// return 0;
+	}
 }
 
 

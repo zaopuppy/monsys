@@ -45,11 +45,11 @@ void ZWebApiServer::deleteClosedHandlers()
 
 int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 {
-	printf("ZWebApiServer::onInnerMsg()");
+	Z_LOG_D("ZWebApiServer::onInnerMsg()");
 
 	handler_id_t handler_id = msg->dst_addr_.handler_id_;
 	// if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-	// 	printf("Bad handler id: %d", handler_id);
+	// 	Z_LOG_D("Bad handler id: %d", handler_id);
 	// 	return FAIL;
 	// }
 
@@ -58,7 +58,7 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 		// XXX: should do load-balancing, current just use the first one
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
 		if (iter == handler_map_.end()) {
-			printf("Empty handler map...:(");
+			Z_LOG_D("Empty handler map...:(");
 			return FAIL;
 		}
 		iter->second->onInnerMsg(msg);
@@ -67,7 +67,7 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 	} else {
 		HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
 		if (iter == handler_map_.end()) {
-			printf("No such handler: %lu, %d", handler_map_.size(), handler_id);
+			Z_LOG_D("No such handler: %lu, %d", handler_map_.size(), handler_id);
 			return -1;
 		}
 
@@ -93,7 +93,7 @@ void ZWebApiServer::onAccept(
 
 	int handler_id = genHandlerId();
 	if (handler_id == INVALID_ID) {
-		printf("Failed to generate handler id, handler full?");
+		Z_LOG_D("Failed to generate handler id, handler full?");
 		return;
 	}
 

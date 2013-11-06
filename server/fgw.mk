@@ -1,6 +1,6 @@
-CC     := gcc
-CXX    := g++
-CPP    := gcc
+CC     := clang
+CXX    := clang++
+CPP    := clang
 LEX    := flex
 YACC   := bison
 

@@ -100,50 +100,50 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
 				}
 				break;
 			}
-	case Z_ID_ZB_GET_RSP:
-		{
-			Z_LOG_D("Z_ID_ZB_GET_RSP");
-			ZZBGetRsp msg;
-			int rv = msg.decode(buf, buf_len);
-			if (rv < 0) {
-				Z_LOG_D("Failed to decode message");
-			} else {
-				Z_LOG_D("decoding success");
-				processMsg(msg);
+		case Z_ID_ZB_GET_RSP:
+			{
+				Z_LOG_D("Z_ID_ZB_GET_RSP");
+				ZZBGetRsp msg;
+				int rv = msg.decode(buf, buf_len);
+				if (rv < 0) {
+					Z_LOG_D("Failed to decode message");
+				} else {
+					Z_LOG_D("decoding success");
+					processMsg(msg);
+				}
+				break;
 			}
-			break;
-		}
-	case Z_ID_ZB_SET_RSP:
-		{
-			Z_LOG_D("Z_ID_ZB_SET_RSP");
-			ZZBSetRsp msg;
-			int rv = msg.decode(buf, buf_len);
-			if (rv < 0) {
-				Z_LOG_D("Failed to decode message");
-			} else {
-				Z_LOG_D("decoding success");
-				processMsg(msg);
+		case Z_ID_ZB_SET_RSP:
+			{
+				Z_LOG_D("Z_ID_ZB_SET_RSP");
+				ZZBSetRsp msg;
+				int rv = msg.decode(buf, buf_len);
+				if (rv < 0) {
+					Z_LOG_D("Failed to decode message");
+				} else {
+					Z_LOG_D("decoding success");
+					processMsg(msg);
+				}
+				break;
 			}
-			break;
-		}
 		case Z_ID_ZB_UPDATE_ID_REQ:
-		{
-			Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
-			ZZBUpdateIdInfoReq msg;
-			int rv = msg.decode(buf, buf_len);
-			if (rv < 0) {
-				Z_LOG_D("Failed to decode message");
-			} else {
-				Z_LOG_D("decoding success");
-				processMsg(msg);
+			{
+				Z_LOG_D("Z_ID_ZB_UPDATE_ID_REQ");
+				ZZBUpdateIdInfoReq msg;
+				int rv = msg.decode(buf, buf_len);
+				if (rv < 0) {
+					Z_LOG_D("Failed to decode message");
+				} else {
+					Z_LOG_D("decoding success");
+					processMsg(msg);
+				}
+				break;
 			}
-			break;
-		}
-	default:
-		{
-			Z_LOG_D("Unknow message: %u", hdr.cmd_);
-			break;
-		}
+		default:
+			{
+				Z_LOG_D("Unknow message: %u", hdr.cmd_);
+				break;
+			}
 	}
 
 	return OK;
@@ -276,19 +276,19 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	ZZBDevInfo *info = NULL;
 
 	// // --- for debugging only ---
-	// {
-	// 	char dev_name_buf[64];
-	// 	for (int i = 0; i < 5; ++i) {
-	// 		snZ_LOG_D(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
-	// 		info = new ZZBDevInfo();
-	// 		info->addr_ = i;
-	// 		info->name_ = dev_name_buf;
-	// 		info->state_ = i;
-	// 		info->type_ = i;
-	// 		memset(&info->mac_, i, sizeof(info->mac_));
-	// 		rsp->info_list_.push_back(info);
-	// 	}
-	// }
+	{
+		char dev_name_buf[64];
+		for (int i = 0; i < 5; ++i) {
+			snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+			info = new ZZBDevInfo();
+			info->addr_ = i;
+			info->name_ = dev_name_buf;
+			info->state_ = i;
+			info->type_ = i;
+			memset(&info->mac_, i, sizeof(info->mac_));
+			rsp->info_list_.push_back(info);
+		}
+	}
 	// --- for debugging only ---
 
 	const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();

@@ -1,14 +1,13 @@
 
-/* --- begin --- yuusa modified */
 body {
-	padding-top: 110px;
+	/*padding-top: 110px;*/
+	/*background: #0F0F0F;*/
 }
 
-#top-panel {
-	position: fixed;
+div#top-panel {
+	position: relative;
 	top: 0;
 	height: 100px;
-	height: 110px;
 	width: 100%;
 	border: 1px solid red;
 }
@@ -18,43 +17,61 @@ body {
 	height: 100%;
 }
 
-#device-table {
+div#main-control-panel {
+	position: relative;
+	top: 5px;
+	border: 1px solid blue;
+}
+
+div#device-list {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*#device-table {
 	list-style: none;
+}*/
+
+div.device-record {
+	height: 128px;
+	border: 1px solid brown;
+	margin: 5px 0;
+	/*margin: auto;*/
+	/*text-align: center;*/
+	/*line-height: 48px;*/
+	background: pink;
 }
 
-.device-record {
-	height:48px;
-	/*line-height:48px;*/
-	/*width:100%;*/
-	border:1px solid red;
-	margin:5px 0;
+.dev-img {
+	height: 100%;
 }
 
-.device-record span {
+.dev-name-label {
+	/*height: 100%;*/
+	text-align: center;
+}
+
+/*.device-record span {
 	display: block;
 	height: 48px;
 	line-height: 48px;
 	float: left;
-}
+}*/
 
 /* .device-record span.image { height:48px; width:48px;} */
 
-.device-record span.name { height:48px; line-height:48px; width: 552px; float:right;}
+/*.device-record span.name { height:48px; line-height:48px; width: 552px; float:right;}*/
 
 /* .device-record span input { height:100%; width:100%;} */
 
 /* ---  end  --- yuusa modified */
 
-div#device-list {
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-table#device-table {
+/*table#device-table {
 	width: 100%;
-	/*border: 1px solid #000000;*/
+	border: 1px solid #000000;
 }
+*/
 
 /* ------------------------------- */
 /* for smart light */
