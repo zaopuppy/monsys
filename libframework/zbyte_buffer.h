@@ -2,9 +2,10 @@
 #define _Z_BYTE_BUFFER_H__
 
 // #include <string>
-
+#include <arpa/inet.h>
 #include "zdata_buffer.h"
 #include "libbase/ztypes.h"
+
 
 namespace z {
 

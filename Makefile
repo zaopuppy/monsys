@@ -4,7 +4,7 @@ include config.mk
 .PHONY: all rebuild clean
 
 # 3rd party library
-.PHONY: libevent
+.PHONY: libevent jansson
 
 .PHONY: libbase libzigbee libframework
 
@@ -14,6 +14,12 @@ all: libbase libzigbee libframework server stub unittest
 
 libevent:
 	cd 3rd/libevent-2.0/ && \
+		./configure --prefix=$(PWD)/libs && \
+		make -j4 && make install
+
+# autoreconf -i
+jansson:
+	cd 3rd/jansson && \
 		./configure --prefix=$(PWD)/libs && \
 		make -j4 && make install
 

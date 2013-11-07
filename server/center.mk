@@ -20,7 +20,7 @@ CXXFILES := center.cc \
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
 
-CFLAGS := -Wall -g \
+CFLAGS := -g -fPIC -Wall \
 	-I../ \
 	-I../libs/include/
 

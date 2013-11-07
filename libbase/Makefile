@@ -7,7 +7,7 @@ CXX := clang++
 # AR  := ar
 
 
-CFLAGS  := -g -Wall
+CFLAGS  := -g -fPIC -Wall
 LDFLAGS :=
 # ARFLAGS := -r
 

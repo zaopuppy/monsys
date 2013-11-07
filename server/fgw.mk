@@ -42,7 +42,7 @@ GTEST_DIR := ${GMOCK_DIR}/gtest/
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)
 
-CFLAGS := -g \
+CFLAGS := -g -fPIC -Wall \
 	-I../ \
 	-I../libs/include/ \
 	-I${GTEST_DIR}/include \
