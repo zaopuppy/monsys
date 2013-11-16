@@ -15,7 +15,7 @@ TARGET  := libbase.so
 
 CFILES := $(wildcard *.c)
 
-CXXFILES := $(wildcard *.cc) $(wildcard algorithm/*.cc)
+CXXFILES := $(wildcard *.cc)
 
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)

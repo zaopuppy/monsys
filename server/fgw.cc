@@ -22,7 +22,7 @@ bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
 {
 	ZModule *module = new ZWebApiServer(ip, port, base);
 	if (module->init() != OK) {
-		printf("Failed to initialize server.");
+		Z_LOG_D("Failed to initialize server.");
 		return false;
 	}
 
@@ -36,7 +36,7 @@ bool start_serial(event_base *base)
 	// const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
 	ZModule *h = new ZSerial(base, serial_dev);
 	if (h->init() != OK) {
-		printf("Failed to init serial module.");
+		Z_LOG_D("Failed to init serial module.");
 		return false;
 	}
 	return true;
@@ -45,7 +45,7 @@ bool start_serial(event_base *base)
 
 static void routine(evutil_socket_t fd, short events, void *arg)
 {
-	// printf("routine()");
+	// Z_LOG_D("routine()");
 	// sleep(2);
 	ZDispatcher::instance()->routine(100);
 }
@@ -62,37 +62,37 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	// if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
-	// 	printf("failed to start server: (0.0.0.0, 1983).");
+	// 	Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
 	// 	return -1;
 	// }
 
 	// if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_WEBCLIENT)) {
-	// 	printf("failed to start server: (0.0.0.0, 1984).");
+	// 	Z_LOG_D("failed to start server: (0.0.0.0, 1984).");
 	// 	return -1;
 	// }
 
 	// if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_APICLIENT)) {
-	// 	printf("failed to start server: (0.0.0.0, 1984).");
+	// 	Z_LOG_D("failed to start server: (0.0.0.0, 1984).");
 	// 	return -1;
 	// }
 
 	// if (!start_webapi_server("0.0.0.0", 1983, base)) {
-	// 	printf("failed to start server: (0.0.0.0, 1983).");
+	// 	Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
 	// 	return -1;
 	// }
 
 	// if (!start_api_server("0.0.0.0", 1984, base)) {
-	// 	printf("failed to start server: (0.0.0.0, 1983).");
+	// 	Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
 	// 	return -1;
 	// }
 
  	// if (!start_client(base)) {
- 	// 	printf("failed to start client.");
+ 	// 	Z_LOG_D("failed to start client.");
  	// 	return -1;
  	// }
 	
 	if (!start_serial(base)) {
-		printf("failed to start serial.");
+		Z_LOG_D("failed to start serial.");
 		return FAIL;
 	}
 
@@ -115,10 +115,10 @@ int main(int argc, char *argv[])
 	// basicly equals to event_base_loop()
 	// event_base_dispatch(base);
 	while (1) {
-		printf("beginning of loop");
+		Z_LOG_D("beginning of loop");
 		// event_base_loop(base, EVLOOP_NONBLOCK);
 		event_base_loop(base, 0);
-		printf("end of loop");
+		Z_LOG_D("end of loop");
 
 		// ZDispatcher::instance()->routine(delta_time);
 
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
 		// delta_time = end_time - begin_time;
 		// begin_time = end_time;
 
-		// // printf("delta_time: [%ld]", delta_time);
+		// // Z_LOG_D("delta_time: [%ld]", delta_time);
 		// assert(delta_time > 0);
 		// if (delta_time <= 0) {
 		// 	delta_time = 100;

@@ -14,8 +14,8 @@ int ZWebApiSession::event(evutil_socket_t fd, char *buf, uint32_t buf_len)
 			json_error_t error;
 			json_t *jobj = json_loadb(buf, buf_len, 0, &error);
 			if ((jobj == NULL) || (!json_is_object(jobj))) {
-				printf("bad request\n");
-				sendRsp(fd, "bad request\n", 400);
+				Z_LOG_D("bad request");
+				sendRsp(fd, "bad request", 400);
 				return -1;
 			}
 
@@ -47,7 +47,7 @@ void ZWebApiSession::sendRsp(evutil_socket_t fd, const char *text_msg, int statu
 
 int ZWebApiSession::processJson(evutil_socket_t fd, json_t *root)
 {
-	printf("ZWebApiSession::processJson\n");
+	Z_LOG_D("ZWebApiSession::processJson");
 	// var req_obj = {        
 	// 	"cmd": "get-dev-info",
 	// 	"uid": "uid001",      
@@ -55,34 +55,34 @@ int ZWebApiSession::processJson(evutil_socket_t fd, json_t *root)
 	// };                     
 	json_t *cmd = json_object_get(root, "cmd");
 	if (!cmd || !json_is_string(cmd)) {
-		printf("Missing 'cmd' field, or 'cmd' is not a string\n");
+		Z_LOG_D("Missing 'cmd' field, or 'cmd' is not a string");
 		return -1;
 	}
 
 	const char *cmd_str = json_string_value(cmd);
 
 	if (strncmp(cmd_str, "get-dev-info", sizeof("get-dev-info") - 1)) {
-		printf("Unknown command\n");
-		sendRsp(fd, "Unknown command\n", 400);
+		Z_LOG_D("Unknown command");
+		sendRsp(fd, "Unknown command", 400);
 		return -1;
 	}
 
 	json_t *uid = json_object_get(root, "uid");
 	if (!uid || !json_is_integer(uid)) {
-		printf("uid is illegal\n");
-		sendRsp(fd, "uid is illegal\n", 400);
+		Z_LOG_D("uid is illegal");
+		sendRsp(fd, "uid is illegal", 400);
 		return -1;
 	}
 
 	json_t *dev_id = json_object_get(root, "dev-id");
 	if (!dev_id || !json_is_integer(dev_id)) {
-		printf("dev-id is illegal\n");
-		sendRsp(fd, "dev-id is illegal\n", 400);
+		Z_LOG_D("dev-id is illegal");
+		sendRsp(fd, "dev-id is illegal", 400);
 		return -1;
 	}
 
-	printf("uid: %d\n", (int)json_integer_value(uid));
-	printf("dev-id: %d\n", (int)json_integer_value(dev_id));
+	Z_LOG_D("uid: %d", (int)json_integer_value(uid));
+	Z_LOG_D("dev-id: %d", (int)json_integer_value(dev_id));
 
 	sendRsp(fd, "uid is good, dev-id is good, everything is good:)\n", 200);
 

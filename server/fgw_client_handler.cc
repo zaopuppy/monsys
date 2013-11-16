@@ -10,7 +10,40 @@ int FGWClientHandler::init()
 	addr_.module_type_ = getModuleType();
 	addr_.handler_id_ = getId();
 
+	state_ = STATE_UNREGISTERED;
+
 	return OK;
+}
+
+json_t* createLoginReq()
+{
+	json_t *jmsg = json_object();
+	assert(jmsg);
+
+	// cmd
+	json_t *jcmd = json_string("login");
+	json_object_set_new(jmsg, "cmd", jcmd);
+
+	// st
+	json_t *jst = json_string("ZHAOYIC");
+	json_object_set_new(jmsg, "st", jst);
+
+	// devid
+	json_t *jdevid = json_string("DEVID-Z");
+	json_object_set_new(jmsg, "devid", jdevid);
+
+	return jmsg;
+}
+
+void FGWClientHandler::fgwLogin()
+{
+	Z_LOG_D("FGWClientHandler::registerFGW()");
+
+	json_t *login_req = createLoginReq();
+
+	sendJson(login_req);
+
+	state_ = STATE_WAIT_FOR_SERVER;
 }
 
 void FGWClientHandler::close()
@@ -21,11 +54,30 @@ void FGWClientHandler::close()
 	read_event_ = NULL;
 }
 
-int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
+int FGWClientHandler::onRead_Unregistered(char *buf, uint32_t buf_len)
 {
-	Z_LOG_D("FGWClientHandler::onRead()");
+	Z_LOG_D("FGWClientHandler::onRead_Unregistered()");
 
-	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
+	// return not-register
+	sendRsp("Not-register(i)", 404);
+
+	return OK;
+}
+
+int FGWClientHandler::onRead_WaitForServer(char *buf, uint32_t buf_len)
+{
+	Z_LOG_D("FGWClientHandler::onRead_WaitForServer()");
+
+	sendRsp("Not-register(w)", 404);
+
+	return OK;
+}
+
+int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
+{
+  Z_LOG_D("FGWClientHandler::onRead_Registered()");
+
+  	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 		Z_LOG_D("empty message");
 
 		sendRsp("empty message", 404);
@@ -54,6 +106,13 @@ int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 		return FAIL;
 	}
 
+	char *str_dump = json_dumps(jmsg, 0);
+	sendRsp(str_dump, 200);
+	trace_bin(str_dump, strlen(str_dump));
+
+	free(str_dump);
+	json_decref(jmsg);
+
 	// everything is OK, now doing the convert
 	ZInnerMsg *inner_msg = json2Inner(jmsg);
 	if (inner_msg == NULL) {
@@ -80,7 +139,29 @@ int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 
 	ZDispatcher::instance()->sendDirect(inner_msg);
 
-	return 0;
+  return OK;
+}
+
+int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
+{
+	Z_LOG_D("FGWClientHandler::onRead()");
+
+	int rv = FAIL;
+	switch (state_) {
+		case STATE_UNREGISTERED:
+			rv = onRead_Unregistered(buf, buf_len);
+			break;
+		case STATE_WAIT_FOR_SERVER:
+			rv = onRead_WaitForServer(buf, buf_len);
+			break;
+		case STATE_REGISTERED:
+			rv = onRead_Registered(buf, buf_len);
+			break;
+		default:
+			rv = FAIL;
+	}
+
+	return rv;
 }
 
 int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
@@ -176,9 +257,28 @@ int FGWClientHandler::send(const char *buf, uint32_t buf_len)
 	return ::send(fd_, buf, buf_len, 0);
 }
 
+int FGWClientHandler::sendJson(json_t *jmsg)
+{
+	Z_LOG_D("FGWClientHandler::sendJson()");
+
+	char *str_dump = json_dumps(jmsg, 0);
+
+	int rv = send(str_dump, strlen(str_dump));
+	trace_bin(str_dump, strlen(str_dump));
+
+	free(str_dump);
+	json_decref(jmsg);
+
+	return rv;
+}
+
 void FGWClientHandler::onConnected()
 {
 	Z_LOG_D("FGWClientHandler::onConnected()");
+	// reset state
+	state_ = STATE_UNREGISTERED;
+
+	fgwLogin();
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)

@@ -93,7 +93,7 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 
 		if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 			Z_LOG_D("empty message");
-			sendRsp("empty message\n", 404);
+			sendRsp("empty message", 404);
 			return -1;
 		}
 
@@ -131,7 +131,7 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 		// if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 		// 	Z_LOG_D("empty message");
 
-		// 	sendRsp("empty message\n", 404);
+		// 	sendRsp("empty message", 404);
 
 		// 	return -1;
 		// }

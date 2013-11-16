@@ -1,0 +1,15 @@
+
+div#main-stage {
+  /*width: 100px;*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+  don't set the width/height in CSS, this will cause canvas be scaled from
+  default size, then everything will be strange
+*/
+canvas#main-canvas {
+  border: 1px solid black;
+}
+

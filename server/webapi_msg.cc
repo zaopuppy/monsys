@@ -486,7 +486,7 @@ json_t* inner2Json(ZInnerGetDevListRsp *msg)
 	rv = json_object_set_new(jobj, "status", jstatus);
 	if (rv != 0) {
 		json_decref(jobj);
-		Z_LOG_D("Failed to set 'status'\n");
+		Z_LOG_D("Failed to set 'status'");
 		return NULL;
 	}
 
@@ -581,7 +581,7 @@ json_t* inner2Json(ZInnerGetDevInfoRsp *msg)
 	rv = json_object_set_new(jobj, "cmd", cmd);
 	if (rv != 0) {
 		json_decref(jobj);
-		Z_LOG_D("Failed to set 'cmd'\n");
+		Z_LOG_D("Failed to set 'cmd'");
 		return NULL;
 	}
 
@@ -633,7 +633,7 @@ json_t* inner2Json(ZInnerSetDevInfoReq *msg)
 	if (rv != 0) {
 		json_decref(jmsg);
 		json_decref(jcmd);
-		Z_LOG_D("Failed to set 'cmd'\n");
+		Z_LOG_D("Failed to set 'cmd'");
 		return NULL;
 	}
 

@@ -1,4 +1,21 @@
 
+// FOR PUSH ONLY
+// bind
+{
+	"cmd": "bind",
+	"st": "Account+DeviceID"
+}
+
+// login
+{
+	"cmd": "login",
+	"st": "XXXXXX",
+	"devid": "XXXX"
+}
+{
+	"cmd": "login-rsp",
+	"result": 0
+}
 
 // GetDevList
 {

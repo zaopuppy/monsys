@@ -36,11 +36,11 @@ class ZZigBeeHandler : public ZClientHandler {
 		// for serial device, use write only, don't use send
 		if (fd_ <= 0)
 		{
-			printf("Invalid fd, return\n");
+			Z_LOG_D("Invalid fd, return");
 			return 0;
 		}
 
-		printf("now sending:\n");
+		Z_LOG_D("now sending:");
 		trace_bin(buf, buf_len);
 		return ::write(fd_, buf, buf_len);
 	}
