@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <meta charset="utf-8" />
+    <meta name="Keywords" content="Canvas" />
+    <meta name="Description" content="Testing code for Moniter System" />
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="mon_sys.css" >
+    <script type="text/javascript" src="jquery-1.10.1.js" ></script>
+    <script type="text/javascript" src="json2.js" ></script>
+    <script type="text/javascript" src="login.js"></script>
+    <style type="text/css" >
+      #z-login-area {
+      width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid red;
+      }
+      #login-account, #login-password {
+      width: 80%;
+      font-size: 1em;
+      }
+      #z-logout-area {
+      width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="z-login-area">
+      <form name="testform" action="/login" method="POST" >
+	<ul style="list-style:none; padding-left: 20; font-size: 2em;" >
+	  <li>User Name:</li>
+	  <li><input id="login-account" type="text" name="account" /></li>
+	  <li>Password:</li>
+	  <li><input id="login-password" type="password" name="password" /></li>
+	  <li><input type="submit" size="50" value="login" /> </li>
+	</ul>
+      </form>
+    </div>
+    <a href="/logout" >logout</a><br/>
+    <a href="/fgw-list" >fgw-list</a><br/>
+    <a href="/dev-list" >dev-list</a><br/>
+    <a href="/dev" >dev</a><br/>
+  </body>
+</html>
