@@ -276,19 +276,19 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 	ZZBDevInfo *info = NULL;
 
 	// // --- for debugging only ---
-	{
-		char dev_name_buf[64];
-		for (int i = 0; i < 5; ++i) {
-			snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
-			info = new ZZBDevInfo();
-			info->addr_ = i;
-			info->name_ = dev_name_buf;
-			info->state_ = i;
-			info->type_ = i;
-			memset(&info->mac_, i, sizeof(info->mac_));
-			rsp->info_list_.push_back(info);
-		}
-	}
+	// {
+	// 	char dev_name_buf[64];
+	// 	for (int i = 0; i < 5; ++i) {
+	// 		snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+	// 		info = new ZZBDevInfo();
+	// 		info->addr_ = i;
+	// 		info->name_ = dev_name_buf;
+	// 		info->state_ = i;
+	// 		info->type_ = i;
+	// 		memset(&info->mac_, i, sizeof(info->mac_));
+	// 		rsp->info_list_.push_back(info);
+	// 	}
+	// }
 	// --- for debugging only ---
 
 	const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();

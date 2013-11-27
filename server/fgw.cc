@@ -14,7 +14,6 @@
 #include "zserial.h"
 #include "fgw_client.h"
 
-
 using namespace std;
 
 
@@ -52,6 +51,7 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 
 int main(int argc, char *argv[])
 {
+
 	struct event_base* base = event_base_new();
 	assert(base);
 	

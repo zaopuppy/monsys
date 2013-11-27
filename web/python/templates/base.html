@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Monsys</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link rel="stylesheet" href="{{ static_url("mon_sys.css") }}" type="text/css"/>
+    {% block head %}{% end %}
+  </head>
+  <body>
+    <div id="top">
+      {% block top %}{% end %}
+    </div>
+    <div id="body">
+      {% block body %}{% end %}
+    </div>
+    <div id="bottom">
+      {% block bottom %}{% end %}
+    </div>
+  </body>
+</html>

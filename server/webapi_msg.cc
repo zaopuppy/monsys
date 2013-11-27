@@ -141,10 +141,10 @@ ZInnerMsg* json2InnerGetDevListRsp(json_t *jmsg)
 		// XX: mac_
 		// type
 		json_t *jtype = json_object_get(jobj, "type");
-		if (!jstate || !json_is_integer(jstate)) {
+		if (!jtype || !json_is_integer(jtype)) {
 			return NULL;
 		}
-		dev_info->state_ = json_integer_value(jstate);
+		dev_info->type_ = json_integer_value(jtype);
 
 		// dev_info
 		inner_msg->info_list_.push_back(dev_info);
@@ -302,18 +302,21 @@ ZInnerMsg* json2InnerSetDevInfoReq(json_t *jobj)
 		return NULL;
 	}
 
+	// uid
 	json_t *juid = json_object_get(jobj, "uid");
-	if (!juid || !json_is_integer(juid)) {
+	if (!juid || !json_is_string(juid)) {
 		Z_LOG_D("uid is illegal");
 		return NULL;
 	}
 
+	// addr
 	json_t *jaddr = json_object_get(jobj, "addr");
 	if (!jaddr || !json_is_integer(jaddr)) {
 		Z_LOG_D("addr is illegal");
 		return NULL;
 	}
 
+	// vals
 	json_t *jvals = json_object_get(jobj, "vals");
 	if (!jvals || !json_is_array(jvals)) {
 		Z_LOG_D("vals is illeagl");
@@ -645,7 +648,11 @@ json_t* inner2Json(ZInnerSetDevInfoReq *msg)
 	json_t *jseq = json_integer(msg->seq_);
 	json_object_set_new(jmsg, "seq", jseq);
 
-	//
+	// addr
+	json_t *jaddr = json_integer(msg->addr_);
+	json_object_set_new(jmsg, "addr", jaddr);
+
+	// vals
 	json_t *jvals = json_array();
 
 	uint32_t vals_len = msg->dev_vals_.size();

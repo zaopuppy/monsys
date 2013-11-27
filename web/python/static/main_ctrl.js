@@ -23,9 +23,11 @@ function MainCtrl() {
 	}
 
 	this.get_dev_list = function() {
+		fgw = $.url().param("fgw")
 		var jreq = {
-			"cmd": "get-dev-list",
-			"uid": "44"
+				"fgw": fgw,
+				"cmd": "get-dev-list",
+				"uid": "44"
 		};
 
 		g_monsys.send_json(jreq);

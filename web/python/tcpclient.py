@@ -12,12 +12,11 @@ import time
 class TCPClient:
     """
     """
-    def connect(self, server_info_pair, callback = None, timeout = 3):
+    def connect(self, server_info_pair, callback = None, timeout = 1):
         self.server_info_pair = server_info_pair
         self.callback = callback
 
-        print("begin to connect to: [{}]".format(self.server_info_pair))
-
+        # print("begin to connect to: [{}]".format(self.server_info_pair))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         self.stream = tornado.iostream.IOStream(s)
         self.stream.set_close_callback(self.on_close)
@@ -28,36 +27,37 @@ class TCPClient:
 
     def write(self, data):
         self.stream.write(data)
-        print("sent")
+        # print("sent")
 
     def read(self, callback = None):
         self.callback = callback
         self.stream.read_bytes(5*1024, callback = None, streaming_callback = self.on_read)
-        print("waiting data...")
+        # print("waiting data...")
 
     def on_connect(self):
-        print("on_connect()")
+        # print("on_connect()")
         if self.callback:
             callback = self.callback
             self.callback = None
             callback(True)
 
     def on_read(self, data):
-        print("on_read({})".format(data))
+        # print("on_read({})".format(data))
         if self.callback:
             callback = self.callback
             self.callback = None
             callback(data)
 
     def on_timeout(self):
-        print("on_timeout()")
+        # print("on_timeout()")
+        self.close()
 
     def close(self):
         if not self.stream.closed():
             self.stream.close()
 
     def on_close(self, data = None):
-        print("on_close({})".format(data))
+        # print("on_close({})".format(data))
         if self.callback:
             callback = self.callback
             self.callback = None

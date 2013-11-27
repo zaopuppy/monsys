@@ -7,6 +7,9 @@
 #include "fgw_server.h"
 #include "zwebapi_server.h"
 #include "libframework/zframework.h"
+#include "database.h"
+
+#include "echo_server.h"
 
 using namespace std;
 
@@ -22,6 +25,19 @@ static void routine(evutil_socket_t fd, short events, void *arg)
 int main(int argc, char *argv[])
 {
 	Z_LOG_I("Starting center...");
+
+	// {
+	// 	if (MySQLDatabase::instance()->init() != 0) {
+	// 		Z_LOG_E("Failed to initialize database");
+	// 		return -1;
+	// 	}
+
+	// 	if (MySQLDatabase::instance()->connect() != 0) {
+	// 		Z_LOG_E("Failed to connect to database");
+	// 		return -1;
+	// 	}
+	// }
+
 	struct event_base* base = event_base_new();
 	assert(base);
 
@@ -36,6 +52,13 @@ int main(int argc, char *argv[])
 	g_webapi_server = new ZWebApiServer("0.0.0.0", 1983, base);
 	if (OK != g_webapi_server->init()) {
 		Z_LOG_E("Failed to start WEBAPI Server, quit");
+		return -1;
+	}
+
+	// echo server
+	ZServer *echo_server = new EchoServer("0.0.0.0", 4444, base);
+	if (OK != echo_server->init()) {
+		Z_LOG_E("Failed to initialize echo server, quit");
 		return -1;
 	}
 

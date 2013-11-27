@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="main_ctrl.js"></script>
 		<script type="text/javascript" src="smart_light.js"></script>
 		<script type="text/javascript" src="mon_sys.js"></script>
+		<script type="text/javascript" src="purl.js"></script>
 	</head>
 	<body>
 
@@ -25,9 +26,6 @@
 		</div>
 
 		<div id="main-control-panel">
-			<!--
-			<input type="button" onclick="get_dev_list()" value="get-dev-list" />
-			-->
 			<div id="progress-bar"></div>
 			<div id="device-list">
 				<p>Sorry, no device was found:(</p>
@@ -36,7 +34,6 @@
 
 		<!-- for light controlling -->
 		<div id="light-control-panel">
-			<!-- -->
 			<input id="light-switch" type="checkbox" >Switch</input><br/>
 			<input id="light-bright-level" type="range" min="0" max="255" step="1" /><br/>
 			<canvas id="light-color-picker" ></canvas>

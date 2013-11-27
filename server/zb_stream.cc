@@ -13,30 +13,6 @@ static const int HEAD_LEN = 1   // ver_(1)
 
 int ZBStream::read(char *buf, int buf_len) {
 
-  // // flip it first for reading
-  // buf_.flip();
-
-  // int rv = buf_.get(buf, buf_len);
-
-  // if (!buf_.hasRemaining()) {
-  //   buf_.clear();
-  // } else {
-  //   Z_LOG_D("oh, buffer is not read over, compact it, remainng: %d", buf_.remaining());
-
-  //   int tmp_buf_len = buf_.remaining();
-  //   char *tmp_buf = new char[tmp_buf_len];
-
-  //   buf_.get(tmp_buf, tmp_buf_len);
-  //   assert(buf_.remaining() == 0);
-
-    // buf_.clear();
-    // buf_.put(tmp_buf, tmp_buf_len);
-    // delete []tmp_buf;
-
-  // }
-
-  // return rv;
-
   if (received_data_list_.size() <= 0) {
     return 0;
   }
