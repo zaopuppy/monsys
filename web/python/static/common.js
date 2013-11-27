@@ -20,11 +20,10 @@ function relMouseCoords(event){
   var canvasY = 0;
   var currentElement = this;
 
-  do{
+  do {
       totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
       totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-  }
-  while(currentElement = currentElement.offsetParent)
+  } while(currentElement = currentElement.offsetParent)
 
   canvasX = event.pageX - totalOffsetX;
   canvasY = event.pageY - totalOffsetY;
@@ -61,20 +60,21 @@ function Monsys() {
   this.send_raw = function(raw_text) {
     console.log("sending:");
     console.log("[" + raw_text + "]");
-    this.xml_http.open("POST", "/monsys", true);
+    this.xml_http.open("POST", "/interface", true);
     this.xml_http.send(raw_text);
   };
 
-  this.get_dev_info = function(uid, dev_id, addr) {
-    var jreq = {
-      "cmd": "get-dev-info",
-      "uid": uid,
-      "dev-id": dev_id,
-      "addr": addr
-    };
-    this.xml_http.open("POST", "monsys", true);
-    this.xml_http.send_json(jreq);
-  };
+  // this.get_dev_info = function(uid, dev_id, addr) {
+  //   var jreq = {
+  //     "cmd": "get-dev-info",
+  //     "uid": uid,
+  //     "dev-id": dev_id,
+  //     "addr": addr
+  //   };
+  //   send_json(jreq);
+  //   // this.xml_http.open("POST", "monsys", true);
+  //   // this.xml_http.send_json(jreq);
+  // };
 
   this.set_dev_info = function(uid, addr, dev_ids, dev_vals) {
 

@@ -11,15 +11,19 @@ import tornado.gen
 import tornado.concurrent
 import tornado.iostream
 
-import concurrent.futures
-
 from tornado.options import define, options
+
+import json
+
+import tcpclient
 
 define("port", default = 8888, help = "run on the given port", type = int)
 define("mysql_host", default = "192.168.2.105:3306", help = "database host")
 define("mysql_database", default = "monsys_db", help = "database name")
 define("mysql_user", default = "monsys", help = "database user")
 define("mysql_password", default = "monsys", help = "database password")
+define("center_host", default = "192.168.2.146", help = "center host")
+define("center_port", default = 1983, help = "center host", type = int)
 
 # home-page --> login --> fgw-list --> dev-list --> dev
 #                        |<--        secure        -->|
@@ -32,7 +36,7 @@ class Application(tornado.web.Application):
             "static_path": os.path.join(
                 os.path.dirname(__file__), "static"),
             "cookie_secret": "monsys",
-            "login_url": "/login.html",
+            "login_url": "/", # XXX: use a real login instead
         }
         handlers = [
             (r"/login", LoginHandler),
@@ -40,10 +44,12 @@ class Application(tornado.web.Application):
             (r"/fgw-list", FGWListHandler),
             (r"/dev-list", DevListHandler),
             (r"/dev", DevHandler),
+            (r"/interface", InterfaceHandler),
             # for debugging only
+            (r"/", HomeHandler),
             (r"/test", TestHandler),
             (r"/print", PrintHandler),
-            (r"/(.*\.html)",
+            (r"/(.*\..*)",
              tornado.web.StaticFileHandler,
              { "path": settings['static_path'] }),
         ]
@@ -51,9 +57,9 @@ class Application(tornado.web.Application):
 
         # Have one global connection to the blog DB across all handlers
         self.db = torndb.Connection(
-            host = options.mysql_host,
+            host     = options.mysql_host,
             database = options.mysql_database,
-            user = options.mysql_user,
+            user     = options.mysql_user,
             password = options.mysql_password)
 
 
@@ -69,6 +75,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class LoginHandler(BaseHandler):
     def post(self):
+        # authentication
         account = self.get_argument("account", None)
         password = self.get_argument("password", None)
         if not account or not password:
@@ -80,32 +87,69 @@ class LoginHandler(BaseHandler):
         if not rv:
             self.write("account and password art not match")
             return
+
+        # save user name
         self.set_secure_cookie("account", account)
-        self.redirect("/fgw-list")
+
+        # save fgw-list for later use
+        fgw_list = rv.get("fgw_list").strip() or ""
+        # fgw_list = list(filter(lambda x: True if x else False, fgw_list.split("|")))
+        # print("fgw_list: [{}]".format(fgw_list))
+        self.set_secure_cookie("fgw-list", fgw_list)
+
+        # redirect
+        self.redirect("/")
 
 class LogoutHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.clear_cookie("account")
+        # self.clear_cookie("account")
+        self.clear_all_cookies()
         self.redirect(self.settings["login_url"])
 
 class FGWListHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        name = tornado.escape.xhtml_escape(self.current_user)
-        self.write("FGWListHandler: " + name)
+        # name = tornado.escape.xhtml_escape(self.current_user)
+        fgw_list = self.get_secure_cookie("fgw-list") or ""
+        fgw_list = list(filter(lambda x: True if x else False, fgw_list.split("|")))
+        self.render("fgw_list.html", fgw_list = fgw_list)
 
 class DevListHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        name = tornado.escape.xhtml_escape(self.current_user)
-        self.write("DevListHandler: " + name)
+        # name = tornado.escape.xhtml_escape(self.current_user)
+        # self.write("DevListHandler: " + name)
+        # fgw = self.get_argument("fgw", "")
+        # self.set_cookie("fgw", fgw)
+        self.render("dev_list.html")
 
 class DevHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         name = tornado.escape.xhtml_escape(self.current_user)
         self.write("DevHandler: " + name)
+
+class InterfaceHandler(BaseHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        if not self.request.body:
+            self.write("bad request")
+            return
+        client = tcpclient.TCPClient()
+        connected = yield tornado.gen.Task(
+            client.connect, (options.center_host, options.center_port))
+        if not connected:
+            self.write("backend is not available")
+            return
+        client.write(self.request.body)
+        rsp = yield tornado.gen.Task(client.read)
+        self.write("{}".format(rsp))
+
+# --- for debugging only ---
+class HomeHandler(BaseHandler):
+    def get(self):
+        self.render("index.html")
 
 class PrintHandler(BaseHandler):
     def get(self):
@@ -121,11 +165,14 @@ class PrintHandler(BaseHandler):
 class TestHandler(BaseHandler):
     @tornado.gen.coroutine
     def get(self):
-        if not hasattr(self, "flag"):
-            self.flag = "fafafa"
-            self.write("don't has flag")
-        else:
-            self.write("has flag: [{}]".format(self.flag))
+        client = tcpclient.TCPClient()
+        connected = yield tornado.gen.Task(client.connect, ("192.168.2.146", 1983))
+        if not connected:
+            self.write("Failed to connect to backend server, man")
+            return
+        client.write(json.dumps({ "cmd": "get-dev-list", "uid": "uid" }))
+        rsp = yield tornado.gen.Task(client.read)
+        self.write("Jesus, we got a response: [{}]".format(rsp))
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()

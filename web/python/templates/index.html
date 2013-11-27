@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css" >
+  #z-login-area, #z-user-info-area {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: 1px solid blue; */
+  }
+  #login-account, #login-password {
+    width: 80%;
+    font-size: 1em;
+  }
+  #z-logout-area {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid red;
+  }
+</style>
+{% end %}
+
+{% block top %}
+  {% if not current_user %}
+    <div id="z-login-area">
+      <form name="testform" action="/login" method="POST" >
+        <ul style="list-style:none; padding-left: 20; font-size: 2em;" >
+          <li>User Name:</li>
+          <li><input id="login-account" type="text" name="account" /></li>
+          <li>Password:</li>
+          <li><input id="login-password" type="password" name="password" /></li>
+          <li><input type="submit" size="50" value="login" /> </li>
+        </ul>
+      </form>
+    </div>
+  {% else %}
+    <div id="z-user-info-area">
+      <h1>Welcome, {{ _(current_user) }}</h1><br>
+      <a href="/logout" style="font-size: 2em">logout</a><br/>
+      <a href="/fgw-list" style="font-size: 2em">fgw-list</a><br/>
+      <a href="/dev-list" style="font-size: 2em">dev-list</a><br/>
+      <a href="/dev" style="font-size: 2em">dev</a><br/>
+    </div>
+  {% end %}
+{% end %}
+
