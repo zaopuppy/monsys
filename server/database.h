@@ -65,19 +65,36 @@ public:
   }
 
   virtual int init() {
+    Z_LOG_D("MySQLDatabase::init()");
+
     assert(conn_ == NULL);
     conn_ = mysql_init(NULL);
-    assert(conn_ != NULL);
+
+    if (conn_ == NULL) {
+      Z_LOG_D("Failed to initialized MySQL database");
+      return -1;
+    }
+
+    Z_LOG_D("MySQL database initialized");
 
     return 0;
   }
 
   virtual int connect() {
+    const char *db_host = "192.168.2.105";
+    const char *db_name = "monsys_db";
+    unsigned int db_port = 3306;
+    const char *db_user = "monsys";
+    const char *db_passwd = "monsys";
+
+    Z_LOG_D("MySQLDatabase::connect()");
+
     do {
 
       MYSQL *rv;
 
-      rv = mysql_real_connect(conn_, "localhost", "root", "", "monsys_db", 0, NULL, 0);
+      rv = mysql_real_connect(
+        conn_, db_host, db_user, db_passwd, db_name, db_port, NULL, 0);
       if (rv == NULL) {
         break;
       }
@@ -92,11 +109,16 @@ public:
       if (mysql_autocommit(conn_, 1) != 0) {
         break;
       }
+  
+      Z_LOG_D("MySQL database connected");
 
       return 0;
+  
     } while (false);
 
     onError();
+
+    Z_LOG_D("Failed to connect to MySQL database");
 
     return -1;
   }

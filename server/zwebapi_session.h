@@ -12,7 +12,7 @@
 class ZWebApiSession {
  public:
  ZWebApiSession(ZModule *module)
-	 : key_(sequence_), state_(STATE_INIT), module_(module) {
+	 : key_(sequence_), state_(STATE_INIT)/*, module_(module)*/ {
 		++sequence_;
 	}
 
@@ -35,7 +35,7 @@ class ZWebApiSession {
 	
  private:
 	int state_;
-	ZModule *module_;
+	// ZModule *module_;
 
  private:
 	static uint32_t sequence_;

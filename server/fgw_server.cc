@@ -104,7 +104,7 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 		return;
 	}
 
-	ZServerHandler *h = new FGWHandler(handler_id, fd, this);
+	ZServerHandler *h = new FGWServerHandler(handler_id, fd, this);
 	assert(h);
 
 	// h->fd_ = fd;

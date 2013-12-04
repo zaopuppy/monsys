@@ -28,10 +28,10 @@ void ZClient::timeout_callback(evutil_socket_t fd, short events, void *arg)
 	// Z_LOG_D("timeout_callback(%d, %d)", fd, events);
 	assert(arg);
 	ZClient *m = (ZClient*)arg;
-	m->doTimeout();
+	m->onTimeoutPrivate();
 }
 
-void ZClient::doTimeout()
+void ZClient::onTimeoutPrivate()
 {
 	Z_LOG_D("ZClient::doTimeout(): %p", this);
 

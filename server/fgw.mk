@@ -14,9 +14,6 @@ CFILES :=
 CXXFILES := \
 	module.cc \
 	zserial.cc \
-	zwebapi_server.cc \
-	zwebapi_handler.cc \
-	zwebapi_session.cc \
 	zzigbee_handler.cc \
 	zformatter.cc \
 	webapi_msg.cc \

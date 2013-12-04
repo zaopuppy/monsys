@@ -202,16 +202,17 @@ ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
 	////////////////////////////////////////////////////////
 	// id-list
 	json_t *jid_list = json_object_get(jobj, "id-list");
-	if (!jid_list || !json_is_string(jid_list)) {
+	// if (!jid_list || !json_is_string(jid_list)) {
+	if (!jid_list) {
 		Z_LOG_D("invalid id-list format");
 		return NULL;
 	}
 
-	const char *id_list = json_string_value(jid_list);
-	if (!id_list) {
-		Z_LOG_D("invalid id-list format");
-		return NULL;
-	}
+	// const char *id_list = json_string_value(jid_list);
+	// if (!id_list) {
+	// 	Z_LOG_D("invalid id-list format");
+	// 	return NULL;
+	// }
 
 	// sendRsp("uid is good, dev-id is good, everything is good:)", 200);
 	// transfer from json to ZigBee message
@@ -219,11 +220,16 @@ ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
 	req->uid_ = json_string_value(juid);
 	req->addr_ = (uint32_t)(addr & 0xFFFF);
 
-	if (!str2list(id_list, req->item_ids_)) {
-		Z_LOG_D("failed to str2list: [%s]", id_list);
-		delete req;
-		req = NULL;
-		return NULL;
+	uint32_t id_list_len = json_array_size(jid_list);
+	for (uint32_t i = 0; i < id_list_len; ++i) {
+		json_t *jid = json_array_get(jid_list, i);
+		if (!jid || !json_is_integer(jid)) {
+			Z_LOG_E("invalid id in id-list");
+			delete req;
+			return NULL;
+		}
+
+		req->item_ids_.push_back(json_integer_value(jid));
 	}
 
 	return req;

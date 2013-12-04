@@ -13,7 +13,7 @@ class ZClient : public ZModule {
  public:
 	ZClient(event_base *base, int type)
 		: ZModule(type)
-		, base_(base), fd_(-1)
+		, /*base_(base), */fd_(-1)
 		, socket_event_proxy_(base, ZClient::socket_callback)
 		, timeout_event_proxy_(base, ZClient::timeout_callback)
 		// , socket_event_(NULL), timeout_event_(NULL)
@@ -31,9 +31,8 @@ class ZClient : public ZModule {
 	virtual int sendMsg(ZInnerMsg *msg);
 	virtual int onInnerMsg(ZInnerMsg *msg);
 
-	// XXX: use `timeout event' instead of freqent timeout check
-	virtual void doTimeout();
-	// virtual bool isComplete();
+	// TODO
+	// virtual void onTimeout(int id) {}
 
 	void event(evutil_socket_t fd, short events);
 	void setServerAddress(const char *server_ip, unsigned short server_port) {
@@ -53,6 +52,8 @@ class ZClient : public ZModule {
 
 	void setHandler(ZClientHandler *handler) { handler_ = handler; }
 
+	void onTimeoutPrivate();
+
 	static void socket_callback(evutil_socket_t fd, short events, void *arg);
 	static void timeout_callback(evutil_socket_t fd, short events, void *arg);
 
@@ -65,7 +66,6 @@ class ZClient : public ZModule {
 	};
 
  private:
-	event_base *base_;
 	evutil_socket_t fd_;
 	ZEventProxy socket_event_proxy_;
 	ZEventProxy timeout_event_proxy_;
