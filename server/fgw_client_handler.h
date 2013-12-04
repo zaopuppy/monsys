@@ -7,11 +7,14 @@
 
 #include "module.h"
 #include "fgw_client_session.h"
+#include "ztimer.h"
 
-class FGWClientHandler : public ZClientHandler {
+class FGWClientHandler : public ZClientHandler, public ZTimer::TimerCallback {
  public:
-	FGWClientHandler(int id, ZModule *module)
-		: ZClientHandler(id, module)
+	FGWClientHandler(int id, ZModule *module, struct event_base *base)
+		: ZClientHandler(id, module), state_(STATE_UNREGISTERED)
+		, timer_(base, this)
+		, login_timer_id(-1)
 	{}
 
  public:
@@ -27,6 +30,9 @@ class FGWClientHandler : public ZClientHandler {
 	virtual void onConnected();
 
 	void fgwLogin();
+
+	// override from ZTimer::TimerCallback
+	virtual void onTimeout(int handler);
 
  protected:
 	int onRead_Unregistered(char *buf, uint32_t buf_len);
@@ -48,15 +54,15 @@ class FGWClientHandler : public ZClientHandler {
 	void setState(int new_state);
 
  private:
-	// char buf_[512 << 10];
-	// char out_buf_[512 << 10];
-
 	ZInnerAddress addr_;
 
  	SESSION_CTRL_TYPE session_ctrl_;
 
  	// state-machine
  	int state_;
+
+ 	ZTimer timer_;
+ 	int login_timer_id;
 };
 
 #endif // _FGW_CLIENT_HANDLER_H__

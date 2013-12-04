@@ -26,17 +26,17 @@ int main(int argc, char *argv[])
 {
 	Z_LOG_I("Starting center...");
 
-	// {
-	// 	if (MySQLDatabase::instance()->init() != 0) {
-	// 		Z_LOG_E("Failed to initialize database");
-	// 		return -1;
-	// 	}
+	{
+		if (MySQLDatabase::instance()->init() != 0) {
+			Z_LOG_E("Failed to initialize database");
+			return -1;
+		}
 
-	// 	if (MySQLDatabase::instance()->connect() != 0) {
-	// 		Z_LOG_E("Failed to connect to database");
-	// 		return -1;
-	// 	}
-	// }
+		if (MySQLDatabase::instance()->connect() != 0) {
+			Z_LOG_E("Failed to connect to database");
+			return -1;
+		}
+	}
 
 	struct event_base* base = event_base_new();
 	assert(base);

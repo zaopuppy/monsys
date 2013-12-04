@@ -9,7 +9,7 @@
 
 // project files
 // #include "zsocket.h"
-#include "zwebapi_server.h"
+// #include "zwebapi_server.h"
 #include "libbase/zlog.h"
 #include "zserial.h"
 #include "fgw_client.h"
@@ -17,16 +17,16 @@
 using namespace std;
 
 
-bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
-{
-	ZModule *module = new ZWebApiServer(ip, port, base);
-	if (module->init() != OK) {
-		Z_LOG_D("Failed to initialize server.");
-		return false;
-	}
+// bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
+// {
+// 	ZModule *module = new ZWebApiServer(ip, port, base);
+// 	if (module->init() != OK) {
+// 		Z_LOG_D("Failed to initialize server.");
+// 		return false;
+// 	}
 
-	return true;
-}
+// 	return true;
+// }
 
 bool start_serial(event_base *base)
 {

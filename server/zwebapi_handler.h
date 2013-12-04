@@ -34,13 +34,15 @@ class ZWebApiHandler : public ZServerHandler {
 	}
 
  private:
+	int processFGWGetListReq(json_t *jmsg);
 
 	void sendRsp(const char *text_msg, int status);
+	int send(json_t *msg);
 
  private:
 	// ZSocket server_;
-	char buf_[512 << 10];
-	char out_buf_[512 << 10];
+	// char buf_[512 << 10];
+	// char out_buf_[512 << 10];
 	// evutil_socket_t fd_;
 
 	// std::map<uint32_t, ZWebApiSession*> session_map_;

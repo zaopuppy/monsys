@@ -14,6 +14,7 @@ CXXFILES := center.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
 	zwebapi_session.cc \
+	fgw_manager.cc \
 	echo_server.cc
 
 # intermedia files

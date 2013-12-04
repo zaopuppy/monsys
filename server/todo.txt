@@ -24,7 +24,11 @@
 [ ] better string search algorithm
 [ ] how to test a random generating algorithm? or a simpler one, how to test a function which will randomly return you one of the element from a set
 [ ] memory leakage!
-
+[ ] protocol improvement
+[ ] PUSH support
+[ ] Android client
+[ ] config library
+[ ] better timeout function
 
 [ ] 接口变更:
 	[ ] 注册携带需要更新的ID个数

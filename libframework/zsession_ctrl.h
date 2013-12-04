@@ -117,7 +117,7 @@ class ZSessionCtrl2Key {
  		key_pair_t pair(key1, key2);
  		// check if there's already one in there
  		for (size_t i = 0; i < key_map_.size(); ++i) {
- 			if (key_map_[i].key1 == key1 || key_map_[i].key2) {
+ 			if (key_map_[i].key1 == key1 || key_map_[i].key2 == key2) {
  				// duplicated record
  				Z_LOG_D("duplicated record at index %ld\n", i);
  				return false;

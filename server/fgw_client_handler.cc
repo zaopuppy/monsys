@@ -16,8 +16,8 @@ int FGWClientHandler::init()
 	addr_.module_type_ = getModuleType();
 	addr_.handler_id_ = getId();
 
-	// state_ = STATE_UNREGISTERED;
-	state_ = STATE_REGISTERED;
+	state_ = STATE_UNREGISTERED;
+	// state_ = STATE_REGISTERED;
 
 	return OK;
 }
@@ -51,6 +51,13 @@ void FGWClientHandler::fgwLogin()
 	sendJson(login_req);
 
 	state_ = STATE_WAIT_FOR_SERVER;
+
+	// set timer
+	struct timeval timeout = { 10, 0 };
+	login_timer_id = timer_.setTimer(&timeout);
+	if (login_timer_id < 0) {
+		Z_LOG_E("Failed to set timer, there's nothing we can do now");
+	}
 }
 
 void FGWClientHandler::close()
@@ -79,11 +86,16 @@ int FGWClientHandler::processLoginRsp(json_t *jmsg)
 	int result = json_integer_value(jresult);
 	if (result != 0) {
 		Z_LOG_E("Failed to login to server, result is [%d]", result);
+		// TODO: should we retry or not?
 		return FAIL;
 	}
 
 	Z_LOG_D("Good, login success");
 	setState(STATE_REGISTERED);
+
+	// cancel timer
+	timer_.cancelTimer(login_timer_id);
+	login_timer_id = -1;
 
 	return OK;
 }
@@ -147,6 +159,7 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 		Z_LOG_E("Field seq is not in request message, ignore");
 		return FAIL;
 	}
+
 	uint32_t seq = (uint32_t)json_integer_value(jseq);
 	Z_LOG_D("push msg sequence id: %u", seq);
 
@@ -327,10 +340,11 @@ int FGWClientHandler::sendJson(json_t *jmsg)
 void FGWClientHandler::onConnected()
 {
 	Z_LOG_D("FGWClientHandler::onConnected()");
-	// // reset state
-	// state_ = STATE_UNREGISTERED;
 
-	// fgwLogin();
+	// reset state
+	setState(STATE_UNREGISTERED);
+
+	fgwLogin();
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)
@@ -340,4 +354,16 @@ void FGWClientHandler::sendRsp(const char *text_msg, int status)
 	Z_LOG_D("sent %d bytes", rv);
 }
 
+void FGWClientHandler::onTimeout(int handler_id)
+{
+	Z_LOG_D("FGWClientHandler::onTimeout(%d)", handler_id);
+	if (handler_id == login_timer_id) {
+		if (state_ == STATE_WAIT_FOR_SERVER) {
+			setState(STATE_UNREGISTERED);
+			fgwLogin();
+		}
+	} else {
+		Z_LOG_E("unknown handler id: ", handler_id);
+	}
+}
 

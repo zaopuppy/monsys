@@ -51,7 +51,7 @@ class ZSerial : public ZModule {
   struct event* read_event_;
   STATE state_;
   char buf_[1 << 10];
-	char buf_out_[1 << 10];
+	// char buf_out_[1 << 10];
 	ZZigBeeHandler *handler_;
 
   std::string serial_dev_;

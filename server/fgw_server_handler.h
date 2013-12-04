@@ -8,13 +8,13 @@
 
 class FGWServer;
 
-class FGWHandler : public ZServerHandler {
+class FGWServerHandler : public ZServerHandler {
  public:
-	FGWHandler(int id, evutil_socket_t fd, ZModule *module)
+	FGWServerHandler(int id, evutil_socket_t fd, ZModule *module)
 		: ZServerHandler(id, fd, module)
 		// , server_(server)
 	{}
-	~FGWHandler() {}
+	~FGWServerHandler() {}
 
 	typedef ZServerHandler super_;
 
@@ -22,7 +22,7 @@ class FGWHandler : public ZServerHandler {
 	virtual void close();
 	virtual int onRead(char *buf, uint32_t buf_len);
 	virtual int onInnerMsg(ZInnerMsg *msg);
-	virtual int onInnerMsgEx(ZInnerMsg *msg);
+	// virtual int onInnerMsgEx(ZInnerMsg *msg);
 	virtual void routine(long delta);
 
 	virtual int send(const char *buf, uint32_t buf_len);
