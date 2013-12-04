@@ -30,8 +30,19 @@ class FGWHandler : public ZServerHandler {
 	typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWSession> SESSION_CTRL_TYPE;
 	// typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
 
+	enum {
+    // TODO: 1 sencod waiting timeout
+		STATE_WAIT_FOR_LOGIN = 0,
+		STATE_LOGED_IN,
+	};
+
+	void setState(int new_state);
+
  protected:
  	bool checkSessionBySequence(uint32_t sequence);
+ 	int processLoginReq(json_t *jmsg);
+	int onRead_WaitForLogin(char *buf, uint32_t buf_len);
+	int onRead_LogedIn(char *buf, uint32_t buf_len);
 
  	push::Msg* inner2push(ZInnerMsg *innerMsg);
  	ZInnerMsg* push2inner(push::Msg *pushMsg);
@@ -39,6 +50,7 @@ class FGWHandler : public ZServerHandler {
  private:
  	// <sequence, fgw_id>
  	SESSION_CTRL_TYPE session_ctrl_;
+ 	int state_;
 
 };
 

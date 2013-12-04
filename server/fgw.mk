@@ -46,7 +46,9 @@ CFLAGS := -g -fPIC -Wall \
 	-I../ \
 	-I../libs/include/ \
 	-I${GTEST_DIR}/include \
-	-I${GMOCK_DIR}/include
+	-I${GMOCK_DIR}/include \
+	-I/opt/local/include \
+	-I/opt/local/include/boost/tr1
 
 ifeq ($(ut), 1)
 # don't add -Wall
@@ -62,7 +64,7 @@ LDFLAGS := \
 	-L../libs/lib -levent_core -ljansson
 
 ifeq ($(ut), 1)
-$(TARGET) : $(OBJFILES) libgmock.a
+$(TARGET) : $(OBJFILES) libgmock.so
 	$(CXX) -o $@ $^ $(LDFLAGS)
 else
 $(TARGET) : $(OBJFILES)
@@ -70,10 +72,12 @@ $(TARGET) : $(OBJFILES)
 endif
 # ------------------------------
 # --- BEGIN --- for google mock
-libgmock.a: ${GTEST_DIR}/src/gtest-all.cc ${GMOCK_DIR}/src/gmock-all.cc
-	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gtest-all.o -c ${GTEST_DIR}/src/gtest-all.cc
-	$(CXX) -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -o gmock-all.o -c ${GMOCK_DIR}/src/gmock-all.cc
-	$(AR) -rv libgmock.a gtest-all.o gmock-all.o
+libgmock.so: ${GTEST_DIR}/src/gtest-all.cc ${GMOCK_DIR}/src/gmock-all.cc
+	$(CXX) -g -fPIC -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -I/opt/local/include -I/opt/local/include/boost/tr1 -o gtest-all.o -c ${GTEST_DIR}/src/gtest-all.cc
+	$(CXX) -g -fPIC -I${GTEST_DIR}/include -I${GTEST_DIR} -I${GMOCK_DIR}/include -I${GMOCK_DIR} -I/opt/local/include -I/opt/local/include/boost/tr1 -o gmock-all.o -c ${GMOCK_DIR}/src/gmock-all.cc
+	$(CXX) -shared -o $@ gtest-all.o gmock-all.o
+
+# $(AR) -rv libgmock.a gtest-all.o gmock-all.o
 # ---  END  --- for google mock
 # ------------------------------
 

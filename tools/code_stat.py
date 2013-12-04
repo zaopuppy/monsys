@@ -4,6 +4,7 @@
 import sys
 import os
 import os.path
+import functools
 
 # ---------------------------------------------------------------
 FILE_POSTFIXS = (".cc", ".h", ".cpp", ".c", ".java")
@@ -22,50 +23,50 @@ def code_line_stat_cpp(file_name):
     NOT_IN_COMMENT = 0
     IN_COMMENT_INIT = 1         # /
     IN_COMMENT_PRE_C = 2        # /*
-    IN_COMMENT_POST_C = 3       # /*xxx*
+    IN_COMMENT_POST_C = 4       # /*xxx*
     IN_COMMENT_IN_CPP = 5       # //
     in_comment = NOT_IN_COMMENT
     fp = open(file_name, "rb")
-    for buf in iter(lambda: fp.read(10 * 1024), ''):
+    for buf in iter(lambda: fp.read(10 * 1024), b''):
         for c in buf:
-            if c == '\r':
+            if c == ord('\r'):
                 # ignore '\r'
                 pass
             elif in_comment == NOT_IN_COMMENT:
-                if c == '\n':
+                if c == ord('\n'):
                     if valid_line: line_num = line_num + 1
                     valid_line = False
-                elif c == '/':
+                elif c == ord('/'):
                     in_comment = IN_COMMENT_INIT
-                elif c != ' ' and c != '\t':
+                elif c != ord(' ') and c != ord('\t'):
                     valid_line = True
             elif in_comment == IN_COMMENT_INIT:
-                if c == '/':
+                if c == ord('/'):
                     in_comment = IN_COMMENT_IN_CPP
-                elif c == '*':
+                elif c == ord('*'):
                     in_comment = IN_COMMENT_PRE_C
                 else:
                     in_comment = NOT_IN_COMMENT
                     valid_line = True
-                    if c == '\n':
+                    if c == ord('\n'):
                         # no need to check valid_line, cause previous character
                         # must be '/'
                         line_num = line_num + 1
                         valid_line = False
             elif in_comment == IN_COMMENT_PRE_C:
-                if c == '\n':
+                if c == ord('\n'):
                     if valid_line: line_num = line_num + 1
                     valid_line = False
-                elif c == '*':
+                elif c == ord('*'):
                     in_comment = IN_COMMENT_POST_C
             elif in_comment == IN_COMMENT_POST_C:
-                if c == '/':
+                if c == ord('/'):
                     in_comment = NOT_IN_COMMENT
-                elif c == '\n':
+                elif c == ord('\n'):
                     if valid_line: line_num = line_num + 1
                     valid_line = False
             elif in_comment == IN_COMMENT_IN_CPP:
-                if c == '\n':
+                if c == ord('\n'):
                     if valid_line: line_num = line_num + 1
                     valid_line = False
                     in_comment = NOT_IN_COMMENT
@@ -87,7 +88,7 @@ def code_line_stat(file_name):
         total_line = 0
         for path, dirs, files in os.walk(file_name):
             total_line = total_line + \
-                reduce(lambda accum, x: accum + code_line_stat(x),
+                functools.reduce(lambda accum, x: accum + code_line_stat(x),
                        [os.path.join(path, x)
                         for x in filter(should_stat, files)],
                        0)
@@ -99,7 +100,10 @@ def main(argv):
         return 1
     
     print("code lines: %d" %
-          (reduce(lambda total, x: total + x,
+          (functools.reduce(lambda total, x: total + x,
+    # 1: '/';
+    #     2: '/*'; 3: '/*xxx*'
+    #     5: '//'
                   [code_line_stat(x) for x in argv[1:]])))
     return 0
 

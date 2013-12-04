@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div id="fgw-list-panel">
+  <div id="fgw-list">
+    {% if fgw_list %}
+    <ul style="list-style: none; font-size: 2em;">
+      {% for fgw in fgw_list %}
+        {% raw _('<li><a href="/dev-list?fgw={0}">{0}</a></li>'.format(fgw)) %}
+      {% end %}
+    </ul>
+    {% else %}
+    <h1>No gateway was registered:(</h1>
+    {% end %}
+  </div>
+</div>
+{% end %}
+
+

@@ -43,6 +43,21 @@ int ZZigBeeMsg::encode(char* buf, uint32_t buf_len)
 	// IMP
 	// child class must call getEncodeLen() to update length field
 
+	// XXX: temporary using
+	{
+		const char *sync_bytes = "ZZZZZZZZ";
+		const uint32_t sync_bytes_len = sizeof("ZZZZZZZZ") - 1;
+		if (buf_len < sync_bytes_len) {
+			return -1;
+		}
+
+		memcpy(buf, sync_bytes, sync_bytes_len);
+		buf += sync_bytes_len;
+		buf_len -= sync_bytes_len;
+		encode_len += sync_bytes_len;
+	}
+	// XXX: temporary using
+
 	// ZMSG_ENCODE(syn_);
 	ZMSG_ENCODE(ver_);
 	ZMSG_ENCODE(len_);
@@ -152,10 +167,11 @@ ZZBRegRsp::ZZBRegRsp() : ZZigBeeMsg()
 
 int ZZBRegRsp::encode(char* buf, uint32_t buf_len)
 {
-	uint16_t enc_len = getEncodeLen();
-	if (buf_len < enc_len) {
-		return -1;
-	}
+	uint32_t old_buf_len = buf_len;
+	// uint16_t enc_len = getEncodeLen();
+	// if (buf_len < enc_len) {
+	// 	return -1;
+	// }
 
 	len_ = getBodyLen();
 
@@ -175,7 +191,7 @@ int ZZBRegRsp::encode(char* buf, uint32_t buf_len)
 	buf += rv;
 	buf_len -= rv;
 
-	return enc_len;
+	return old_buf_len - buf_len;
 }
 
 int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
@@ -376,13 +392,6 @@ int ZZBGetRsp::encode(char* buf, uint32_t buf_len) {
 int ZZBGetRsp::decode(char* buf, uint32_t buf_len) {
 	printf("ZZBGetRsp::decode()\n");
 
-	// check buf length
-	// int enc_len = getEncodeLen();
-	// if (buf_len < enc_len) {
-	// 	printf("No enough buffer length\n");
-	// 	return -1;
-	// }
-
 	// super::decode()
 	int len = 0;
 	
@@ -448,12 +457,13 @@ ZZBSetReq::ZZBSetReq():
 int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
 	printf("ZZBSetReq::encode()\n");
 
-	// check buf length
-	int enc_len = getEncodeLen();
-	if ((int)buf_len < enc_len) {
-		printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
-		return -1;
-	}
+	uint32_t old_buf_len = buf_len;
+	// // check buf length
+	// int enc_len = getEncodeLen();
+	// if ((int)buf_len < enc_len) {
+	// 	printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+	// 	return -1;
+	// }
 
 	// update len_ first
 	len_ = getBodyLen();
@@ -494,7 +504,7 @@ int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
 		buf_len -= rv;
 	}
 
-	return enc_len;
+	return old_buf_len - buf_len;
 }
 
 int ZZBSetReq::decode(char* buf, uint32_t buf_len) {
@@ -572,11 +582,12 @@ int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
 	printf("ZZBSetRsp::encode()\n");
 
 	// check buf length
-	int enc_len = getEncodeLen();
-	if ((int)buf_len < enc_len) {
-		printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
-		return -1;
-	}
+	uint32_t old_buf_len = buf_len;
+	// int enc_len = getEncodeLen();
+	// if ((int)buf_len < enc_len) {
+	// 	printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+	// 	return -1;
+	// }
 
 	// update len_ first
 	len_ = getBodyLen();
@@ -599,7 +610,7 @@ int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
 	buf += rv;
 	buf_len -= rv;
 
-	return enc_len;
+	return old_buf_len - buf_len;
 }
 
 int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {

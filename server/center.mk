@@ -13,7 +13,8 @@ CXXFILES := center.cc \
 	webapi_msg.cc \
 	zwebapi_server.cc \
 	zwebapi_handler.cc \
-	zwebapi_session.cc
+	zwebapi_session.cc \
+	echo_server.cc
 
 # intermedia files
 # OBJFILES := $(CFILES:%.c=obj/%.o) $(CXXFILES:%.cc=obj/%.o)
@@ -22,14 +23,17 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -g -fPIC -Wall \
 	-I../ \
-	-I../libs/include/
+	-I../libs/include/ \
+	`mysql_config5 --cflags`
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
 	-L../libbase -lbase \
 	-L../libzigbee -lzb \
 	-L../libframework -lframework \
-	-L../libs/lib -levent_core -ljansson
+	-L../libs/lib -levent_core -ljansson \
+	`mysql_config5 --libs`
+
 
 $(TARGET) : $(OBJFILES)
 	$(CXX) -o $@ $(OBJFILES) $(LDFLAGS)

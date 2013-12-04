@@ -32,6 +32,7 @@ class FGWClientHandler : public ZClientHandler {
 	int onRead_Unregistered(char *buf, uint32_t buf_len);
 	int onRead_WaitForServer(char *buf, uint32_t buf_len);
 	int onRead_Registered(char *buf, uint32_t buf_len);
+ 	int processLoginRsp(json_t *jmsg);
 
 	void sendRsp(const char *text_msg, int status);
 
@@ -43,6 +44,8 @@ class FGWClientHandler : public ZClientHandler {
 		STATE_WAIT_FOR_SERVER,
 		STATE_REGISTERED,
 	};
+
+	void setState(int new_state);
 
  private:
 	// char buf_[512 << 10];

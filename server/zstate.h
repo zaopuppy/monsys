@@ -4,8 +4,8 @@
 class ZState
 {
  public:
-  virtual void init() = 0;
-  virtual void process() = 0;
+  virtual int init() = 0;
+  virtual int process() = 0;
 };
 
 class ZStateMachine

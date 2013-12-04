@@ -5,12 +5,19 @@
 
 #include "webapi_msg.h"
 
+void FGWClientHandler::setState(int new_state)
+{
+	Z_LOG_D("changed from [%d] to [%d]", state_, new_state);
+	state_ = new_state;
+}
+
 int FGWClientHandler::init()
 {
 	addr_.module_type_ = getModuleType();
 	addr_.handler_id_ = getId();
 
-	state_ = STATE_UNREGISTERED;
+	// state_ = STATE_UNREGISTERED;
+	state_ = STATE_REGISTERED;
 
 	return OK;
 }
@@ -64,11 +71,55 @@ int FGWClientHandler::onRead_Unregistered(char *buf, uint32_t buf_len)
 	return OK;
 }
 
+int FGWClientHandler::processLoginRsp(json_t *jmsg)
+{
+	Z_LOG_D("FGWClientHandler::processLoginRsp()");
+
+	json_t *jresult = json_object_get(jmsg, "result");
+	int result = json_integer_value(jresult);
+	if (result != 0) {
+		Z_LOG_E("Failed to login to server, result is [%d]", result);
+		return FAIL;
+	}
+
+	Z_LOG_D("Good, login success");
+	setState(STATE_REGISTERED);
+
+	return OK;
+}
+
 int FGWClientHandler::onRead_WaitForServer(char *buf, uint32_t buf_len)
 {
 	Z_LOG_D("FGWClientHandler::onRead_WaitForServer()");
 
-	sendRsp("Not-register(w)", 404);
+	// decode first
+	json_error_t jerror;
+	json_t *jmsg = json_loadb(buf, buf_len, 0, &jerror);
+	if (jmsg == NULL || !json_is_object(jmsg)) {
+		Z_LOG_E("Failed to decode web message");
+		return FAIL;
+	}
+
+	json_t *jcmd = json_object_get(jmsg, "cmd");
+	if (!jcmd || !json_is_string(jcmd)) {
+		Z_LOG_E("Failed to get field 'cmd' from message");
+		return FAIL;
+	}
+
+	const char *cmd = json_string_value(jcmd);
+	if (!cmd) {
+		Z_LOG_E("Failed to get string value");
+		return FAIL;
+	}
+
+	if (strcmp(cmd, "login-rsp") == 0) {
+		return processLoginRsp(jmsg);
+	} else {
+		// XXX: sercurrity problem,
+		// should check the length and content of cmd
+		Z_LOG_E("unknown cmd: [%s]", cmd);
+		return FAIL;
+	}
 
 	return OK;
 }
@@ -106,12 +157,12 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 		return FAIL;
 	}
 
-	char *str_dump = json_dumps(jmsg, 0);
-	sendRsp(str_dump, 200);
-	trace_bin(str_dump, strlen(str_dump));
+	// char *str_dump = json_dumps(jmsg, 0);
+	// sendRsp(str_dump, 200);
+	// trace_bin(str_dump, strlen(str_dump));
 
-	free(str_dump);
-	json_decref(jmsg);
+	// free(str_dump);
+	// json_decref(jmsg);
 
 	// everything is OK, now doing the convert
 	ZInnerMsg *inner_msg = json2Inner(jmsg);
@@ -145,6 +196,7 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
 {
 	Z_LOG_D("FGWClientHandler::onRead()");
+	trace_bin(buf, buf_len);
 
 	int rv = FAIL;
 	switch (state_) {
@@ -275,10 +327,10 @@ int FGWClientHandler::sendJson(json_t *jmsg)
 void FGWClientHandler::onConnected()
 {
 	Z_LOG_D("FGWClientHandler::onConnected()");
-	// reset state
-	state_ = STATE_UNREGISTERED;
+	// // reset state
+	// state_ = STATE_UNREGISTERED;
 
-	fgwLogin();
+	// fgwLogin();
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)
