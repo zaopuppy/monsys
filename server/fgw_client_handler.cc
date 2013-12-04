@@ -344,7 +344,7 @@ void FGWClientHandler::onConnected()
 	// reset state
 	setState(STATE_UNREGISTERED);
 
-	fgwLogin();
+	// fgwLogin();
 }
 
 void FGWClientHandler::sendRsp(const char *text_msg, int status)

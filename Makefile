@@ -20,6 +20,7 @@ libevent:
 # autoreconf -i
 jansson:
 	cd 3rd/jansson && \
+		autoreconf -i && \
 		./configure --prefix=$(PWD)/libs && \
 		make -j4 && make install
 
