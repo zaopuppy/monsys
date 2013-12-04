@@ -136,6 +136,27 @@ class HomeHandler(BaseHandler):
     def get(self):
         self.render("index.html")
 
+class InterfaceHandler(BaseHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        if not self.request.body:
+            self.write("bad request")
+            return
+        client = tcpclient.TCPClient()
+        connected = yield tornado.gen.Task(
+            client.connect, (options.center_host, options.center_port))
+        if not connected:
+            self.write("backend is not available")
+            return
+        client.write(self.request.body)
+        rsp = yield tornado.gen.Task(client.read)
+        self.write("{}".format(rsp))
+
+# --- for debugging only ---
+class HomeHandler(BaseHandler):
+    def get(self):
+        self.render("index.html")
+
 class PrintHandler(BaseHandler):
     def get(self):
         self.write(("arguments: [{}]<br/>" +
