@@ -7,10 +7,8 @@ CXX := clang++
 CFLAGS  := -g -fPIC -Wall \
 	-I../ -I../libs/include
 LDFLAGS := -L../libbase -lbase \
-           -L../libzigbee -lzb \
 					 -L../libs/lib -levent
 # ARFLAGS := -r
-
 TARGET  := libframework.a
 
 CFILES :=

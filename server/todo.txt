@@ -29,6 +29,7 @@
 [ ] Android client
 [ ] config library
 [ ] better timeout function
+[ ] ZDispatcher event check
 
 [ ] 接口变更:
 	[ ] 注册携带需要更新的ID个数

@@ -5,15 +5,15 @@
 
 class FGWSession : public ZSession<uint32_t> {
  public:
- 	FGWSession() {
- 		setTimeout(1000);
- 	}
+  FGWSession() {
+    setTimeout(1000);
+  }
 
- 	typedef ZSession super;
+  typedef ZSession super;
 
  public:
- 	ZInnerAddress src_addr_;
- 	ZInnerAddress dst_addr_;
+  ZInnerAddress src_addr_;
+  ZInnerAddress dst_addr_;
 };
 
 #endif // _FGW_SESSION_H__

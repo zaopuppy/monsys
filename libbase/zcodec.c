@@ -10,7 +10,7 @@ z_encode_string(const char *val, char *buf, uint32_t buf_len)
 {
   uint32_t str_len = (val == NULL) ? 0 : strlen(val);
   if (buf_len < (str_len + 1)) {
-    return -1;			/* TODO: return ((str_len + 1) - buf_len); */
+    return -1;      /* TODO: return ((str_len + 1) - buf_len); */
   }
 
   memcpy(buf, val, str_len);

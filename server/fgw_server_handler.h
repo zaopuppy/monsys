@@ -10,47 +10,47 @@ class FGWServer;
 
 class FGWServerHandler : public ZServerHandler {
  public:
-	FGWServerHandler(int id, evutil_socket_t fd, ZModule *module)
-		: ZServerHandler(id, fd, module)
-		// , server_(server)
-	{}
-	~FGWServerHandler() {}
+  FGWServerHandler(int id, evutil_socket_t fd, ZModule *module, struct event_base *base)
+    : ZServerHandler(id, fd, module, base)
+    // , server_(server)
+  {}
+  ~FGWServerHandler() {}
 
-	typedef ZServerHandler super_;
+  typedef ZServerHandler super_;
 
-	virtual int init();
-	virtual void close();
-	virtual int onRead(char *buf, uint32_t buf_len);
-	virtual int onInnerMsg(ZInnerMsg *msg);
-	// virtual int onInnerMsgEx(ZInnerMsg *msg);
-	virtual void routine(long delta);
+  virtual int init();
+  virtual void close();
+  virtual int onRead(char *buf, uint32_t buf_len);
+  virtual int onInnerMsg(ZInnerMsg *msg);
+  // virtual int onInnerMsgEx(ZInnerMsg *msg);
+  virtual void routine(long delta);
 
-	virtual int send(const char *buf, uint32_t buf_len);
+  virtual int send(const char *buf, uint32_t buf_len);
 
-	typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWSession> SESSION_CTRL_TYPE;
-	// typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
+  typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWSession> SESSION_CTRL_TYPE;
+  // typedef ZSessionCtrl<uint32_t, ZSession> SESSION_CTRL_TYPE;
 
-	enum {
+  enum {
     // TODO: 1 sencod waiting timeout
-		STATE_WAIT_FOR_LOGIN = 0,
-		STATE_LOGED_IN,
-	};
+    STATE_WAIT_FOR_LOGIN = 0,
+    STATE_LOGED_IN,
+  };
 
-	void setState(int new_state);
+  void setState(int new_state);
 
  protected:
- 	bool checkSessionBySequence(uint32_t sequence);
- 	int processLoginReq(json_t *jmsg);
-	int onRead_WaitForLogin(char *buf, uint32_t buf_len);
-	int onRead_LogedIn(char *buf, uint32_t buf_len);
+  bool checkSessionBySequence(uint32_t sequence);
+  int processLoginReq(json_t *jmsg);
+  int onRead_WaitForLogin(char *buf, uint32_t buf_len);
+  int onRead_LogedIn(char *buf, uint32_t buf_len);
 
- 	push::Msg* inner2push(ZInnerMsg *innerMsg);
- 	ZInnerMsg* push2inner(push::Msg *pushMsg);
+  push::Msg* inner2push(ZInnerMsg *innerMsg);
+  ZInnerMsg* push2inner(push::Msg *pushMsg);
 
  private:
- 	// <sequence, fgw_id>
- 	SESSION_CTRL_TYPE session_ctrl_;
- 	int state_;
+  // <sequence, fgw_id>
+  SESSION_CTRL_TYPE session_ctrl_;
+  int state_;
 
 };
 

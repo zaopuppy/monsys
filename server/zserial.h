@@ -15,7 +15,7 @@ class ZSerial : public ZModule {
     : ZModule(MODULE_SERIAL)
     , base_(base), fd_(-1), serial_dev_(serial_dev)
   {
-		handler_ = new ZZigBeeHandler(1, this);
+    handler_ = new ZZigBeeHandler(1, this, base);
   }
 
   typedef ZModule super_;
@@ -23,8 +23,8 @@ class ZSerial : public ZModule {
  public:
   virtual int init();
   virtual void close();
-	virtual int sendMsg(ZInnerMsg *msg);
-	virtual int onInnerMsg(ZInnerMsg *msg);
+  virtual int sendMsg(ZInnerMsg *msg);
+  virtual int onInnerMsg(ZInnerMsg *msg);
   virtual void routine(long delta) { handler_->routine(delta); }
 
   int event(evutil_socket_t fd, short events);
@@ -33,7 +33,7 @@ class ZSerial : public ZModule {
   // int onWaitingForConnect(evutil_socket_t fd, short events);
   void onConnected(evutil_socket_t fd, short events);
   int onDisconnected(evutil_socket_t fd, short events);
-	void onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
+  void onRead(evutil_socket_t fd, char *buf, uint32_t buf_len);
 
   int connect();
   void scheduleReconnect();
@@ -46,13 +46,13 @@ class ZSerial : public ZModule {
   };
 
  private:
-	event_base *base_;
+  event_base *base_;
   evutil_socket_t fd_;
   struct event* read_event_;
   STATE state_;
   char buf_[1 << 10];
-	// char buf_out_[1 << 10];
-	ZZigBeeHandler *handler_;
+  // char buf_out_[1 << 10];
+  ZZigBeeHandler *handler_;
 
   std::string serial_dev_;
 

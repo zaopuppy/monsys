@@ -7,14 +7,14 @@
 
 class ZWebApiMsg : public ZMsg {
  public:
- 	ZWebApiMsg(): jobj_;
+  ZWebApiMsg(): jobj_;
 
  public:
-	virtual int encode(char *buf, uint32_t buf_len) = 0;
-	virtual int decode(char *buf, uint32_t buf_len) = 0;
+  virtual int encode(char *buf, uint32_t buf_len) = 0;
+  virtual int decode(char *buf, uint32_t buf_len) = 0;
 
  private:
- 	jsong_t *jobj_;
+  jsong_t *jobj_;
 };
 
 #endif // _Z_WEBAPI_MSG_H__

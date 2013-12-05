@@ -4,17 +4,17 @@
 #include "libframework/zframework.h"
 
 class FGWClientSession : public ZSession<uint32_t> {
- public:
- 	FGWClientSession() {
- 		setTimeout(1000);
- 	}
+public:
+  FGWClientSession() {
+    setTimeout(1000);
+  }
 
- 	typedef ZSession super;
+  typedef ZSession super;
 
- public:
- 	// ZInnerAddress src_addr_;
- 	// ZInnerAddress dst_addr_;
- 	uint32_t webapi_seq;
+public:
+  // ZInnerAddress src_addr_;
+  // ZInnerAddress dst_addr_;
+  uint32_t webapi_seq;
 };
 
 #endif // _FGW_CLIENT_SESSION_H__

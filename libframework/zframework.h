@@ -16,6 +16,7 @@
 #include "zdata_buffer.h"
 #include "zbyte_buffer.h"
 #include "zevent_proxy.h"
+#include "ztimer.h"
 
 #endif // _Z_FRAMEWORK_H__
 

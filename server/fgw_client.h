@@ -6,22 +6,22 @@
 #include "fgw_client_handler.h"
 
 class FGWClient : public ZClient {
- public:
-	FGWClient(event_base *base)
-	: ZClient(base, MODULE_FGW_CLIENT) {
-		handler_ = new FGWClientHandler(1, this, base);
-		ZClient::setHandler(handler_);
-	}
+public:
+  FGWClient(event_base *base)
+  : ZClient(base, MODULE_FGW_CLIENT) {
+    handler_ = new FGWClientHandler(1, this, base);
+    ZClient::setHandler(handler_);
+  }
 
-	typedef ZClient super;
+  typedef ZClient super;
 
-	virtual ~FGWClient() {}
+  virtual ~FGWClient() {}
 
- public:
-	virtual void routine(long delta);
+public:
+  virtual void routine(long delta);
 
- private:
- 	FGWClientHandler *handler_;
+private:
+  FGWClientHandler *handler_;
 };
 
 #endif // _FGW_CLIENT_H__

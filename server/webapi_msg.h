@@ -10,15 +10,15 @@
 #include "zinner_message_ex.h"
 
 // enum emPUSH_MSG_TYPE {
-// 	PUSH_INVALID = -1,
-// 	PUSH_HB = 0,
+//  PUSH_INVALID = -1,
+//  PUSH_HB = 0,
 // };
 
 // class ZPushHBMsg : public ZInnerMsg {
 //  public:
-//  	ZPushHBMsg(): ZInnerMsg(PUSH_HB) {
-//  		//
-//  	}
+//    ZPushHBMsg(): ZInnerMsg(PUSH_HB) {
+//      //
+//    }
 //  };
 
 json_t* inner2Json(ZInnerMsg *innerMsg);

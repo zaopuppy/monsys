@@ -4,8 +4,8 @@
 
 class EchoHandler : public ZServerHandler {
  public:
-  EchoHandler(int id, evutil_socket_t fd, ZModule *module)
-    : ZServerHandler(id, fd, module)
+  EchoHandler(int id, evutil_socket_t fd, ZModule *module, struct event_base *base)
+    : ZServerHandler(id, fd, module, base)
   {}
 
   typedef ZServerHandler super_;
@@ -40,7 +40,7 @@ void EchoServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned
 {
   Z_LOG_D("EchoServer::onAccept");
 
-  ZServerHandler *h = new EchoHandler(-1, fd, this);
+  ZServerHandler *h = new EchoHandler(-1, fd, this, getBase());
   assert(h);
 
   // h->fd_ = fd;

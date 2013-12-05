@@ -8,30 +8,30 @@
 // FGW is short for "Family gateway"
 class FGWServer : public ZServer {
  public:
-	FGWServer(const char *ip, uint16_t port, event_base *base)
-	: ZServer(ip, port, base, MODULE_FGW_SERVER)
-	{}
-	~FGWServer() {}
+  FGWServer(const char *ip, uint16_t port, event_base *base)
+  : ZServer(ip, port, base, MODULE_FGW_SERVER)
+  {}
+  ~FGWServer() {}
 
  public:
-	virtual int onInnerMsg(ZInnerMsg *msg);
- 	virtual void routine(long delta);
+  virtual int onInnerMsg(ZInnerMsg *msg);
+  virtual void routine(long delta);
 
  public:
- 	void removeHandler(ZServerHandler *h);
+  void removeHandler(ZServerHandler *h);
 
  protected:
-	virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port);
+  virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port);
 
  protected:
-	handler_id_t genHandlerId();
-	void deleteClosedHandlers();
+  handler_id_t genHandlerId();
+  void deleteClosedHandlers();
 
-	typedef std::map<handler_id_t, ZServerHandler*> HANDLER_MAP_TYPE;
+  typedef std::map<handler_id_t, ZServerHandler*> HANDLER_MAP_TYPE;
 
  private:
- 	HANDLER_MAP_TYPE handler_map_;
- 	std::vector<ZServerHandler*> delete_handler_list_;
+  HANDLER_MAP_TYPE handler_map_;
+  std::vector<ZServerHandler*> delete_handler_list_;
 };
 
 #endif // _FGW_SERVER_H__

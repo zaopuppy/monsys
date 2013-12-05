@@ -7,38 +7,52 @@
 
 #include "zhandler.h"
 
-class ZServerHandler : public ZHandler {
+class ZServerHandler : public ZHandler, public ZTimer::TimerCallback {
  public:
- 	ZServerHandler(int id, evutil_socket_t fd, ZModule *module)
- 		: ZHandler(id, module)
- 		, read_event_(NULL)
-		,	fd_(fd)
-	{}
- 	virtual ~ZServerHandler() {}
+  ZServerHandler(int id, evutil_socket_t fd, ZModule *module, struct event_base *base)
+    : ZHandler(id, module)
+    , read_event_(NULL)
+    , fd_(fd)
+    , timer_(base, this)
+  {}
+  virtual ~ZServerHandler() {}
 
  public:
- 	static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg) {
- 		assert(arg);
- 		ZServerHandler *h = (ZServerHandler*)arg;
- 		h->event(fd, events);
- 	}
+  static void SOCKET_CALLBACK(evutil_socket_t fd, short events, void *arg) {
+    assert(arg);
+    ZServerHandler *h = (ZServerHandler*)arg;
+    h->event(fd, events);
+  }
 
  public:
-	virtual int init() = 0;
-	virtual void close();
-	virtual int onRead(char *buf, uint32_t buf_len) = 0;
-	virtual int onInnerMsg(ZInnerMsg *msg) = 0;
-	evutil_socket_t getFd() { return fd_; }
+  virtual int init() = 0;
+  virtual void close();
+  virtual int onRead(char *buf, uint32_t buf_len) = 0;
+  virtual int onInnerMsg(ZInnerMsg *msg) = 0;
+
+  // @override from ZTimer::TimerCallback
+  virtual void onTimeout(int handler_id) {}
 
  public:
-	virtual int event(evutil_socket_t fd, short events);
+  virtual int event(evutil_socket_t fd, short events);
+
+  evutil_socket_t getFd() { return fd_; }
+
+  int setTimer(int interval, bool repeat = false) {
+    return timer_.setTimer(interval, repeat);
+  }
+
+  void cancelTimer(int id) {
+    timer_.cancelTimer(id);
+  }
 
  public:
-	struct event *read_event_;
+  struct event *read_event_;
 
  private:
-	evutil_socket_t fd_;
-	char buf_[1 << 10];
+  evutil_socket_t fd_;
+  char buf_[1 << 10];
+  ZTimer timer_;
 };
 
 #endif // _Z_SERVER_HANDLER_H__

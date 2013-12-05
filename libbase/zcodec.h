@@ -7,24 +7,24 @@
 extern "C" {
 #endif // __cplusplus
 
-#define ENCODE_WITH_METHOD(_method, _val, _buf, _buf_len, _tmp)	\
-  do {								\
-    _tmp = (_method)((_val), (_buf), (_buf_len));		\
-    if (_tmp < 0) {						\
-      return _tmp;						\
-    }								\
-    _buf     += _tmp;						\
-    _buf_len -= _tmp;						\
+#define ENCODE_WITH_METHOD(_method, _val, _buf, _buf_len, _tmp) \
+  do {                \
+    _tmp = (_method)((_val), (_buf), (_buf_len));   \
+    if (_tmp < 0) {           \
+      return _tmp;            \
+    }               \
+    _buf     += _tmp;           \
+    _buf_len -= _tmp;           \
   } while (0)
 
-#define DECODE_WITH_METHOD(_method, _val, _buf, _buf_len, _tmp)	\
-  do {								\
-    _tmp = (_method)((_val), (_buf), (_buf_len));		\
-    if (_tmp < 0) {						\
-      return _tmp;						\
-    }								\
-    _buf     += _tmp;						\
-    _buf_len -= _tmp;						\
+#define DECODE_WITH_METHOD(_method, _val, _buf, _buf_len, _tmp) \
+  do {                \
+    _tmp = (_method)((_val), (_buf), (_buf_len));   \
+    if (_tmp < 0) {           \
+      return _tmp;            \
+    }               \
+    _buf     += _tmp;           \
+    _buf_len -= _tmp;           \
   } while (0)
 
 ///////////////////////////////////////////////////////////////

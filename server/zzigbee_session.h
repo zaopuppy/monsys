@@ -5,21 +5,21 @@
 
 class ZZigBeeSession : public ZSession<uint32_t> {
  public:
- 	ZZigBeeSession() {
- 		setTimeout(1000);
- 	}
+  ZZigBeeSession() {
+    setTimeout(1000);
+  }
 
- 	typedef ZSession super;
+  typedef ZSession super;
 
- 	// union common_data {
- 	// 	uint32_t u32;
- 	// 	uint16_t u16;
- 	// };
+  // union common_data {
+  //  uint32_t u32;
+  //  uint16_t u16;
+  // };
 
  public:
- 	ZInnerAddress src_addr_;
- 	ZInnerAddress dst_addr_;
- 	// union common_data extern_key_;
+  ZInnerAddress src_addr_;
+  ZInnerAddress dst_addr_;
+  // union common_data extern_key_;
 };
 
 

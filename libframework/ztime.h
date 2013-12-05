@@ -6,16 +6,16 @@
 
 class ZTime {
  public:
-	static long getMillisecond() {
-		struct timeval tv;
-		int rv = gettimeofday(&tv, NULL);
-		if (rv != 0) {
-			assert(false);
-			return 0xFFFFFF;
-		}
+  static long getMillisecond() {
+    struct timeval tv;
+    int rv = gettimeofday(&tv, NULL);
+    if (rv != 0) {
+      assert(false);
+      return 0xFFFFFF;
+    }
 
-		return tv.tv_sec*1000 + (tv.tv_usec/1000);
-	}
+    return tv.tv_sec*1000 + (tv.tv_usec/1000);
+  }
 
 };
 

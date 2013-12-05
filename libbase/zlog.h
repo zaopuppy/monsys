@@ -15,38 +15,38 @@
 extern "C" {
 #endif // __cplusplus
 
-#define LOG_NONE		0
-#define LOG_ERROR		1
-#define LOG_WARN		2
-#define LOG_INFO		3
-#define LOG_DEBUG		4
+#define LOG_NONE    0
+#define LOG_ERROR   1
+#define LOG_WARN    2
+#define LOG_INFO    3
+#define LOG_DEBUG   4
 
 // modify this macro for different log level
-// #define LOG_LVL 	LOG_INFO
-#define LOG_LVL 	LOG_DEBUG
+// #define LOG_LVL  LOG_INFO
+#define LOG_LVL   LOG_DEBUG
 
 #if (LOG_LVL >= LOG_ERROR)
-	#define Z_LOG_E(format, ...)		zlog("E|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_E(format, ...)    zlog("E|" __FILE__ "|" format "\n", ##__VA_ARGS__)
 #else
-	#define Z_LOG_E(...)
+  #define Z_LOG_E(...)
 #endif
 
 #if (LOG_LVL >= LOG_WARN)
-	#define Z_LOG_W(format, ...)		zlog("W|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_W(format, ...)    zlog("W|" __FILE__ "|" format "\n", ##__VA_ARGS__)
 #else
-	#define Z_LOG_W(...)
+  #define Z_LOG_W(...)
 #endif
 
 #if (LOG_LVL >= LOG_DEBUG)
-	#define Z_LOG_D(format, ...)		zlog("D|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_D(format, ...)    zlog("D|" __FILE__ "|" format "\n", ##__VA_ARGS__)
 #else
-	#define Z_LOG_D(...)
+  #define Z_LOG_D(...)
 #endif
 
 #if (LOG_LVL >= LOG_INFO)
-	#define Z_LOG_I(format, ...)		zlog("I|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_I(format, ...)    zlog("I|" __FILE__ "|" format "\n", ##__VA_ARGS__)
 #else
-	#define Z_LOG_I(...)
+  #define Z_LOG_I(...)
 #endif
 
 char printable_char(char c);
