@@ -2,26 +2,26 @@
 
 #include "libbase/zlog.h"
 
-// XXX: this kind of code should be moved to upper class
+// TODO: this kind of code should be moved to upper class
 int FGWServer::onInnerMsg(ZInnerMsg *msg)
 {
   Z_LOG_D("FGWServer::onInnerMsg");
 
   handler_id_t handler_id = msg->dst_addr_.handler_id_;
 
-  // if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-  //  printf("Bad handler id: %d", handler_id);
-  //  return FAIL;
-  // }
+  if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
+   printf("Bad handler id: %d", handler_id);
+   return FAIL;
+  }
 
   if (handler_map_.size() == 0) {
-    Z_LOG_W("no client is connecting");
+    Z_LOG_W("no client is connected");
     return FAIL;
   }
 
   if (ANY_ID == handler_id) {
     Z_LOG_D("ANY_ID");
-    HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+    handler_map_type_t::iterator iter = handler_map_.begin();
     if (iter == handler_map_.end()) {
       Z_LOG_E("Empty handler map: %d", handler_id);
       return FAIL;
@@ -39,7 +39,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
   // } else if (BROADCAST_ID = handler_id) {
   //  // TODO:
   } else {
-    HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
+    handler_map_type_t::iterator iter = handler_map_.find(handler_id);
     if (iter == handler_map_.end()) {
       printf("No such handler: %d", handler_id);
       return FAIL;
@@ -57,7 +57,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
 void FGWServer::removeHandler(ZServerHandler *h)
 {
   Z_LOG_D("FGWServer::removeHandler(%p)", h);
-  HANDLER_MAP_TYPE::iterator iter = handler_map_.find(h->getId());
+  handler_map_type_t::iterator iter = handler_map_.find(h->getId());
   if (iter != handler_map_.end()) {
     handler_map_.erase(iter);
   } else {
@@ -74,7 +74,7 @@ void FGWServer::removeHandler(ZServerHandler *h)
 void FGWServer::routine(long delta)
 {
   // Z_LOG_D("FGWServer::routine()");
-  HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+  handler_map_type_t::iterator iter = handler_map_.begin();
   for (; iter != handler_map_.end(); ++iter) {
     iter->second->routine(delta);
   }
@@ -110,15 +110,17 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
   // h->fd_ = fd;
   // h->setId(handler_id);
   // h->setModuleType(0); // should be Z_MODULE_FGW
-  h->read_event_ =
-    event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
+  h->read_event_proxy_.registerSocket(fd, EV_READ|EV_PERSIST, h, NULL);
+  // h->read_event_ =
+  //   event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
 
   assert(h->init() == OK);
 
-  event_add(h->read_event_, NULL);
+  // event_add(h->read_event_, NULL);
 
   // handler_map_[h->getId()] = h;
-  bool result = handler_map_.insert(std::pair<handler_id_t, ZServerHandler*>(h->getId(), h)).second;
+  bool result = handler_map_.insert(
+    std::pair<handler_id_t, ZServerHandler*>(h->getId(), h)).second;
   if (!result) {
     Z_LOG_E("Failed to insert handler into handler map");
     h->close();
@@ -130,24 +132,36 @@ void FGWServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned 
 
 handler_id_t FGWServer::genHandlerId()
 {
-  static handler_id_t s_id = 1;
-  // XXX: use defined max_handler_id in module.h
-  static const handler_id_t MAX_HANDLER_NUM = 0xFFFFF; // > 100w
+  // static handler_id_t s_id = 1;
+  // // XXX: use defined max_handler_id in module.h
+  // // static const handler_id_t MAX_HANDLER_NUM = 0xFFFFF; // > 100w
 
-  HANDLER_MAP_TYPE::iterator iter;
-  handler_id_t old_id = s_id;
+  // handler_map_type_t::iterator iter;
+  // handler_id_t old_id = s_id;
+  // do {
+  //   iter = handler_map_.find(s_id);
+  //   if (iter == handler_map_.end()) {
+  //     return s_id++;
+  //   }
+  //   ++s_id;
+  //   if (s_id > MAX_HANDLER_ID) {
+  //     s_id = 1;
+  //   }
+  // } while (s_id != old_id);
+  handler_id_t first_id, final_id;
+
+  first_id = final_id = handler_id_generator_.next();
+  handler_map_type_t::iterator iter;
   do {
-    iter = handler_map_.find(s_id);
+    iter = handler_map_.find(final_id);
     if (iter == handler_map_.end()) {
-      return s_id++;
+      return final_id;
     }
-    ++s_id;
-    if (s_id > MAX_HANDLER_NUM) {
-      s_id = 1;
-    }
-  } while (s_id != old_id);
+    final_id = handler_id_generator_.next();
+  } while (final_id != first_id);
 
-  return -1;
+  Z_LOG_E("(FGWServer)Out of handler id:(, current client count: %u", handler_map_.size());
+  return INVALID_ID;
 }
 
 

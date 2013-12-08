@@ -1,7 +1,6 @@
 #include "zserver_handler.h"
 
 #include <errno.h>
-
 #include <unistd.h>
 
 #include "libbase/zlog.h"
@@ -11,8 +10,8 @@ void ZServerHandler::close()
   Z_LOG_D("ZServerHandler::close()");
   ::close(fd_);
   fd_ = -1;
-  event_free(read_event_);
-  read_event_ = NULL;
+  // event_free(read_event_);
+  // read_event_ = NULL;
 }
 
 int ZServerHandler::event(evutil_socket_t fd, short events)

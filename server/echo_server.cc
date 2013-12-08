@@ -46,12 +46,13 @@ void EchoServer::onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned
   // h->fd_ = fd;
   // h->setId(handler_id);
   // h->setModuleType(0); // should be Z_MODULE_FGW
-  h->read_event_ =
-    event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
+  // h->read_event_ =
+  //   event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
+  h->read_event_proxy_.registerSocket(fd, EV_READ|EV_PERSIST, h, NULL);
 
   assert(h->init() == OK);
 
-  event_add(h->read_event_, NULL);
+  // event_add(h->read_event_, NULL);
 }
 
 void EchoServer::removeHandler(ZServerHandler *h)

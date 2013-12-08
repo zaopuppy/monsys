@@ -4,6 +4,8 @@
 
 #include "libframework/zframework.h"
 
+#include "module.h"
+
 void FGWManager::add_handler(std::string name, int handler_id)
 {
   Z_LOG_D("FGWManager::add_handler(%s, %d)", name.c_str(), handler_id);

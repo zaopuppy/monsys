@@ -7,11 +7,14 @@
 #include "libframework/zframework.h"
 
 #include "module.h"
+#include "zgenerator.h"
 
 class ZWebApiServer : public ZServer {
  public:
   ZWebApiServer(const char *ip, uint16_t port, event_base *base)
-    : ZServer(ip, port, base, MODULE_WEBAPI) {
+    : ZServer(ip, port, base, MODULE_WEBAPI)
+    , handler_id_generator_(1, MAX_HANDLER_ID)
+  {
   }
 
   typedef ZServer super_;
@@ -25,7 +28,8 @@ class ZWebApiServer : public ZServer {
  public:
   void removeHandler(ZServerHandler *h);
 
-  typedef std::map<int, ZServerHandler*> HANDLER_MAP_TYPE;
+  typedef std::map<int, ZServerHandler*> handler_map_type_t;
+  typedef std::vector<ZServerHandler*> handler_list_type_t;
 
  protected:
   virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port);
@@ -35,8 +39,10 @@ class ZWebApiServer : public ZServer {
   void deleteClosedHandlers();
 
  private:
-  HANDLER_MAP_TYPE handler_map_;
-  std::vector<ZServerHandler*> delete_handler_list_;
+  handler_map_type_t handler_map_;
+  handler_list_type_t delete_handler_list_;
+
+  HandlerIdGenerator handler_id_generator_;
 };
 
 #endif // _Z_WEBAPI_SERVER_H__

@@ -1,7 +1,7 @@
 #include "module.h"
 
-const char* moduleType2string(int moduleType) {
-  switch (moduleType) {
+const char* moduleType2string(module_type_t type) {
+  switch (type) {
     case MODULE_SERVER:
       return "SERVER";
     case MODULE_CLIENT:

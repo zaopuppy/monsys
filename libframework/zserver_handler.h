@@ -6,12 +6,14 @@
 #include <event2/event.h>
 
 #include "zhandler.h"
+#include "zevent_proxy.h"
 
 class ZServerHandler : public ZHandler, public ZTimer::TimerCallback {
  public:
   ZServerHandler(int id, evutil_socket_t fd, ZModule *module, struct event_base *base)
     : ZHandler(id, module)
-    , read_event_(NULL)
+    , read_event_proxy_(base, SOCKET_CALLBACK)
+    // , read_event_(NULL)
     , fd_(fd)
     , timer_(base, this)
   {}
@@ -47,13 +49,15 @@ class ZServerHandler : public ZHandler, public ZTimer::TimerCallback {
   }
 
  public:
-  struct event *read_event_;
+  // TODO: use EventProxy
+  // struct event *read_event_;
+  ZEventProxy read_event_proxy_;
 
  private:
   evutil_socket_t fd_;
   char buf_[1 << 10];
   ZTimer timer_;
-};
+  };
 
 #endif // _Z_SERVER_HANDLER_H__
 

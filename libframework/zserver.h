@@ -46,6 +46,8 @@ class ZServer : public ZModule, public ZTimer::TimerCallback {
     timer_.cancelTimer(id);
   }
 
+  int fileno() { return fd_; }
+
  protected:
   virtual void onAccept(evutil_socket_t fd, struct sockaddr_in *addr, unsigned short port) = 0;
 

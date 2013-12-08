@@ -7,15 +7,9 @@
 typedef int module_type_t;
 typedef int handler_id_t;
 
-const handler_id_t INVALID_ID = -1;
-const handler_id_t ANY_ID = 0;
-const handler_id_t BROADCAST_ID = 0xFFFFFF;
-const handler_id_t MIN_HANDLER_ID = 1;
-const handler_id_t MAX_HANDLER_ID = 0xFFFFF; // don't let it overflow
-
 class ZModule {
 public:
-  ZModule(int type): type_(type) {}
+  ZModule(module_type_t type): type_(type) {}
 
 public:
   virtual int init() = 0;
@@ -28,11 +22,11 @@ public:
   // virtual void onTimeout(int handler_id) {}
 
 public:
-  int getType() { return type_; }
+  module_type_t getType() { return type_; }
   // void setType(int type) { type_ = type; }
 
 private:
-  const int type_;
+  const module_type_t type_;
 };
 
 #endif // _Z_MODULE_H__

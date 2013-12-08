@@ -36,36 +36,38 @@ LDFLAGS := \
 	`mysql_config5 --libs`
 
 
-$(TARGET) : $(OBJFILES)
+$(TARGET): $(OBJFILES)
 	$(CXX) -o $@ $(OBJFILES) $(LDFLAGS)
 
-%.d : %.cc
+%.d: %.cc
 	$(CXX) $(CFLAGS) -MT $(@:%.d=%.o) -MM -o $@ $<
 
-%.d : %.c
+%.d: %.c
 	$(CC) $(CFLAGS) -MT $(@:%.d=%.o) -MM -o $@ $<
 
-%.o : %.cc
+%.o: %.cc
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
-%.o : %.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 include $(DEPFILES)
 
-.PHONY : clean rebuild test gdb
+.PHONY : clean rebuild test gdb valgrind
 
 # check :
 # 	if [ ! -d obj ]; then rm -rf obj; mkdir obj; fi
 
-clean :
+clean:
 	rm -f $(OBJFILES) $(DEPFILES) $(TARGET)
 
-rebuild : clean $(TARGET)
+rebuild: clean $(TARGET)
 
-test : $(TARGET)
+test: $(TARGET)
 	@clear
 	@./ts
 
+valgrind: $(TARGET)
+	valgrind --tool=memcheck --dsymutil=yes ./$(TARGET)
 
 

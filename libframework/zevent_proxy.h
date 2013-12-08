@@ -8,7 +8,9 @@
 
 /////////////////////////////////////////////////
 // an encapsulation of libevent event
+// TODO: This should be replace a better version, something like ZTimer
 class ZEventProxy {
+public:
   typedef void (*callback_t)(evutil_socket_t, short, void*);
 
  public:

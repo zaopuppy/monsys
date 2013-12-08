@@ -18,7 +18,7 @@ void ZWebApiServer::close()
 
 void ZWebApiServer::removeHandler(ZServerHandler *h)
 {
-  HANDLER_MAP_TYPE::iterator iter = handler_map_.find(h->getId());
+  handler_map_type_t::iterator iter = handler_map_.find(h->getId());
   if (iter != handler_map_.end()) {
     handler_map_.erase(iter);
   } else {
@@ -48,15 +48,15 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
   Z_LOG_D("ZWebApiServer::onInnerMsg()");
 
   handler_id_t handler_id = msg->dst_addr_.handler_id_;
-  // if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-  //  Z_LOG_D("Bad handler id: %d", handler_id);
-  //  return FAIL;
-  // }
+  if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
+   Z_LOG_D("Bad handler id: %d", handler_id);
+   return FAIL;
+  }
 
   if (ANY_ID == handler_id) {
     // TODO:
     // XXX: should do load-balancing, current just use the first one
-    HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+    handler_map_type_t::iterator iter = handler_map_.begin();
     if (iter == handler_map_.end()) {
       Z_LOG_D("Empty handler map...:(");
       return FAIL;
@@ -65,7 +65,7 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
   // } else if (BROADCAST_ID = handler_id) {
   //  // TODO:
   } else {
-    HANDLER_MAP_TYPE::iterator iter = handler_map_.find(handler_id);
+    handler_map_type_t::iterator iter = handler_map_.find(handler_id);
     if (iter == handler_map_.end()) {
       Z_LOG_D("No such handler: %lu, %d", handler_map_.size(), handler_id);
       return -1;
@@ -78,8 +78,8 @@ int ZWebApiServer::onInnerMsg(ZInnerMsg *msg)
 
 void ZWebApiServer::routine(long delta)
 {
-  Z_LOG_D("ZWebApiServer::routine()");
-  HANDLER_MAP_TYPE::iterator iter = handler_map_.begin();
+  // Z_LOG_D("ZWebApiServer::routine()");
+  handler_map_type_t::iterator iter = handler_map_.begin();
   for (; iter != handler_map_.end(); ++iter) {
     iter->second->routine(delta);
   }
@@ -101,25 +101,33 @@ void ZWebApiServer::onAccept(
   ZServerHandler *h = new ZWebApiHandler(getBase(), handler_id, fd, this);
   assert(h);
 
-  h->read_event_ =
-    event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
+  h->read_event_proxy_.registerSocket(fd, EV_READ|EV_PERSIST, h, NULL);
+  // h->read_event_ =
+  //   event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
 
   assert(h->init() == OK);
 
-  event_add(h->read_event_, NULL);
+  // event_add(h->read_event_, NULL);
 
   // add to handler map
   handler_map_[h->getId()] = h;
 }
 
-/// XXX: 
 int ZWebApiServer::genHandlerId()
 {
-  static int id = MIN_HANDLER_ID;
-  if (id > MAX_HANDLER_ID) {
-    id = MIN_HANDLER_ID;
-  }
+  handler_id_t first_id, final_id;
 
-  return id++;
+  first_id = final_id = handler_id_generator_.next();
+  handler_map_type_t::iterator iter;
+  do {
+    iter = handler_map_.find(final_id);
+    if (iter == handler_map_.end()) {
+      return final_id;
+    }
+    final_id = handler_id_generator_.next();
+  } while (final_id != first_id);
+
+  Z_LOG_E("(WebApiServer)Out of handler id:(, current client count: %u", handler_map_.size());
+  return INVALID_ID;
 }
 

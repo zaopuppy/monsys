@@ -3,6 +3,12 @@
 
 #include "libframework/zframework.h"
 
+const handler_id_t INVALID_ID = -1;
+const handler_id_t ANY_ID = 0;
+const handler_id_t BROADCAST_ID = 0xFFFFFF;
+const handler_id_t MIN_HANDLER_ID = 0;
+const handler_id_t MAX_HANDLER_ID = 0xFFFFF; // don't let it overflow
+
 enum MODULE_TYPE {
   MODULE_UNKNOWN = 0,
   MODULE_SERVER,
@@ -15,6 +21,6 @@ enum MODULE_TYPE {
   MODULE_FGW_CLIENT,
 };
 
-const char* moduleType2string(int moduleType);
+const char* moduleType2string(module_type_t type);
 
 #endif // _MODULE_H__
