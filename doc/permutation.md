@@ -24,14 +24,12 @@
         out.insert(v);
         return;
       }
-
       set<int>::iterator iter = s.begin();
       for (; iter != s.end(); ++iter) {
         in_t s1(s);
         out_t out1;
         s1.erase(*iter);
         permutation(s1, out1);
-
         out_t::iterator iter1 = out1.begin();
         vector<int> *p = NULL;
         for (; iter1 != out1.end(); ++iter1) {

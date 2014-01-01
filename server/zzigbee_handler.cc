@@ -70,6 +70,23 @@ void ZZigBeeHandler::routine(long delta)
 void ZZigBeeHandler::onConnected()
 {
   Z_LOG_D("ZZigBeeHandler::onConnected()");
+
+  // notify wireless modules to re-register themselves
+  ZZBBroadcastInd notify;
+  notify.what_ = ZB_BROADCAST_WHAT_FGW_CONNECTED;
+
+  int rv = notify.encode(buf_, sizeof(buf_));
+  if (rv <= 0) {
+    assert(false);
+    Z_LOG_E("!!! Failed to encode notify!");
+    return;
+  }
+
+  rv = send(buf_, rv);
+  if (rv <= 0) {
+    assert(false);
+    Z_LOG_E("!!! Failed to send notify to zb module, any problem?");
+  }
 }
 
 
@@ -215,6 +232,9 @@ int ZZigBeeHandler::processMsg(ZZBGetRsp &msg)
     }
 
     rsp->dst_addr_ = session->src_addr_;
+    rsp->seq_ = session->getKey();
+    // TODO:
+    rsp->status_ = 0;
 
     session_ctrl_.removeByKey1(session->getKey());
     delete session;
@@ -357,7 +377,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
     session->src_addr_ = msg->src_addr_;
     session->dst_addr_ = msg->dst_addr_;
     // session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
-
+    Z_LOG_D("add session key1=%u, key2=0x%X", msg->seq_, (req.addr_ << 16 | 0x00));
     session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
     // session_ctrl_1_.add(msg->addr_, session);
   }

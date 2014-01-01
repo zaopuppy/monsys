@@ -15,7 +15,7 @@
 
 char printable_char(char c)
 {
-  static const char printable_char_map[256] = {
+  static const char p_map[256] = {
     '.', '.', '.', '.', '.', '.', '.', '.',     /*   8 */
     '.', '.', '.', '.', '.', '.', '.', '.',     /*  16 */
     '.', '.', '.', '.', '.', '.', '.', '.',     /*  24 */
@@ -57,7 +57,7 @@ char printable_char(char c)
     '.', '.', '.', '.', '.', '.', '.', '.',
   };
 
-  return printable_char_map[(uint8_t)c];
+  return p_map[(uint8_t)c];
 }
 
 char hex2char(unsigned char h)

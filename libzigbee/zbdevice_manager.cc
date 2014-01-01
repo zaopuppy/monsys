@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "libbase/zlog.h"
+
 void ZZBDevManager::reset()
 {
   ///////////////////////////////////////////
@@ -24,12 +26,13 @@ void ZZBDevManager::reset()
 bool ZZBDevManager::add(zb_mac_type_t &mac,
   zb_addr_type_t addr, const char *name, uint16_t type/*uint8_t id_count*/)
 {
-  printf("ZZBDevManager::add(%u)\n", addr);
+  Z_LOG_D("ZZBDevManager::add(%u)\n", addr);
 
   ZZBDevInfo *info_from_mac = find(mac);
   ZZBDevInfo *info_from_addr = find(addr);
 
   if (info_from_mac && !info_from_addr) {
+    Z_LOG_I("mac already exists, but addr is changed.");
 
     info_from_mac->name_ = name;
     // info_from_mac->id_count_ = id_count;
@@ -47,13 +50,14 @@ bool ZZBDevManager::add(zb_mac_type_t &mac,
     return true;
 
   } else if (!info_from_mac && info_from_addr) {
-
+    // XXX: should we kick the old one out?
     // addr has been token, this should not happen
-    printf("address has been token, huh?\n");
+    Z_LOG_I("address has been token, huh?\n");
 
     return false;
 
   } else if (info_from_mac && info_from_addr) {
+    Z_LOG_I("mac and addr are already exist, update info only");
 
     // XXX
     assert(info_from_mac == info_from_addr);
@@ -66,6 +70,7 @@ bool ZZBDevManager::add(zb_mac_type_t &mac,
     return true;
 
   } else { // !info_from_mac && !info_from_addr
+    Z_LOG_I("no mac or addr is found, add as new one");
 
     // good, it's empty, just add it
     info_from_mac = new ZZBDevInfo();

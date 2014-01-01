@@ -184,6 +184,7 @@ class ZZBGetRsp : public ZZigBeeMsg {
   }
 
  public:
+  uint8_t status_;
   // uint8_t itemCount_;
   std::vector<struct ZItemPair> items_;
 };
@@ -290,6 +291,31 @@ class ZZBUpdateIdInfoRsp : public ZZigBeeMsg {
   uint8_t status_;
 };
 
+//////////////////////////////////////////////////////////////////
+// broadcast
+class ZZBBroadcastInd : public ZZigBeeMsg {
+ public:
+  ZZBBroadcastInd();
+
+  typedef ZZigBeeMsg super_;
+
+ public:
+
+  virtual int encode(char *buf, uint32_t buf_len);
+  virtual int decode(char *buf, uint32_t buf_len);
+  
+  uint16_t getEncodeLen() {
+    return getHeaderLen()
+      + getBodyLen();
+  }
+  
+  uint16_t getBodyLen() {
+    return getlen(what_);
+  }
+
+ public:
+  uint16_t what_;
+};
 
 
 #endif // _Z_ZIGBEE_MESSAGE_H__

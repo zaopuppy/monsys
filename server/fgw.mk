@@ -25,7 +25,8 @@ CXXFILES := \
 
 ifeq ($(ut), 1)
 CXXFILES += test_zbstream.cc \
-						test_push_msg.cc
+						test_push_msg.cc \
+						test_zigbee_message.cc
 CXXFILES += unittest.cc
 else
 CXXFILES += fgw.cc
@@ -46,8 +47,8 @@ CFLAGS := -g -fPIC -Wall \
 	-I/opt/local/include/boost/tr1
 
 ifeq ($(ut), 1)
-CFLAGS += -I${GTEST_DIR}/include
-	-I${GMOCK_DIR}/include \
+CFLAGS += -I${GTEST_DIR}/include \
+	-I${GMOCK_DIR}/include
 else
 CFLAGS += -Wall
 endif

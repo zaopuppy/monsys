@@ -25,26 +25,28 @@ extern "C" {
 // #define LOG_LVL  LOG_INFO
 #define LOG_LVL   LOG_DEBUG
 
+// #define Z_LOG(_format, _file, _line, _format, ...)        zlog("D|" _file ":" ##_line, 4)
+
 #if (LOG_LVL >= LOG_ERROR)
-  #define Z_LOG_E(format, ...)    zlog("E|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_E(_format, ...)   zlog("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
 #else
   #define Z_LOG_E(...)
 #endif
 
 #if (LOG_LVL >= LOG_WARN)
-  #define Z_LOG_W(format, ...)    zlog("W|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_W(_format, ...)   zlog("W|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
 #else
   #define Z_LOG_W(...)
 #endif
 
 #if (LOG_LVL >= LOG_DEBUG)
-  #define Z_LOG_D(format, ...)    zlog("D|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_D(_format, ...)   zlog("D|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
 #else
   #define Z_LOG_D(...)
 #endif
 
 #if (LOG_LVL >= LOG_INFO)
-  #define Z_LOG_I(format, ...)    zlog("I|" __FILE__ "|" format "\n", ##__VA_ARGS__)
+  #define Z_LOG_I(_format, ...)   zlog("I|" __FILE__ "%d|" _format "\n", __LINE__, ##__VA_ARGS__)
 #else
   #define Z_LOG_I(...)
 #endif

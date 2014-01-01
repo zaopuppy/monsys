@@ -253,13 +253,14 @@ ZInnerMsg* json2InnerGetDevInfoRsp(json_t *jobj)
     return NULL;
   }
 
-  ////////////////////////////////////////////////////////
-  // status
-  json_t *jstatus = json_object_get(jobj, "status");
-  if (!jstatus || !json_is_integer(jstatus)) {
-    Z_LOG_D("status is illegal");
-    return NULL;
-  }
+  // TODO: temporary commented, we should add status field for all response
+  // ////////////////////////////////////////////////////////
+  // // status
+  // json_t *jstatus = json_object_get(jobj, "status");
+  // if (!jstatus || !json_is_integer(jstatus)) {
+  //   Z_LOG_D("status is illegal");
+  //   return NULL;
+  // }
 
   ////////////////////////////////////////////////////////
   // list
@@ -270,7 +271,8 @@ ZInnerMsg* json2InnerGetDevInfoRsp(json_t *jobj)
   }
 
   ZInnerGetDevInfoRsp *msg = new ZInnerGetDevInfoRsp();
-  msg->status_ = json_integer_value(jstatus);
+  // TODO: temporary commented, we should add status field for all response
+  // msg->status_ = json_integer_value(jstatus);
 
   uint32_t info_list_len = json_array_size(jinfo_list);
   for (uint32_t i = 0; i < info_list_len; ++i) {
@@ -281,7 +283,7 @@ ZInnerMsg* json2InnerGetDevInfoRsp(json_t *jobj)
     pair.id = json_integer_value(jid);
 
     json_t *jvalue = json_object_get(jobj, "value");
-    pair.id = json_integer_value(jvalue);
+    pair.val = json_integer_value(jvalue);
 
     msg->dev_infos_.push_back(pair);
   }
@@ -624,7 +626,7 @@ json_t* inner2Json(ZInnerGetDevInfoRsp *msg)
     json_array_append_new(info, jobj1);
   }
 
-  json_object_set_new(jobj, "info", info);
+  json_object_set_new(jobj, "id-infos", info);
 
   return jobj;
 }

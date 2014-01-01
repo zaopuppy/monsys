@@ -200,7 +200,7 @@ int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
 
   int rv = super_::decode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::decode()\n");
+    Z_LOG_D("failed to call super_::decode()");
     return rv;
   }
 
@@ -209,7 +209,7 @@ int ZZBRegRsp::decode(char* buf, uint32_t buf_len)
   len += rv;
 
   if (buf_len < len_) {
-    printf("No enough buffer: %u, %u\n", len_, buf_len);
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
     return -1;
   }
 
@@ -235,14 +235,15 @@ ZZBGetReq::ZZBGetReq():
 }
 
 int ZZBGetReq::encode(char* buf, uint32_t buf_len) {
-  printf("ZZBGetReq::encode()\n");
+  Z_LOG_D("ZZBGetReq::encode()");
 
   // check buf length
-  int enc_len = getEncodeLen();
-  if ((int)buf_len < enc_len) {
-    printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
-    return -1;
-  }
+  // int enc_len = getEncodeLen();
+  // if ((int)buf_len < enc_len) {
+  //   Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
+  //   return -1;
+  // }
+  uint32_t old_buf_len = buf_len;
 
   // update len_ first
   len_ = getBodyLen();
@@ -250,7 +251,7 @@ int ZZBGetReq::encode(char* buf, uint32_t buf_len) {
   // super::encode()
   int rv = super_::encode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::encode()\n");
+    Z_LOG_D("failed to call super_::encode()");
     return rv;
   }
 
@@ -275,16 +276,17 @@ int ZZBGetReq::encode(char* buf, uint32_t buf_len) {
     buf_len -= rv;
   }
 
-  return enc_len;
+  // return enc_len;
+  return old_buf_len - buf_len;
 }
 
 int ZZBGetReq::decode(char* buf, uint32_t buf_len) {
-  printf("ZZBGetReq::decode()\n");
+  Z_LOG_D("ZZBGetReq::decode()");
 
   // check buf length
   // int enc_len = getEncodeLen();
   // if (buf_len < enc_len) {
-  //  printf("No enough buffer length\n");
+  //  Z_LOG_D("No enough buffer length");
   //  return -1;
   // }
 
@@ -293,7 +295,7 @@ int ZZBGetReq::decode(char* buf, uint32_t buf_len) {
   
   int rv = super_::decode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::decode()\n");
+    Z_LOG_D("failed to call super_::decode()");
     return rv;
   }
 
@@ -302,7 +304,7 @@ int ZZBGetReq::decode(char* buf, uint32_t buf_len) {
   len += rv;
 
   if (buf_len < len_) {
-    printf("No enough buffer: %u, %u\n", len_, buf_len);
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
     return -1;
   }
 
@@ -336,12 +338,12 @@ ZZBGetRsp::ZZBGetRsp():
 }
 
 int ZZBGetRsp::encode(char* buf, uint32_t buf_len) {
-  printf("ZZBGetRsp::encode()\n");
+  Z_LOG_D("ZZBGetRsp::encode()");
 
   // check buf length
   int enc_len = getEncodeLen();
   if ((int)buf_len < enc_len) {
-    printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+    Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
     return -1;
   }
 
@@ -351,7 +353,7 @@ int ZZBGetRsp::encode(char* buf, uint32_t buf_len) {
   // super::encode()
   int rv = super_::encode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::encode()\n");
+    Z_LOG_D("failed to call super_::encode()");
     return rv;
   }
 
@@ -390,14 +392,14 @@ int ZZBGetRsp::encode(char* buf, uint32_t buf_len) {
 }
 
 int ZZBGetRsp::decode(char* buf, uint32_t buf_len) {
-  printf("ZZBGetRsp::decode()\n");
+  Z_LOG_D("ZZBGetRsp::decode()");
 
   // super::decode()
   int len = 0;
   
   int rv = super_::decode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::decode()\n");
+    Z_LOG_D("failed to call super_::decode()");
     return rv;
   }
 
@@ -406,7 +408,7 @@ int ZZBGetRsp::decode(char* buf, uint32_t buf_len) {
   len += rv;
 
   if (buf_len < len_) {
-    printf("No enough buffer: %u, %u\n", len_, buf_len);
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
     return -1;
   }
 
@@ -455,13 +457,13 @@ ZZBSetReq::ZZBSetReq():
 }
 
 int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
-  printf("ZZBSetReq::encode()\n");
+  Z_LOG_D("ZZBSetReq::encode()");
 
   uint32_t old_buf_len = buf_len;
   // // check buf length
   // int enc_len = getEncodeLen();
   // if ((int)buf_len < enc_len) {
-  //  printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+  //  Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
   //  return -1;
   // }
 
@@ -471,7 +473,7 @@ int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
   // super::encode()
   int rv = super_::encode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::encode()\n");
+    Z_LOG_D("failed to call super_::encode()");
     return rv;
   }
 
@@ -508,21 +510,13 @@ int ZZBSetReq::encode(char* buf, uint32_t buf_len) {
 }
 
 int ZZBSetReq::decode(char* buf, uint32_t buf_len) {
-  printf("ZZBSetReq::decode()\n");
+  Z_LOG_D("ZZBSetReq::decode()");
 
-  // check buf length
-  // int enc_len = getEncodeLen();
-  // if (buf_len < enc_len) {
-  //  printf("No enough buffer length\n");
-  //  return -1;
-  // }
-
-  // super::decode()
   int len = 0;
   
   int rv = super_::decode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::decode()\n");
+    Z_LOG_D("failed to call super_::decode()");
     return rv;
   }
 
@@ -531,7 +525,7 @@ int ZZBSetReq::decode(char* buf, uint32_t buf_len) {
   len += rv;
 
   if (buf_len < len_) {
-    printf("No enough buffer: %u, %u\n", len_, buf_len);
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
     return -1;
   }
 
@@ -579,13 +573,13 @@ ZZBSetRsp::ZZBSetRsp():
 }
 
 int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
-  printf("ZZBSetRsp::encode()\n");
+  Z_LOG_D("ZZBSetRsp::encode()");
 
   // check buf length
   uint32_t old_buf_len = buf_len;
   // int enc_len = getEncodeLen();
   // if ((int)buf_len < enc_len) {
-  //  printf("No enough buffer length: %u, %u\n", enc_len, buf_len);
+  //  Z_LOG_D("No enough buffer length: %u, %u", enc_len, buf_len);
   //  return -1;
   // }
 
@@ -595,7 +589,7 @@ int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
   // super::encode()
   int rv = super_::encode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::encode()\n");
+    Z_LOG_D("failed to call super_::encode()");
     return rv;
   }
 
@@ -614,12 +608,12 @@ int ZZBSetRsp::encode(char* buf, uint32_t buf_len) {
 }
 
 int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
-  printf("ZZBSetRsp::decode()\n");
+  Z_LOG_D("ZZBSetRsp::decode()");
 
   // check buf length
   // int enc_len = getEncodeLen();
   // if (buf_len < enc_len) {
-  //  printf("No enough buffer length\n");
+  //  Z_LOG_D("No enough buffer length");
   //  return -1;
   // }
 
@@ -628,7 +622,7 @@ int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
   
   int rv = super_::decode(buf, buf_len);
   if (rv < 0) {
-    printf("failed to call super_::decode()\n");
+    Z_LOG_D("failed to call super_::decode()");
     return rv;
   }
 
@@ -637,7 +631,7 @@ int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
   len += rv;
 
   if (buf_len < len_) {
-    printf("No enough buffer: %u, %u\n", len_, buf_len);
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
     return -1;
   }
 
@@ -734,4 +728,58 @@ int ZZBUpdateIdInfoRsp::decode(char *buf, uint32_t buf_len)
 
   ZMSG_DECODE_END();
 }
+
+//////////////////////////////////////////////////////////////////
+// broadcast
+ZZBBroadcastInd::ZZBBroadcastInd(): ZZigBeeMsg()
+{
+  cmd_ = Z_ID_ZB_BROADCAST_IND;
+}
+
+int ZZBBroadcastInd::encode(char *buf, uint32_t buf_len)
+{
+  uint32_t old_buf_len = buf_len;
+
+  len_ = getBodyLen();
+
+  int rv = super_::encode(buf, buf_len);
+  if (rv < 0) { return rv; }
+  buf += rv;
+  buf_len -= rv;
+
+  // what
+  rv = z_encode_integer16(what_, buf, buf_len);
+  if (rv < 0) { return rv; }
+  buf += rv;
+  buf_len -= rv;
+
+  return old_buf_len - buf_len;
+}
+
+int ZZBBroadcastInd::decode(char *buf, uint32_t buf_len)
+{
+  int len = 0;
+
+  int rv = super_::decode(buf, buf_len);
+  if (rv < 0) { return rv; }
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  if (buf_len < len_) {
+    Z_LOG_D("No enough buffer: %u, %u", len_, buf_len);
+    return -1;
+  }
+
+  // what
+  rv = z_decode_integer16(&what_, buf, buf_len);
+  if (rv < 0) { return rv; }
+
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  return len;
+}
+
 

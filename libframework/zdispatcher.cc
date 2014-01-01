@@ -103,7 +103,7 @@ void ZDispatcher::moduleRoutine(long delta)
 
 void ZDispatcher::routine(long delta)
 {
-  // Z_LOG_D("ZDispatcher::routine()");
+  // Z_LOG_D("ZDispatcher::routine(%ld)", delta);
   // consumeMsg();
 
   checkTimeout(delta);

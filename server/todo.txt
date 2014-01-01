@@ -34,6 +34,9 @@
     [ ] easy api
     [ ] auto connecting with database
 [ ] use CMake instead of Makefile
+[ ] auto re-register if network structure has been changed
+[ ] 重新整理接口文档
+[ ] android client
 
 [ ] 接口变更:
 	[ ] 注册携带需要更新的ID个数

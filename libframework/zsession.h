@@ -15,9 +15,9 @@ class ZSession {
 
  public:
   virtual void doTimeout(long delta) {
-    // Z_LOG_D("touch_time_: [%ld]", touch_time_);
-    // Z_LOG_D("timeout_: [%ld]", timeout_);
-    // Z_LOG_D("delta: [%ld]", delta);
+    Z_LOG_D("touch_time_: [%ld]", touch_time_);
+    Z_LOG_D("timeout_: [%ld]", timeout_);
+    Z_LOG_D("delta: [%ld]", delta);
     touch_time_ += delta;
   }
 
