@@ -106,7 +106,7 @@ ZigBee Control Protocol(Application Layer)
 
 所有整型字段皆为无符号类型
 
-### heart-beat (0xFF)
+### heart-beat
 
 心跳消息, 用于无线模块和家庭网关之间的健康检测, 一定时间内没有发起心跳则认为对端发生异常.
 
@@ -114,7 +114,10 @@ ZigBee Control Protocol(Application Layer)
 
 任何心跳之外的交互具有心跳更新功能. 即, 如果家庭网关频繁发送查询请求给无线模块, 无线模块收到查询请求后, 可以认为家庭网关健康并更新心跳.
 
-心跳消息为单向消息, 且没有消息体.
+update: 初期为简单其间, 由家庭网关的控制芯片周期性发起心跳
+
+请求消息 command 为 0xEF, 没有消息体
+响应消息 command 为 0xFF, 没有消息体
 
 ### register
 
