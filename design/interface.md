@@ -117,6 +117,7 @@ ZigBee Control Protocol(Application Layer)
 update: 初期为简单其间, 由家庭网关的控制芯片周期性发起心跳
 
 请求消息 command 为 0xEF, 没有消息体
+
 响应消息 command 为 0xFF, 没有消息体
 
 ### register
