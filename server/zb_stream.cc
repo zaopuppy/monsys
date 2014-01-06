@@ -167,6 +167,9 @@ int ZBStream::doWaitingForHead(char *buf, int buf_len)
     rv1 = decode(msg_len, buf + 1, buf_len);
     assert(rv1 == 2);
 
+    Z_LOG_D("decoded version: %u", zb_ver);
+    Z_LOG_D("decoded message length: %u", msg_len);
+
     // head length must be included
     msg_len += HEAD_LEN;
   }
@@ -180,7 +183,7 @@ int ZBStream::doWaitingForHead(char *buf, int buf_len)
 
 int ZBStream::doWaitingForData(char *buf, int buf_len)
 {
-  Z_LOG_D("ZBStream::doWaitingForData()");
+  Z_LOG_D("ZBStream::doWaitingForData(%d)", expect_data_len_);
 
   if (buf_len < expect_data_len_) {
     buf_.put(buf, buf_len);

@@ -26,7 +26,6 @@
 [ ] memory leakage!
 [ ] protocol improvement
 [ ] PUSH support
-[ ] Android client
 [ ] config library
 [ ] better timeout function
 [ ] ZDispatcher event check
@@ -37,6 +36,7 @@
 [ ] auto re-register if network structure has been changed
 [ ] 重新整理接口文档
 [ ] android client
+[ ] 不依赖cookie机制, 参考OAuth2机制, 进行更好的鉴权
 
 [ ] 接口变更:
 	[ ] 注册携带需要更新的ID个数

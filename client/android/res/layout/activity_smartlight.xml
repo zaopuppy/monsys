@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Button" />
+
+    <SurfaceView
+        android:id="@+id/color_pick_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <SeekBar
+        android:id="@+id/r_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/color_pick_view"
+        android:layout_marginTop="18dp"
+        android:max="255" />
+
+    <SeekBar
+        android:id="@+id/g_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/r_slider"
+        android:max="255" />
+
+    <SeekBar
+        android:id="@+id/b_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/g_slider"
+        android:max="255" />
+
+</RelativeLayout>
