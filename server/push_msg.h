@@ -118,6 +118,7 @@ class VData {
   // forbid it
   VData& operator=(const VData &other) {
     assert(false);
+    return *this;
   }
 
   // re-allocate memory only, no data copy will occur

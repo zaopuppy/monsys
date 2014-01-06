@@ -12,7 +12,7 @@ import time
 class TCPClient:
     """
     """
-    def connect(self, server_info_pair, callback = None, timeout = 1):
+    def connect(self, server_info_pair, callback = None, timeout = 3):
         self.server_info_pair = server_info_pair
         self.callback = callback
 

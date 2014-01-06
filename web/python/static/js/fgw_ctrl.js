@@ -38,18 +38,18 @@ function FGWController () {
 
     this.panel_.empty();
 
-    // --- for debugging only ---
-    msg = {
-      "cmd": "get-dev-list-rsp",
-      "devs": [
-	{"type": 0, "addr": 0, "name": "dev-00", "state": 0},
-	{"type": 1, "addr": 1, "name": "dev-01", "state": 1},
-	{"type": 2, "addr": 2, "name": "dev-02", "state": 2},
-	{"type": 3, "addr": 3, "name": "dev-03", "state": 3},
-	{"type": 4, "addr": 4, "name": "dev-04", "state": 4}],
-      "status": 0
-    };
-    // --- for debugging only ---
+    // // --- for debugging only ---
+    // msg = {
+    //   "cmd": "get-dev-list-rsp",
+    //   "devs": [
+    // 	{"type": 0, "addr": 0, "name": "dev-00", "state": 0},
+    // 	{"type": 1, "addr": 1, "name": "dev-01", "state": 1},
+    // 	{"type": 2, "addr": 2, "name": "dev-02", "state": 2},
+    // 	{"type": 3, "addr": 3, "name": "dev-03", "state": 3},
+    // 	{"type": 4, "addr": 4, "name": "dev-04", "state": 4}],
+    //   "status": 0
+    // };
+    // // --- for debugging only ---
 
     var devs = msg["devs"];
     if (devs != null) {

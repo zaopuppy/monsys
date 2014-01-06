@@ -22,7 +22,7 @@ define("mysql_host", default = "192.168.2.105:3306", help = "database host")
 define("mysql_database", default = "monsys_db", help = "database name")
 define("mysql_user", default = "monsys", help = "database user")
 define("mysql_password", default = "monsys", help = "database password")
-define("center_host", default = "192.168.2.146", help = "center host")
+define("center_host", default = "192.168.2.105", help = "center host")
 define("center_port", default = 1983, help = "center host", type = int)
 
 # home-page --> login --> fgw-list --> dev-list --> dev
@@ -41,10 +41,8 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/login", LoginHandler),
             (r"/logout", LogoutHandler),
-            # (r"/fgw-list", FGWListHandler),
-            # (r"/dev-list", DevListHandler),
-            # (r"/dev", DevHandler),
             (r"/interface", InterfaceHandler),
+            (r"/interface/login", InterfaceLoginHandler),
             # for debugging only
             (r"/", HomeHandler),
             (r"/test", TestHandler),
@@ -151,6 +149,28 @@ class InterfaceHandler(BaseHandler):
         client.write(self.request.body)
         rsp = yield tornado.gen.Task(client.read)
         self.write("{}".format(rsp))
+
+class InterfaceLoginHandler(BaseHandler):
+    def post(self):
+        # authentication
+        account = self.get_argument("account", None)
+        password = self.get_argument("password", None)
+        if not account or not password:
+            self.set_status(404)
+            self.write("wrong input")
+            return
+        rv = self.db.get(
+            "select * from account_info where account = %s and password = %s",
+            account, password)
+        if not rv:
+            self.set_status(404)
+            self.write("account and password art not match")
+            return
+        # save user name
+        self.set_secure_cookie("account", account)
+        # save fgw-list for later use
+        fgw_list = rv.get("fgw_list").strip() or ""
+        self.set_secure_cookie("fgw-list", fgw_list)
 
 # --- for debugging only ---
 class HomeHandler(BaseHandler):

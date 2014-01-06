@@ -69,7 +69,7 @@ function DevCommon () {
       return function () {
 	console.log("mouseup(" + fgw + ", " + addr + ", " + id + ")");
 	value_box.text($(this).val());
-	g_monsys_api.set_dev_info(fgw, addr, id, $(this).val());
+	g_monsys_api.set_dev_info(fgw, addr, id, parseInt($(this).val()));
       };
     })(this.fgw_, this.dev_["addr"], id);
 
@@ -97,25 +97,26 @@ function DevCommon () {
   this.on_get_dev_info_rsp = function (msg) {
     console.log("DevCommon.on_get_dev_info_rsp()");
 
-    if (!msg.hasOwnProperty("info")) {
+    if (!msg.hasOwnProperty("id-infos")) {
       console.log("field 'info' doesn't exist");
       return;
     }
 
-    var info = msg["info"];
+    var info = msg["id-infos"];
 
     this.disable_all_config_item();
 
     for (var i = 0; i < info.length; ++i) {
       var id = parseInt(info[i]["id"]);
-      var val = parseInt(info[i]["value"]);
+      var val = parseInt(info[i]["val"]);
       if (id <= 0 || id > this.max_id_) {
 	// XXX: bibi!
 	console.log("!!!! error handle needed");
+	continue;
       }
-      this.slide_btns_[id].attr("disabled", false);
-      this.slide_btns_[id].val(val);
-      this.value_boxes_[id].text(val);
+      this.slide_btns_[id-1].attr("disabled", false);
+      this.slide_btns_[id-1].val(val);
+      this.value_boxes_[id-1].text(val);
     }
 
   }
@@ -133,14 +134,14 @@ function DevCommon () {
     console.log("status: [" + status + "]");
     console.log("timeout: [" + this.timeout + "]");
 
-    // --- FOR DEBUGGING ONLY ---
-    this.on_get_dev_info_rsp({
-      "info": [
-	{ "id": 4, "value": 67 },
-	{ "id": 3, "value": 23 }
-      ]
-    });
-    // --- FOR DEBUGGING ONLY ---
+    // // --- FOR DEBUGGING ONLY ---
+    // this.on_get_dev_info_rsp({
+    //   "info": [
+    // 	{ "id": 4, "value": 67 },
+    // 	{ "id": 3, "value": 23 }
+    //   ]
+    // });
+    // // --- FOR DEBUGGING ONLY ---
 
     // decode it first
     var jmsg = null;

@@ -62,7 +62,7 @@ function MonsysApi() {
       "cmd": "get-dev-info",
       "uid": "33",
       "fgw": fgw,
-      "addr": 0x1234,
+      "addr": addr,
       "id-list": id_list,
     };
 

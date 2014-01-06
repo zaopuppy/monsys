@@ -25,7 +25,7 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 CFLAGS := -g -fPIC -Wall \
 	-I../ \
 	-I../libs/include/ \
-	`mysql_config5 --cflags`
+	`mysql_config --cflags`
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
@@ -33,7 +33,7 @@ LDFLAGS := \
 	-L../libzigbee -lzb \
 	-L../libframework -lframework \
 	-L../libs/lib -levent_core -ljansson \
-	`mysql_config5 --libs`
+	`mysql_config --libs`
 
 
 $(TARGET): $(OBJFILES)
