@@ -105,7 +105,8 @@ void ZWebApiServer::onAccept(
   // h->read_event_ =
   //   event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
 
-  assert(h->init() == OK);
+  int rv = h->init();
+  assert(rv == OK);
 
   // event_add(h->read_event_, NULL);
 

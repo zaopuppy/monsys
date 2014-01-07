@@ -25,7 +25,7 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 CFLAGS := -g -fPIC -Wall \
 	-I../ \
 	-I../libs/include/ \
-	`mysql_config --cflags`
+	`mysql_config --include`
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
