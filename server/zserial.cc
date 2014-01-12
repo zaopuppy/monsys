@@ -6,6 +6,7 @@
 #include <errno.h>
 // #include <unistd.h>
 #include <sys/ioctl.h>
+#include <signal.h>
 
 #include "libframework/zframework.h"
 
@@ -127,6 +128,11 @@ void ZSerial::onConnected(evutil_socket_t fd, short events)
   } 
 }
 
+static void signal_handler_IO(int status)
+{
+  Z_LOG_D("signal_handler_IO(%d)\n", status);
+}
+
 int ZSerial::connect()
 {
   Z_LOG_D("Openning serial device: [%s]", serial_dev_.c_str());
@@ -137,13 +143,16 @@ int ZSerial::connect()
     return FAIL;
   }
 
-  // TODO:
-  //  struct sigaction saio;
-  //  saio.sa_handler = signal_handler_IO;
-  //  saio.sa_mask = 0;
-  //  saio.sa_flags = 0;
-  //  saio.sa_restorer = NULL;
-  //  sigaction(SIGIO, &saio, NULL);
+  // this signal handler must be set, or program will be abort
+  // by signal SIGIO
+  struct sigaction saio;
+  saio.sa_handler = signal_handler_IO;
+  // saio.sa_mask = 0;
+  sigemptyset(&saio.sa_mask);
+  // sigaddset(&new_action.sa_mask, SIGINT);
+  saio.sa_flags = 0;
+  saio.sa_restorer = NULL;
+  sigaction(SIGIO, &saio, NULL);
 
   fcntl(fd_, F_SETOWN, getpid());
 

@@ -31,7 +31,8 @@ using namespace std;
 bool start_serial(event_base *base)
 {
   // const char* serial_dev = "/dev/tty.usbmodemfd141";
-  const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
+  // const char* serial_dev = "/dev/tty.usbserial-ftDX0P76";
+  const char* serial_dev = "/dev/ttyUSB0";
   // const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
   ZModule *h = new ZSerial(base, serial_dev);
   if (h->init() != OK) {
@@ -57,12 +58,18 @@ int main(int argc, char *argv[])
 
   ZDispatcher::init(base);
 
+  if (!start_serial(base)) {
+    Z_LOG_D("failed to start serial.");
+    return FAIL;
+  }
+
   FGWClient *client = new FGWClient(base);
   client->setServerAddress("127.0.0.1", 1984);
   if (OK != client->init()) {
     Z_LOG_E("Failed to initialize fgw client");
     return -1;
   }
+
   // if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
   //  Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
   //  return -1;
@@ -93,11 +100,6 @@ int main(int argc, char *argv[])
   //  return -1;
   // }
   
-  if (!start_serial(base)) {
-    Z_LOG_D("failed to start serial.");
-    return FAIL;
-  }
-
   // long begin_time = ZTime::getInMillisecond();
   // long end_time = 0;
   // long delta_time = 0;
