@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/refresh_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,7 +15,7 @@
         android:id="@+id/color_pick_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/refresh_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 

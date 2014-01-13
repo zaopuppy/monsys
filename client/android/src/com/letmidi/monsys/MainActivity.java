@@ -2,10 +2,9 @@ package com.letmidi.monsys;
 
 import java.util.List;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +12,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.letmidi.monsys.protocol.MonsysInterface;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +22,7 @@ public class MainActivity extends Activity {
   private TextView mAccountText = null;
   private TextView mPasswordText = null;
   private Button mLoginBtn = null;
+  private LoginTask mLoginTask;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +37,12 @@ public class MainActivity extends Activity {
     mLoginBtn.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Bundle bundle = new Bundle();
-        bundle.putString("account", mAccountText.getText().toString());
-        bundle.putString("password", mPasswordText.getText().toString());
-
-        Intent intent = new Intent(getApplicationContext(), FgwListActivity.class);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
+        if (mLoginTask != null) {
+          mLoginTask.cancel(true);
+        }
+        mLoginTask = new LoginTask();
+        mLoginTask.execute(
+            mAccountText.getText().toString(), mPasswordText.getText().toString());
       }
     });
 
@@ -96,6 +97,44 @@ public class MainActivity extends Activity {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
+  }
+
+  private class LoginTask extends AsyncTask<String, Integer, Boolean> {
+
+    @Override
+    protected Boolean doInBackground(String... params) {
+
+      String account = params[0];
+      String password = params[1];
+
+      if (!MonsysInterface.login(account, password)) {
+        Log.e("XXX", "Failed to login monsys with ([" + account + "], [" + password + "])");
+        return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean result) {
+      if (!result) {
+        Log.e("XXX", "task failed");
+        Toast.makeText(getApplicationContext(), "Failed to login :(", Toast.LENGTH_SHORT).show();
+        return;
+      }
+
+      Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+
+      Bundle bundle = new Bundle();
+      bundle.putString("account", mAccountText.getText().toString());
+//      bundle.putString("password", mPasswordText.getText().toString());
+
+      Intent intent = new Intent(getApplicationContext(), FgwListActivity.class);
+      intent.putExtras(bundle);
+
+      startActivity(intent);
+    }
+
   }
 
 }

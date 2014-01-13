@@ -3,8 +3,6 @@ package com.letmidi.monsys;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,16 +16,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DevListActivity extends Activity implements OnItemClickListener {
+import com.letmidi.monsys.protocol.MonsysInterface;
 
+public class DevListActivity extends Activity implements OnItemClickListener {
+  private static final String TAG = "DevListActivity";
+
+  private Button mRefreshButton;
   private ListView mListView;
   private final List<DevInfo> mDevList = new LinkedList<DevInfo>();
   private MyAdapter mListViewAdapter;
-  private final MyAsyncTask mQueryTask = new MyAsyncTask();
+  private MyAsyncTask mQueryTask = new MyAsyncTask();
 
   private String mFgwId;
 
@@ -36,11 +39,6 @@ public class DevListActivity extends Activity implements OnItemClickListener {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_dev_list);
-
-    mListViewAdapter = new MyAdapter(getApplicationContext(), R.layout.dev_item, R.id.dev_name, mDevList);
-    mListView = (ListView) findViewById(R.id.dev_list);
-    mListView.setAdapter(mListViewAdapter);
-    mListView.setOnItemClickListener(this);
 
     Intent intent = getIntent();
     Bundle bundle = intent.getExtras();
@@ -58,6 +56,25 @@ public class DevListActivity extends Activity implements OnItemClickListener {
           })
           .show();
     } else {
+      mListViewAdapter = new MyAdapter(getApplicationContext(), R.layout.dev_item, R.id.dev_name, mDevList);
+      mListView = (ListView) findViewById(R.id.dev_list);
+      mListView.setAdapter(mListViewAdapter);
+      mListView.setOnItemClickListener(this);
+
+      mRefreshButton = (Button) findViewById(R.id.refresh_button);
+      mRefreshButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          mDevList.clear();
+          mListViewAdapter.notifyDataSetChanged();
+          if (mQueryTask != null) {
+            mQueryTask.cancel(true);
+          }
+          mQueryTask = new MyAsyncTask();
+          mQueryTask.execute(mFgwId);
+        }
+      });
+
       mQueryTask.execute(mFgwId);
     }
   }
@@ -113,7 +130,8 @@ public class DevListActivity extends Activity implements OnItemClickListener {
         return;
       }
 
-      Log.i("XXX", "got " + result.size() + " fgws");
+      Log.i("XXX", "got " + result.size() + " devs");
+      Toast.makeText(getApplicationContext(), "dev list got successfully", Toast.LENGTH_SHORT).show();
 
       mDevList.clear();
       for (DevInfo info : result) {

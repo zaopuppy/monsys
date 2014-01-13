@@ -14,8 +14,11 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 import com.letmidi.monsys.protocol.MonsysInterface;
 
@@ -27,6 +30,7 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
   private static final int ID_COLOR_G = 2;
   private static final int ID_COLOR_B = 3;
 
+  private Button mRefreshButton;
   // color picker
   private SurfaceView mColorPickView;
   private SurfaceHolder mColorPickViewHolder;
@@ -39,20 +43,13 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
   private String mFgwId;
   private int mDevAddr;
 
-//  private final MyAsyncTask mWorkTask = new MyAsyncTask();
+  private QueryDevInfoTask mQueryTask = new QueryDevInfoTask();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_smartlight);
-
-    mColorPickView = (SurfaceView) findViewById(R.id.color_pick_view);
-    mColorPickViewHolder = mColorPickView.getHolder();
-
-    mRSeekBar = (SeekBar) findViewById(R.id.r_slider);
-    mGSeekBar = (SeekBar) findViewById(R.id.g_slider);
-    mBSeekBar = (SeekBar) findViewById(R.id.b_slider);
 
     // get parameters
     Intent intent = getIntent();
@@ -72,11 +69,29 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
           })
           .show();
     } else {
-      QueryDevInfoTask task = new QueryDevInfoTask();
+      mRefreshButton = (Button) findViewById(R.id.refresh_button);
+      mRefreshButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if (mQueryTask != null) {
+            mQueryTask.cancel(true);
+          }
+          mQueryTask = new QueryDevInfoTask();
+          mQueryTask.mIds.add(0); // query all id
+          mQueryTask.execute();
+        }
+      });
 
-      task.mIds.add(0); // query all id
+      mColorPickView = (SurfaceView) findViewById(R.id.color_pick_view);
+      mColorPickViewHolder = mColorPickView.getHolder();
 
-      task.execute();
+      mRSeekBar = (SeekBar) findViewById(R.id.r_slider);
+      mGSeekBar = (SeekBar) findViewById(R.id.g_slider);
+      mBSeekBar = (SeekBar) findViewById(R.id.b_slider);
+
+      mQueryTask = new QueryDevInfoTask();
+      mQueryTask.mIds.add(0); // query all id
+      mQueryTask.execute();
     }
 
     //
@@ -133,6 +148,7 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
     protected void onPostExecute(List<Pair<Integer, Integer>> result) {
       if (result == null) {
         Log.e(TAG, "Failed to get result");
+        Toast.makeText(getApplicationContext(), "failed to get dev info", Toast.LENGTH_SHORT).show();
         return;
       }
 
@@ -151,6 +167,7 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
           Log.e(TAG, "Unknown id: " + pair.first + "=" + pair.second);
         }
       }
+      Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
     }
 
   }

@@ -3,8 +3,6 @@ package com.letmidi.monsys;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,18 +16,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.letmidi.monsys.protocol.MonsysInterface;
+
 public class FgwListActivity extends Activity implements OnItemClickListener {
 
+  private Button mRefreshButton;
   private ListView mListView;
   private String mAccount;
-  private String mPassword;
+//  private String mPassword;
   private final List<FgwInfo> mFgwList = new LinkedList<FgwInfo>();
   private MyAdapter mListViewAdapter;
-  private final MyAsyncTask mLoginTask = new MyAsyncTask();
+  private MyAsyncTask mLoginTask = new MyAsyncTask();
 //  private static final Handler mHandler;
 
   @Override
@@ -41,13 +43,12 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
     Intent intent = getIntent();
     Bundle bundle = intent.getExtras();
     mAccount = bundle.getString("account");
-    mPassword = bundle.getString("password");
-    if (mAccount == null || mAccount.length() <= 0 ||
-        mPassword == null || mPassword.length() <= 0) {
+//    mPassword = bundle.getString("password");
+    if (mAccount == null || mAccount.length() <= 0) {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
       builder
           .setTitle("Bubu!")
-          .setMessage("No account or password was supplied")
+          .setMessage("No account was supplied")
           .setPositiveButton("Fine", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -61,7 +62,21 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
       mListView.setAdapter(mListViewAdapter);
       mListView.setOnItemClickListener(this);
 
-      mLoginTask.execute(mAccount, mPassword);
+      mRefreshButton = (Button) findViewById(R.id.refresh_button);
+      mRefreshButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          mFgwList.clear();
+          mListViewAdapter.notifyDataSetChanged();
+          if (mLoginTask != null) {
+            mLoginTask.cancel(true);
+          }
+          mLoginTask = new MyAsyncTask();
+          mLoginTask.execute(mAccount);
+        }
+      });
+
+      mLoginTask.execute(mAccount);
     }
   }
 
@@ -98,12 +113,12 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
     protected List<FgwInfo> doInBackground(String... params) {
 
       String account = params[0];
-      String password = params[1];
+//      String password = params[1];
 
-      if (!MonsysInterface.login(account, password)) {
-        Log.e("XXX", "Failed to login monsys with ([" + account + "], [" + password + "])");
-        return null;
-      }
+//      if (!MonsysInterface.login(account, password)) {
+//        Log.e("XXX", "Failed to login monsys with ([" + account + "], [" + password + "])");
+//        return null;
+//      }
 
       List<FgwInfo> fgw_list = MonsysInterface.getFgwList(account);
       if (fgw_list == null) {
@@ -123,6 +138,7 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
       }
 
       Log.i("XXX", "got " + result.size() + " fgws");
+      Toast.makeText(getApplicationContext(), "fgw list got successfully", Toast.LENGTH_SHORT).show();
 
       mFgwList.clear();
       for (FgwInfo info : result) {
