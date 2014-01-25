@@ -28,6 +28,13 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // check if we have logged in
+//    String cookies = Config.instance().getString("cookies", null);
+//    if (cookies != null) {
+//      // logged in
+//      //
+//    }
+
     setContentView(R.layout.activity_main);
 
     mAccountText = (TextView) findViewById(R.id.account_text);
@@ -88,8 +95,6 @@ public class MainActivity extends Activity {
         thread.start();
       }
     });
-
-
   }
 
   @Override
