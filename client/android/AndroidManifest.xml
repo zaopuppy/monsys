@@ -41,6 +41,9 @@
             android:name="com.letmidi.monsys.MainFragActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity 
+            android:name="com.letmidi.monsys.LoginActivity" >
+        </activity>
     </application>
 
 </manifest>

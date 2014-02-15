@@ -29,6 +29,10 @@ public class MonsysInterface {
   private static final String SERVER_HOST = "http://letsmidi.wicp.net:1983/interface";
   private static String mCookies = null;
 
+  public static void logout() {
+    mCookies = null;
+  }
+
   private static HttpURLConnection getConnection(String host) {
     URL url;
 

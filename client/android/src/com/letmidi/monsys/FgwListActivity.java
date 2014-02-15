@@ -8,8 +8,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
+import com.letmidi.monsys.account.AccountManager;
+import com.letmidi.monsys.account.AccountManager.GetFgwListCallback;
 
-public class FgwListActivity extends Activity implements OnItemClickListener {
+public class FgwListActivity extends Activity implements OnItemClickListener, GetFgwListCallback {
+
+  private static final String TAG = "XXX";
 
   private Button mRefreshButton;
   private ListView mListView;
@@ -31,8 +34,47 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
 //  private String mPassword;
   private final List<FgwInfo> mFgwList = new LinkedList<FgwInfo>();
   private MyAdapter mListViewAdapter;
-  private MyAsyncTask mLoginTask = new MyAsyncTask();
-//  private static final Handler mHandler;
+//  private MyAsyncTask mLoginTask = new MyAsyncTask();
+
+  private static final int MSG_GET_FGW_LIST_COMPLETE = 0x01;
+
+  private final Handler mHandler = new Handler() {
+    @Override
+    public void handleMessage(Message msg) {
+      switch (msg.what) {
+        case MSG_GET_FGW_LIST_COMPLETE:
+          mFgwList.clear();
+          List<FgwInfo> fgw_list = (List<FgwInfo>) msg.obj;
+          if (fgw_list != null) {
+            for (FgwInfo info: fgw_list) {
+              mFgwList.add(info);
+            }
+          }
+          mListViewAdapter.notifyDataSetChanged();
+          mRefreshButton.setEnabled(true);
+          break;
+      }
+    }
+  };
+
+  private static class MyAdapter extends ArrayAdapter<FgwInfo> {
+
+    public MyAdapter(Context context, int resource, int textViewResourceId, List<FgwInfo> objects) {
+      super(context, resource, textViewResourceId, objects);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      View view = super.getView(position, convertView, parent);
+
+      FgwInfo item = getItem(position);
+
+      TextView fgw_id_text = (TextView) view.findViewById(R.id.fgw_id);
+      fgw_id_text.setText(item.id);
+
+      return view;
+    }
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +85,6 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
     Intent intent = getIntent();
     Bundle bundle = intent.getExtras();
     mAccount = bundle.getString("account");
-//    mPassword = bundle.getString("password");
     if (mAccount == null || mAccount.length() <= 0) {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
       builder
@@ -68,93 +109,43 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
         public void onClick(View v) {
           mFgwList.clear();
           mListViewAdapter.notifyDataSetChanged();
-          if (mLoginTask != null) {
-            mLoginTask.cancel(true);
-          }
-          mLoginTask = new MyAsyncTask();
-          mLoginTask.execute(mAccount);
+//          AccountManager.getFgwListAsync(mAccount, FgwListActivity.this);
+          getFgwList();
         }
       });
 
-      mLoginTask.execute(mAccount);
+//      mLoginTask.execute(mAccount);
+//      AccountManager.getFgwListAsync(mAccount, this);
+      getFgwList();
+
+//      Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+//      startActivityForResult(loginIntent, 0x01);
+    }
+  }
+
+  private void getFgwList() {
+    mRefreshButton.setEnabled(false);
+    AccountManager.getFgwListAsync(mAccount, this);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    Log.d(TAG, "requestCode: " + requestCode + ", resultCode: " + resultCode);
+
+    if (requestCode == 0x01 && resultCode == RESULT_OK) {
+//      AccountManager
+    } else {
+      super.onActivityResult(requestCode, resultCode, data);
     }
   }
 
   @Override
   protected void onDestroy() {
-    if (!mLoginTask.isCancelled()) {
-      mLoginTask.cancel(true);
-    }
     super.onDestroy();
-  }
-
-  private static class MyAdapter extends ArrayAdapter<FgwInfo> {
-
-    public MyAdapter(Context context, int resource, int textViewResourceId, List<FgwInfo> objects) {
-      super(context, resource, textViewResourceId, objects);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View view = super.getView(position, convertView, parent);
-
-      FgwInfo item = getItem(position);
-
-      TextView fgw_id_text = (TextView) view.findViewById(R.id.fgw_id);
-      fgw_id_text.setText(item.id);
-
-      return view;
-    }
-  }
-
-  private class MyAsyncTask extends AsyncTask<String, Integer, List<FgwInfo>> {
-
-    @Override
-    protected List<FgwInfo> doInBackground(String... params) {
-
-      String account = params[0];
-//      String password = params[1];
-
-//      if (!MonsysInterface.login(account, password)) {
-//        Log.e("XXX", "Failed to login monsys with ([" + account + "], [" + password + "])");
-//        return null;
-//      }
-
-      List<FgwInfo> fgw_list = MonsysInterface.getFgwList(account);
-      if (fgw_list == null) {
-        Log.e("XXX", "Failed to get fgw list");
-        return null;
-      }
-
-      return fgw_list;
-    }
-
-    @Override
-    protected void onPostExecute(List<FgwInfo> result) {
-      if (result == null) {
-        Log.e("XXX", "task failed");
-        Toast.makeText(getApplicationContext(), "Failed to get fgw list:(", Toast.LENGTH_SHORT).show();
-        return;
-      }
-
-      Log.i("XXX", "got " + result.size() + " fgws");
-      Toast.makeText(getApplicationContext(), "fgw list got successfully", Toast.LENGTH_SHORT).show();
-
-      mFgwList.clear();
-      for (FgwInfo info : result) {
-        Log.i("XXX", "fgw: " + info);
-        mFgwList.add(info);
-      }
-
-      mListViewAdapter.notifyDataSetChanged();
-    }
-
   }
 
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//    Toast.makeText(this, "clicked: " + position, Toast.LENGTH_SHORT).show();
-
     Bundle bundle = new Bundle();
     bundle.putString("fgw-id", mFgwList.get(position).id);
 
@@ -162,5 +153,12 @@ public class FgwListActivity extends Activity implements OnItemClickListener {
     intent.putExtras(bundle);
 
     startActivity(intent);
+  }
+
+  @Override
+  public void onGetFgwList(List<FgwInfo> fgw_list) {
+    Log.d(TAG, "onGetFGWList()");
+    Message msg = mHandler.obtainMessage(MSG_GET_FGW_LIST_COMPLETE, fgw_list);
+    msg.sendToTarget();
   }
 }

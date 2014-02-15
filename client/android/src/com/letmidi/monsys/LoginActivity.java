@@ -1,25 +1,27 @@
 package com.letmidi.monsys;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
+import com.letmidi.monsys.account.AccountManager;
+import com.letmidi.monsys.account.AccountManager.LoginCallback;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements LoginCallback {
 
-  private static final String TAG = "LoginActivity";
+  private static final String TAG = "XXX";
 
   private EditText mAccountEdit = null;
   private EditText mPasswordEdit = null;
   private Button mSubmitBtn = null;
 
-  private final LoginTask mLoginTask = new LoginTask();
+  private static final int MSG_LOGIN_COMPLETE = 0x01;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,52 +35,13 @@ public class LoginActivity extends Activity {
 
       @Override
       public void onClick(View v) {
-        mLoginTask.execute(
-            mAccountEdit.getText().toString(),
-            mPasswordEdit.getText().toString());
         disableLogin();
+        AccountManager.loginAsync(mAccountEdit.getText().toString(),
+                                  mPasswordEdit.getText().toString(),
+                                  LoginActivity.this);
       }
 
     });
-  }
-
-  public class LoginTask extends AsyncTask<String, Integer, Boolean> {
-    @Override
-    protected Boolean doInBackground(String... params) {
-      if (params.length != 2) {
-        Log.e(TAG, "Bad argument");
-        return false;
-      }
-
-      String account = params[0];
-      String password = params[1];
-
-      if (account.length() <= 0 || password.length() <= 0) {
-        Log.e(TAG, "Bad argument");
-        return false;
-      }
-
-      return MonsysInterface.login(account, password);
-    }
-
-    @Override
-    protected void onPostExecute(Boolean result) {
-      if (result) {
-        onLoginSuccess();
-      } else {
-        onLoginFail();
-      }
-    }
-  }
-
-  private void onLoginSuccess() {
-    enableLogin();
-    Toast.makeText(getApplicationContext(), "login success :)", Toast.LENGTH_SHORT).show();
-  }
-
-  private void onLoginFail() {
-    enableLogin();
-    Toast.makeText(getApplicationContext(), "login failed :(", Toast.LENGTH_SHORT).show();
   }
 
   private void enableLogin() {
@@ -91,6 +54,38 @@ public class LoginActivity extends Activity {
     mAccountEdit.setEnabled(false);
     mPasswordEdit.setEnabled(false);
     mSubmitBtn.setEnabled(false);
+  }
+
+  private final Handler sHandler = new Handler() {
+
+    @Override
+    public void handleMessage(Message msg) {
+      switch (msg.what) {
+        case MSG_LOGIN_COMPLETE:
+          Boolean result = (Boolean) msg.obj;
+          if (result) {
+            Log.d(TAG, "Seikou");
+          } else {
+            Log.d(TAG, "Shibbai");
+          }
+          Intent data = new Intent();
+          data.putExtra("result", result);
+          data.putExtra("account", mAccountEdit.getText().toString());
+          setResult(RESULT_OK, data);
+          LoginActivity.this.finish();
+          break;
+      }
+    }
+  };
+
+  private void test() {
+
+  }
+
+  @Override
+  public void onLogin(boolean result) {
+    Message msg = sHandler.obtainMessage(MSG_LOGIN_COMPLETE, result);
+    msg.sendToTarget();
   }
 
 }
