@@ -1,6 +1,7 @@
-
-Nand分区调整
+Monsys 移植 Cubieboard2 单板
 =================================================
+
+### Nand分区调整
 刚刚刷好Nand的分区一般是这样的:
 
     linaro@zcubieboard2:/dev$ df -h
@@ -118,5 +119,37 @@ nand的分区格式和普通的不一样, 不能使用fdisk, 需要使用nand-pa
 wrote at 2013-11-19 22:27
 
 
+### 设置固定IP
 
+注意路由设置固定IP只是租期, 设备必须设置固定IP, 否则IP依然会变.
+
+修改 /etc/network/interface
+
+    auto lo eth0
+    iface lo inet loopback
+
+    # iface eth0 inet dhcp
+    iface eth0 inet static
+    address 192.168.2.105
+    netmask 255.255.255.0
+    gateway 192.168.2.1
+
+### 使用串口
+
+原来我是使用 libevent 直接操作文件描述符的, 移植到 cubieboard2 之后, 发现总是被 SIGIO 搞挂掉. 备受打击, 仔细看过网上的串口编程代码之后发现, 其实我原来的代码是有相关的处理的
+
+SIGIO 用来通知进程 IO 可用, 其实一般可以用它来判断端口可写, 可惜我当时以为没啥用就给注释掉了(幸好没直接干掉- -b)
+
+    // this signal handler must be set, or program will be abort
+    // by signal SIGIO                                                
+    struct sigaction saio;                                            
+    saio.sa_handler = signal_handler_IO;                              
+    // saio.sa_mask = 0;                                              
+    sigemptyset(&saio.sa_mask);                                       
+    // sigaddset(&new_action.sa_mask, SIGINT);                        
+    saio.sa_flags = 0;                                                
+    saio.sa_restorer = NULL;                                          
+    sigaction(SIGIO, &saio, NULL);                                    
+
+wrote at 2014-01-12 23:54
 

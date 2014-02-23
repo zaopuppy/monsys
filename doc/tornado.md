@@ -85,3 +85,9 @@ Tornado 中实现异步的非HTTP协议
 参考:
 http://lbolla.info/blog/2012/10/03/asynchronous-programming-with-tornado
 
+Tornado 记录运行日志
+-------------------------------------------------
+python monsys.py --log\_file\_prefix=log/access.log --log\_to\_stderr=true
+
+
+

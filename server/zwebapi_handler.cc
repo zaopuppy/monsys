@@ -80,6 +80,7 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 		return FAIL;
 	}
 
+  // for `get-fgw-list'
 	{
 		json_t *jcmd = json_object_get(jmsg, "cmd");
 		if (jcmd == NULL || !json_is_string(jcmd)) {

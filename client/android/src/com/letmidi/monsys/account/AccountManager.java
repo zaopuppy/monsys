@@ -9,6 +9,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.util.Pair;
+
 import com.letmidi.monsys.DevInfo;
 import com.letmidi.monsys.FgwInfo;
 import com.letmidi.monsys.protocol.MonsysInterface;
@@ -46,7 +48,9 @@ public class AccountManager {
                              TimeUnit.SECONDS, sWorkQueue, new MyThreadFactory());
 
   private static boolean mIsLoggedIn = false;
+  private static String mAccount = null;
 
+  ////////////////////////////////////////////////////////////////////////
   // login
   public interface LoginCallback {
     void onLogin(boolean result);
@@ -54,6 +58,11 @@ public class AccountManager {
 
   public static boolean login(String account, String password) {
     mIsLoggedIn = MonsysInterface.login(account, password);
+    if (mIsLoggedIn) {
+      mAccount = account;
+    } else {
+      mAccount = null;
+    }
     return mIsLoggedIn;
   }
 
@@ -66,6 +75,7 @@ public class AccountManager {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////
   // get-fgw-list
   public interface GetFgwListCallback {
     void onGetFgwList(List<FgwInfo> fgw_list);
@@ -84,6 +94,7 @@ public class AccountManager {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////
   // get-dev-list
   public interface GetDevListCallback {
     void onGetDevList(List<DevInfo> dev_list);
@@ -102,9 +113,71 @@ public class AccountManager {
     });
   }
 
-  //
+  ////////////////////////////////////////////////////////////////////////
+  // get-dev-info
+  public interface GetDevInfoListCallback {
+    void onGetDevInfoList(List<Pair<Integer, Integer>> dev_info_list);
+  }
+
+  public static List<Pair<Integer, Integer>> getDevInfoList(String fgw_id, int dev_addr, List<Integer> id_list) {
+    return MonsysInterface.getDevInfo(fgw_id, dev_addr, id_list);
+  }
+
+  public static void getDevInfoListAsync(final String fgw_id, final int dev_addr, final List<Integer> id_list,
+                                                                 final GetDevInfoListCallback callback) {
+    sExecutor.execute(new Runnable() {
+      @Override
+      public void run() {
+        callback.onGetDevInfoList(MonsysInterface.getDevInfo(fgw_id, dev_addr, id_list));
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // pre-bind
+  public interface PreBindCallback {
+    void onPreBind(boolean result);
+  }
+
+  public static boolean preBind(String fgw_id) {
+    return MonsysInterface.preBind(fgw_id);
+  }
+
+  public static void preBindAsync(final String fgw_id, final PreBindCallback callback) {
+    sExecutor.execute(new Runnable() {
+      @Override
+      public void run() {
+        callback.onPreBind(preBind(fgw_id));
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // pre-bind
+  public interface BindCallback {
+    void onBind(boolean result);
+  }
+
+  public static boolean bind(String fgw_id) {
+    return MonsysInterface.bind(fgw_id);
+  }
+
+  public static void bindAsync(final String fgw_id, final BindCallback callback) {
+    sExecutor.execute(new Runnable() {
+      @Override
+      public void run() {
+        callback.onBind(bind(fgw_id));
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////
   public static boolean isLoggedIn() {
     return mIsLoggedIn;
+  }
+
+  public static String getAccount() {
+    return mAccount;
   }
 
   public static void logout() {

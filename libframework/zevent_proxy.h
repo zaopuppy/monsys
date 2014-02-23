@@ -24,7 +24,7 @@ public:
   }
 
  public:
-  void registerSocket(evutil_socket_t fd, short events, void* arg, const struct timeval *timeout) {
+  void registerSocket(evutil_socket_t fd, short events, void *arg, const struct timeval *timeout) {
     cancel();
 
     assert(ev_ == NULL);

@@ -139,7 +139,7 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 {
   Z_LOG_D("FGWClientHandler::onRead_Registered()");
 
-    if (buf_len <= 0) { // MIN_MSG_LEN(header length)
+  if (buf_len <= 0) { // MIN_MSG_LEN(header length)
     Z_LOG_D("empty message");
 
     sendRsp("empty message", 404);
@@ -152,6 +152,7 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 
   // decode
   json_t* jmsg = decodeWebApiMsg(buf, buf_len);
+
   // check sequence
   json_t *jseq = json_object_get(jmsg, "seq");
   if (jseq == NULL || !json_is_integer(jseq)) {
@@ -181,6 +182,25 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
   if (inner_msg == NULL) {
     sendRsp("bad request", 400);
     return -1;
+  }
+
+  // no session is needed
+  {
+    if (inner_msg->msg_type_ == Z_ZB_PRE_BIND_REQ) {
+      ZInnerPreBindRsp *rsp = new ZInnerPreBindRsp();
+      rsp->seq_ = seq;
+      rsp->result_ = 0x00;
+      json_t *jrsp = inner2Json(rsp);
+      sendJson(jrsp);
+      return OK;
+    } else if (inner_msg->msg_type_ == Z_ZB_BIND_REQ) {
+      ZInnerBindRsp *rsp = new ZInnerBindRsp();
+      rsp->seq_ = seq;
+      rsp->result_ = 0x00;
+      json_t *jrsp = inner2Json(rsp);
+      sendJson(jrsp);
+      return OK;
+    }
   }
 
   // set source address

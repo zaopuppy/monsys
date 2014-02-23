@@ -20,6 +20,12 @@ enum {
 
   Z_ZB_SET_DEV_REQ,
   Z_ZB_SET_DEV_RSP,
+
+  Z_ZB_PRE_BIND_REQ,
+  Z_ZB_PRE_BIND_RSP,
+
+  Z_ZB_BIND_REQ,
+  Z_ZB_BIND_RSP,
 };
 
 ////////////////////////////////////////////////////
@@ -122,6 +128,44 @@ class ZInnerSetDevInfoRsp : public ZInnerMsg {
 
  public:
   uint8_t status_;
+};
+
+////////////////////////////////////////////////////
+// PreBind
+class ZInnerPreBindReq : public ZInnerMsg {
+ public:
+  ZInnerPreBindReq()
+    : ZInnerMsg(Z_ZB_PRE_BIND_REQ) { }
+
+ public:
+};
+
+class ZInnerPreBindRsp : public ZInnerMsg {
+ public:
+  ZInnerPreBindRsp()
+    : ZInnerMsg(Z_ZB_PRE_BIND_RSP) { }
+
+ public:
+  uint8_t result_;
+};
+
+////////////////////////////////////////////////////
+// Bind
+class ZInnerBindReq : public ZInnerMsg {
+ public:
+  ZInnerBindReq()
+    : ZInnerMsg(Z_ZB_BIND_REQ) { }
+
+ public:
+};
+
+class ZInnerBindRsp : public ZInnerMsg {
+ public:
+  ZInnerBindRsp()
+    : ZInnerMsg(Z_ZB_BIND_RSP) { }
+
+ public:
+  uint8_t result_;
 };
 
 

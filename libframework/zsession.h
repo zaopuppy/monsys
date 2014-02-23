@@ -32,6 +32,10 @@ class ZSession {
     return true;
   }
 
+  virtual void event(ZInnerMsg *msg) {
+    Z_LOG_D("enter event()");
+  }
+
  public:
   // void touch() { touch_time_ = ZTime::getInMillisecond(); }
   void touch() { touch_time_ = 0; }

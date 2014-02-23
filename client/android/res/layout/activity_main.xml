@@ -8,42 +8,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <EditText
-        android:id="@+id/account_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="email@example.com"
-        android:inputType="textEmailAddress"
-        android:text="ztest@gmail.com" >
-    </EditText>
-
-    <EditText
-        android:id="@+id/password_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/account_text"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="123" >
-
-        <requestFocus />
-    </EditText>
-
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_below="@+id/password_text"
         android:text="login" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"
         android:text="Button" />
@@ -51,7 +26,7 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="false"

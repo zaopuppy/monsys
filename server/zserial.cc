@@ -151,7 +151,7 @@ int ZSerial::connect()
   sigemptyset(&saio.sa_mask);
   // sigaddset(&new_action.sa_mask, SIGINT);
   saio.sa_flags = 0;
-  saio.sa_restorer = NULL;
+  // saio.sa_restorer = NULL;
   sigaction(SIGIO, &saio, NULL);
 
   fcntl(fd_, F_SETOWN, getpid());
@@ -265,7 +265,7 @@ void ZSerial::onRead(evutil_socket_t fd, char *buf, uint32_t buf_len)
 void ZSerial::scheduleReconnect()
 {
   // --- for debugging only ---
-  // return;
+  return;
   // --- for debugging only ---
 
   Z_LOG_D("ZSerial::scheduleReconnect()");

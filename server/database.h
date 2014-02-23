@@ -5,6 +5,7 @@
 
 #include <my_global.h>
 #include <mysql.h>
+#include <errmsg.h>
 
 #include "libbase/zlog.h"
 
@@ -125,17 +126,41 @@ public:
 
   virtual int onError() {
     if (conn_) {
-      printf("Failed to connect to database: [%s]\n", mysql_error(conn_));
+      printf("Failed to connect to database: [%u:%s]\n",
+        mysql_errno(conn_), mysql_error(conn_));
     }
 
     return 0;
   }
 
+  // FIXME: too ugly...
   MYSQL_RES* query(const char *sql) {
     int rv = mysql_query(conn_, sql);
-    if (rv != 0) {
-      onError();
-      return NULL;
+    unsigned int err = 0;
+    if (rv != 0 ) {
+      err = mysql_errno(conn_);
+      if (err != CR_SERVER_GONE_ERROR && err != CR_SERVER_LOST) {
+        Z_LOG_E("exception while query database: %d, %u", rv, err);
+        onError();
+        return NULL;
+      }
+    }
+
+    if (err == CR_SERVER_GONE_ERROR || err == CR_SERVER_LOST) {
+      Z_LOG_E("database connection lost, try to re-connect");
+      rv = connect();
+      if (rv != 0) {
+        Z_LOG_E("failed to re-connect to database: %d, %u", rv, err);
+        onError();
+        return NULL;
+      }
+
+      rv = mysql_query(conn_, sql);
+      if (rv != 0) {
+        Z_LOG_E("failed to query database again, fail");
+        onError();
+        return NULL;
+      }
     }
 
     // FIXME: take care, this will query and save all result from server

@@ -8,13 +8,12 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
+
+import com.letmidi.monsys.account.AccountManager;
 
 public class MainActivity extends Activity {
 
   private static final String TAG = "XXX";
-  private TextView mAccountText = null;
-  private TextView mPasswordText = null;
   private Button mLoginBtn = null;
 
   @Override
@@ -25,56 +24,59 @@ public class MainActivity extends Activity {
       String account = data.getStringExtra("account");
       Log.d(TAG, "account: " + account + ", result: " + result);
 
-      Intent intent = new Intent(getApplicationContext(), FgwListActivity.class);
-      Bundle bundle = new Bundle();
-      bundle.putString("account", account);
-      intent.putExtras(bundle);
-
-      startActivity(intent);
-
+      startFgwListActivity(account);
     } else {
       super.onActivityResult(requestCode, resultCode, data);
     }
+  }
+
+  private void startFgwListActivity(String account) {
+    Intent intent = new Intent(getApplicationContext(), FgwListActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putString("account", account);
+    intent.putExtras(bundle);
+    startActivity(intent);
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // check if we have logged in
-//    String cookies = Config.instance().getString("cookies", null);
-//    if (cookies != null) {
-//      // logged in
-//      //
-//    }
-
     setContentView(R.layout.activity_main);
 
-    mAccountText = (TextView) findViewById(R.id.account_text);
-    mPasswordText = (TextView) findViewById(R.id.password_text);
     mLoginBtn = (Button) findViewById(R.id.login_button);
 
-    mAccountText.setEnabled(false);
-    mPasswordText.setEnabled(false);
+    // check if we have logged in
+    if (AccountManager.isLoggedIn()) {
+      mLoginBtn.setText("Enter");
+    }
 
     mLoginBtn.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivityForResult(intent, 0x00);
+        if (AccountManager.isLoggedIn()) {
+          startFgwListActivity(AccountManager.getAccount());
+        } else {
+          Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+          startActivityForResult(intent, 0x00);
+        }
       }
     });
 
     // button1
     Button btn1 = (Button) findViewById(R.id.button1);
-//    btn1.setOnClickListener(new OnClickListener() {
-//
-//      @Override
-//      public void onClick(View v) {
-//        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//        startActivityForResult(intent, 4);
-//      }
-//    });
+    btn1.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        // startActivityForResult(intent, 4);
+        Intent intent = new Intent(getApplicationContext(), BindFgwActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("fgw-id", "DEVID-Z");
+//        intent.putExtras(bundle);
+        startActivity(intent);
+      }
+    });
 
     // button2
     Button btn2 = (Button) findViewById(R.id.button2);

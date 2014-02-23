@@ -7,13 +7,6 @@
 #include "libbase/zlog.h"
 #include "zinner_message_ex.h"
 
-// // { "cmd": "HB" }
-// ZInnerMsg* json2InnerHB(json_t *jroot)
-// {
-//  return new ZPushHBMsg();
-// }
-
-
 json_t* inner2Json(ZInnerMsg *innerMsg)
 {
   switch (innerMsg->msg_type_) {
@@ -29,6 +22,14 @@ json_t* inner2Json(ZInnerMsg *innerMsg)
       return inner2Json((ZInnerSetDevInfoReq*)innerMsg);
     case Z_ZB_SET_DEV_RSP:
       return inner2Json((ZInnerSetDevInfoRsp*)innerMsg);
+    case Z_ZB_PRE_BIND_REQ:
+      return inner2Json((ZInnerPreBindReq*)innerMsg);
+    case Z_ZB_PRE_BIND_RSP:
+      return inner2Json((ZInnerPreBindRsp*)innerMsg);
+    case Z_ZB_BIND_REQ:
+      return inner2Json((ZInnerBindReq*)innerMsg);
+    case Z_ZB_BIND_RSP:
+      return inner2Json((ZInnerBindRsp*)innerMsg);
     default:
       return NULL;
   }
@@ -412,6 +413,59 @@ ZInnerMsg* json2InnerSetDevInfoRsp(json_t *jobj)
   return msg;
 }
 
+ZInnerMsg* json2InnerPreBindReq(json_t *jobj)
+{
+  Z_LOG_D("json2InnerPreBindReq()");
+
+  // // command
+  // json_t *jcmd = json_object_get(jobj, "cmd");
+  // if (!jcmd || !json_is_string(jcmd)) {
+  //   return NULL;
+  // }
+
+  ZInnerPreBindReq *msg = new ZInnerPreBindReq();
+
+  return msg;
+}
+
+ZInnerMsg* json2InnerPreBindRsp(json_t *jobj)
+{
+  Z_LOG_D("json2InnerPreBindRsp()");
+
+  // result
+  json_t *jresult = json_object_get(jobj, "result");
+  if (!jresult || !json_is_integer(jresult)) {
+    return NULL;
+  }
+
+  ZInnerPreBindRsp *msg = new ZInnerPreBindRsp();
+  msg->result_ = json_integer_value(jresult);
+
+  return msg;
+}
+
+ZInnerMsg* json2InnerBindReq(json_t *jobj)
+{
+  Z_LOG_D("json2InnerBindReq()");
+
+  return new ZInnerBindReq();
+}
+
+ZInnerMsg* json2InnerBindRsp(json_t *jobj)
+{
+  Z_LOG_D("json2InnerBindRsp()");
+
+  // result
+  json_t *jresult = json_object_get(jobj, "result");
+  if (!jresult || !json_is_integer(jresult)) {
+    return NULL;
+  }
+
+  ZInnerBindRsp *msg = new ZInnerBindRsp();
+  msg->result_ = json_integer_value(jresult);
+
+  return msg;
+}
 
 ZInnerMsg* json2Inner(json_t *jroot)
 {
@@ -431,16 +485,22 @@ ZInnerMsg* json2Inner(json_t *jroot)
     return json2InnerGetDevListReq(jroot);
   } else if (!strcmp(cmd_str, "get-dev-list-rsp")) {
     return json2InnerGetDevListRsp(jroot);
-
   } else if (!strcmp(cmd_str, "get-dev-info")) {
     return json2InnerGetDevInfoReq(jroot);
   } else if (!strcmp(cmd_str, "get-dev-info-rsp")) {
     return json2InnerGetDevInfoRsp(jroot);
-
   } else if (!strcmp(cmd_str, "set-dev-info")) {
     return json2InnerSetDevInfoReq(jroot);
   } else if (!strcmp(cmd_str, "set-dev-info-rsp")) {
     return json2InnerSetDevInfoRsp(jroot);
+  } else if (!strcmp(cmd_str, "pre-bind")) {
+    return json2InnerPreBindReq(jroot);
+  } else if (!strcmp(cmd_str, "pre-bind-rsp")) {
+    return json2InnerPreBindRsp(jroot);
+  } else if (!strcmp(cmd_str, "bind")) {
+    return json2InnerBindReq(jroot);
+  } else if (!strcmp(cmd_str, "bind-rsp")) {
+    return json2InnerBindRsp(jroot);
   } else {
     return NULL;
   }
@@ -707,6 +767,104 @@ json_t* inner2Json(ZInnerSetDevInfoRsp *msg)
   }
 
   return jroot;
+}
+
+json_t* inner2Json(ZInnerPreBindReq *msg)
+{
+  int rv;
+
+  json_t *jmsg = json_object();
+  assert(jmsg);
+
+  json_t *jcmd = json_string("pre-bind");
+  rv = json_object_set_new(jmsg, "cmd", jcmd);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  // seq
+  json_t *jseq = json_integer(msg->seq_);
+  json_object_set_new(jmsg, "seq", jseq);
+
+  return jmsg;
+}
+
+json_t* inner2Json(ZInnerPreBindRsp *msg)
+{
+  int rv;
+
+  json_t *jmsg = json_object();
+  assert(jmsg);
+
+  json_t *jcmd = json_string("pre-bind-rsp");
+  rv = json_object_set_new(jmsg, "cmd", jcmd);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  json_t *jresult = json_integer(msg->result_);
+  rv = json_object_set_new(jmsg, "result", jresult);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  // seq
+  json_t *jseq = json_integer(msg->seq_);
+  json_object_set_new(jmsg, "seq", jseq);
+
+  return jmsg;
+}
+
+json_t* inner2Json(ZInnerBindReq *msg)
+{
+  int rv;
+
+  json_t *jmsg = json_object();
+  assert(jmsg);
+
+  json_t *jcmd = json_string("bind");
+  rv = json_object_set_new(jmsg, "cmd", jcmd);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  // seq
+  json_t *jseq = json_integer(msg->seq_);
+  json_object_set_new(jmsg, "seq", jseq);
+
+  return jmsg;
+}
+
+json_t* inner2Json(ZInnerBindRsp *msg)
+{
+  int rv;
+
+  json_t *jmsg = json_object();
+  assert(jmsg);
+
+  json_t *jcmd = json_string("bind-rsp");
+  rv = json_object_set_new(jmsg, "cmd", jcmd);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  json_t *jresult = json_integer(msg->result_);
+  rv = json_object_set_new(jmsg, "result", jresult);
+  if (rv != 0) {
+    assert(false);
+    return NULL;
+  }
+
+  // seq
+  json_t *jseq = json_integer(msg->seq_);
+  json_object_set_new(jmsg, "seq", jseq);
+
+  return jmsg;
 }
 
 // 

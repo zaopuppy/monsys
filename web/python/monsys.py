@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import sys
 
 import torndb
 import tornado.ioloop
@@ -27,6 +28,7 @@ define("center_port", default = 1983, help = "center host", type = int)
 
 # home-page --> login --> fgw-list --> dev-list --> dev
 #                        |<--        secure        -->|
+# python monsys.py --log_file_prefix=log/access.log --log_to_stderr=true
 class Application(tornado.web.Application):
     def __init__(self):
         settings = {
@@ -37,8 +39,12 @@ class Application(tornado.web.Application):
                 os.path.dirname(__file__), "static"),
             "cookie_secret": "monsys",
             "login_url": "/",
+            "log_file_prefix": "log/access.log",
+            "log_to_stderr": True,
         }
         handlers = [
+            (r"/register", RegisterHandler),
+            (r"/bind", BindHandler),
             (r"/login", LoginHandler),
             (r"/logout", LogoutHandler),
             (r"/interface", InterfaceHandler),
@@ -60,8 +66,6 @@ class Application(tornado.web.Application):
             user     = options.mysql_user,
             password = options.mysql_password)
 
-
-
 class BaseHandler(tornado.web.RequestHandler):
     def initialize(self):
         pass
@@ -71,12 +75,63 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("account")
 
+class RegisterHandler(BaseHandler):
+    def post(self):
+        account = self.get_argument("account", None)
+        password = self.get_argument("password", None)
+        if not account or not password:
+            self.set_status(404)
+            self.write("Wrong arguments")
+            return
+        account_info = self.db.get("select * from account_info where account = %s", account)
+        if account_info is not None:
+            self.write("account already exists")
+            return
+        rv = self.db.execute_rowcount(
+            "insert into account_info (account, password, salt, fgw_list, nickname) values (%s, %s, %s, %s, %s)",
+            account, password, 'c', '', account)
+        if rv <= 0:
+            self.set_status(404)
+            self.write("Failed to create user")
+            return
+        self.write("OK")
+
+class BindHandler(BaseHandler):
+    # """docstring for BindHandler"""
+    @tornado.web.authenticated
+    def post(self):
+        account = self.get_current_user()
+        device_id = self.get_argument("device-id")
+        if account is None or device_id is None or len(device_id) <= 0:
+            self.set_status(404)
+            self.write("bad arguments")
+            return
+        # get account record
+        account_info = self.db.get("select * from account_info where account = %s", account)
+        if account_info is None:
+            self.set_status(404)
+            self.write("account doesn't exist")
+            return
+        fgw_list = account_info.get("fgw_list") or ""
+        fgw_list = filter(lambda x: True if x else False, fgw_list.split("|"))
+        device_id = device_id.strip()
+        if device_id in fgw_list:
+            self.set_status(404)
+            self.write("device id is alread there")
+            return
+        fgw_list.append(device_id)
+        rv = self.db.execute_rowcount(
+            "update account_info set fgw_list=%s where account=%s",
+            "|".join(fgw_list), account)
+        self.write("OK")
+
 class LoginHandler(BaseHandler):
     def post(self):
         # authentication
         account = self.get_argument("account", None)
         password = self.get_argument("password", None)
         if not account or not password:
+            self.set_status(404)
             self.write("wrong input")
             return
         rv = self.db.get(
@@ -90,7 +145,7 @@ class LoginHandler(BaseHandler):
         self.set_secure_cookie("account", account)
 
         # save fgw-list for later use
-        fgw_list = rv.get("fgw_list").strip() or ""
+        fgw_list = rv.get("fgw_list") or ""
         # fgw_list = list(filter(lambda x: True if x else False, fgw_list.split("|")))
         # print("fgw_list: [{}]".format(fgw_list))
         self.set_secure_cookie("fgw-list", fgw_list)
@@ -169,7 +224,7 @@ class InterfaceLoginHandler(BaseHandler):
         # save user name
         self.set_secure_cookie("account", account)
         # save fgw-list for later use
-        fgw_list = rv.get("fgw_list").strip() or ""
+        fgw_list = rv.get("fgw_list") or ""
         self.set_secure_cookie("fgw-list", fgw_list)
 
 # --- for debugging only ---
@@ -224,6 +279,8 @@ class TestHandler(BaseHandler):
         self.write("Jesus, we got a response: [{}]".format(rsp))
 
 if __name__ == "__main__":
+    sys.argv.append("--log_file_prefix=log/access.log")
+    sys.argv.append("--log_to_stderr=true")
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)

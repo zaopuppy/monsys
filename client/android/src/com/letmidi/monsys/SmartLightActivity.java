@@ -8,8 +8,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.Pair;
 import android.view.SurfaceHolder;
@@ -20,9 +21,10 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
 
-import com.letmidi.monsys.protocol.MonsysInterface;
+import com.letmidi.monsys.account.AccountManager;
+import com.letmidi.monsys.account.AccountManager.GetDevInfoListCallback;
 
-public class SmartLightActivity extends Activity implements OnSeekBarChangeListener {
+public class SmartLightActivity extends Activity implements OnSeekBarChangeListener, GetDevInfoListCallback {
 
   private static final String TAG = "XXX";
 
@@ -43,7 +45,46 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
   private String mFgwId;
   private int mDevAddr;
 
-  private QueryDevInfoTask mQueryTask = new QueryDevInfoTask();
+  private static final int MSG_GET_DEV_INFO_LIST_COMPLETE = 0x01;
+
+  private final Handler mHandler = new Handler() {
+    @Override
+    public void handleMessage(Message msg) {
+      switch (msg.what) {
+        case MSG_GET_DEV_INFO_LIST_COMPLETE:
+          List<Pair<Integer, Integer>> dev_info_list = (List<Pair<Integer, Integer>>) msg.obj;
+          handleGetDevInfoResult(dev_info_list);
+          break;
+      }
+    }
+  };
+
+  private void handleGetDevInfoResult(List<Pair<Integer, Integer>> result) {
+    if (result == null) {
+      Log.e(TAG, "Failed to get result");
+      Toast.makeText(getApplicationContext(), "failed to get dev info", Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    for (Pair<Integer, Integer> pair : result) {
+      if (pair.first == ID_COLOR_R) { // R
+        Log.d(TAG, "Enable R-SeekBar");
+        mRSeekBar.setEnabled(true);
+        mRSeekBar.setProgress(mapColorValue(pair.second));
+      } else if (pair.first == ID_COLOR_G) {
+        mGSeekBar.setEnabled(true);
+        mGSeekBar.setProgress(mapColorValue(pair.second));
+      } else if (pair.first == ID_COLOR_B) {
+        mBSeekBar.setEnabled(true);
+        mBSeekBar.setProgress(mapColorValue(pair.second));
+      } else {
+        Log.e(TAG, "Unknown id: " + pair.first + "=" + pair.second);
+      }
+    }
+    Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
+  }
+
+//  private QueryDevInfoTask mQueryTask = new QueryDevInfoTask();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +114,15 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
       mRefreshButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          if (mQueryTask != null) {
-            mQueryTask.cancel(true);
-          }
-          mQueryTask = new QueryDevInfoTask();
-          mQueryTask.mIds.add(0); // query all id
-          mQueryTask.execute();
+//          if (mQueryTask != null) {
+//            mQueryTask.cancel(true);
+//          }
+//          mQueryTask = new QueryDevInfoTask();
+//          mQueryTask.mIds.add(0); // query all id
+//          mQueryTask.execute();
+          List<Integer> id_list = new LinkedList<Integer>();
+          id_list.add(0);
+          AccountManager.getDevInfoListAsync(mFgwId, mDevAddr, id_list, SmartLightActivity.this);
         }
       });
 
@@ -89,9 +133,12 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
       mGSeekBar = (SeekBar) findViewById(R.id.g_slider);
       mBSeekBar = (SeekBar) findViewById(R.id.b_slider);
 
-      mQueryTask = new QueryDevInfoTask();
-      mQueryTask.mIds.add(0); // query all id
-      mQueryTask.execute();
+//      mQueryTask = new QueryDevInfoTask();
+//      mQueryTask.mIds.add(0); // query all id
+//      mQueryTask.execute();
+      List<Integer> id_list = new LinkedList<Integer>();
+      id_list.add(0);
+      AccountManager.getDevInfoListAsync(mFgwId, mDevAddr, id_list, this);
     }
 
     //
@@ -128,49 +175,49 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
     Log.d(TAG, "onStopTrackingTouch(" + seekBar.getProgress() + ")");
   }
 
-  private class QueryDevInfoTask extends AsyncTask<Void, Integer, List<Pair<Integer, Integer>>> {
-
-    public List<Integer> mIds = new LinkedList<Integer>();
-
-    @Override
-    protected List<Pair<Integer, Integer>> doInBackground(Void... params) {
-
-      List<Pair<Integer, Integer>> info_list = MonsysInterface.getDevInfo(mFgwId, mDevAddr, mIds);
-      if (info_list == null) {
-        Log.e(TAG, "Failed to get dev info");
-        return null;
-      }
-
-      return info_list;
-    }
-
-    @Override
-    protected void onPostExecute(List<Pair<Integer, Integer>> result) {
-      if (result == null) {
-        Log.e(TAG, "Failed to get result");
-        Toast.makeText(getApplicationContext(), "failed to get dev info", Toast.LENGTH_SHORT).show();
-        return;
-      }
-
-      for (Pair<Integer, Integer> pair: result) {
-        if (pair.first == ID_COLOR_R) {    // R
-          Log.d(TAG, "Enable R-SeekBar");
-          mRSeekBar.setEnabled(true);
-          mRSeekBar.setProgress(mapColorValue(pair.second));
-        } else if (pair.first == ID_COLOR_G) {
-          mGSeekBar.setEnabled(true);
-          mGSeekBar.setProgress(mapColorValue(pair.second));
-        } else if (pair.first == ID_COLOR_B) {
-          mBSeekBar.setEnabled(true);
-          mBSeekBar.setProgress(mapColorValue(pair.second));
-        } else {
-          Log.e(TAG, "Unknown id: " + pair.first + "=" + pair.second);
-        }
-      }
-      Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
-    }
-
-  }
+//  private class QueryDevInfoTask extends AsyncTask<Void, Integer, List<Pair<Integer, Integer>>> {
+//
+//    public List<Integer> mIds = new LinkedList<Integer>();
+//
+//    @Override
+//    protected List<Pair<Integer, Integer>> doInBackground(Void... params) {
+//
+//      List<Pair<Integer, Integer>> info_list = MonsysInterface.getDevInfo(mFgwId, mDevAddr, mIds);
+//      if (info_list == null) {
+//        Log.e(TAG, "Failed to get dev info");
+//        return null;
+//      }
+//
+//      return info_list;
+//    }
+//
+//    @Override
+//    protected void onPostExecute(List<Pair<Integer, Integer>> result) {
+//      if (result == null) {
+//        Log.e(TAG, "Failed to get result");
+//        Toast.makeText(getApplicationContext(), "failed to get dev info", Toast.LENGTH_SHORT).show();
+//        return;
+//      }
+//
+//      for (Pair<Integer, Integer> pair: result) {
+//        if (pair.first == ID_COLOR_R) {    // R
+//          Log.d(TAG, "Enable R-SeekBar");
+//          mRSeekBar.setEnabled(true);
+//          mRSeekBar.setProgress(mapColorValue(pair.second));
+//        } else if (pair.first == ID_COLOR_G) {
+//          mGSeekBar.setEnabled(true);
+//          mGSeekBar.setProgress(mapColorValue(pair.second));
+//        } else if (pair.first == ID_COLOR_B) {
+//          mBSeekBar.setEnabled(true);
+//          mBSeekBar.setProgress(mapColorValue(pair.second));
+//        } else {
+//          Log.e(TAG, "Unknown id: " + pair.first + "=" + pair.second);
+//        }
+//      }
+//      Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
+//    }
+//
+//  }
 
   private int mapColorValue(Integer value) {
     if (value > mRSeekBar.getMax()) {
@@ -181,5 +228,12 @@ public class SmartLightActivity extends Activity implements OnSeekBarChangeListe
     } else {
       return value;
     }
+  }
+
+  @Override
+  public void onGetDevInfoList(List<Pair<Integer, Integer>> dev_info_list) {
+    Log.d(TAG, "onGetDevInfoList()");
+    Message msg = mHandler.obtainMessage(MSG_GET_DEV_INFO_LIST_COMPLETE, dev_info_list);
+    msg.sendToTarget();
   }
 }

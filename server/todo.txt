@@ -7,8 +7,8 @@
 [ ] better cleaning work, close and reset `fd_'
 [O] session time control
 [O] GetDevList
-[ ] GetDevInfo
-[ ] SetDevInfo
+[O] GetDevInfo
+[O] SetDevInfo
 [ ] {en,de}coding methods for inner messages(like ZInnerGetDevListReq, etc.)
 [ ] all error path response
 [ ] session timeout response
@@ -35,8 +35,18 @@
 [ ] use CMake instead of Makefile
 [ ] auto re-register if network structure has been changed
 [ ] 重新整理接口文档
-[ ] android client
+[O] android client
 [ ] 不依赖cookie机制, 参考OAuth2机制, 进行更好的鉴权
+[O] linaro下编译, 会自动优化掉assert, 即使我没有使用NDBUG宏
+	mysql_config 捣的鬼
+[O] tornado 日志机制
+[ ] 串口波特率可以调高到 115200, 而不是现在的 38400
+[ ] 数据库断连
+[ ] 支持多线程
+[ ] 性能问题
+[ ] 页面开发
+	[ ] 注册
+	[ ] 绑定
 
 [ ] 接口变更:
 	[ ] 注册携带需要更新的ID个数

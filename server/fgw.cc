@@ -1,4 +1,3 @@
-// system api
 #include <iostream>
 #include <assert.h>
 
@@ -7,26 +6,12 @@
 
 #include "libframework/zframework.h"
 
-// project files
-// #include "zsocket.h"
-// #include "zwebapi_server.h"
 #include "libbase/zlog.h"
 #include "zserial.h"
 #include "fgw_client.h"
 
 using namespace std;
 
-
-// bool start_webapi_server(const char* ip, uint16_t port, event_base* base)
-// {
-//  ZModule *module = new ZWebApiServer(ip, port, base);
-//  if (module->init() != OK) {
-//    Z_LOG_D("Failed to initialize server.");
-//    return false;
-//  }
-
-//  return true;
-// }
 
 bool start_serial(event_base *base)
 {
@@ -42,13 +27,30 @@ bool start_serial(event_base *base)
   return true;
 }
 
+typedef struct {
+  event_base *base;
+  int max_client_count;
+  int client_count;
+  ZEventProxy *proxy;
+} test_param_t;
 
-// static void routine(evutil_socket_t fd, short events, void *arg)
-// {
-//   // Z_LOG_D("routine()");
-//   // sleep(2);
-//   ZDispatcher::instance()->routine(100);
-// }
+const int MAX_CLIENT_COUNT = 1000;
+
+void test_callback(evutil_socket_t fd, short events, void *arg)
+{
+  test_param_t *param = (test_param_t*)arg;
+  Z_LOG_E("[%d] Time to create a new client..", param->client_count);
+  if (param->client_count >= param->max_client_count) {
+    Z_LOG_E("Maximum client count reached, canel timer");
+    param->proxy->cancel();
+    return;
+  }
+
+  FGWClient *client = new FGWClient(param->base);
+  if (OK != client->init()) {
+    Z_LOG_E("Failed to initialize client");
+  }
+}
 
 int main(int argc, char *argv[])
 {
@@ -70,51 +72,13 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  // if (!start_server("0.0.0.0", 1984, base, ZServer::TYPE_ZIGBEE)) {
-  //  Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
-  //  return -1;
-  // }
-
-  // if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_WEBCLIENT)) {
-  //  Z_LOG_D("failed to start server: (0.0.0.0, 1984).");
-  //  return -1;
-  // }
-
-  // if (!start_server("0.0.0.0", 1983, base, ZServer::TYPE_APICLIENT)) {
-  //  Z_LOG_D("failed to start server: (0.0.0.0, 1984).");
-  //  return -1;
-  // }
-
-  // if (!start_webapi_server("0.0.0.0", 1983, base)) {
-  //  Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
-  //  return -1;
-  // }
-
-  // if (!start_api_server("0.0.0.0", 1984, base)) {
-  //  Z_LOG_D("failed to start server: (0.0.0.0, 1983).");
-  //  return -1;
-  // }
-
-  // if (!start_client(base)) {
-  //  Z_LOG_D("failed to start client.");
-  //  return -1;
-  // }
-  
-  // long begin_time = ZTime::getInMillisecond();
-  // long end_time = 0;
-  // long delta_time = 0;
-
-  // setup timeout
-  // const struct timeval ROUTINE_INTERVAL = { 0, 500 * 1000 };
-  // ZEventProxy routine_timer(base, routine);
-  // routine_timer.registerPersistTimeout(NULL, &ROUTINE_INTERVAL);
-  // {
-  //  const struct timeval ROUTINE_INTERVAL = { 0, 500 * 1000 };
-  //  // struct event *timeout_ev = evtimer_new(base, routine, NULL);
-  //  // XXX: don't use EV_PEERSIST, time-cost routine may be dangerous
-  //  struct event *timeout_ev = event_new(base, -1, EV_PERSIST, routine, NULL);
-  //  event_add(timeout_ev, &ROUTINE_INTERVAL);
-  // }
+  // ZEventProxy test_event(base, test_callback);
+  // test_param_t param;
+  // param.base = base;
+  // param.max_client_count = 1;
+  // param.client_count = 1;
+  // struct timeval tv = { 1, 0 };
+  // test_event.registerPersistTimeout(&param, &tv);
 
   // basicly equals to event_base_loop()
   // event_base_dispatch(base);
@@ -123,20 +87,6 @@ int main(int argc, char *argv[])
     // event_base_loop(base, EVLOOP_NONBLOCK);
     event_base_loop(base, 0);
     Z_LOG_D("end of loop");
-
-    // ZDispatcher::instance()->routine(delta_time);
-
-    // usleep(100 * 1000);  // 100 milliseconds
-
-    // end_time = ZTime::getInMillisecond();
-    // delta_time = end_time - begin_time;
-    // begin_time = end_time;
-
-    // // Z_LOG_D("delta_time: [%ld]", delta_time);
-    // assert(delta_time > 0);
-    // if (delta_time <= 0) {
-    //  delta_time = 100;
-    // }
   }
 
   return 0;

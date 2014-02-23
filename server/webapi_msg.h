@@ -9,18 +9,6 @@
 
 #include "zinner_message_ex.h"
 
-// enum emPUSH_MSG_TYPE {
-//  PUSH_INVALID = -1,
-//  PUSH_HB = 0,
-// };
-
-// class ZPushHBMsg : public ZInnerMsg {
-//  public:
-//    ZPushHBMsg(): ZInnerMsg(PUSH_HB) {
-//      //
-//    }
-//  };
-
 json_t* inner2Json(ZInnerMsg *innerMsg);
 
 json_t* inner2Json(ZInnerGetDevListReq *msg);
@@ -31,6 +19,12 @@ json_t* inner2Json(ZInnerGetDevInfoRsp *msg);
 
 json_t* inner2Json(ZInnerSetDevInfoRsp *msg);
 json_t* inner2Json(ZInnerSetDevInfoReq *msg);
+
+json_t* inner2Json(ZInnerPreBindReq *msg);
+json_t* inner2Json(ZInnerPreBindRsp *msg);
+
+json_t* inner2Json(ZInnerBindReq *msg);
+json_t* inner2Json(ZInnerBindRsp *msg);
 
 // deprecated
 ZInnerMsg* decodePushMsg(char *buf, uint32_t buf_len);

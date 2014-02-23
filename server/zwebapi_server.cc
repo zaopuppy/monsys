@@ -102,13 +102,9 @@ void ZWebApiServer::onAccept(
   assert(h);
 
   h->read_event_proxy_.registerSocket(fd, EV_READ|EV_PERSIST, h, NULL);
-  // h->read_event_ =
-  //   event_new(getBase(), fd, EV_READ|EV_PERSIST, ZServerHandler::SOCKET_CALLBACK, h);
 
   int rv = h->init();
   assert(rv == OK);
-
-  // event_add(h->read_event_, NULL);
 
   // add to handler map
   handler_map_[h->getId()] = h;
