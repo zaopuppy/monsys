@@ -57,7 +57,7 @@ private:
 private:
   // TODO: use hash map instead of list
   MODULE_LIST_TYPE module_list_;
-  std::list<ZInnerMsg*> msg_list_;
+  // std::list<ZInnerMsg*> msg_list_;
   // SESSION_CTRL_TYPE session_ctrl_;
 
   int routine_interval_;

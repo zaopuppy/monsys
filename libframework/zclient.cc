@@ -73,18 +73,12 @@ int ZClient::init() {
   return OK;
 }
 
-int ZClient::sendMsg(ZInnerMsg *msg)
+int ZClient::onInnerMsg(ZInnerMsg *msg)
 {
   Z_LOG_D("ZClient::sendMsg(%p)", msg);
   if (handler_) {
     handler_->onInnerMsg(msg);
   }
-  return 0;
-}
-
-int ZClient::onInnerMsg(ZInnerMsg *msg)
-{
-  Z_LOG_D("ZClient::sendMsg(%p)", msg);
   return 0;
 }
 

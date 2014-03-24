@@ -25,8 +25,10 @@ import com.letmidi.monsys.FgwInfo;
 
 public class MonsysInterface {
   private static final String TAG = "XXX";
-  private static final String SERVER_LOGIN_HOST = "http://letsmidi.wicp.net:1983/interface/login";
-  private static final String SERVER_HOST = "http://letsmidi.wicp.net:1983/interface";
+//  private static final String SERVER_LOGIN_HOST = "http://letsmidi.wicp.net:1983/interface/login";
+//  private static final String SERVER_HOST = "http://letsmidi.wicp.net:1983/interface";
+  private static final String SERVER_LOGIN_HOST = "http://192.168.2.146:8888/interface/login";
+  private static final String SERVER_HOST = "http://192.168.2.146:8888/interface";
   private static String mCookies = null;
 
   public static class Response {
@@ -89,6 +91,7 @@ public class MonsysInterface {
       jreq.put("cmd", "get-fgw-list");
       jreq.put("account", account);
       jreq.put("uid", "456");
+      jreq.put("seq", generateSequence());
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
       return null;
@@ -135,6 +138,7 @@ public class MonsysInterface {
     try {
       jreq.put("cmd", "get-dev-list");
       jreq.put("fgw", fgw_id);
+      jreq.put("seq", generateSequence());
       jreq.put("uid", "456");
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
@@ -187,6 +191,7 @@ public class MonsysInterface {
       jreq.put("cmd", "get-dev-info");
       jreq.put("fgw", fgw_id);
       jreq.put("addr", dev_addr);
+      jreq.put("seq", generateSequence());
       jreq.put("uid", "456");
       JSONArray jid_list = new JSONArray(ids);
       jreq.put("id-list", jid_list);
@@ -231,6 +236,7 @@ public class MonsysInterface {
     try {
       jreq.put("cmd", "pre-bind");
       jreq.put("fgw", fgw_id);
+      jreq.put("seq", generateSequence());
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
       return false;
@@ -266,6 +272,7 @@ public class MonsysInterface {
     try {
       jreq.put("cmd", "bind");
       jreq.put("fgw", fgw_id);
+      jreq.put("seq", generateSequence());
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
       return false;
@@ -427,5 +434,16 @@ public class MonsysInterface {
     if (conn != null) { conn.disconnect(); }
 
       return null;
+  }
+
+  private static int mLastSequence = 0;
+  private static int generateSequence() {
+    if (mLastSequence >= 0xFFFFFF) {
+      mLastSequence = 0;
+    }
+
+    mLastSequence += 1;
+
+    return mLastSequence;
   }
 }

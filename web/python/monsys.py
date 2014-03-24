@@ -23,7 +23,8 @@ define("mysql_host", default = "192.168.2.105:3306", help = "database host")
 define("mysql_database", default = "monsys_db", help = "database name")
 define("mysql_user", default = "monsys", help = "database user")
 define("mysql_password", default = "monsys", help = "database password")
-define("center_host", default = "192.168.2.105", help = "center host")
+# define("center_host", default = "192.168.2.105", help = "center host")
+define("center_host", default = "127.0.0.1", help = "center host")
 define("center_port", default = 1983, help = "center host", type = int)
 
 # home-page --> login --> fgw-list --> dev-list --> dev

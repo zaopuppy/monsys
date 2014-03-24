@@ -10,6 +10,7 @@
 
 // #include "zwebapi_session.h"
 #include "zinner_message_ex.h"
+#include "zwebapi_session.h"
 
 // class ZWebApiHandler : public ZHandler {
 class ZWebApiHandler : public ZServerHandler {
@@ -33,11 +34,18 @@ class ZWebApiHandler : public ZServerHandler {
     return ::send(getFd(), buf, buf_len, 0);
   }
 
- private:
+public:
+  int send(json_t *msg);
+
+  // typedef ZSessionCtrl<uint32_t, ZWebApiSession*> SESSIONCTRL_TYPE;
+private:
   int processFGWGetListReq(json_t *jmsg);
 
   void sendRsp(const char *text_msg, int status);
-  int send(json_t *msg);
+
+  ZWebApiSession* createSession(ZInnerMsg *inner_msg);
+
+  void destroySession(ZSession<uint32_t> *session);
 
  private:
   // ZSocket server_;
@@ -46,6 +54,13 @@ class ZWebApiHandler : public ZServerHandler {
   // evutil_socket_t fd_;
 
   // std::map<uint32_t, ZWebApiSession*> session_map_;
+
+  // XXX:
+  // NO, we shouldn't use sessionctrl, cause HTTP is usually short connecting
+  // handler will be destroied very quickly
+  // SESSIONCTRL_TYPE session_ctrl_;
+
+  ZWebApiSession *session_;
 
   // XXX
   ZInnerAddress addr_;

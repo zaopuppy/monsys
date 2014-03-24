@@ -21,20 +21,20 @@ int ZDispatcher::sendDirect(ZInnerMsg *msg)
   return OK;
 }
 
-// XXX: this mothod should not used currently, use message queue depends on
-// the implement of message loop, which will be a performance problem
-int ZDispatcher::sendMsg(ZInnerMsg *msg)
-{
-  if (!msg->src_addr_.isValid()) {
-    Z_LOG_D("Source address is invalid");
-    // delete msg;
-    // return -1;
-  }
+// // XXX: this mothod should not used currently, use message queue depends on
+// // the implement of message loop, which will be a performance problem
+// int ZDispatcher::sendMsg(ZInnerMsg *msg)
+// {
+//   if (!msg->src_addr_.isValid()) {
+//     Z_LOG_D("Source address is invalid");
+//     // delete msg;
+//     // return -1;
+//   }
 
-  msg_list_.push_back(msg);
+//   msg_list_.push_back(msg);
 
-  return 0;
-}
+//   return 0;
+// }
 
 int ZDispatcher::registerModule(ZModule *m)
 {

@@ -10,7 +10,7 @@
 template <typename T_Key>
 class ZSession {
  public:
-  ZSession(): key_(0), touch_time_(0), timeout_(0) {}
+  ZSession(): key_(0), touch_time_(0), timeout_(0), closed_(false) {}
   virtual ~ZSession() {}
 
  public:
@@ -19,22 +19,20 @@ class ZSession {
     Z_LOG_D("timeout_: [%ld]", timeout_);
     Z_LOG_D("delta: [%ld]", delta);
     touch_time_ += delta;
-  }
-
-  virtual bool isComplete() {
-    if (touch_time_ < timeout_) {
-      return false;
+    if (touch_time_ > timeout_) {
+      this->close();
+      return;
     }
 
     Z_LOG_D("session complete: %p", this);
     Z_LOG_D("touch_time_: [%ld], timeout_: [%ld]", touch_time_, timeout_);
-
-    return true;
   }
 
-  virtual void event(ZInnerMsg *msg) {
-    Z_LOG_D("enter event()");
+  virtual bool isComplete() {
+    return closed_;
   }
+
+  virtual void event(ZInnerMsg *msg) = 0;
 
  public:
   // void touch() { touch_time_ = ZTime::getInMillisecond(); }
@@ -43,11 +41,13 @@ class ZSession {
   void setKey(T_Key key) { key_ = key; }
   long getTimeout() { return timeout_; }
   void setTimeout(long timeout) { timeout_ = timeout; }
+  void close() { closed_ = true; }
 
  private:
   T_Key key_;
   long touch_time_;
   long timeout_;
+  bool closed_;
 };
 
 class ZInnerForwardSession : public ZSession<uint32_t> {

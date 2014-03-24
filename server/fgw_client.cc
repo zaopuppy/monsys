@@ -3,6 +3,7 @@
 void FGWClient::routine(long delta)
 {
   // Z_LOG_D("FGWClient::routine()");
+  handler_->routine(delta);
 }
 
 

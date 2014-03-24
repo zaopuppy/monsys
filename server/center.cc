@@ -72,7 +72,13 @@ int main(int argc, char *argv[])
 
   // main-loop
   // basicly equals to event_base_loop()
-  event_base_dispatch(base);
+  // event_base_dispatch(base);
+  while (1) {
+    event_base_loop(base, EVLOOP_ONCE);
+    fgw_server->checkMsgQueue();
+    webapi_server->checkMsgQueue();
+    echo_server->checkMsgQueue();
+  }
 
   Z_LOG_I("exited normally");
 

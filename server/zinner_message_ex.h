@@ -30,32 +30,32 @@ enum {
 
 ////////////////////////////////////////////////////
 // Transport
-class ZTransportMsg : public ZInnerMsg {
- public:
-  ZTransportMsg()
-    : ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL) { }
-  ~ZTransportMsg() {
-    if (data_) {
-      delete []data_;
-      data_ = NULL;
-    }
-  }
+// class ZTransportMsg : public ZInnerMsg {
+//  public:
+//   ZTransportMsg()
+//     : ZInnerMsg(Z_TRANSPORT_MSG), data_(NULL) { }
+//   ~ZTransportMsg() {
+//     if (data_) {
+//       delete []data_;
+//       data_ = NULL;
+//     }
+//   }
 
- public:
-  void set(char *data, uint32_t data_len) {
-    if (data_) {
-      delete []data_;
-      data_ = NULL;
-    }
-    data_len_ = data_len;
-    data_ = new char[data_len_];
-    memcpy(data_, data, data_len_);
-  }
+//  public:
+//   void set(char *data, uint32_t data_len) {
+//     if (data_) {
+//       delete []data_;
+//       data_ = NULL;
+//     }
+//     data_len_ = data_len;
+//     data_ = new char[data_len_];
+//     memcpy(data_, data, data_len_);
+//   }
 
- public:
-  char *data_;
-  uint32_t data_len_;
-};
+//  public:
+//   char *data_;
+//   uint32_t data_len_;
+// };
 
 ////////////////////////////////////////////////////
 // GetDevList
@@ -65,6 +65,7 @@ class ZInnerGetDevListReq : public ZInnerMsg {
     : ZInnerMsg(Z_ZB_GET_DEV_LIST_REQ) { }
  public:
   std::string uid_;
+  std::string fgw_;
 };
 
 class ZInnerGetDevListRsp : public ZInnerMsg {
@@ -93,6 +94,7 @@ class ZInnerGetDevInfoReq : public ZInnerMsg {
     : ZInnerMsg(Z_ZB_GET_DEV_REQ) { }
 
  public:
+  std::string fgw_;
   std::string uid_;
   uint16_t addr_;
   std::vector<uint8_t> item_ids_;
@@ -116,6 +118,7 @@ class ZInnerSetDevInfoReq : public ZInnerMsg {
     : ZInnerMsg(Z_ZB_SET_DEV_REQ) { }
 
  public:
+  std::string fgw_;
   std::string uid_;
   uint16_t addr_;
   std::vector<ZItemPair> dev_vals_;
@@ -138,6 +141,7 @@ class ZInnerPreBindReq : public ZInnerMsg {
     : ZInnerMsg(Z_ZB_PRE_BIND_REQ) { }
 
  public:
+  std::string fgw_;
 };
 
 class ZInnerPreBindRsp : public ZInnerMsg {
@@ -157,6 +161,7 @@ class ZInnerBindReq : public ZInnerMsg {
     : ZInnerMsg(Z_ZB_BIND_REQ) { }
 
  public:
+  std::string fgw_;
 };
 
 class ZInnerBindRsp : public ZInnerMsg {

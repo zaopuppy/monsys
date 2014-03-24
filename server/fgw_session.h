@@ -11,6 +11,8 @@ class FGWSession : public ZSession<uint32_t> {
 
   typedef ZSession super;
 
+  virtual void event(ZInnerMsg *msg) {}
+
  public:
   ZInnerAddress src_addr_;
   ZInnerAddress dst_addr_;

@@ -24,7 +24,7 @@ class ZServer : public ZModule, public ZTimer::TimerCallback {
  public:
   virtual int init();
   virtual void close();
-  virtual int sendMsg(ZInnerMsg *msg);
+  // virtual int sendMsg(ZInnerMsg *msg);
   virtual int onInnerMsg(ZInnerMsg *msg);
 
   // @override from ZTimer::TimerCallback

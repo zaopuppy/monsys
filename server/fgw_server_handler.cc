@@ -89,15 +89,15 @@ int FGWServerHandler::processLoginReq(json_t *jmsg)
     FGWManager::instance()->add_handler("DEVID-Z", getId());
 
     // status
-    json_t *jst = json_integer(0);
-    json_object_set_new(jrsp, "result", jst);
+    json_t *jstatus = json_integer(0);
+    json_object_set_new(jrsp, "result", jstatus);
 
   } else {
     Z_LOG_E("Failed to check account");
 
     // status
-    json_t *jst = json_integer(-1);
-    json_object_set_new(jrsp, "result", jst);
+    json_t *jstatus = json_integer(-1);
+    json_object_set_new(jrsp, "result", jstatus);
   }
 
   char *str_dump = json_dumps(jrsp, 0);
@@ -152,6 +152,18 @@ int FGWServerHandler::onRead_WaitForLogin(char *buf, uint32_t buf_len)
   return OK;
 }
 
+// 一般来说一个会话会有两个索引: 外部索引, 内部索引
+// 需要两个map, 外部一个, 内部一个, 但是指向同一个session
+// 外部消息处理流程:
+//    * 解码, 获得外部sequence
+//    * 根据外部sequence检查是否已经存在session
+//    * 创建(或者获取)会话, 调用会话进行处理
+//    * 如果会话不需要保存, 将会话从外部map和内部map中删除
+// 内部消息处理流程:
+//    * 解码, 获得内部sequence
+//    * 根据内部sequence检查是否已经存在session
+//    * 创建(或者获取)会话, 调用会话进行处理
+//    * 如果会话不需要保存, 将会话从外部map和内部map中删除
 int FGWServerHandler::onRead_LogedIn(char *buf, uint32_t buf_len)
 {
   Z_LOG_D("FGWServerHandler::onRead_LogedIn()");

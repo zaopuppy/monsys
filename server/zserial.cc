@@ -46,12 +46,12 @@ void ZSerial::close()
   fd_ = -1;
 }
 
-int ZSerial::sendMsg(ZInnerMsg *msg)
-{
-  Z_LOG_D("ZSerial::sendMsg");
+// int ZSerial::sendMsg(ZInnerMsg *msg)
+// {
+//   Z_LOG_D("ZSerial::sendMsg");
 
-  return onInnerMsg(msg);
-}
+//   return onInnerMsg(msg);
+// }
 
 int ZSerial::onInnerMsg(ZInnerMsg *msg)
 {

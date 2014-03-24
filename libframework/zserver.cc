@@ -24,11 +24,11 @@ void ZServer::onTimeout(int handler_id)
   // }
 }
 
-int ZServer::sendMsg(ZInnerMsg *msg)
-{
-  Z_LOG_D("ZServer::sendMsg");
-  return onInnerMsg(msg);
-}
+// int ZServer::sendMsg(ZInnerMsg *msg)
+// {
+//   Z_LOG_D("ZServer::sendMsg");
+//   return onInnerMsg(msg);
+// }
 
 int ZServer::onInnerMsg(ZInnerMsg *msg)
 {

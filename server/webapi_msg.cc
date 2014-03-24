@@ -61,7 +61,13 @@ ZInnerMsg* json2InnerGetDevListReq(json_t *jmsg)
     return NULL;
   }
 
-  // XXX ??
+  // fgw
+  json_t *jfgw = json_object_get(jmsg, "fgw");
+  if (!jfgw || !json_is_string(jfgw)) {
+    Z_LOG_D("Missing fgw field");
+    return NULL;
+  }
+
   // // sequence
   // json_t *jseq = json_object_get(jmsg, "seq");
   // if (jseq == NULL || !json_is_integer(jseq)) {
@@ -71,6 +77,7 @@ ZInnerMsg* json2InnerGetDevListReq(json_t *jmsg)
   ZInnerGetDevListReq *inner_msg = new ZInnerGetDevListReq();
   // inner_msg->seq_ = json_integer_value(jseq);
   inner_msg->uid_ = json_string_value(juid);
+  inner_msg->fgw_ = json_string_value(jfgw);
 
   return inner_msg;
 }
@@ -155,13 +162,13 @@ ZInnerMsg* json2InnerGetDevListRsp(json_t *jmsg)
 }
 
 
-ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
+ZInnerMsg* json2InnerGetDevInfoReq(json_t *jmsg)
 {
   Z_LOG_D("json2InnerGetDevInfoReq()");
 
   ////////////////////////////////////////////////////////
   // command
-  json_t *jcmd = json_object_get(jobj, "cmd");
+  json_t *jcmd = json_object_get(jmsg, "cmd");
   if (!jcmd || !json_is_string(jcmd)) {
     Z_LOG_D("Missing 'cmd' field, or 'cmd' is not a string");
     return NULL;
@@ -173,18 +180,31 @@ ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
     return NULL;
   }
 
+  // fgw
+  json_t *jfgw = json_object_get(jmsg, "fgw");
+  if (!jfgw || !json_is_string(jfgw)) {
+    Z_LOG_D("Missing fgw field");
+    return NULL;
+  }
+
   ////////////////////////////////////////////////////////
   // uid
-  json_t *juid = json_object_get(jobj, "uid");
+  json_t *juid = json_object_get(jmsg, "uid");
   if (!juid || !json_is_string(juid)) {
     Z_LOG_D("uid is illegal");
     return NULL;
   }
   // int uid = (int)json_integer_value(juid);
 
+  // // sequence
+  // json_t *jseq = json_object_get(jmsg, "seq");
+  // if (jseq == NULL || !json_is_integer(jseq)) {
+  //  return NULL;
+  // }
+
   ////////////////////////////////////////////////////////
   // addr
-  json_t *jaddr = json_object_get(jobj, "addr");
+  json_t *jaddr = json_object_get(jmsg, "addr");
   if (!jaddr || !json_is_integer(jaddr))
   {
     Z_LOG_D("addr is illegal");
@@ -202,7 +222,7 @@ ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
 
   ////////////////////////////////////////////////////////
   // id-list
-  json_t *jid_list = json_object_get(jobj, "id-list");
+  json_t *jid_list = json_object_get(jmsg, "id-list");
   // if (!jid_list || !json_is_string(jid_list)) {
   if (!jid_list) {
     Z_LOG_D("invalid id-list format");
@@ -218,8 +238,10 @@ ZInnerMsg* json2InnerGetDevInfoReq(json_t *jobj)
   // sendRsp("uid is good, dev-id is good, everything is good:)", 200);
   // transfer from json to ZigBee message
   ZInnerGetDevInfoReq *req = new ZInnerGetDevInfoReq();
+  // req->seq_ = json_integer_value(jseq);
   req->uid_ = json_string_value(juid);
   req->addr_ = (uint32_t)(addr & 0xFFFF);
+  req->fgw_ = json_string_value(jfgw);
 
   uint32_t id_list_len = json_array_size(jid_list);
   for (uint32_t i = 0; i < id_list_len; ++i) {
@@ -293,12 +315,12 @@ ZInnerMsg* json2InnerGetDevInfoRsp(json_t *jobj)
 }
 
 
-ZInnerMsg* json2InnerSetDevInfoReq(json_t *jobj)
+ZInnerMsg* json2InnerSetDevInfoReq(json_t *jmsg)
 {
   Z_LOG_D("json2InnerSetDevInfoReq()");
 
   // cmd
-  json_t *cmd = json_object_get(jobj, "cmd");
+  json_t *cmd = json_object_get(jmsg, "cmd");
   if (!cmd || !json_is_string(cmd)) {
     Z_LOG_D("Missing 'cmd' field, or 'cmd' is not a string");
     return NULL;
@@ -311,22 +333,35 @@ ZInnerMsg* json2InnerSetDevInfoReq(json_t *jobj)
     return NULL;
   }
 
+  // fgw
+  json_t *jfgw = json_object_get(jmsg, "fgw");
+  if (!jfgw || !json_is_string(jfgw)) {
+    Z_LOG_D("Missing fgw field");
+    return NULL;
+  }
+
   // uid
-  json_t *juid = json_object_get(jobj, "uid");
+  json_t *juid = json_object_get(jmsg, "uid");
   if (!juid || !json_is_string(juid)) {
     Z_LOG_D("uid is illegal");
     return NULL;
   }
 
+  // // sequence
+  // json_t *jseq = json_object_get(jmsg, "seq");
+  // if (jseq == NULL || !json_is_integer(jseq)) {
+  //  return NULL;
+  // }
+
   // addr
-  json_t *jaddr = json_object_get(jobj, "addr");
+  json_t *jaddr = json_object_get(jmsg, "addr");
   if (!jaddr || !json_is_integer(jaddr)) {
     Z_LOG_D("addr is illegal");
     return NULL;
   }
 
   // vals
-  json_t *jvals = json_object_get(jobj, "vals");
+  json_t *jvals = json_object_get(jmsg, "vals");
   if (!jvals || !json_is_array(jvals)) {
     Z_LOG_D("vals is illeagl");
     return NULL;
@@ -340,8 +375,10 @@ ZInnerMsg* json2InnerSetDevInfoReq(json_t *jobj)
 
   // new request
   ZInnerSetDevInfoReq *req = new ZInnerSetDevInfoReq();
+  // req->seq_ = json_integer_value(jseq);
   req->uid_ = json_string_value(juid);
   req->addr_ = addr;
+  req->fgw_ = json_string_value(jfgw);
 
   ZItemPair pair;
   json_t *elem;
@@ -413,7 +450,7 @@ ZInnerMsg* json2InnerSetDevInfoRsp(json_t *jobj)
   return msg;
 }
 
-ZInnerMsg* json2InnerPreBindReq(json_t *jobj)
+ZInnerMsg* json2InnerPreBindReq(json_t *jmsg)
 {
   Z_LOG_D("json2InnerPreBindReq()");
 
@@ -423,7 +460,22 @@ ZInnerMsg* json2InnerPreBindReq(json_t *jobj)
   //   return NULL;
   // }
 
+  // fgw
+  json_t *jfgw = json_object_get(jmsg, "fgw");
+  if (!jfgw || !json_is_string(jfgw)) {
+    Z_LOG_D("Missing fgw field");
+    return NULL;
+  }
+
+  // // sequence
+  // json_t *jseq = json_object_get(jmsg, "seq");
+  // if (jseq == NULL || !json_is_integer(jseq)) {
+  //  return NULL;
+  // }
+
   ZInnerPreBindReq *msg = new ZInnerPreBindReq();
+  // msg->seq_ = json_integer_value(jseq);
+  msg->fgw_ = json_string_value(jfgw);
 
   return msg;
 }
@@ -444,11 +496,28 @@ ZInnerMsg* json2InnerPreBindRsp(json_t *jobj)
   return msg;
 }
 
-ZInnerMsg* json2InnerBindReq(json_t *jobj)
+ZInnerMsg* json2InnerBindReq(json_t *jmsg)
 {
   Z_LOG_D("json2InnerBindReq()");
 
-  return new ZInnerBindReq();
+  // fgw
+  json_t *jfgw = json_object_get(jmsg, "fgw");
+  if (!jfgw || !json_is_string(jfgw)) {
+    Z_LOG_D("Missing fgw field");
+    return NULL;
+  }
+
+  // // sequence
+  // json_t *jseq = json_object_get(jmsg, "seq");
+  // if (jseq == NULL || !json_is_integer(jseq)) {
+  //  return NULL;
+  // }
+
+  ZInnerBindReq *msg = new ZInnerBindReq();
+  // msg->seq_ = json_integer_value(jseq);
+  msg->fgw_ = json_string_value(jfgw);
+
+  return msg;
 }
 
 ZInnerMsg* json2InnerBindRsp(json_t *jobj)
@@ -526,6 +595,10 @@ json_t* inner2Json(ZInnerGetDevListReq *msg)
   // uid
   json_t *juid = json_string(msg->uid_.c_str());
   json_object_set_new(jmsg, "uid", juid);
+
+  // fgw
+  json_t *jfgw = json_string(msg->fgw_.c_str());
+  json_object_set_new(jmsg, "fgw", jfgw);
 
   // seq
   json_t *jseq = json_integer(msg->seq_);
@@ -611,6 +684,10 @@ json_t* inner2Json(ZInnerGetDevInfoReq *msg)
     json_decref(jcmd);
     return NULL;
   }
+
+  // fgw
+  json_t *jfgw = json_string(msg->fgw_.c_str());
+  json_object_set_new(jmsg, "fgw", jfgw);
 
   // uid
   json_t *juid = json_string(msg->uid_.c_str());
@@ -708,6 +785,10 @@ json_t* inner2Json(ZInnerSetDevInfoReq *msg)
     return NULL;
   }
 
+  // fgw
+  json_t *jfgw = json_string(msg->fgw_.c_str());
+  json_object_set_new(jmsg, "fgw", jfgw);
+
   // uid
   json_t *juid = json_string(msg->uid_.c_str());
   json_object_set_new(jmsg, "uid", juid);
@@ -787,6 +868,10 @@ json_t* inner2Json(ZInnerPreBindReq *msg)
   json_t *jseq = json_integer(msg->seq_);
   json_object_set_new(jmsg, "seq", jseq);
 
+  // fgw
+  json_t *jfgw = json_string(msg->fgw_.c_str());
+  json_object_set_new(jmsg, "fgw", jfgw);
+
   return jmsg;
 }
 
@@ -835,6 +920,10 @@ json_t* inner2Json(ZInnerBindReq *msg)
   // seq
   json_t *jseq = json_integer(msg->seq_);
   json_object_set_new(jmsg, "seq", jseq);
+
+  // fgw
+  json_t *jfgw = json_string(msg->fgw_.c_str());
+  json_object_set_new(jmsg, "fgw", jfgw);
 
   return jmsg;
 }

@@ -39,7 +39,7 @@ libzigbee: libbase
 libframework: libbase
 	make -C $@
 
-server: libzigbee libbase
+server: libzigbee libbase libframework
 	make -C $@
 
 # stub:

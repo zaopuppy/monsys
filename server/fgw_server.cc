@@ -10,7 +10,7 @@ int FGWServer::onInnerMsg(ZInnerMsg *msg)
   handler_id_t handler_id = msg->dst_addr_.handler_id_;
 
   if (handler_id < MIN_HANDLER_ID || handler_id > MAX_HANDLER_ID) {
-   printf("Bad handler id: %d", handler_id);
+   Z_LOG_E("Bad handler id: %d", handler_id);
    return FAIL;
   }
 

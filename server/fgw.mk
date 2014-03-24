@@ -42,13 +42,13 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -g -fPIC -Wall \
 	-I../ \
-	-I../libs/include/ \
-	-I/opt/local/include \
-	-I/opt/local/include/boost/tr1
+	-I../libs/include/
 
 ifeq ($(ut), 1)
 CFLAGS += -I${GTEST_DIR}/include \
-	-I${GMOCK_DIR}/include
+	-I${GMOCK_DIR}/include \
+	-I/opt/local/include \
+	-I/opt/local/include/boost/tr1
 else
 CFLAGS += -Wall
 endif

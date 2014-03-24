@@ -28,6 +28,9 @@ GTAGS
 # others
 *.d
 
+*.apk
+*.class
+
 bak
 ts
 

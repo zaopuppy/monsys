@@ -41,6 +41,8 @@ protected:
 
   void sendRsp(const char *text_msg, int status);
 
+  FGWClientSession* createSession(ZInnerMsg *inner_msg);
+
   typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWClientSession> SESSION_CTRL_TYPE;
 
   // state-machine

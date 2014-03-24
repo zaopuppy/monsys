@@ -27,7 +27,7 @@ class ZClient : public ZModule {
  public:
   virtual int init();
   virtual void close();
-  virtual int sendMsg(ZInnerMsg *msg);
+  // virtual int sendMsg(ZInnerMsg *msg);
   virtual int onInnerMsg(ZInnerMsg *msg);
 
   // TODO

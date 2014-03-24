@@ -60,8 +60,11 @@ int main(int argc, char *argv[])
 
   ZDispatcher::init(base);
 
-  if (!start_serial(base)) {
-    Z_LOG_D("failed to start serial.");
+  const char* serial_dev = "/dev/ttyUSB0";
+  // const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+  ZModule *serial = new ZSerial(base, serial_dev);
+  if (serial->init() != OK) {
+    Z_LOG_D("Failed to init serial module.");
     return FAIL;
   }
 
@@ -83,10 +86,12 @@ int main(int argc, char *argv[])
   // basicly equals to event_base_loop()
   // event_base_dispatch(base);
   while (1) {
-    Z_LOG_D("beginning of loop");
-    // event_base_loop(base, EVLOOP_NONBLOCK);
-    event_base_loop(base, 0);
-    Z_LOG_D("end of loop");
+    // Z_LOG_D("beginning of loop");
+    event_base_loop(base, EVLOOP_ONCE);
+    // event_base_loop(base, 0);
+    serial->checkMsgQueue();
+    client->checkMsgQueue();
+    // Z_LOG_D("end of loop");
   }
 
   return 0;

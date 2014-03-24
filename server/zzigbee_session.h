@@ -16,6 +16,8 @@ class ZZigBeeSession : public ZSession<uint32_t> {
   //  uint16_t u16;
   // };
 
+  virtual void event(ZInnerMsg *msg) {}
+
  public:
   ZInnerAddress src_addr_;
   ZInnerAddress dst_addr_;

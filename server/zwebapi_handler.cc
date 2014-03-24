@@ -36,20 +36,40 @@ int ZWebApiHandler::onInnerMsg(ZInnerMsg *msg)
 {
 	Z_LOG_D("ZWebApiHandler::onInnerMsg()");
 
-	json_t *web_msg = inner2Json(msg);
-	if (web_msg == NULL) {
-		Z_LOG_E("Failed to convert inner message to web message");
-		return FAIL;
-	}
+  if (session_ == NULL) {
+    Z_LOG_E("no session waiting for xx");
+    return FAIL;
+  }
 
-	send(web_msg);
-	json_decref(web_msg);
+  session_->event(msg);
+  if (session_->isComplete()) {
+    destroySession(session_);
+    session_ = NULL;
+  }
+
+	// json_t *web_msg = inner2Json(msg);
+	// if (web_msg == NULL) {
+	// 	Z_LOG_E("Failed to convert inner message to web message");
+	// 	return FAIL;
+	// }
+
+	// send(web_msg);
+	// json_decref(web_msg);
 
 	return OK;
 }
 
 void ZWebApiHandler::routine(long delta)
 {
+  if (session_ == NULL) {
+    return;
+  }
+
+  session_->doTimeout(delta);
+  if (session_->isComplete()) {
+    destroySession(session_);
+    session_ = NULL;
+  }
 }
 
 void ZWebApiHandler::sendRsp(const char *text_msg, int status)
@@ -59,6 +79,30 @@ void ZWebApiHandler::sendRsp(const char *text_msg, int status)
 	Z_LOG_D("sent %d bytes", rv);
 }
 
+ZWebApiSession* ZWebApiHandler::createSession(ZInnerMsg *inner_msg)
+{
+  Z_LOG_D("ZWebApiHandler::createSession()");
+
+  // TODO: use a map instead of switch-case
+  switch (inner_msg->msg_type_) {
+    case Z_ZB_GET_DEV_LIST_REQ:
+    case Z_ZB_GET_DEV_REQ:
+    case Z_ZB_SET_DEV_REQ:
+    case Z_ZB_PRE_BIND_REQ:
+      return new ZWebApiForwardSession(this);
+    case Z_ZB_BIND_REQ:
+    default:
+      Z_LOG_E("this message type is no supported");
+      return NULL;
+  }
+}
+
+void ZWebApiHandler::destroySession(ZSession<uint32_t> *session)
+{
+  Z_LOG_D("ZWebApiHandler::destroySession()");
+  delete session;
+}
+
 int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 {
 	Z_LOG_D("ZWebApiModule::onRead(fd_=%d)", getFd());
@@ -66,10 +110,15 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 	if (buf_len <= 0) { // MIN_MSG_LEN(header length)
 		Z_LOG_D("empty message");
 		sendRsp("empty message", 404);
-		return -1;
+		return FAIL;
 	}
 
 	trace_bin(buf, buf_len);
+
+  if (session_ != NULL) {
+    sendRsp("previous message handling", 404);
+    return FAIL;
+  }
 
 	// decode first
 	json_error_t jerror;
@@ -96,41 +145,62 @@ int ZWebApiHandler::onRead(char *buf, uint32_t buf_len)
 		}
 	}
 
-	// find fgw first
-	int handler_id = INVALID_ID;
-	{
-		json_t *jfgw = json_object_get(jmsg, "fgw");
-		if (!jfgw || !json_is_string(jfgw)) {
-			Z_LOG_D("Missing fgw field");
-			sendRsp("fgw missed", 404);
-			return FAIL;
-		}
+  ZInnerMsg *inner_msg = json2Inner(jmsg);
+  if (inner_msg == NULL) {
+    Z_LOG_D("Failed to convert web message to inner message");
+    return FAIL;
+  }
 
-		const char *fgw = json_string_value(jfgw);
+  // ZSession<uint32_t> *session = createSession(inner_msg);
+  session_ = createSession(inner_msg);
+  if (session_ == NULL) {
+    return FAIL;
+  }
 
-		handler_id = FGWManager::instance()->find_handler(fgw);
-		if (handler_id == INVALID_ID) {
-			Z_LOG_D("no such fgw");
-			sendRsp("No such FGW", 404);
-			return FAIL;
-		}
-	}
+  session_->event(inner_msg);
+  if (!session_->isComplete()) {
+    // TODO: add to session map
+  } else {
+    // TODO: delete it
+    destroySession(session_);
+    session_ = NULL;
+  }
 
-	// convert to inner message
-	ZInnerMsg *inner_msg = json2Inner(jmsg);
-	if (inner_msg == NULL) {
-		Z_LOG_D("Failed to convert web message to inner message");
-		return FAIL;
-	}
+	// // find fgw first
+	// int handler_id = INVALID_ID;
+	// {
+	// 	json_t *jfgw = json_object_get(jmsg, "fgw");
+	// 	if (!jfgw || !json_is_string(jfgw)) {
+	// 		Z_LOG_D("Missing fgw field");
+	// 		sendRsp("fgw missed", 404);
+	// 		return FAIL;
+	// 	}
 
-	// add 'seq' field
-	inner_msg->seq_ = getId();
+	// 	const char *fgw = json_string_value(jfgw);
 
-	inner_msg->src_addr_ = addr_;
-	inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
-	inner_msg->dst_addr_.handler_id_ = handler_id;
+	// 	handler_id = FGWManager::instance()->find_handler(fgw);
+	// 	if (handler_id == INVALID_ID) {
+	// 		Z_LOG_D("no such fgw");
+	// 		sendRsp("No such FGW", 404);
+	// 		return FAIL;
+	// 	}
+	// }
 
-	ZDispatcher::instance()->sendDirect(inner_msg);
+	// // convert to inner message
+	// ZInnerMsg *inner_msg = json2Inner(jmsg);
+	// if (inner_msg == NULL) {
+	// 	Z_LOG_D("Failed to convert web message to inner message");
+	// 	return FAIL;
+	// }
+
+	// // add 'seq' field
+	// inner_msg->seq_ = getId();
+
+	// inner_msg->src_addr_ = addr_;
+	// inner_msg->dst_addr_.module_type_ = MODULE_FGW_SERVER;
+	// inner_msg->dst_addr_.handler_id_ = handler_id;
+
+	// ZDispatcher::instance()->sendDirect(inner_msg);
 
 	return 0;
 }

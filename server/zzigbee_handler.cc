@@ -271,7 +271,8 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
     delete session;
   }
 
-  ZDispatcher::instance()->sendMsg(rsp);
+  // ZDispatcher::instance()->sendMsg(rsp);
+  ZDispatcher::instance()->sendDirect(rsp);
 
   return 0;
 }
