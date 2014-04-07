@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
+        android:text="Refresh" />
 
     <SurfaceView
         android:id="@+id/color_pick_view"
@@ -43,5 +43,13 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/g_slider"
         android:max="255" />
+
+    <Button
+        android:id="@+id/switch_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/b_slider"
+        android:layout_centerHorizontal="true"
+        android:text="Switch" />
 
 </RelativeLayout>

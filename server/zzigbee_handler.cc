@@ -36,6 +36,10 @@ int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
       {
         return processMsg((ZInnerSetDevInfoReq*)msg);
       }
+    case Z_ZB_BIND_REQ:
+      {
+        return processMsg((ZInnerBindReq*)msg);
+      }
     default:
       Z_LOG_D("Unknown message type: %u", msg->msg_type_);
       return -1;
@@ -156,6 +160,18 @@ int ZZigBeeHandler::onRead(char *buf, uint32_t buf_len)
         }
         break;
       }
+    case Z_ID_ZB_BIND_RSP:
+      {
+        Z_LOG_D("Z_ID_ZB_BIND_RSP");
+        ZZBBindRsp msg;
+        int rv = msg.decode(buf, buf_len);
+        if (rv < 0) {
+          Z_LOG_E("Failed to decode ZZBBindRsp");
+        } else {
+          Z_LOG_D("decoding success");
+          processMsg(msg);
+        }
+      }
     default:
       {
         Z_LOG_D("Unknow message: %u", hdr.cmd_);
@@ -265,6 +281,41 @@ int ZZigBeeHandler::processMsg(ZZBSetRsp &msg)
       return -1;
     }
 
+    rsp->seq_ = session->getKey();
+    rsp->dst_addr_ = session->src_addr_;
+
+    session_ctrl_.removeByKey1(session->getKey());
+    delete session;
+  }
+
+  // ZDispatcher::instance()->sendMsg(rsp);
+  ZDispatcher::instance()->sendDirect(rsp);
+
+  return 0;
+}
+
+int ZZigBeeHandler::processMsg(ZZBBindRsp &msg)
+{
+  Z_LOG_D("rsp result");
+
+  ZInnerBindRsp *rsp = new ZInnerBindRsp();
+
+  rsp->result_ = 0;
+
+  {
+    // FIXME: should zigbee message have a requence or not?
+    // if it doesn't, then we should have a queue for serial processing
+    // so, add one
+    Z_LOG_D("tring to find session by key2: 0x%X", (msg.addr_ << 16));
+    ZZigBeeSession *session =
+        (ZZigBeeSession*)session_ctrl_.findByKey2((msg.addr_ << 16) | 0x00);
+    if (session == NULL) {
+      Z_LOG_D("No session is found");
+      delete rsp;
+      return -1;
+    }
+
+    rsp->seq_ = session->getKey();
     rsp->dst_addr_ = session->src_addr_;
 
     session_ctrl_.removeByKey1(session->getKey());
@@ -297,20 +348,20 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
   ZZBDevInfo *info = NULL;
 
   // // --- for debugging only ---
-  {
-   char dev_name_buf[64];
-   for (int i = 0; i < 5; ++i) {
-     snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
-     info = new ZZBDevInfo();
-     info->addr_ = i;
-     info->name_ = dev_name_buf;
-     info->state_ = i;
-     info->type_ = i;
-     memset(&info->mac_, i, sizeof(info->mac_));
-     rsp->info_list_.push_back(info);
-   }
-  }
-  // --- for debugging only ---
+  // {
+  //  char dev_name_buf[64];
+  //  for (int i = 0; i < 5; ++i) {
+  //    snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+  //    info = new ZZBDevInfo();
+  //    info->addr_ = i;
+  //    info->name_ = dev_name_buf;
+  //    info->state_ = i;
+  //    info->type_ = i;
+  //    memset(&info->mac_, i, sizeof(info->mac_));
+  //    rsp->info_list_.push_back(info);
+  //  }
+  // }
+  // // --- for debugging only ---
 
   const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
   ZZBDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
@@ -453,6 +504,43 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
   }
 
   return 0;
+}
+
+int ZZigBeeHandler::processMsg(ZInnerBindReq *msg)
+{
+  Z_LOG_D("ZZigBeeHandler::processMsg(ZInnerBindReq)");
+
+  ZZBBindReq req;
+  req.addr_ = 0x00;   // special address for core module
+
+  int rv = req.encode(buf_, sizeof(buf_));
+  if (rv < 0) {
+    Z_LOG_E("Failed to encode ZZBBindReq");
+    return -1;
+  }
+
+  trace_bin(buf_, rv);
+
+  rv = send(buf_, rv);
+  if (rv <= 0) {
+    perror("send");
+    Z_LOG_E("Failed to send");
+  } else {
+    Z_LOG_D("write over");
+    {
+      // TODO: get inner sequence from ZBGet
+      ZZigBeeSession *session = new ZZigBeeSession();
+      session->setKey(msg->seq_);
+      session->src_addr_ = msg->src_addr_;
+      session->dst_addr_ = msg->dst_addr_;
+
+      session_ctrl_.add(msg->seq_, (req.addr_ << 16 | 0x00), session);
+
+      Z_LOG_D("session added: key1=%u, key2=0x%X", msg->seq_, (req.addr_ << 16));
+    }
+  }
+
+  return OK;
 }
 
 static void updateIdInfo(ZZBDevInfo &dev_info, zb_item_id_info_t &new_id_info)

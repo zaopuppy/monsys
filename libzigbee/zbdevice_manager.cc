@@ -26,7 +26,7 @@ void ZZBDevManager::reset()
 bool ZZBDevManager::add(zb_mac_type_t &mac,
   zb_addr_type_t addr, const char *name, uint16_t type/*uint8_t id_count*/)
 {
-  Z_LOG_D("ZZBDevManager::add(%u)\n", addr);
+  Z_LOG_D("ZZBDevManager::add(%u)", addr);
 
   ZZBDevInfo *info_from_mac = find(mac);
   ZZBDevInfo *info_from_addr = find(addr);

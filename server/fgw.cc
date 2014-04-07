@@ -34,7 +34,7 @@ typedef struct {
   ZEventProxy *proxy;
 } test_param_t;
 
-const int MAX_CLIENT_COUNT = 1000;
+// const int MAX_CLIENT_COUNT = 1000;
 
 void test_callback(evutil_socket_t fd, short events, void *arg)
 {
@@ -60,8 +60,9 @@ int main(int argc, char *argv[])
 
   ZDispatcher::init(base);
 
-  const char* serial_dev = "/dev/ttyUSB0";
-  // const char* serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+  // const char *serial_dev = "/dev/ttyUSB0";
+  // const char *serial_dev = "/dev/tty.usbserial-FTG5WHHL";
+  const char *serial_dev = "/dev/tty.usbserial-ftDX0P76";
   ZModule *serial = new ZSerial(base, serial_dev);
   if (serial->init() != OK) {
     Z_LOG_D("Failed to init serial module.");

@@ -11,6 +11,8 @@ static const int HEAD_LEN = 1   // ver_(1)
                           + 1   // cmd_(1)
                           + 2;  // addr_(2)
 
+static const int RESET_INTERVAL = 1; // 1 second
+
 int ZBStream::read(char *buf, int buf_len) {
 
   if (received_data_list_.size() <= 0) {
@@ -93,7 +95,7 @@ int ZBStream::feed(char *buf, int buf_len)
       }
     }
 
-    if (rv <= 0) {
+    if (rv < 0) {
       break;
     }
 
@@ -161,10 +163,10 @@ int ZBStream::doWaitingForHead(char *buf, int buf_len)
     int rv1;
     uint8_t zb_ver;
 
-    rv1 = decode(zb_ver, buf, buf_len);
+    rv1 = decode(zb_ver, buf_.getArray(), buf_.remaining());
     assert(rv1 == 1);
 
-    rv1 = decode(msg_len, buf + 1, buf_len);
+    rv1 = decode(msg_len, buf_.getArray()+1, buf_.remaining()-1);
     assert(rv1 == 2);
 
     Z_LOG_D("decoded version: %u", zb_ver);
@@ -176,6 +178,9 @@ int ZBStream::doWaitingForHead(char *buf, int buf_len)
 
   // we already read 3 bytes, so don't forget to exclude them
   expect_data_len_ = msg_len - MIN_HEAD_LEN;
+
+  Z_LOG_D("expect_data_len_: %d", expect_data_len_);
+
   setState(STATE_WAITING_FOR_DATA);
 
   return used_len;

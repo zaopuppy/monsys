@@ -240,6 +240,51 @@ class ZZBSetRsp : public ZZigBeeMsg {
   uint8_t status_;
 };
 
+//////////////////////////////////////////////////////////////////
+// bind
+class ZZBBindReq: public ZZigBeeMsg {
+public:
+  ZZBBindReq();
+  typedef ZZigBeeMsg super_;
+
+public:
+  virtual int encode(char* buf, uint32_t buf_len);
+  virtual int decode(char* buf, uint32_t buf_len);
+  
+  uint16_t getEncodeLen() {
+    return getHeaderLen()
+      + getBodyLen();
+  }
+  
+  uint16_t getBodyLen() {
+    return 0;
+  }
+
+ public:
+};
+
+//////////////////////////////////////////////////////////////////
+// bind
+class ZZBBindRsp: public ZZigBeeMsg {
+public:
+  ZZBBindRsp();
+  typedef ZZigBeeMsg super_;
+
+public:
+  virtual int encode(char* buf, uint32_t buf_len);
+  virtual int decode(char* buf, uint32_t buf_len);
+  
+  uint16_t getEncodeLen() {
+    return getHeaderLen()
+      + getBodyLen();
+  }
+  
+  uint16_t getBodyLen() {
+    return 0;
+  }
+
+ public:
+};
 
 //////////////////////////////////////////////////////////////////
 // Update

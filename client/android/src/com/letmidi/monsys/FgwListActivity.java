@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.letmidi.monsys.account.AccountManager;
-import com.letmidi.monsys.account.AccountManager.GetFgwListCallback;
+import com.letmidi.monsys.account.MonsysHelper;
+import com.letmidi.monsys.account.MonsysHelper.GetFgwListCallback;
 
 public class FgwListActivity extends Activity implements OnItemClickListener, GetFgwListCallback {
 
@@ -125,7 +125,7 @@ public class FgwListActivity extends Activity implements OnItemClickListener, Ge
 
   private void getFgwList() {
     mRefreshButton.setEnabled(false);
-    AccountManager.getFgwListAsync(mAccount, this);
+    MonsysHelper.getFgwListAsync(mAccount, this);
   }
 
   @Override

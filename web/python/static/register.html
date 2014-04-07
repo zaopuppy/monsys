@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Register -- Monsys</title>
+    <!-- for touch screen -->
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link rel="stylesheet" href="css/ui.css" type="text/css"/>
+  </head>
+  <body>
+    <div id="register-container">
+      <div class="front-register">
+        <form action="/register" method="post">
+          <div class="register-username">
+            <input type="text" id="register-email" class="text-input email-input" name="account" autocomplete="on" placeholder="Email">
+          </div>
+          <span class="register-password">
+            <input type="password" id="register-password" class="text-input password-input" name="password" placeholder="Password">
+            <button type="submit" class="register-submit-btn">
+              Register
+            </button>
+          </span>
+
+          <input type="hidden" name="redirect_after_login" value="/">
+          <!-- ??? -->
+          <input type="hidden" value="e5a1c9e7c5b3e0ad7cfea1a048a2eb5778b9cf21" name="authenticity_token">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

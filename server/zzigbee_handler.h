@@ -54,11 +54,13 @@ class ZZigBeeHandler : public ZClientHandler {
   int processMsg(ZZBGetRsp &msg);
   // int processMsg(ZZBSetReq &msg);
   int processMsg(ZZBSetRsp &msg);
+  int processMsg(ZZBBindRsp &msg);
   int processMsg(ZZBUpdateIdInfoReq &msg);
 
   int processMsg(ZInnerGetDevListReq *msg);
   int processMsg(ZInnerGetDevInfoReq *msg);
   int processMsg(ZInnerSetDevInfoReq *msg);
+  int processMsg(ZInnerBindReq *msg);
 
   // <senquence, addr>
   typedef ZSessionCtrl2Key<uint32_t, uint32_t, ZZigBeeSession> SESSION_CTRL_TYPE;

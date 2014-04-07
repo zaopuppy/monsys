@@ -50,6 +50,7 @@ function MonsysApi() {
     var jreq = {
       "cmd": "get-dev-list",
       "uid": "22",
+      "seq": 123,
       "fgw": fgw,
     };
 
@@ -61,6 +62,7 @@ function MonsysApi() {
     var jreq = {
       "cmd": "get-dev-info",
       "uid": "33",
+      "seq": 123,
       "fgw": fgw,
       "addr": addr,
       "id-list": id_list,
@@ -75,6 +77,7 @@ function MonsysApi() {
       "cmd": "set-dev-info",
       "uid": "44",
       "fgw": fgw,
+      "seq": 123,
       "addr": addr,
       "vals": [ { "id": id, "val": val } ]
     };

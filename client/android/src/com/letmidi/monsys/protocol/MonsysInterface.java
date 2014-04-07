@@ -25,8 +25,10 @@ import com.letmidi.monsys.FgwInfo;
 
 public class MonsysInterface {
   private static final String TAG = "XXX";
-//  private static final String SERVER_LOGIN_HOST = "http://letsmidi.wicp.net:1983/interface/login";
-//  private static final String SERVER_HOST = "http://letsmidi.wicp.net:1983/interface";
+  // private static final String SERVER_LOGIN_HOST =
+  // "http://letsmidi.wicp.net:1983/interface/login";
+  // private static final String SERVER_HOST =
+  // "http://letsmidi.wicp.net:1983/interface";
   private static final String SERVER_LOGIN_HOST = "http://192.168.2.146:8888/interface/login";
   private static final String SERVER_HOST = "http://192.168.2.146:8888/interface";
   private static String mCookies = null;
@@ -74,7 +76,9 @@ public class MonsysInterface {
     } catch (IOException e) {
       Log.e(TAG, e.toString());
     } finally {
-      if (conn != null) { conn.disconnect(); }
+      if (conn != null) {
+        conn.disconnect();
+      }
     }
 
     return false;
@@ -220,7 +224,7 @@ public class MonsysInterface {
 
         info_list.add(
             new Pair<Integer, Integer>(
-                jobj.getInt("id"), jobj.getInt("value")));
+                jobj.getInt("id"), jobj.getInt("val")));
       }
 
       return info_list;
@@ -231,11 +235,64 @@ public class MonsysInterface {
     return null;
   }
 
-  public static boolean preBind(String fgw_id) {
+  /**
+   *
+   * @param fgw_id
+   * @param dev_addr
+   * @param ids
+   * @return status
+   *
+   */
+  public static int setDevInfo(String fgw_id, int dev_addr, List<Pair<Integer, Integer>> id_vals) {
+    Log.d(TAG, "setDevInfo()");
+    JSONObject jreq = new JSONObject();
+    try {
+      jreq.put("cmd", "set-dev-info");
+      jreq.put("fgw", fgw_id);
+      jreq.put("addr", dev_addr);
+      jreq.put("seq", generateSequence());
+      jreq.put("uid", "456");
+      JSONArray jid_list = new JSONArray();
+      for (Pair<Integer, Integer> id_val: id_vals) {
+        JSONObject value = new JSONObject();
+        value.put("id", id_val.first);
+        value.put("val", id_val.second);
+        jid_list.put(value);
+      }
+      jreq.put("vals", jid_list);
+    } catch (JSONException e) {
+      Log.e(TAG, e.toString());
+      return -1;
+    }
+
+    Log.d(TAG, "set-dev-info: [" + jreq.toString() + "]");
+
+    HttpURLConnection conn = post(SERVER_HOST, jreq.toString());
+    if (conn == null) {
+      return -1;
+    }
+
+    Response rsp = getResponse(conn);
+    if (rsp == null) {
+      return -1;
+    }
+
+    try {
+      JSONObject jrsp = new JSONObject(rsp.data);
+      return jrsp.getInt("status");
+    } catch (JSONException e) {
+      Log.e(TAG, e.toString());
+    }
+
+    return -1;
+  }
+
+  public static boolean preBind(String fgw_id, String account) {
     JSONObject jreq = new JSONObject();
     try {
       jreq.put("cmd", "pre-bind");
       jreq.put("fgw", fgw_id);
+      jreq.put("account", account);
       jreq.put("seq", generateSequence());
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
@@ -267,11 +324,12 @@ public class MonsysInterface {
     return false;
   }
 
-  public static boolean bind(String fgw_id) {
+  public static boolean bind(String fgw_id, String account) {
     JSONObject jreq = new JSONObject();
     try {
       jreq.put("cmd", "bind");
       jreq.put("fgw", fgw_id);
+      jreq.put("account", account);
       jreq.put("seq", generateSequence());
     } catch (JSONException e) {
       Log.e(TAG, e.toString());
@@ -324,7 +382,9 @@ public class MonsysInterface {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      if (conn != null) { conn.disconnect(); }
+      if (conn != null) {
+        conn.disconnect();
+      }
     }
 
     return null;
@@ -335,12 +395,12 @@ public class MonsysInterface {
     Map<String, String> key_map = new HashMap<String, String>(10);
     String[] fields;
     String[] kv;
-    for (Map.Entry<String, List<String>> entry: headers.entrySet()) {
+    for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       if ("Set-Cookie".equals(entry.getKey())) {
         // "account=enRlc3RAZ21haWwuY29t|1388901264|0930497a9d4b93d45026601af43a0191edf85bab; expires=Tue, 04 Feb 2014 05:54:24 GMT; Path=/"
-        for (String value: entry.getValue()) {
+        for (String value : entry.getValue()) {
           fields = value.split(";");
-          for (String field: fields) {
+          for (String field : fields) {
             kv = field.trim().split("=");
             if (kv.length != 2) {
               Log.e(TAG, "!!! field = [" + field + "], split size: " + kv.length);
@@ -355,7 +415,7 @@ public class MonsysInterface {
     // join them~
     StringBuilder builder = new StringBuilder(512);
     boolean first = true;
-    for (Map.Entry<String, String> entry: key_map.entrySet()) {
+    for (Map.Entry<String, String> entry : key_map.entrySet()) {
       if (first) {
         first = false;
       } else {
@@ -372,7 +432,6 @@ public class MonsysInterface {
 
     Log.d(TAG, "final cookies is: [" + mCookies + "]");
   }
-
 
   private static HttpURLConnection getConnection(String host) {
     URL url;
@@ -402,7 +461,9 @@ public class MonsysInterface {
     } catch (IOException e) {
       Log.e(TAG, e.toString());
     } finally {
-      if (conn != null) { conn.disconnect(); }
+      if (conn != null) {
+        conn.disconnect();
+      }
     }
 
     return null;
@@ -430,14 +491,27 @@ public class MonsysInterface {
       Log.e(TAG, "exception: " + e.toString());
     }
 
-    if (out != null) { try { out.close(); } catch (IOException e) {} }
-    if (conn != null) { conn.disconnect(); }
+    if (out != null) {
+      try {
+        out.close();
+      } catch (IOException e) {
+      }
+    }
+    if (conn != null) {
+      conn.disconnect();
+    }
 
-      return null;
+    return null;
   }
 
   private static int mLastSequence = 0;
+
   private static int generateSequence() {
+    // --- FOR DEBUGGING ONLY ---
+    if (true) {
+      return 1;
+    }
+    // --- FOR DEBUGGING ONLY ---
     if (mLastSequence >= 0xFFFFFF) {
       mLastSequence = 0;
     }

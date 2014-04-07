@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.letmidi.monsys.account.AccountManager;
+import com.letmidi.monsys.account.MonsysHelper;
 
 public class MainActivity extends Activity {
 
   private static final String TAG = "XXX";
   private Button mLoginBtn = null;
+  private Button mLogoutBtn = null;
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -45,21 +46,30 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
     mLoginBtn = (Button) findViewById(R.id.login_button);
+    mLogoutBtn  = (Button) findViewById(R.id.logout_button);
 
     // check if we have logged in
-    if (AccountManager.isLoggedIn()) {
+    if (MonsysHelper.isLoggedIn()) {
       mLoginBtn.setText("Enter");
     }
 
     mLoginBtn.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (AccountManager.isLoggedIn()) {
-          startFgwListActivity(AccountManager.getAccount());
+        if (MonsysHelper.isLoggedIn()) {
+          startFgwListActivity(MonsysHelper.getAccount());
         } else {
           Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
           startActivityForResult(intent, 0x00);
         }
+      }
+    });
+
+    mLogoutBtn.setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
+        MonsysHelper.logout();
       }
     });
 

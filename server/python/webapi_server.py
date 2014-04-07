@@ -1,50 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging
 import json
 
-# import pymysql
+import log
 
 from database import Database
 
 import gevent
 from gevent.server import StreamServer
-from simple_server import SimpleHandler
+from simple_handler import SimpleHandler
 from module_define import *
 
-# logging handler
-logger_handler = logging.StreamHandler()
-logger_handler.setLevel(logging.DEBUG)
-
 # logger
-logger = logging.getLogger("webapi_server")
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logger_handler)
+logger = log.Log.get_logger(__name__)
 
 class WebApiServer(StreamServer):
-    def __init__(self, listener, dispatcher):
+    def __init__(self, listener, env):
         StreamServer.__init__(self, listener)
-        self._dispatcher = dispatcher
+        self.env = env
         self._conn = Database.get_connection()
 
     def handle(self, socket, address):
         handler = WebApiHandler(
-            socket, address, self._dispatcher, self._conn)
+            socket, address, self.env, self._conn)
         handler.start()
 
 class WebApiHandler(SimpleHandler):
-    def __init__(self, socket, address, dispatcher, db):
+    def __init__(self, socket, address, env, db):
         SimpleHandler.__init__(self, socket, address)
         self.type = MODULE_WEBAPI_SERVER
         self.id = id(self)
-        self._dispatcher = dispatcher
+        self.env = env
         self._conn = db
 
     def start(self):
-        self._dispatcher.add(self)
+        self.env.dispatcher.add(self)
         SimpleHandler.start(self)
-        self._dispatcher.remove(self)
+        self.env.dispatcher.remove(self)
 
     def decode(self, data):
         try:
@@ -56,11 +49,18 @@ class WebApiHandler(SimpleHandler):
     def encode(self, msg):
         return json.dumps(msg)
 
+    def routine(self):
+        # logger.debug("routine()")
+        pass
+
     def event(self, msg):
-        if "cmd" not in msg.keys():
+        if "cmd" not in msg:
             logger.error("no cmd in msg")
             return
         cmd = msg["cmd"]
+
+        logger.debug("webapi_server: cmd: [{}]".format(cmd))
+
         if cmd == "get-fgw-list":
             self.process_get_fgw_list(msg)
         elif cmd in [ "get-dev-list",
@@ -68,7 +68,12 @@ class WebApiHandler(SimpleHandler):
                       "set-dev-info",
                       "pre-bind",
                       "bind" ]:
-            self._dispatcher.send(MODULE_FGW_SERVER, msg)
+            fgw_id = msg["fgw"]
+            handler_id = self.env.fgw_manager.find_handler(fgw_id)
+            if handler_id is None:
+                logger.error("not logged in yet")
+                return
+            self.env.dispatcher.send(MODULE_FGW_SERVER, handler_id, msg)
         elif cmd in [ "get-dev-list-rsp",
                       "get-dev-info-rsp",
                       "set-dev-info-rsp",

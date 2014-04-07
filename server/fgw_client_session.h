@@ -29,16 +29,16 @@ public:
         send(jrsp);
 
         this->close();
-      } else if (msg->msg_type_ == Z_ZB_BIND_REQ) {
-        ZInnerPreBindRsp *rsp = new ZInnerPreBindRsp();
-        rsp->seq_ = msg->seq_;
-        rsp->result_ = 0x00;
+      // } else if (msg->msg_type_ == Z_ZB_BIND_REQ) {
+      //   ZInnerBindRsp *rsp = new ZInnerBindRsp();
+      //   rsp->seq_ = msg->seq_;
+      //   rsp->result_ = 0x00;
 
-        json_t *jrsp = inner2Json(rsp);
+      //   json_t *jrsp = inner2Json(rsp);
 
-        send(jrsp);
+      //   send(jrsp);
 
-        this->close();
+      //   this->close();
       } else {
         msg->src_addr_.module_type_ = handler_->getModuleType();
         msg->src_addr_.handler_id_ = handler_->getId();
@@ -65,6 +65,10 @@ public:
           {
             jmsg = inner2Json((ZInnerSetDevInfoRsp*)msg);
             break;
+          }
+          case Z_ZB_BIND_RSP:
+          {
+            jmsg = inner2Json((ZInnerBindRsp*)msg);
           }
         default:
           Z_LOG_E("Unknown message type: %d", msg->msg_type_);

@@ -3,24 +3,30 @@
 
 import sys
 import signal
-import logging
 
 import gevent
 import gevent.monkey
 
-# from simple_server import SimpleServer, SimpleHandler
 from webapi_server import WebApiServer
 from fgw_server import FGWServer
-from dispatcher import Dispatcher
 
-# logging handler
-logger_handler = logging.StreamHandler()
-logger_handler.setLevel(logging.DEBUG)
+from env import Env
+from dispatcher import Dispatcher
+from fgw_manager import FGWManager
+
+import log
 
 # logger
-logger = logging.getLogger("main")
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logger_handler)
+logger = log.Log.get_logger(__name__)
+
+
+def webapi_server(msg):
+    if msg.type is MSG_INNER:
+        pass
+    elif msg.type is MSG_OUTER:
+        pass
+    else:
+        pass
 
 def routine():
     while True:
@@ -31,12 +37,15 @@ def main():
 
     gevent.monkey.patch_all()
 
-    dispatcher = Dispatcher()
+    env = Env()
 
-    webapi_server = WebApiServer(("0.0.0.0", 1983), dispatcher)
+    env.dispatcher = Dispatcher()
+    env.fgw_manager = FGWManager()
+
+    webapi_server = WebApiServer(("0.0.0.0", 1983), env)
     webapi_server.start()
 
-    fgw_server = FGWServer(("0.0.0.0", 1984), dispatcher)
+    fgw_server = FGWServer(("0.0.0.0", 1984), env)
     fgw_server.start()
 
     jobs = [

@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.letmidi.monsys.account.AccountManager;
-import com.letmidi.monsys.account.AccountManager.LoginCallback;
+import com.letmidi.monsys.account.MonsysHelper;
+import com.letmidi.monsys.account.MonsysHelper.LoginCallback;
 
 public class LoginActivity extends Activity implements LoginCallback {
 
@@ -36,7 +36,7 @@ public class LoginActivity extends Activity implements LoginCallback {
       @Override
       public void onClick(View v) {
         disableLogin();
-        AccountManager.loginAsync(mAccountEdit.getText().toString(),
+        MonsysHelper.loginAsync(mAccountEdit.getText().toString(),
                                   mPasswordEdit.getText().toString(),
                                   LoginActivity.this);
       }

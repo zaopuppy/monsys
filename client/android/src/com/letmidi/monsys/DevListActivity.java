@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.letmidi.monsys.account.AccountManager;
-import com.letmidi.monsys.account.AccountManager.GetDevListCallback;
+import com.letmidi.monsys.account.MonsysHelper;
+import com.letmidi.monsys.account.MonsysHelper.GetDevListCallback;
 
 public class DevListActivity extends Activity implements OnItemClickListener, GetDevListCallback {
   private static final String TAG = "DevListActivity";
@@ -119,7 +119,7 @@ public class DevListActivity extends Activity implements OnItemClickListener, Ge
   }
 
   private void getDevList() {
-    AccountManager.getDevListAsync(mFgwId, this);
+    MonsysHelper.getDevListAsync(mFgwId, this);
   }
 
   @Override

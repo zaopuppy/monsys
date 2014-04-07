@@ -649,6 +649,93 @@ int ZZBSetRsp::decode(char* buf, uint32_t buf_len) {
 }
 
 //////////////////////////////////////////////////////////////////
+// bind
+ZZBBindReq::ZZBBindReq()
+: ZZigBeeMsg()
+{
+  cmd_ = Z_ID_ZB_BIND_REQ;
+}
+
+int ZZBBindReq::encode(char *buf, uint32_t buf_len)
+{
+  Z_LOG_D("ZZBBindReq::encode()");
+
+  uint32_t old_buf_len = buf_len;
+
+  // update len_ first
+  len_ = getBodyLen();
+
+  // super::encode()
+  int rv = super_::encode(buf, buf_len);
+  if (rv < 0) {
+    Z_LOG_D("failed to call super_::encode()");
+    return rv;
+  }
+
+  buf += rv;
+  buf_len -= rv;
+
+  return old_buf_len - buf_len;
+}
+
+int ZZBBindReq::decode(char *buf, uint32_t buf_len)
+{
+  Z_LOG_D("ZZBBindReq::decode()");
+
+  int len = 0;
+  
+  int rv = super_::decode(buf, buf_len);
+  if (rv < 0) {
+    Z_LOG_D("failed to call super_::decode()");
+    return rv;
+  }
+
+  buf += rv;
+  buf_len -= rv;
+  len += rv;
+
+  return len;
+}
+
+//////////////////////////////////////////////////////////////////
+// bind-rsp
+ZZBBindRsp::ZZBBindRsp()
+: ZZigBeeMsg()
+{
+  cmd_ = Z_ID_ZB_BIND_RSP;
+}
+
+int ZZBBindRsp::encode(char *buf, uint32_t buf_len)
+{
+  ZMSG_ENCODE_BEGIN();
+
+  rv = super_::encode(buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  encode_len += rv;
+
+  ZMSG_ENCODE_END();
+}
+
+int ZZBBindRsp::decode(char *buf, uint32_t buf_len)
+{
+  ZMSG_DECODE_BEGIN();
+
+  len_ = getBodyLen();
+
+  // TODO: clean it up
+  rv = super_::decode(buf, buf_len);
+  if (rv < 0) return rv;
+  buf += rv;
+  buf_len -= rv;
+  decode_len += rv;
+
+  ZMSG_DECODE_END();
+}
+
+
+//////////////////////////////////////////////////////////////////
 // Update
 ZZBUpdateIdInfoReq::ZZBUpdateIdInfoReq()
 : ZZigBeeMsg()

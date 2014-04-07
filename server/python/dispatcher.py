@@ -3,16 +3,12 @@
 
 import random
 
-import logging
+import log
 
-# logging handler
-logger_handler = logging.StreamHandler()
-logger_handler.setLevel(logging.DEBUG)
 
 # logger
-logger = logging.getLogger("dispatcher")
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logger_handler)
+logger = log.Log.get_logger(__name__)
+
 
 class Dispatcher():
     def __init__(self):
@@ -41,13 +37,13 @@ class Dispatcher():
             h.send(msg)
 
     def send(self, handler_type, handler_id, msg):
-        self._handler_map[handler_type][handler_id].send(msg)
-
-    def send(self, handler_type, msg):
-        if handler_type not in self._handler_map.keys():
-            return
-        handler_count = len(self._handler_map[handler_type])
-        h = self._handler_map[handler_type].values()[random.randint(0, handler_count-1)]
-        h.send(msg)
-
+        if handler_id is None:
+            if handler_type not in self._handler_map.keys():
+                logger.error("handler type not found")
+                return
+            handler_count = len(self._handler_map[handler_type])
+            h = self._handler_map[handler_type].values()[random.randint(0, handler_count-1)]
+            h.send(msg)
+        else:
+            self._handler_map[handler_type][handler_id].send(msg)
 

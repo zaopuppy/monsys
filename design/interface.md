@@ -106,6 +106,19 @@ ZigBee Control Protocol(Application Layer)
 
 所有整型字段皆为无符号类型
 
+Command ID | Command name
+---------- | ------------
+0xEF       | heart-beat
+0xFF       | heart-beat-rsp
+0x01       | register
+0x81       | register-rsp
+0x02       | get-dev-info
+0x82       | get-dev-info-rsp
+0x03       | set-dev-info
+0x83       | set-dev-info-rsp
+0x04       | broadcast
+
+
 ### heart-beat
 
 心跳消息, 用于无线模块和家庭网关之间的健康检测, 一定时间内没有发起心跳则认为对端发生异常.
