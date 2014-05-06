@@ -114,7 +114,7 @@ class BindHandler(BaseHandler):
             self.write("account doesn't exist")
             return
         fgw_list = account_info.get("fgw_list") or ""
-        fgw_list = filter(lambda x: True if x else False, fgw_list.split("|"))
+        fgw_list = filter(lambda x: True if len(x) > 0 else False, fgw_list.split("|"))
         device_id = device_id.strip()
         if device_id in fgw_list:
             self.set_status(404)

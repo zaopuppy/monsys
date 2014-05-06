@@ -21,11 +21,15 @@ logger = log.Log.get_logger(__name__)
 
 
 def webapi_server(msg):
-    if msg.type is MSG_INNER:
-        pass
-    elif msg.type is MSG_OUTER:
-        pass
-    else:
+    """
+    1. external/internal message
+    2. 
+    """
+    session = find_session(msg)
+    if session is None:
+        return
+    session.event(msg)
+    if not session.is_complete():
         pass
 
 def routine():

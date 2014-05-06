@@ -11,9 +11,33 @@ logger = log.Log.get_logger(__name__)
 class Session():
     def __init__(self):
         self.touched_time = time.time()
+        self.closed = False
+        self.key = None
+        self.ext_key = None
+
+    def check_timeout(self, timeout):
+        cur_time = time.time()
+        logger.debug(
+            "cur_time: [{}], touched_time: [{}]".format(
+                cur_time, self.touched_time))        
+        if self.touched_time > cur_time:
+            # time skcrewed, refresh its time
+            self.touched_time = cur_time
+        elif (cur_time - self.touched_time) > timeout:
+            logger.debug("session timeout({})".format(self.key))
+            self.on_timeout()
 
     def on_timeout(self):
         pass
+
+    def is_complete(self):
+        return self.closed
+
+    def close(self):
+        self.closed = True;
+
+    def event(self, msg):
+        raise NotImplementedError()
 
 class SessionCtrl():
     def __init__(self):
@@ -22,19 +46,11 @@ class SessionCtrl():
         self._last_key = 0
 
     def check_timeout(self, timeout):
-        # logger.debug("check_timeout({}, {})".format(
-        #     len(self._session_map), len(self._ext_session_map)))
-        cur_time = time.time()
         session_tobe_deleted = []
         for key, session in self._session_map.items():
-            logger.debug("cur_time: [{}], touched_time: [{}]".format(
-                    cur_time, session.touched_time))
-            if session.touched_time > cur_time:
-                # time skcrewed, refresh its time
-                session.touched_time = cur_time
-            elif (cur_time - session.touched_time) > timeout:
-                logger.debug("session timeout({})".format(session.key))
-                session.on_timeout()
+
+            session.check_timeout(timeout)
+            if session.is_complete():
                 session_tobe_deleted.append((key, session.ext_key))
         for key, ext_key in session_tobe_deleted:
             self._session_map.pop(key)

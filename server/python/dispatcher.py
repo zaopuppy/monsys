@@ -34,16 +34,20 @@ class Dispatcher():
         if handler_type not in self._handler_map.keys():
             raise Exception("handler has not been registered yet")
         for h in self._handler_map[handler_type].values():
-            h.send(msg)
+            h.on_inner(msg)
 
-    def send(self, handler_type, handler_id, msg):
+    # def send(self, handler_type, handler_id, msg):
+    def send(self, msg):
+        # dst_addr = msg.dst_addr
+        handler_type = msg.dst_addr[0]
+        handler_id = msg.dst_addr[1]
         if handler_id is None:
             if handler_type not in self._handler_map.keys():
                 logger.error("handler type not found")
                 return
             handler_count = len(self._handler_map[handler_type])
             h = self._handler_map[handler_type].values()[random.randint(0, handler_count-1)]
-            h.send(msg)
+            h.on_inner(msg)
         else:
-            self._handler_map[handler_type][handler_id].send(msg)
+            self._handler_map[handler_type][handler_id].on_inner(msg)
 

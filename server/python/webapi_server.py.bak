@@ -9,12 +9,9 @@ from database import Database
 
 import gevent
 from gevent.server import StreamServer
-
 from simple_handler import SimpleHandler
 from module_define import *
 from context import Context
-
-from msg import Msg
 
 # logger
 logger = log.Log.get_logger(__name__)
@@ -43,7 +40,6 @@ class WebApiHandler(SimpleHandler):
         self.id = id(self)
         self.env = env
         self._conn = db
-        self.inner_addr = (self.type, self.id)
 
     def start(self):
         self.env.dispatcher.add(self)
@@ -63,17 +59,6 @@ class WebApiHandler(SimpleHandler):
     def routine(self):
         # logger.debug("routine()")
         pass
-
-    def on_inner(self, msg):
-        logger.debug("on_inner()")
-        inner_msg = msg.data;
-        cmd = inner_msg["cmd"]
-        if cmd in [ "get-dev-list-rsp",
-                      "get-dev-info-rsp",
-                      "set-dev-info-rsp",
-                      "pre-bind-rsp",
-                      "bind-rsp" ]:
-            self.out_queue.put(inner_msg)
 
     def event(self, msg):
         if "cmd" not in msg:
@@ -95,8 +80,13 @@ class WebApiHandler(SimpleHandler):
             if handler_id is None:
                 logger.error("not logged in yet")
                 return
-            self.env.dispatcher.send(
-                Msg(self.inner_addr, (MODULE_FGW_SERVER, handler_id), msg))
+            self.env.dispatcher.send(MODULE_FGW_SERVER, handler_id, msg)
+        elif cmd in [ "get-dev-list-rsp",
+                      "get-dev-info-rsp",
+                      "set-dev-info-rsp",
+                      "pre-bind-rsp",
+                      "bind-rsp" ]:
+            self.out_queue.put(msg)
         else:
             logger.error("unknown message")
 
@@ -119,9 +109,6 @@ class WebApiHandler(SimpleHandler):
             return
 
         rsp = { "cmd": "get-fgw-list-rsp" }
-        rsp["fgws"] = filter(lambda x: True if len(x) > 0 else False,
-                             [ x.strip() for x in row[0].split("|") ])
+        rsp["fgws"] = row[0].split("|")
+
         self.out_queue.put(rsp)
-
-
-

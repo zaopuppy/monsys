@@ -15,6 +15,7 @@ class SimpleHandler():
         self.address = address
         self.in_queue = Queue()
         self.out_queue = Queue()
+        self.inner_queue = Queue()
         self._is_running = False
 
     def start(self):
@@ -27,6 +28,7 @@ class SimpleHandler():
                 gevent.spawn(self._recv_loop),
                 gevent.spawn(self._send_loop),
                 gevent.spawn(self._event_loop),
+                gevent.spawn(self._inner_loop),
                 gevent.spawn(self._routine_loop),
             ]
             gevent.joinall(jobs)
@@ -39,6 +41,7 @@ class SimpleHandler():
     def close(self):
         self.in_queue.put(None)
         self.out_queue.put(None)
+        self.inner_queue.put(None)
         self._is_running = False
 
     def _routine_loop(self):
@@ -82,7 +85,18 @@ class SimpleHandler():
             #     self.event(msg)
             self.event(data)
 
+    def _inner_loop(self):
+        while True:
+            data = self.inner_queue.get()
+            if data is None:
+                logger.debug("inner broken")
+                break
+            self.on_inner(data)
+
     def event(self, msg):
+        raise NotImplementedError()
+
+    def on_inner(self, msg):
         raise NotImplementedError()
 
     def decode(self, data):
@@ -92,10 +106,11 @@ class SimpleHandler():
         raise NotImplementedError()
 
     def send(self, msg):
-        logger.debug("send()")
-        self.in_queue.put(msg)
-        logger.debug("send() done")
+        """
+        """
+        self.out_queue.put(msg)
+        # logger.debug("send()")
+        # self.in_queue.put(msg)
+        # logger.debug("send() done")
         # raise NotImplementedError()
-
-
 

@@ -12,7 +12,7 @@
 
 // TODO: server wait timeout
 // static const struct timeval SERVER_WAIT_TIMEOUT = { 20, 0 };
-static const struct timeval RETRY_INTERVAL = { 5, 0 };
+static const struct timeval RETRY_INTERVAL = { 3, 0 };
 
 // static
 void ZClient::socket_callback(evutil_socket_t fd, short events, void *arg) {
