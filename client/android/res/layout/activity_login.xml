@@ -35,4 +35,13 @@
         android:layout_below="@+id/password_text"
         android:text="login" />
 
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/login_button"
+        android:text="Register" />
+
 </RelativeLayout>

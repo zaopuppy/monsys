@@ -25,12 +25,12 @@ import com.letmidi.monsys.FgwInfo;
 
 public class MonsysInterface {
   private static final String TAG = "XXX";
-  // private static final String SERVER_LOGIN_HOST =
-  // "http://letsmidi.wicp.net:1983/interface/login";
-  // private static final String SERVER_HOST =
-  // "http://letsmidi.wicp.net:1983/interface";
-  private static final String SERVER_LOGIN_HOST = "http://192.168.2.146:8888/interface/login";
-  private static final String SERVER_HOST = "http://192.168.2.146:8888/interface";
+  private static final String SERVER_LOGIN_HOST =
+      "http://letsmidi.wicp.net:1983/interface/login";
+  private static final String SERVER_HOST =
+      "http://letsmidi.wicp.net:1983/interface";
+  // private static final String SERVER_LOGIN_HOST = "http://192.168.2.146:8888/interface/login";
+  // private static final String SERVER_HOST = "http://192.168.2.146:8888/interface";
   private static String mCookies = null;
 
   public static class Response {
@@ -58,7 +58,9 @@ public class MonsysInterface {
    * @return
    */
   public static boolean login(String account, String password) {
-    HttpURLConnection conn = post(SERVER_LOGIN_HOST, "account=ztest%40gmail.com&password=123");
+    // XXX: 安全問題
+    HttpURLConnection conn = post(SERVER_LOGIN_HOST,
+                                  "account=" + account + "&password=" + password);
     if (conn == null) {
       return false;
     }
@@ -69,7 +71,13 @@ public class MonsysInterface {
 
       Log.d(TAG, "received(" + status + "): " + rsp);
 
-      saveCookies(conn.getHeaderFields());
+      if (status != HttpURLConnection.HTTP_OK) {
+        return false;
+      }
+
+      if (!saveCookies(conn.getHeaderFields())) {
+        return false;
+      }
 
       return true;
 
@@ -390,13 +398,15 @@ public class MonsysInterface {
     return null;
   }
 
-  private static void saveCookies(Map<String, List<String>> headers) {
+  private static boolean saveCookies(Map<String, List<String>> headers) {
     // extract all cookies and fiter duplicated ones
     Map<String, String> key_map = new HashMap<String, String>(10);
     String[] fields;
     String[] kv;
+    boolean has_cookie = false;
     for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       if ("Set-Cookie".equals(entry.getKey())) {
+        has_cookie = true;
         // "account=enRlc3RAZ21haWwuY29t|1388901264|0930497a9d4b93d45026601af43a0191edf85bab; expires=Tue, 04 Feb 2014 05:54:24 GMT; Path=/"
         for (String value : entry.getValue()) {
           fields = value.split(";");
@@ -410,6 +420,10 @@ public class MonsysInterface {
           }
         }
       }
+    }
+
+    if (!has_cookie) {
+      return false;
     }
 
     // join them~
@@ -430,7 +444,13 @@ public class MonsysInterface {
       mCookies = builder.toString();
     }
 
+    if (null == mCookies) {
+      return false;
+    }
+
     Log.d(TAG, "final cookies is: [" + mCookies + "]");
+
+    return true;
   }
 
   private static HttpURLConnection getConnection(String host) {

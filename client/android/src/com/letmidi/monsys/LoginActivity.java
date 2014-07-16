@@ -20,6 +20,7 @@ public class LoginActivity extends Activity implements LoginCallback {
   private EditText mAccountEdit = null;
   private EditText mPasswordEdit = null;
   private Button mSubmitBtn = null;
+  private Button mRegisterBtn = null;
 
   private static final int MSG_LOGIN_COMPLETE = 0x01;
 
@@ -31,16 +32,26 @@ public class LoginActivity extends Activity implements LoginCallback {
     mAccountEdit = (EditText) findViewById(R.id.account_text);
     mPasswordEdit = (EditText) findViewById(R.id.password_text);
     mSubmitBtn = (Button) findViewById(R.id.login_button);
-    mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+    mRegisterBtn = (Button) findViewById(R.id.register_button);
 
+
+    mSubmitBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         disableLogin();
         MonsysHelper.loginAsync(mAccountEdit.getText().toString(),
-                                  mPasswordEdit.getText().toString(),
-                                  LoginActivity.this);
+                                mPasswordEdit.getText().toString(),
+                                LoginActivity.this);
       }
+    });
 
+    mRegisterBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Log.d(TAG, "account+password: ["
+            + mAccountEdit.getText().toString() + "]:["
+            + mPasswordEdit.getText().toString() + "]");
+      }
     });
   }
 

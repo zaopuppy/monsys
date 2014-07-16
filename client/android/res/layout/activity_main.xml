@@ -8,12 +8,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+    <ImageView
+        android:id="@+id/avatar_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_launcher" />
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@+id/password_text"
-        android:text="login" />
+        android:layout_below="@+id/avatar_img"
+        android:text="Show FGW List" />
     
     <Button
         android:id="@+id/logout_button"

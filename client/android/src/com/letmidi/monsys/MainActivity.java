@@ -14,22 +14,8 @@ import com.letmidi.monsys.account.MonsysHelper;
 public class MainActivity extends Activity {
 
   private static final String TAG = "XXX";
-  private Button mLoginBtn = null;
+  private Button mShowFgwBtn = null;
   private Button mLogoutBtn = null;
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Log.d(TAG, "onActivityResult(" + requestCode + ", " + resultCode + ")");
-    if (requestCode == 0x00 && resultCode == RESULT_OK) {
-      boolean result = data.getBooleanExtra("result", false);
-      String account = data.getStringExtra("account");
-      Log.d(TAG, "account: " + account + ", result: " + result);
-
-      startFgwListActivity(account);
-    } else {
-      super.onActivityResult(requestCode, resultCode, data);
-    }
-  }
 
   private void startFgwListActivity(String account) {
     Intent intent = new Intent(getApplicationContext(), FgwListActivity.class);
@@ -45,15 +31,14 @@ public class MainActivity extends Activity {
 
     setContentView(R.layout.activity_main);
 
-    mLoginBtn = (Button) findViewById(R.id.login_button);
+    mShowFgwBtn = (Button) findViewById(R.id.login_button);
     mLogoutBtn  = (Button) findViewById(R.id.logout_button);
 
-    // check if we have logged in
-    if (MonsysHelper.isLoggedIn()) {
-      mLoginBtn.setText("Enter");
-    }
+//    if (MonsysHelper.isLoggedIn()) {
+//      mShowFgwBtn.setText("Enter");
+//    }
 
-    mLoginBtn.setOnClickListener(new OnClickListener() {
+    mShowFgwBtn.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         if (MonsysHelper.isLoggedIn()) {
@@ -115,6 +100,30 @@ public class MainActivity extends Activity {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    Log.d(TAG, "onActivityResult(" + requestCode + ", " + resultCode + ")");
+    if (requestCode == 0x00 && resultCode == RESULT_OK) {
+      boolean result = data.getBooleanExtra("result", false);
+      String account = data.getStringExtra("account");
+      Log.d(TAG, "account: " + account + ", result: " + result);
+
+      startFgwListActivity(account);
+    } else {
+      super.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    if (!MonsysHelper.isLoggedIn()) {
+      Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+      startActivity(intent);
+    }
   }
 
 }

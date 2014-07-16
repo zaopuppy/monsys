@@ -21,7 +21,7 @@ import com.letmidi.monsys.protocol.MonsysInterface;
  *
  */
 public class MonsysHelper {
-  private static final String TAG = "AccountManager";
+  private static final String TAG = "XXX";
 
   /**
    * for executing tasks in background
@@ -67,6 +67,7 @@ public class MonsysHelper {
   }
 
   public static void loginAsync(final String account, final String password, final LoginCallback callback) {
+    // Log.d(TAG, "account: [" + account + "], password: [" + password + "]");
     sExecutor.execute(new Runnable() {
       @Override
       public void run() {

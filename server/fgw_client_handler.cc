@@ -4,6 +4,9 @@
 #include <string.h>
 
 #include "webapi_msg.h"
+#include "push.pb.h"
+
+using namespace com::letsmidi::monsys::protocol;
 
 void FGWClientHandler::setState(int new_state)
 {
@@ -43,6 +46,35 @@ json_t* createLoginReq()
 }
 
 void FGWClientHandler::fgwLogin()
+{
+  Z_LOG_D("FGWClientHandler::registerFGW()");
+
+  PushMsg *push_msg = new PushMsg();
+  // push_msg->set_type(PushMsg::LOGIN);
+
+  // Login *login = new Login();
+  // login->set_device_id("DEVID-Z");
+
+  // push_msg->set_allocated_login(login);
+
+  // const size_t buf_len = push_msg->ByteSize();
+  // char *buf = new char[buf_len];
+  // if (!push_msg->SerializeToArray(buf, buf_len)) {
+  //   Z_LOG_E("Failed to encode login request");
+  // }
+
+  // send(buf, buf_len);
+
+  state_ = STATE_WAIT_FOR_SERVER;
+
+  // set timer
+  login_timer_id = timer_.setTimer(10 * 1000);
+  if (login_timer_id < 0) {
+    Z_LOG_E("Failed to set timer, there's nothing we can do now");
+  }
+}
+
+void FGWClientHandler::fgwLogin_old()
 {
   Z_LOG_D("FGWClientHandler::registerFGW()");
 

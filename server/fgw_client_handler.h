@@ -28,6 +28,7 @@ public:
 
   virtual void onConnected();
 
+  void fgwLogin_old();
   void fgwLogin();
 
   // override from ZTimer::TimerCallback

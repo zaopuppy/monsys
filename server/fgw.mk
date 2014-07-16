@@ -21,7 +21,8 @@ CXXFILES := \
 	fgw_client_handler.cc \
 	msg_factory.cc \
 	zb_stream.cc \
-	push_msg.cc
+	push_msg.cc \
+	push.pb.cc
 
 ifeq ($(ut), 1)
 CXXFILES += test_zbstream.cc \
@@ -58,7 +59,7 @@ LDFLAGS := \
 	-L../libzigbee -lzb \
 	-L../libbase -lbase \
 	-L../libframework -lframework \
-	-L../libs/lib -levent_core -ljansson
+	-L../libs/lib -levent_core -ljansson -lprotobuf
 
 ifeq ($(ut), 1)
 $(TARGET) : $(OBJFILES) libgmock.so
