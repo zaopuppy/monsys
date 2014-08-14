@@ -1,7 +1,10 @@
 
-CC     := clang
-CXX    := clang++
-CPP    := clang
+# CC     := clang
+# CXX    := clang++
+# CPP    := clang
+CC     := gcc
+CXX    := g++
+CPP    := gcc
 LEX    := flex
 YACC   := bison
 

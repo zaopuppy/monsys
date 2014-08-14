@@ -1,0 +1,153 @@
+
+package com.letsmidi.monsys.protocol.push;
+
+enum MsgType {
+  LOGIN             =   1;
+  LOGIN_RSP         = 101;
+    
+  BIND              =   2;
+  BIND_RSP          = 102;
+    
+  CONNECT           =   3;
+  CONNECT_RSP       = 103;
+    
+  GET_FGW_LIST      =   4;
+  GET_FGW_LIST_RSP  = 104;
+
+  GET_DEV_LIST      =   5;
+  GET_DEV_LIST_RSP  = 105;
+  
+  GET_DEV_INFO      =   6;
+  GET_DEV_INFO_RSP  = 106;
+  
+  SET_DEV_INFO      =   7;
+  SET_DEV_INFO_RSP  = 107;
+
+  CLIENT_LOGIN      =   8;
+  CLIENT_LOGIN_RSP  = 108;
+
+  RESPONSE          =  99;
+}
+
+message IdValuePair {
+  required int32 id = 1;
+  required int32 value = 2;
+}
+
+message FGatewayInfo {
+  required string id = 1;
+  required string name = 2;
+  required string desc = 3;
+}
+
+message DeviceInfo {
+  required int32 addr = 1;
+  required int32 type = 2;
+  required string name = 3;
+}
+
+message PushMsg {
+  required int32 version = 1;
+  required MsgType type = 2;
+
+  optional Login login = 10;
+  optional LoginRsp login_rsp = 11;
+
+  optional Bind bind = 12;
+  optional BindRsp bind_rsp = 13;
+
+  optional Connect connect = 14;
+  optional ConnectRsp connect_rsp = 15;
+
+  optional GetFgwList get_fgw_list = 16;
+  optional GetFgwListRsp get_fgw_list_rsp = 17;
+
+  optional GetDevList get_dev_list = 18;
+  optional GetDevListRsp get_dev_list_rsp = 19;
+
+  optional GetDevInfo get_dev_info = 20;
+  optional GetDevInfoRsp get_dev_info_rsp = 21;
+
+  optional SetDevInfo set_dev_info = 22;
+  optional SetDevInfoRsp set_dev_info_rsp = 23;
+
+  optional ClientLogin client_login = 24;
+  optional ClientLoginRsp client_login_rsp = 25;
+
+}
+
+message Login {
+  required string device_id = 1;
+}
+
+message LoginRsp {
+  required int32 code = 1;
+}
+
+message ClientLogin {
+  required string account = 1;
+  required string password = 2;
+}
+
+message ClientLoginRsp {
+  required int32 code = 1;
+  repeated FGatewayInfo fgw_infos = 2;
+}
+
+message Bind {
+  required string device_id = 1;
+}
+
+message BindRsp {
+  required int32 code = 1;
+}
+
+message Connect {
+  required string device_id = 1;
+}
+
+message ConnectRsp {
+  required int32 code = 1;
+}
+
+message GetFgwList {
+}
+
+message GetFgwListRsp {
+  required int32 code = 1;
+  repeated FGatewayInfo fgw_infos = 2;
+}
+
+message GetDevList {
+  required string device_id = 1;
+}
+
+message GetDevListRsp {
+  required int32 code = 1;
+  repeated DeviceInfo dev_infos = 2;
+}
+
+message GetDevInfo {
+  required int32 addr = 1;
+  repeated int32 item_ids = 2 [packed=true];
+}
+
+message GetDevInfoRsp {
+  required int32 code = 1;
+  repeated IdValuePair id_value_pairs = 2;
+}
+
+message SetDevInfo {
+  required int32 addr = 1;
+  repeated IdValuePair id_value_pairs = 2;
+}
+
+message SetDevInfoRsp {
+  required int32 code = 1;
+}
+
+message Response {
+  required int32 code = 1;
+}
+
+

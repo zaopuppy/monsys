@@ -48,6 +48,10 @@ int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
 
 void ZZigBeeHandler::routine(long delta)
 {
+  // --- FOR DEBUGGING ONLY ---
+  return;
+  // --- FOR DEBUGGING ONLY ---
+
   // Z_LOG_D("ZZigBeeHandler::routine()");
 
   ZZigBeeSession *session;
@@ -347,21 +351,21 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
 
   ZZBDevInfo *info = NULL;
 
-  // // --- for debugging only ---
-  // {
-  //  char dev_name_buf[64];
-  //  for (int i = 0; i < 5; ++i) {
-  //    snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
-  //    info = new ZZBDevInfo();
-  //    info->addr_ = i;
-  //    info->name_ = dev_name_buf;
-  //    info->state_ = i;
-  //    info->type_ = i;
-  //    memset(&info->mac_, i, sizeof(info->mac_));
-  //    rsp->info_list_.push_back(info);
-  //  }
-  // }
-  // // --- for debugging only ---
+  // --- for debugging only ---
+  {
+   char dev_name_buf[64];
+   for (int i = 0; i < 5; ++i) {
+     snprintf(dev_name_buf, sizeof(dev_name_buf), "dev-%02d", i);
+     info = new ZZBDevInfo();
+     info->addr_ = i;
+     info->name_ = dev_name_buf;
+     info->state_ = i;
+     info->type_ = i;
+     memset(&info->mac_, i, sizeof(info->mac_));
+     rsp->info_list_.push_back(info);
+   }
+  }
+  // --- for debugging only ---
 
   const ZZBDevManager::MAC_DEV_MAP_TYPE &dev_map = dev_manager_.getMacDevMap();
   ZZBDevManager::MAC_DEV_MAP_TYPE::const_iterator iter = dev_map.begin();
@@ -393,21 +397,24 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
   ZZBGetReq req;
   req.addr_ = msg->addr_;
 
-  // // --- for debugging only ---
-  // {
-  //  ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp(addr_);
-  //  ZItemPair pair;
+  // --- for debugging only ---
+  {
+    ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp();
+    ZItemPair pair;
 
-  //  for (uint32_t i = 0; i < msg->item_ids_.size(); ++i)
-  //  {
-  //    pair.id = i;
-  //    pair.val = i * 11;
-  //    rsp->dev_infos_.push_back(pair);
-  //  }
+    for (uint32_t i = 0; i < msg->item_ids_.size(); ++i)
+    {
+      pair.id = i;
+      pair.val = i * 11;
+      rsp->dev_infos_.push_back(pair);
+    }
+    rsp->status_ = 0;
 
-  //  ZDispatcher::instance()->sendMsg(rsp);
-  // }
-  // // --- for debugging only ---
+    rsp->dst_addr_ = msg->src_addr_;
+    ZDispatcher::instance()->sendDirect(rsp);
+    return OK;
+  }
+  // --- for debugging only ---
 
   for (uint32_t i = 0; i < msg->item_ids_.size(); ++i) {
     req.items_.push_back(msg->item_ids_[i]);
@@ -452,12 +459,13 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
     }
   }
 
-  // // -- for debugging only --
-  // ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp(addr_);
-  // rsp->status_ = 0;
-  // ZDispatcher::instance()->sendMsg(rsp);
-  // return 0;
-  // // -- for debugging only --
+  // -- for debugging only --
+  ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp();
+  rsp->status_ = 0;
+  rsp->dst_addr_ = msg->src_addr_;
+  ZDispatcher::instance()->sendDirect(rsp);
+  return 0;
+  // -- for debugging only --
 
   // // set all device
   // if (msg->addr_ == 0) {

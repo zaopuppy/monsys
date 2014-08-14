@@ -1,0 +1,8 @@
+2014-08-14_19:31:21|INFO|com.letsmidi.monsys.push.PushServer start|-----------------------------------
+2014-08-14_19:31:21|INFO|com.letsmidi.monsys.push.PushServer start|push server start
+2014-08-14_19:31:21|INFO|io.netty.handler.logging.LoggingHandler channelRegistered|[id: 0x719fb19e] REGISTERED
+2014-08-14_19:31:22|INFO|io.netty.handler.logging.LoggingHandler channelRegistered|[id: 0xf6722883] REGISTERED
+2014-08-14_19:31:22|INFO|io.netty.handler.logging.LoggingHandler bind|[id: 0x719fb19e] BIND(0.0.0.0/0.0.0.0:1984)
+2014-08-14_19:31:22|INFO|io.netty.handler.logging.LoggingHandler bind|[id: 0xf6722883] BIND(0.0.0.0/0.0.0.0:1988)
+2014-08-14_19:31:22|INFO|io.netty.handler.logging.LoggingHandler channelActive|[id: 0x719fb19e, /0:0:0:0:0:0:0:0:1984] ACTIVE
+2014-08-14_19:31:22|INFO|io.netty.handler.logging.LoggingHandler channelActive|[id: 0xf6722883, /0:0:0:0:0:0:0:0:1988] ACTIVE

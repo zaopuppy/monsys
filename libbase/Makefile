@@ -1,8 +1,8 @@
 
-CC  := clang
-CXX := clang++
-# CC  := gcc
-# CXX := g++
+# CC  := clang
+# CXX := clang++
+CC  := gcc
+CXX := g++
 # AR  := ar
 # AR  := ar
 

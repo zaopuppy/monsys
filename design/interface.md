@@ -248,5 +248,6 @@ what 用于指定广播类型, 可使用的枚举如下
     };
 
 ZB_BROADCAST_WHAT_FGW_CONNECTED:
+
     用于家庭网关和zigbee模块连接后, 通知所有无线模块重新进行注册
 

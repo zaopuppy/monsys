@@ -7,6 +7,9 @@
 
 #include "module.h"
 #include "fgw_client_session.h"
+#include "push.pb.h"
+
+using namespace com::letsmidi::monsys::protocol;
 
 class FGWClientHandler : public ZClientHandler {
 public:
@@ -28,7 +31,6 @@ public:
 
   virtual void onConnected();
 
-  void fgwLogin_old();
   void fgwLogin();
 
   // override from ZTimer::TimerCallback
@@ -38,7 +40,7 @@ protected:
   int onRead_Unregistered(char *buf, uint32_t buf_len);
   int onRead_WaitForServer(char *buf, uint32_t buf_len);
   int onRead_Registered(char *buf, uint32_t buf_len);
-  int processLoginRsp(json_t *jmsg);
+  int processLoginRsp(PushMsg *push_msg);
 
   void sendRsp(const char *text_msg, int status);
 
@@ -65,6 +67,8 @@ private:
 
   ZTimer timer_;
   int login_timer_id;
+
+  char out_buf_[2048];
 };
 
 #endif // _FGW_CLIENT_HANDLER_H__

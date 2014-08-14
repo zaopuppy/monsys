@@ -1,0 +1,57 @@
+package com.letsmidi.monsys.protocol.route;
+
+enum MsgType {
+  REQ_TOKEN         = 1;
+  REQ_TOKEN_RSP     = 2;
+
+  CONNECT           = 3;
+  CONNECT_RSP       = 4;
+}
+
+enum AddrType {
+  IP_V4   = 1;
+  IP_V6   = 2;
+}
+
+enum ClientType {
+  CLIENT = 1;
+  FGW = 2;
+}
+
+message RouteMsg {
+  required int32 version = 1;
+  required MsgType type = 2;
+
+  optional ReqToken req_token = 10;
+  optional ReqTokenRsp req_token_rsp = 11;
+
+  optional Connect connect = 12;
+  optional ConnectRsp connect_rsp = 13;
+
+}
+
+message ReqToken {
+  required string token = 1;
+  required AddrType addr_type = 2;
+  // required int32 timeout = 3;
+
+  optional int32 client_ip_v4 = 3;
+  optional int32 fgw_ip_v4 = 4;
+}
+
+message ReqTokenRsp {
+  required int32 code = 1;
+  // required int32 timeout = 2;
+  required int32 port_for_client = 2;
+  required int32 port_for_fgw = 3;
+}
+
+message Connect {
+  required ClientType client_type = 1;
+  required string token = 2;
+}
+
+message ConnectRsp {
+  required int32 code = 1;
+}
+

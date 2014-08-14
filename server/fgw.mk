@@ -1,6 +1,9 @@
-CC     := clang
-CXX    := clang++
-CPP    := clang
+# CC     := clang
+# CXX    := clang++
+# CPP    := clang
+CC     := gcc
+CXX    := g++
+CPP    := gcc
 LEX    := flex
 YACC   := bison
 
@@ -22,7 +25,9 @@ CXXFILES := \
 	msg_factory.cc \
 	zb_stream.cc \
 	push_msg.cc \
-	push.pb.cc
+	push.pb.cc \
+	protobuf_convert.cc \
+	protobuf_helper.cc
 
 ifeq ($(ut), 1)
 CXXFILES += test_zbstream.cc \

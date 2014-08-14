@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
   }
 
   FGWClient *client = new FGWClient(base);
-  client->setServerAddress("127.0.0.1", 1984);
+  client->setServerAddress("192.168.2.105", 1984);
   if (OK != client->init()) {
     Z_LOG_E("Failed to initialize fgw client");
     return -1;

@@ -31,46 +31,386 @@ namespace com {
 namespace letsmidi {
 namespace monsys {
 namespace protocol {
+namespace push {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_push_2eproto();
 void protobuf_AssignDesc_push_2eproto();
 void protobuf_ShutdownFile_push_2eproto();
 
+class IdValuePair;
+class FGatewayInfo;
+class DeviceInfo;
 class PushMsg;
 class Login;
+class LoginRsp;
+class ClientLogin;
+class ClientLoginRsp;
 class Bind;
+class BindRsp;
 class Connect;
+class ConnectRsp;
+class GetFgwList;
+class GetFgwListRsp;
 class GetDevList;
+class GetDevListRsp;
 class GetDevInfo;
+class GetDevInfoRsp;
 class SetDevInfo;
+class SetDevInfoRsp;
 class Response;
 
-enum PushMsg_MsgType {
-  PushMsg_MsgType_LOGIN = 1,
-  PushMsg_MsgType_BIND = 2,
-  PushMsg_MsgType_CONNECT = 3,
-  PushMsg_MsgType_GET_DEV_LIST = 4,
-  PushMsg_MsgType_GET_DEV_INFO = 5,
-  PushMsg_MsgType_SET_DEV_INFO = 6,
-  PushMsg_MsgType_RESPONSE = 99
+enum MsgType {
+  LOGIN = 1,
+  LOGIN_RSP = 101,
+  BIND = 2,
+  BIND_RSP = 102,
+  CONNECT = 3,
+  CONNECT_RSP = 103,
+  GET_FGW_LIST = 4,
+  GET_FGW_LIST_RSP = 104,
+  GET_DEV_LIST = 5,
+  GET_DEV_LIST_RSP = 105,
+  GET_DEV_INFO = 6,
+  GET_DEV_INFO_RSP = 106,
+  SET_DEV_INFO = 7,
+  SET_DEV_INFO_RSP = 107,
+  CLIENT_LOGIN = 8,
+  CLIENT_LOGIN_RSP = 108,
+  RESPONSE = 99
 };
-bool PushMsg_MsgType_IsValid(int value);
-const PushMsg_MsgType PushMsg_MsgType_MsgType_MIN = PushMsg_MsgType_LOGIN;
-const PushMsg_MsgType PushMsg_MsgType_MsgType_MAX = PushMsg_MsgType_RESPONSE;
-const int PushMsg_MsgType_MsgType_ARRAYSIZE = PushMsg_MsgType_MsgType_MAX + 1;
+bool MsgType_IsValid(int value);
+const MsgType MsgType_MIN = LOGIN;
+const MsgType MsgType_MAX = CLIENT_LOGIN_RSP;
+const int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* PushMsg_MsgType_descriptor();
-inline const ::std::string& PushMsg_MsgType_Name(PushMsg_MsgType value) {
+const ::google::protobuf::EnumDescriptor* MsgType_descriptor();
+inline const ::std::string& MsgType_Name(MsgType value) {
   return ::google::protobuf::internal::NameOfEnum(
-    PushMsg_MsgType_descriptor(), value);
+    MsgType_descriptor(), value);
 }
-inline bool PushMsg_MsgType_Parse(
-    const ::std::string& name, PushMsg_MsgType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PushMsg_MsgType>(
-    PushMsg_MsgType_descriptor(), name, value);
+inline bool MsgType_Parse(
+    const ::std::string& name, MsgType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgType>(
+    MsgType_descriptor(), name, value);
 }
 // ===================================================================
+
+class IdValuePair : public ::google::protobuf::Message {
+ public:
+  IdValuePair();
+  virtual ~IdValuePair();
+
+  IdValuePair(const IdValuePair& from);
+
+  inline IdValuePair& operator=(const IdValuePair& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const IdValuePair& default_instance();
+
+  void Swap(IdValuePair* other);
+
+  // implements Message ----------------------------------------------
+
+  IdValuePair* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const IdValuePair& from);
+  void MergeFrom(const IdValuePair& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // required int32 value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline ::google::protobuf::int32 value() const;
+  inline void set_value(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.IdValuePair)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_value();
+  inline void clear_has_value();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 value_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static IdValuePair* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class FGatewayInfo : public ::google::protobuf::Message {
+ public:
+  FGatewayInfo();
+  virtual ~FGatewayInfo();
+
+  FGatewayInfo(const FGatewayInfo& from);
+
+  inline FGatewayInfo& operator=(const FGatewayInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FGatewayInfo& default_instance();
+
+  void Swap(FGatewayInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  FGatewayInfo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const FGatewayInfo& from);
+  void MergeFrom(const FGatewayInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::std::string& id() const;
+  inline void set_id(const ::std::string& value);
+  inline void set_id(const char* value);
+  inline void set_id(const char* value, size_t size);
+  inline ::std::string* mutable_id();
+  inline ::std::string* release_id();
+  inline void set_allocated_id(::std::string* id);
+
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string desc = 3;
+  inline bool has_desc() const;
+  inline void clear_desc();
+  static const int kDescFieldNumber = 3;
+  inline const ::std::string& desc() const;
+  inline void set_desc(const ::std::string& value);
+  inline void set_desc(const char* value);
+  inline void set_desc(const char* value, size_t size);
+  inline ::std::string* mutable_desc();
+  inline ::std::string* release_desc();
+  inline void set_allocated_desc(::std::string* desc);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.FGatewayInfo)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_desc();
+  inline void clear_has_desc();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* id_;
+  ::std::string* name_;
+  ::std::string* desc_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static FGatewayInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class DeviceInfo : public ::google::protobuf::Message {
+ public:
+  DeviceInfo();
+  virtual ~DeviceInfo();
+
+  DeviceInfo(const DeviceInfo& from);
+
+  inline DeviceInfo& operator=(const DeviceInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const DeviceInfo& default_instance();
+
+  void Swap(DeviceInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  DeviceInfo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const DeviceInfo& from);
+  void MergeFrom(const DeviceInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 addr = 1;
+  inline bool has_addr() const;
+  inline void clear_addr();
+  static const int kAddrFieldNumber = 1;
+  inline ::google::protobuf::int32 addr() const;
+  inline void set_addr(::google::protobuf::int32 value);
+
+  // required int32 type = 2;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 type() const;
+  inline void set_type(::google::protobuf::int32 value);
+
+  // required string name = 3;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 3;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.DeviceInfo)
+ private:
+  inline void set_has_addr();
+  inline void clear_has_addr();
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_name();
+  inline void clear_has_name();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 addr_;
+  ::google::protobuf::int32 type_;
+  ::std::string* name_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static DeviceInfo* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class PushMsg : public ::google::protobuf::Message {
  public:
@@ -124,67 +464,228 @@ class PushMsg : public ::google::protobuf::Message {
 
   // nested types ----------------------------------------------------
 
-  typedef PushMsg_MsgType MsgType;
-  static const MsgType LOGIN = PushMsg_MsgType_LOGIN;
-  static const MsgType BIND = PushMsg_MsgType_BIND;
-  static const MsgType CONNECT = PushMsg_MsgType_CONNECT;
-  static const MsgType GET_DEV_LIST = PushMsg_MsgType_GET_DEV_LIST;
-  static const MsgType GET_DEV_INFO = PushMsg_MsgType_GET_DEV_INFO;
-  static const MsgType SET_DEV_INFO = PushMsg_MsgType_SET_DEV_INFO;
-  static const MsgType RESPONSE = PushMsg_MsgType_RESPONSE;
-  static inline bool MsgType_IsValid(int value) {
-    return PushMsg_MsgType_IsValid(value);
-  }
-  static const MsgType MsgType_MIN =
-    PushMsg_MsgType_MsgType_MIN;
-  static const MsgType MsgType_MAX =
-    PushMsg_MsgType_MsgType_MAX;
-  static const int MsgType_ARRAYSIZE =
-    PushMsg_MsgType_MsgType_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  MsgType_descriptor() {
-    return PushMsg_MsgType_descriptor();
-  }
-  static inline const ::std::string& MsgType_Name(MsgType value) {
-    return PushMsg_MsgType_Name(value);
-  }
-  static inline bool MsgType_Parse(const ::std::string& name,
-      MsgType* value) {
-    return PushMsg_MsgType_Parse(name, value);
-  }
-
   // accessors -------------------------------------------------------
 
-  // required .com.letsmidi.monsys.protocol.PushMsg.MsgType type = 1;
+  // required int32 version = 1;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 1;
+  inline ::google::protobuf::int32 version() const;
+  inline void set_version(::google::protobuf::int32 value);
+
+  // required .com.letsmidi.monsys.protocol.push.MsgType type = 2;
   inline bool has_type() const;
   inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::com::letsmidi::monsys::protocol::PushMsg_MsgType type() const;
-  inline void set_type(::com::letsmidi::monsys::protocol::PushMsg_MsgType value);
+  static const int kTypeFieldNumber = 2;
+  inline ::com::letsmidi::monsys::protocol::push::MsgType type() const;
+  inline void set_type(::com::letsmidi::monsys::protocol::push::MsgType value);
 
-  // optional .com.letsmidi.monsys.protocol.Login login = 2;
+  // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
   inline bool has_login() const;
   inline void clear_login();
-  static const int kLoginFieldNumber = 2;
-  inline const ::com::letsmidi::monsys::protocol::Login& login() const;
-  inline ::com::letsmidi::monsys::protocol::Login* mutable_login();
-  inline ::com::letsmidi::monsys::protocol::Login* release_login();
-  inline void set_allocated_login(::com::letsmidi::monsys::protocol::Login* login);
+  static const int kLoginFieldNumber = 10;
+  inline const ::com::letsmidi::monsys::protocol::push::Login& login() const;
+  inline ::com::letsmidi::monsys::protocol::push::Login* mutable_login();
+  inline ::com::letsmidi::monsys::protocol::push::Login* release_login();
+  inline void set_allocated_login(::com::letsmidi::monsys::protocol::push::Login* login);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.PushMsg)
+  // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
+  inline bool has_login_rsp() const;
+  inline void clear_login_rsp();
+  static const int kLoginRspFieldNumber = 11;
+  inline const ::com::letsmidi::monsys::protocol::push::LoginRsp& login_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::LoginRsp* mutable_login_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::LoginRsp* release_login_rsp();
+  inline void set_allocated_login_rsp(::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
+  inline bool has_bind() const;
+  inline void clear_bind();
+  static const int kBindFieldNumber = 12;
+  inline const ::com::letsmidi::monsys::protocol::push::Bind& bind() const;
+  inline ::com::letsmidi::monsys::protocol::push::Bind* mutable_bind();
+  inline ::com::letsmidi::monsys::protocol::push::Bind* release_bind();
+  inline void set_allocated_bind(::com::letsmidi::monsys::protocol::push::Bind* bind);
+
+  // optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
+  inline bool has_bind_rsp() const;
+  inline void clear_bind_rsp();
+  static const int kBindRspFieldNumber = 13;
+  inline const ::com::letsmidi::monsys::protocol::push::BindRsp& bind_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::BindRsp* mutable_bind_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::BindRsp* release_bind_rsp();
+  inline void set_allocated_bind_rsp(::com::letsmidi::monsys::protocol::push::BindRsp* bind_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
+  inline bool has_connect() const;
+  inline void clear_connect();
+  static const int kConnectFieldNumber = 14;
+  inline const ::com::letsmidi::monsys::protocol::push::Connect& connect() const;
+  inline ::com::letsmidi::monsys::protocol::push::Connect* mutable_connect();
+  inline ::com::letsmidi::monsys::protocol::push::Connect* release_connect();
+  inline void set_allocated_connect(::com::letsmidi::monsys::protocol::push::Connect* connect);
+
+  // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
+  inline bool has_connect_rsp() const;
+  inline void clear_connect_rsp();
+  static const int kConnectRspFieldNumber = 15;
+  inline const ::com::letsmidi::monsys::protocol::push::ConnectRsp& connect_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::ConnectRsp* mutable_connect_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::ConnectRsp* release_connect_rsp();
+  inline void set_allocated_connect_rsp(::com::letsmidi::monsys::protocol::push::ConnectRsp* connect_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
+  inline bool has_get_fgw_list() const;
+  inline void clear_get_fgw_list();
+  static const int kGetFgwListFieldNumber = 16;
+  inline const ::com::letsmidi::monsys::protocol::push::GetFgwList& get_fgw_list() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetFgwList* mutable_get_fgw_list();
+  inline ::com::letsmidi::monsys::protocol::push::GetFgwList* release_get_fgw_list();
+  inline void set_allocated_get_fgw_list(::com::letsmidi::monsys::protocol::push::GetFgwList* get_fgw_list);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
+  inline bool has_get_fgw_list_rsp() const;
+  inline void clear_get_fgw_list_rsp();
+  static const int kGetFgwListRspFieldNumber = 17;
+  inline const ::com::letsmidi::monsys::protocol::push::GetFgwListRsp& get_fgw_list_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* mutable_get_fgw_list_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* release_get_fgw_list_rsp();
+  inline void set_allocated_get_fgw_list_rsp(::com::letsmidi::monsys::protocol::push::GetFgwListRsp* get_fgw_list_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
+  inline bool has_get_dev_list() const;
+  inline void clear_get_dev_list();
+  static const int kGetDevListFieldNumber = 18;
+  inline const ::com::letsmidi::monsys::protocol::push::GetDevList& get_dev_list() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetDevList* mutable_get_dev_list();
+  inline ::com::letsmidi::monsys::protocol::push::GetDevList* release_get_dev_list();
+  inline void set_allocated_get_dev_list(::com::letsmidi::monsys::protocol::push::GetDevList* get_dev_list);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
+  inline bool has_get_dev_list_rsp() const;
+  inline void clear_get_dev_list_rsp();
+  static const int kGetDevListRspFieldNumber = 19;
+  inline const ::com::letsmidi::monsys::protocol::push::GetDevListRsp& get_dev_list_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetDevListRsp* mutable_get_dev_list_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::GetDevListRsp* release_get_dev_list_rsp();
+  inline void set_allocated_get_dev_list_rsp(::com::letsmidi::monsys::protocol::push::GetDevListRsp* get_dev_list_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
+  inline bool has_get_dev_info() const;
+  inline void clear_get_dev_info();
+  static const int kGetDevInfoFieldNumber = 20;
+  inline const ::com::letsmidi::monsys::protocol::push::GetDevInfo& get_dev_info() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetDevInfo* mutable_get_dev_info();
+  inline ::com::letsmidi::monsys::protocol::push::GetDevInfo* release_get_dev_info();
+  inline void set_allocated_get_dev_info(::com::letsmidi::monsys::protocol::push::GetDevInfo* get_dev_info);
+
+  // optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
+  inline bool has_get_dev_info_rsp() const;
+  inline void clear_get_dev_info_rsp();
+  static const int kGetDevInfoRspFieldNumber = 21;
+  inline const ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp& get_dev_info_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* mutable_get_dev_info_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* release_get_dev_info_rsp();
+  inline void set_allocated_get_dev_info_rsp(::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* get_dev_info_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
+  inline bool has_set_dev_info() const;
+  inline void clear_set_dev_info();
+  static const int kSetDevInfoFieldNumber = 22;
+  inline const ::com::letsmidi::monsys::protocol::push::SetDevInfo& set_dev_info() const;
+  inline ::com::letsmidi::monsys::protocol::push::SetDevInfo* mutable_set_dev_info();
+  inline ::com::letsmidi::monsys::protocol::push::SetDevInfo* release_set_dev_info();
+  inline void set_allocated_set_dev_info(::com::letsmidi::monsys::protocol::push::SetDevInfo* set_dev_info);
+
+  // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
+  inline bool has_set_dev_info_rsp() const;
+  inline void clear_set_dev_info_rsp();
+  static const int kSetDevInfoRspFieldNumber = 23;
+  inline const ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp& set_dev_info_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* mutable_set_dev_info_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* release_set_dev_info_rsp();
+  inline void set_allocated_set_dev_info_rsp(::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
+  inline bool has_client_login() const;
+  inline void clear_client_login();
+  static const int kClientLoginFieldNumber = 24;
+  inline const ::com::letsmidi::monsys::protocol::push::ClientLogin& client_login() const;
+  inline ::com::letsmidi::monsys::protocol::push::ClientLogin* mutable_client_login();
+  inline ::com::letsmidi::monsys::protocol::push::ClientLogin* release_client_login();
+  inline void set_allocated_client_login(::com::letsmidi::monsys::protocol::push::ClientLogin* client_login);
+
+  // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
+  inline bool has_client_login_rsp() const;
+  inline void clear_client_login_rsp();
+  static const int kClientLoginRspFieldNumber = 25;
+  inline const ::com::letsmidi::monsys::protocol::push::ClientLoginRsp& client_login_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* mutable_client_login_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* release_client_login_rsp();
+  inline void set_allocated_client_login_rsp(::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushMsg)
  private:
+  inline void set_has_version();
+  inline void clear_has_version();
   inline void set_has_type();
   inline void clear_has_type();
   inline void set_has_login();
   inline void clear_has_login();
+  inline void set_has_login_rsp();
+  inline void clear_has_login_rsp();
+  inline void set_has_bind();
+  inline void clear_has_bind();
+  inline void set_has_bind_rsp();
+  inline void clear_has_bind_rsp();
+  inline void set_has_connect();
+  inline void clear_has_connect();
+  inline void set_has_connect_rsp();
+  inline void clear_has_connect_rsp();
+  inline void set_has_get_fgw_list();
+  inline void clear_has_get_fgw_list();
+  inline void set_has_get_fgw_list_rsp();
+  inline void clear_has_get_fgw_list_rsp();
+  inline void set_has_get_dev_list();
+  inline void clear_has_get_dev_list();
+  inline void set_has_get_dev_list_rsp();
+  inline void clear_has_get_dev_list_rsp();
+  inline void set_has_get_dev_info();
+  inline void clear_has_get_dev_info();
+  inline void set_has_get_dev_info_rsp();
+  inline void clear_has_get_dev_info_rsp();
+  inline void set_has_set_dev_info();
+  inline void clear_has_set_dev_info();
+  inline void set_has_set_dev_info_rsp();
+  inline void clear_has_set_dev_info_rsp();
+  inline void set_has_client_login();
+  inline void clear_has_client_login();
+  inline void set_has_client_login_rsp();
+  inline void clear_has_client_login_rsp();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::com::letsmidi::monsys::protocol::Login* login_;
+  ::google::protobuf::int32 version_;
   int type_;
+  ::com::letsmidi::monsys::protocol::push::Login* login_;
+  ::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp_;
+  ::com::letsmidi::monsys::protocol::push::Bind* bind_;
+  ::com::letsmidi::monsys::protocol::push::BindRsp* bind_rsp_;
+  ::com::letsmidi::monsys::protocol::push::Connect* connect_;
+  ::com::letsmidi::monsys::protocol::push::ConnectRsp* connect_rsp_;
+  ::com::letsmidi::monsys::protocol::push::GetFgwList* get_fgw_list_;
+  ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* get_fgw_list_rsp_;
+  ::com::letsmidi::monsys::protocol::push::GetDevList* get_dev_list_;
+  ::com::letsmidi::monsys::protocol::push::GetDevListRsp* get_dev_list_rsp_;
+  ::com::letsmidi::monsys::protocol::push::GetDevInfo* get_dev_info_;
+  ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* get_dev_info_rsp_;
+  ::com::letsmidi::monsys::protocol::push::SetDevInfo* set_dev_info_;
+  ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp_;
+  ::com::letsmidi::monsys::protocol::push::ClientLogin* client_login_;
+  ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
 
   friend void  protobuf_AddDesc_push_2eproto();
   friend void protobuf_AssignDesc_push_2eproto();
@@ -261,7 +762,7 @@ class Login : public ::google::protobuf::Message {
   inline ::std::string* release_device_id();
   inline void set_allocated_device_id(::std::string* device_id);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.Login)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Login)
  private:
   inline void set_has_device_id();
   inline void clear_has_device_id();
@@ -279,6 +780,285 @@ class Login : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Login* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LoginRsp : public ::google::protobuf::Message {
+ public:
+  LoginRsp();
+  virtual ~LoginRsp();
+
+  LoginRsp(const LoginRsp& from);
+
+  inline LoginRsp& operator=(const LoginRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginRsp& default_instance();
+
+  void Swap(LoginRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  LoginRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const LoginRsp& from);
+  void MergeFrom(const LoginRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.LoginRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static LoginRsp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ClientLogin : public ::google::protobuf::Message {
+ public:
+  ClientLogin();
+  virtual ~ClientLogin();
+
+  ClientLogin(const ClientLogin& from);
+
+  inline ClientLogin& operator=(const ClientLogin& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientLogin& default_instance();
+
+  void Swap(ClientLogin* other);
+
+  // implements Message ----------------------------------------------
+
+  ClientLogin* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientLogin& from);
+  void MergeFrom(const ClientLogin& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string account = 1;
+  inline bool has_account() const;
+  inline void clear_account();
+  static const int kAccountFieldNumber = 1;
+  inline const ::std::string& account() const;
+  inline void set_account(const ::std::string& value);
+  inline void set_account(const char* value);
+  inline void set_account(const char* value, size_t size);
+  inline ::std::string* mutable_account();
+  inline ::std::string* release_account();
+  inline void set_allocated_account(::std::string* account);
+
+  // required string password = 2;
+  inline bool has_password() const;
+  inline void clear_password();
+  static const int kPasswordFieldNumber = 2;
+  inline const ::std::string& password() const;
+  inline void set_password(const ::std::string& value);
+  inline void set_password(const char* value);
+  inline void set_password(const char* value, size_t size);
+  inline ::std::string* mutable_password();
+  inline ::std::string* release_password();
+  inline void set_allocated_password(::std::string* password);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLogin)
+ private:
+  inline void set_has_account();
+  inline void clear_has_account();
+  inline void set_has_password();
+  inline void clear_has_password();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* account_;
+  ::std::string* password_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static ClientLogin* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ClientLoginRsp : public ::google::protobuf::Message {
+ public:
+  ClientLoginRsp();
+  virtual ~ClientLoginRsp();
+
+  ClientLoginRsp(const ClientLoginRsp& from);
+
+  inline ClientLoginRsp& operator=(const ClientLoginRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientLoginRsp& default_instance();
+
+  void Swap(ClientLoginRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  ClientLoginRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientLoginRsp& from);
+  void MergeFrom(const ClientLoginRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
+  inline int fgw_infos_size() const;
+  inline void clear_fgw_infos();
+  static const int kFgwInfosFieldNumber = 2;
+  inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& fgw_infos(int index) const;
+  inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* mutable_fgw_infos(int index);
+  inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* add_fgw_infos();
+  inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >&
+      fgw_infos() const;
+  inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
+      mutable_fgw_infos();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo > fgw_infos_;
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static ClientLoginRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -348,7 +1128,7 @@ class Bind : public ::google::protobuf::Message {
   inline ::std::string* release_device_id();
   inline void set_allocated_device_id(::std::string* device_id);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.Bind)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Bind)
  private:
   inline void set_has_device_id();
   inline void clear_has_device_id();
@@ -366,6 +1146,88 @@ class Bind : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Bind* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class BindRsp : public ::google::protobuf::Message {
+ public:
+  BindRsp();
+  virtual ~BindRsp();
+
+  BindRsp(const BindRsp& from);
+
+  inline BindRsp& operator=(const BindRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BindRsp& default_instance();
+
+  void Swap(BindRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  BindRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const BindRsp& from);
+  void MergeFrom(const BindRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.BindRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static BindRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -435,7 +1297,7 @@ class Connect : public ::google::protobuf::Message {
   inline ::std::string* release_device_id();
   inline void set_allocated_device_id(::std::string* device_id);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.Connect)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Connect)
  private:
   inline void set_has_device_id();
   inline void clear_has_device_id();
@@ -453,6 +1315,255 @@ class Connect : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Connect* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ConnectRsp : public ::google::protobuf::Message {
+ public:
+  ConnectRsp();
+  virtual ~ConnectRsp();
+
+  ConnectRsp(const ConnectRsp& from);
+
+  inline ConnectRsp& operator=(const ConnectRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ConnectRsp& default_instance();
+
+  void Swap(ConnectRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  ConnectRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ConnectRsp& from);
+  void MergeFrom(const ConnectRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ConnectRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static ConnectRsp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetFgwList : public ::google::protobuf::Message {
+ public:
+  GetFgwList();
+  virtual ~GetFgwList();
+
+  GetFgwList(const GetFgwList& from);
+
+  inline GetFgwList& operator=(const GetFgwList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFgwList& default_instance();
+
+  void Swap(GetFgwList* other);
+
+  // implements Message ----------------------------------------------
+
+  GetFgwList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetFgwList& from);
+  void MergeFrom(const GetFgwList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetFgwList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetFgwList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetFgwListRsp : public ::google::protobuf::Message {
+ public:
+  GetFgwListRsp();
+  virtual ~GetFgwListRsp();
+
+  GetFgwListRsp(const GetFgwListRsp& from);
+
+  inline GetFgwListRsp& operator=(const GetFgwListRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFgwListRsp& default_instance();
+
+  void Swap(GetFgwListRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  GetFgwListRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetFgwListRsp& from);
+  void MergeFrom(const GetFgwListRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
+  inline int fgw_infos_size() const;
+  inline void clear_fgw_infos();
+  static const int kFgwInfosFieldNumber = 2;
+  inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& fgw_infos(int index) const;
+  inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* mutable_fgw_infos(int index);
+  inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* add_fgw_infos();
+  inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >&
+      fgw_infos() const;
+  inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
+      mutable_fgw_infos();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetFgwListRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo > fgw_infos_;
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetFgwListRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -522,7 +1633,7 @@ class GetDevList : public ::google::protobuf::Message {
   inline ::std::string* release_device_id();
   inline void set_allocated_device_id(::std::string* device_id);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.GetDevList)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevList)
  private:
   inline void set_has_device_id();
   inline void clear_has_device_id();
@@ -540,6 +1651,101 @@ class GetDevList : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static GetDevList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetDevListRsp : public ::google::protobuf::Message {
+ public:
+  GetDevListRsp();
+  virtual ~GetDevListRsp();
+
+  GetDevListRsp(const GetDevListRsp& from);
+
+  inline GetDevListRsp& operator=(const GetDevListRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetDevListRsp& default_instance();
+
+  void Swap(GetDevListRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  GetDevListRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetDevListRsp& from);
+  void MergeFrom(const GetDevListRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;
+  inline int dev_infos_size() const;
+  inline void clear_dev_infos();
+  static const int kDevInfosFieldNumber = 2;
+  inline const ::com::letsmidi::monsys::protocol::push::DeviceInfo& dev_infos(int index) const;
+  inline ::com::letsmidi::monsys::protocol::push::DeviceInfo* mutable_dev_infos(int index);
+  inline ::com::letsmidi::monsys::protocol::push::DeviceInfo* add_dev_infos();
+  inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::DeviceInfo >&
+      dev_infos() const;
+  inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::DeviceInfo >*
+      mutable_dev_infos();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevListRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::DeviceInfo > dev_infos_;
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetDevListRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -604,17 +1810,31 @@ class GetDevInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 addr() const;
   inline void set_addr(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.GetDevInfo)
+  // repeated int32 item_ids = 2 [packed = true];
+  inline int item_ids_size() const;
+  inline void clear_item_ids();
+  static const int kItemIdsFieldNumber = 2;
+  inline ::google::protobuf::int32 item_ids(int index) const;
+  inline void set_item_ids(int index, ::google::protobuf::int32 value);
+  inline void add_item_ids(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      item_ids() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_item_ids();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevInfo)
  private:
   inline void set_has_addr();
   inline void clear_has_addr();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > item_ids_;
+  mutable int _item_ids_cached_byte_size_;
   ::google::protobuf::int32 addr_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_push_2eproto();
   friend void protobuf_AssignDesc_push_2eproto();
@@ -622,6 +1842,101 @@ class GetDevInfo : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static GetDevInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetDevInfoRsp : public ::google::protobuf::Message {
+ public:
+  GetDevInfoRsp();
+  virtual ~GetDevInfoRsp();
+
+  GetDevInfoRsp(const GetDevInfoRsp& from);
+
+  inline GetDevInfoRsp& operator=(const GetDevInfoRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetDevInfoRsp& default_instance();
+
+  void Swap(GetDevInfoRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  GetDevInfoRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetDevInfoRsp& from);
+  void MergeFrom(const GetDevInfoRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  inline int id_value_pairs_size() const;
+  inline void clear_id_value_pairs();
+  static const int kIdValuePairsFieldNumber = 2;
+  inline const ::com::letsmidi::monsys::protocol::push::IdValuePair& id_value_pairs(int index) const;
+  inline ::com::letsmidi::monsys::protocol::push::IdValuePair* mutable_id_value_pairs(int index);
+  inline ::com::letsmidi::monsys::protocol::push::IdValuePair* add_id_value_pairs();
+  inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >&
+      id_value_pairs() const;
+  inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >*
+      mutable_id_value_pairs();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevInfoRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair > id_value_pairs_;
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetDevInfoRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -686,14 +2001,109 @@ class SetDevInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 addr() const;
   inline void set_addr(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.SetDevInfo)
+  // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+  inline int id_value_pairs_size() const;
+  inline void clear_id_value_pairs();
+  static const int kIdValuePairsFieldNumber = 2;
+  inline const ::com::letsmidi::monsys::protocol::push::IdValuePair& id_value_pairs(int index) const;
+  inline ::com::letsmidi::monsys::protocol::push::IdValuePair* mutable_id_value_pairs(int index);
+  inline ::com::letsmidi::monsys::protocol::push::IdValuePair* add_id_value_pairs();
+  inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >&
+      id_value_pairs() const;
+  inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >*
+      mutable_id_value_pairs();
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfo)
  private:
   inline void set_has_addr();
   inline void clear_has_addr();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair > id_value_pairs_;
   ::google::protobuf::int32 addr_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static SetDevInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class SetDevInfoRsp : public ::google::protobuf::Message {
+ public:
+  SetDevInfoRsp();
+  virtual ~SetDevInfoRsp();
+
+  SetDevInfoRsp(const SetDevInfoRsp& from);
+
+  inline SetDevInfoRsp& operator=(const SetDevInfoRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SetDevInfoRsp& default_instance();
+
+  void Swap(SetDevInfoRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  SetDevInfoRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const SetDevInfoRsp& from);
+  void MergeFrom(const SetDevInfoRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 code_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -703,7 +2113,7 @@ class SetDevInfo : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_push_2eproto();
 
   void InitAsDefaultInstance();
-  static SetDevInfo* default_instance_;
+  static SetDevInfoRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -768,32 +2178,17 @@ class Response : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 code() const;
   inline void set_code(::google::protobuf::int32 value);
 
-  // required string desc = 2;
-  inline bool has_desc() const;
-  inline void clear_desc();
-  static const int kDescFieldNumber = 2;
-  inline const ::std::string& desc() const;
-  inline void set_desc(const ::std::string& value);
-  inline void set_desc(const char* value);
-  inline void set_desc(const char* value, size_t size);
-  inline ::std::string* mutable_desc();
-  inline ::std::string* release_desc();
-  inline void set_allocated_desc(::std::string* desc);
-
-  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.Response)
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Response)
  private:
   inline void set_has_code();
   inline void clear_has_code();
-  inline void set_has_desc();
-  inline void clear_has_desc();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::std::string* desc_;
   ::google::protobuf::int32 code_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   friend void  protobuf_AddDesc_push_2eproto();
   friend void protobuf_AssignDesc_push_2eproto();
@@ -807,66 +2202,1038 @@ class Response : public ::google::protobuf::Message {
 
 // ===================================================================
 
-// PushMsg
+// IdValuePair
 
-// required .com.letsmidi.monsys.protocol.PushMsg.MsgType type = 1;
-inline bool PushMsg::has_type() const {
+// required int32 id = 1;
+inline bool IdValuePair::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PushMsg::set_has_type() {
+inline void IdValuePair::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PushMsg::clear_has_type() {
+inline void IdValuePair::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void IdValuePair::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 IdValuePair::id() const {
+  return id_;
+}
+inline void IdValuePair::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// required int32 value = 2;
+inline bool IdValuePair::has_value() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void IdValuePair::set_has_value() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void IdValuePair::clear_has_value() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void IdValuePair::clear_value() {
+  value_ = 0;
+  clear_has_value();
+}
+inline ::google::protobuf::int32 IdValuePair::value() const {
+  return value_;
+}
+inline void IdValuePair::set_value(::google::protobuf::int32 value) {
+  set_has_value();
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// FGatewayInfo
+
+// required string id = 1;
+inline bool FGatewayInfo::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void FGatewayInfo::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void FGatewayInfo::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void FGatewayInfo::clear_id() {
+  if (id_ != &::google::protobuf::internal::kEmptyString) {
+    id_->clear();
+  }
+  clear_has_id();
+}
+inline const ::std::string& FGatewayInfo::id() const {
+  return *id_;
+}
+inline void FGatewayInfo::set_id(const ::std::string& value) {
+  set_has_id();
+  if (id_ == &::google::protobuf::internal::kEmptyString) {
+    id_ = new ::std::string;
+  }
+  id_->assign(value);
+}
+inline void FGatewayInfo::set_id(const char* value) {
+  set_has_id();
+  if (id_ == &::google::protobuf::internal::kEmptyString) {
+    id_ = new ::std::string;
+  }
+  id_->assign(value);
+}
+inline void FGatewayInfo::set_id(const char* value, size_t size) {
+  set_has_id();
+  if (id_ == &::google::protobuf::internal::kEmptyString) {
+    id_ = new ::std::string;
+  }
+  id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* FGatewayInfo::mutable_id() {
+  set_has_id();
+  if (id_ == &::google::protobuf::internal::kEmptyString) {
+    id_ = new ::std::string;
+  }
+  return id_;
+}
+inline ::std::string* FGatewayInfo::release_id() {
+  clear_has_id();
+  if (id_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = id_;
+    id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void FGatewayInfo::set_allocated_id(::std::string* id) {
+  if (id_ != &::google::protobuf::internal::kEmptyString) {
+    delete id_;
+  }
+  if (id) {
+    set_has_id();
+    id_ = id;
+  } else {
+    clear_has_id();
+    id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string name = 2;
+inline bool FGatewayInfo::has_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void FGatewayInfo::set_has_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void FGatewayInfo::clear_has_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void FGatewayInfo::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& FGatewayInfo::name() const {
+  return *name_;
+}
+inline void FGatewayInfo::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void FGatewayInfo::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void FGatewayInfo::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* FGatewayInfo::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* FGatewayInfo::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void FGatewayInfo::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string desc = 3;
+inline bool FGatewayInfo::has_desc() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void FGatewayInfo::set_has_desc() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void FGatewayInfo::clear_has_desc() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void FGatewayInfo::clear_desc() {
+  if (desc_ != &::google::protobuf::internal::kEmptyString) {
+    desc_->clear();
+  }
+  clear_has_desc();
+}
+inline const ::std::string& FGatewayInfo::desc() const {
+  return *desc_;
+}
+inline void FGatewayInfo::set_desc(const ::std::string& value) {
+  set_has_desc();
+  if (desc_ == &::google::protobuf::internal::kEmptyString) {
+    desc_ = new ::std::string;
+  }
+  desc_->assign(value);
+}
+inline void FGatewayInfo::set_desc(const char* value) {
+  set_has_desc();
+  if (desc_ == &::google::protobuf::internal::kEmptyString) {
+    desc_ = new ::std::string;
+  }
+  desc_->assign(value);
+}
+inline void FGatewayInfo::set_desc(const char* value, size_t size) {
+  set_has_desc();
+  if (desc_ == &::google::protobuf::internal::kEmptyString) {
+    desc_ = new ::std::string;
+  }
+  desc_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* FGatewayInfo::mutable_desc() {
+  set_has_desc();
+  if (desc_ == &::google::protobuf::internal::kEmptyString) {
+    desc_ = new ::std::string;
+  }
+  return desc_;
+}
+inline ::std::string* FGatewayInfo::release_desc() {
+  clear_has_desc();
+  if (desc_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = desc_;
+    desc_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void FGatewayInfo::set_allocated_desc(::std::string* desc) {
+  if (desc_ != &::google::protobuf::internal::kEmptyString) {
+    delete desc_;
+  }
+  if (desc) {
+    set_has_desc();
+    desc_ = desc;
+  } else {
+    clear_has_desc();
+    desc_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// DeviceInfo
+
+// required int32 addr = 1;
+inline bool DeviceInfo::has_addr() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void DeviceInfo::set_has_addr() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void DeviceInfo::clear_has_addr() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void DeviceInfo::clear_addr() {
+  addr_ = 0;
+  clear_has_addr();
+}
+inline ::google::protobuf::int32 DeviceInfo::addr() const {
+  return addr_;
+}
+inline void DeviceInfo::set_addr(::google::protobuf::int32 value) {
+  set_has_addr();
+  addr_ = value;
+}
+
+// required int32 type = 2;
+inline bool DeviceInfo::has_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void DeviceInfo::set_has_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void DeviceInfo::clear_has_type() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void DeviceInfo::clear_type() {
+  type_ = 0;
+  clear_has_type();
+}
+inline ::google::protobuf::int32 DeviceInfo::type() const {
+  return type_;
+}
+inline void DeviceInfo::set_type(::google::protobuf::int32 value) {
+  set_has_type();
+  type_ = value;
+}
+
+// required string name = 3;
+inline bool DeviceInfo::has_name() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void DeviceInfo::set_has_name() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void DeviceInfo::clear_has_name() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void DeviceInfo::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& DeviceInfo::name() const {
+  return *name_;
+}
+inline void DeviceInfo::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void DeviceInfo::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void DeviceInfo::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* DeviceInfo::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* DeviceInfo::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void DeviceInfo::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// PushMsg
+
+// required int32 version = 1;
+inline bool PushMsg::has_version() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushMsg::set_has_version() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushMsg::clear_has_version() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushMsg::clear_version() {
+  version_ = 0;
+  clear_has_version();
+}
+inline ::google::protobuf::int32 PushMsg::version() const {
+  return version_;
+}
+inline void PushMsg::set_version(::google::protobuf::int32 value) {
+  set_has_version();
+  version_ = value;
+}
+
+// required .com.letsmidi.monsys.protocol.push.MsgType type = 2;
+inline bool PushMsg::has_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushMsg::set_has_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushMsg::clear_has_type() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void PushMsg::clear_type() {
   type_ = 1;
   clear_has_type();
 }
-inline ::com::letsmidi::monsys::protocol::PushMsg_MsgType PushMsg::type() const {
-  return static_cast< ::com::letsmidi::monsys::protocol::PushMsg_MsgType >(type_);
+inline ::com::letsmidi::monsys::protocol::push::MsgType PushMsg::type() const {
+  return static_cast< ::com::letsmidi::monsys::protocol::push::MsgType >(type_);
 }
-inline void PushMsg::set_type(::com::letsmidi::monsys::protocol::PushMsg_MsgType value) {
-  assert(::com::letsmidi::monsys::protocol::PushMsg_MsgType_IsValid(value));
+inline void PushMsg::set_type(::com::letsmidi::monsys::protocol::push::MsgType value) {
+  assert(::com::letsmidi::monsys::protocol::push::MsgType_IsValid(value));
   set_has_type();
   type_ = value;
 }
 
-// optional .com.letsmidi.monsys.protocol.Login login = 2;
+// optional .com.letsmidi.monsys.protocol.push.Login login = 10;
 inline bool PushMsg::has_login() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void PushMsg::set_has_login() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void PushMsg::clear_has_login() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void PushMsg::clear_login() {
-  if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::Login::Clear();
+  if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::push::Login::Clear();
   clear_has_login();
 }
-inline const ::com::letsmidi::monsys::protocol::Login& PushMsg::login() const {
+inline const ::com::letsmidi::monsys::protocol::push::Login& PushMsg::login() const {
   return login_ != NULL ? *login_ : *default_instance_->login_;
 }
-inline ::com::letsmidi::monsys::protocol::Login* PushMsg::mutable_login() {
+inline ::com::letsmidi::monsys::protocol::push::Login* PushMsg::mutable_login() {
   set_has_login();
-  if (login_ == NULL) login_ = new ::com::letsmidi::monsys::protocol::Login;
+  if (login_ == NULL) login_ = new ::com::letsmidi::monsys::protocol::push::Login;
   return login_;
 }
-inline ::com::letsmidi::monsys::protocol::Login* PushMsg::release_login() {
+inline ::com::letsmidi::monsys::protocol::push::Login* PushMsg::release_login() {
   clear_has_login();
-  ::com::letsmidi::monsys::protocol::Login* temp = login_;
+  ::com::letsmidi::monsys::protocol::push::Login* temp = login_;
   login_ = NULL;
   return temp;
 }
-inline void PushMsg::set_allocated_login(::com::letsmidi::monsys::protocol::Login* login) {
+inline void PushMsg::set_allocated_login(::com::letsmidi::monsys::protocol::push::Login* login) {
   delete login_;
   login_ = login;
   if (login) {
     set_has_login();
   } else {
     clear_has_login();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
+inline bool PushMsg::has_login_rsp() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushMsg::set_has_login_rsp() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushMsg::clear_has_login_rsp() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushMsg::clear_login_rsp() {
+  if (login_rsp_ != NULL) login_rsp_->::com::letsmidi::monsys::protocol::push::LoginRsp::Clear();
+  clear_has_login_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::LoginRsp& PushMsg::login_rsp() const {
+  return login_rsp_ != NULL ? *login_rsp_ : *default_instance_->login_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::LoginRsp* PushMsg::mutable_login_rsp() {
+  set_has_login_rsp();
+  if (login_rsp_ == NULL) login_rsp_ = new ::com::letsmidi::monsys::protocol::push::LoginRsp;
+  return login_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::LoginRsp* PushMsg::release_login_rsp() {
+  clear_has_login_rsp();
+  ::com::letsmidi::monsys::protocol::push::LoginRsp* temp = login_rsp_;
+  login_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_login_rsp(::com::letsmidi::monsys::protocol::push::LoginRsp* login_rsp) {
+  delete login_rsp_;
+  login_rsp_ = login_rsp;
+  if (login_rsp) {
+    set_has_login_rsp();
+  } else {
+    clear_has_login_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
+inline bool PushMsg::has_bind() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PushMsg::set_has_bind() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PushMsg::clear_has_bind() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PushMsg::clear_bind() {
+  if (bind_ != NULL) bind_->::com::letsmidi::monsys::protocol::push::Bind::Clear();
+  clear_has_bind();
+}
+inline const ::com::letsmidi::monsys::protocol::push::Bind& PushMsg::bind() const {
+  return bind_ != NULL ? *bind_ : *default_instance_->bind_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Bind* PushMsg::mutable_bind() {
+  set_has_bind();
+  if (bind_ == NULL) bind_ = new ::com::letsmidi::monsys::protocol::push::Bind;
+  return bind_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Bind* PushMsg::release_bind() {
+  clear_has_bind();
+  ::com::letsmidi::monsys::protocol::push::Bind* temp = bind_;
+  bind_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_bind(::com::letsmidi::monsys::protocol::push::Bind* bind) {
+  delete bind_;
+  bind_ = bind;
+  if (bind) {
+    set_has_bind();
+  } else {
+    clear_has_bind();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
+inline bool PushMsg::has_bind_rsp() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void PushMsg::set_has_bind_rsp() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void PushMsg::clear_has_bind_rsp() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void PushMsg::clear_bind_rsp() {
+  if (bind_rsp_ != NULL) bind_rsp_->::com::letsmidi::monsys::protocol::push::BindRsp::Clear();
+  clear_has_bind_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::BindRsp& PushMsg::bind_rsp() const {
+  return bind_rsp_ != NULL ? *bind_rsp_ : *default_instance_->bind_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::BindRsp* PushMsg::mutable_bind_rsp() {
+  set_has_bind_rsp();
+  if (bind_rsp_ == NULL) bind_rsp_ = new ::com::letsmidi::monsys::protocol::push::BindRsp;
+  return bind_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::BindRsp* PushMsg::release_bind_rsp() {
+  clear_has_bind_rsp();
+  ::com::letsmidi::monsys::protocol::push::BindRsp* temp = bind_rsp_;
+  bind_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_bind_rsp(::com::letsmidi::monsys::protocol::push::BindRsp* bind_rsp) {
+  delete bind_rsp_;
+  bind_rsp_ = bind_rsp;
+  if (bind_rsp) {
+    set_has_bind_rsp();
+  } else {
+    clear_has_bind_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
+inline bool PushMsg::has_connect() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PushMsg::set_has_connect() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PushMsg::clear_has_connect() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PushMsg::clear_connect() {
+  if (connect_ != NULL) connect_->::com::letsmidi::monsys::protocol::push::Connect::Clear();
+  clear_has_connect();
+}
+inline const ::com::letsmidi::monsys::protocol::push::Connect& PushMsg::connect() const {
+  return connect_ != NULL ? *connect_ : *default_instance_->connect_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Connect* PushMsg::mutable_connect() {
+  set_has_connect();
+  if (connect_ == NULL) connect_ = new ::com::letsmidi::monsys::protocol::push::Connect;
+  return connect_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Connect* PushMsg::release_connect() {
+  clear_has_connect();
+  ::com::letsmidi::monsys::protocol::push::Connect* temp = connect_;
+  connect_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_connect(::com::letsmidi::monsys::protocol::push::Connect* connect) {
+  delete connect_;
+  connect_ = connect;
+  if (connect) {
+    set_has_connect();
+  } else {
+    clear_has_connect();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
+inline bool PushMsg::has_connect_rsp() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void PushMsg::set_has_connect_rsp() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void PushMsg::clear_has_connect_rsp() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void PushMsg::clear_connect_rsp() {
+  if (connect_rsp_ != NULL) connect_rsp_->::com::letsmidi::monsys::protocol::push::ConnectRsp::Clear();
+  clear_has_connect_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::ConnectRsp& PushMsg::connect_rsp() const {
+  return connect_rsp_ != NULL ? *connect_rsp_ : *default_instance_->connect_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ConnectRsp* PushMsg::mutable_connect_rsp() {
+  set_has_connect_rsp();
+  if (connect_rsp_ == NULL) connect_rsp_ = new ::com::letsmidi::monsys::protocol::push::ConnectRsp;
+  return connect_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ConnectRsp* PushMsg::release_connect_rsp() {
+  clear_has_connect_rsp();
+  ::com::letsmidi::monsys::protocol::push::ConnectRsp* temp = connect_rsp_;
+  connect_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_connect_rsp(::com::letsmidi::monsys::protocol::push::ConnectRsp* connect_rsp) {
+  delete connect_rsp_;
+  connect_rsp_ = connect_rsp;
+  if (connect_rsp) {
+    set_has_connect_rsp();
+  } else {
+    clear_has_connect_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
+inline bool PushMsg::has_get_fgw_list() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void PushMsg::set_has_get_fgw_list() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void PushMsg::clear_has_get_fgw_list() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void PushMsg::clear_get_fgw_list() {
+  if (get_fgw_list_ != NULL) get_fgw_list_->::com::letsmidi::monsys::protocol::push::GetFgwList::Clear();
+  clear_has_get_fgw_list();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetFgwList& PushMsg::get_fgw_list() const {
+  return get_fgw_list_ != NULL ? *get_fgw_list_ : *default_instance_->get_fgw_list_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetFgwList* PushMsg::mutable_get_fgw_list() {
+  set_has_get_fgw_list();
+  if (get_fgw_list_ == NULL) get_fgw_list_ = new ::com::letsmidi::monsys::protocol::push::GetFgwList;
+  return get_fgw_list_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetFgwList* PushMsg::release_get_fgw_list() {
+  clear_has_get_fgw_list();
+  ::com::letsmidi::monsys::protocol::push::GetFgwList* temp = get_fgw_list_;
+  get_fgw_list_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_fgw_list(::com::letsmidi::monsys::protocol::push::GetFgwList* get_fgw_list) {
+  delete get_fgw_list_;
+  get_fgw_list_ = get_fgw_list;
+  if (get_fgw_list) {
+    set_has_get_fgw_list();
+  } else {
+    clear_has_get_fgw_list();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
+inline bool PushMsg::has_get_fgw_list_rsp() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void PushMsg::set_has_get_fgw_list_rsp() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void PushMsg::clear_has_get_fgw_list_rsp() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void PushMsg::clear_get_fgw_list_rsp() {
+  if (get_fgw_list_rsp_ != NULL) get_fgw_list_rsp_->::com::letsmidi::monsys::protocol::push::GetFgwListRsp::Clear();
+  clear_has_get_fgw_list_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetFgwListRsp& PushMsg::get_fgw_list_rsp() const {
+  return get_fgw_list_rsp_ != NULL ? *get_fgw_list_rsp_ : *default_instance_->get_fgw_list_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* PushMsg::mutable_get_fgw_list_rsp() {
+  set_has_get_fgw_list_rsp();
+  if (get_fgw_list_rsp_ == NULL) get_fgw_list_rsp_ = new ::com::letsmidi::monsys::protocol::push::GetFgwListRsp;
+  return get_fgw_list_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* PushMsg::release_get_fgw_list_rsp() {
+  clear_has_get_fgw_list_rsp();
+  ::com::letsmidi::monsys::protocol::push::GetFgwListRsp* temp = get_fgw_list_rsp_;
+  get_fgw_list_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_fgw_list_rsp(::com::letsmidi::monsys::protocol::push::GetFgwListRsp* get_fgw_list_rsp) {
+  delete get_fgw_list_rsp_;
+  get_fgw_list_rsp_ = get_fgw_list_rsp;
+  if (get_fgw_list_rsp) {
+    set_has_get_fgw_list_rsp();
+  } else {
+    clear_has_get_fgw_list_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
+inline bool PushMsg::has_get_dev_list() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void PushMsg::set_has_get_dev_list() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void PushMsg::clear_has_get_dev_list() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void PushMsg::clear_get_dev_list() {
+  if (get_dev_list_ != NULL) get_dev_list_->::com::letsmidi::monsys::protocol::push::GetDevList::Clear();
+  clear_has_get_dev_list();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetDevList& PushMsg::get_dev_list() const {
+  return get_dev_list_ != NULL ? *get_dev_list_ : *default_instance_->get_dev_list_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevList* PushMsg::mutable_get_dev_list() {
+  set_has_get_dev_list();
+  if (get_dev_list_ == NULL) get_dev_list_ = new ::com::letsmidi::monsys::protocol::push::GetDevList;
+  return get_dev_list_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevList* PushMsg::release_get_dev_list() {
+  clear_has_get_dev_list();
+  ::com::letsmidi::monsys::protocol::push::GetDevList* temp = get_dev_list_;
+  get_dev_list_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_dev_list(::com::letsmidi::monsys::protocol::push::GetDevList* get_dev_list) {
+  delete get_dev_list_;
+  get_dev_list_ = get_dev_list;
+  if (get_dev_list) {
+    set_has_get_dev_list();
+  } else {
+    clear_has_get_dev_list();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
+inline bool PushMsg::has_get_dev_list_rsp() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void PushMsg::set_has_get_dev_list_rsp() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void PushMsg::clear_has_get_dev_list_rsp() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void PushMsg::clear_get_dev_list_rsp() {
+  if (get_dev_list_rsp_ != NULL) get_dev_list_rsp_->::com::letsmidi::monsys::protocol::push::GetDevListRsp::Clear();
+  clear_has_get_dev_list_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetDevListRsp& PushMsg::get_dev_list_rsp() const {
+  return get_dev_list_rsp_ != NULL ? *get_dev_list_rsp_ : *default_instance_->get_dev_list_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevListRsp* PushMsg::mutable_get_dev_list_rsp() {
+  set_has_get_dev_list_rsp();
+  if (get_dev_list_rsp_ == NULL) get_dev_list_rsp_ = new ::com::letsmidi::monsys::protocol::push::GetDevListRsp;
+  return get_dev_list_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevListRsp* PushMsg::release_get_dev_list_rsp() {
+  clear_has_get_dev_list_rsp();
+  ::com::letsmidi::monsys::protocol::push::GetDevListRsp* temp = get_dev_list_rsp_;
+  get_dev_list_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_dev_list_rsp(::com::letsmidi::monsys::protocol::push::GetDevListRsp* get_dev_list_rsp) {
+  delete get_dev_list_rsp_;
+  get_dev_list_rsp_ = get_dev_list_rsp;
+  if (get_dev_list_rsp) {
+    set_has_get_dev_list_rsp();
+  } else {
+    clear_has_get_dev_list_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
+inline bool PushMsg::has_get_dev_info() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void PushMsg::set_has_get_dev_info() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void PushMsg::clear_has_get_dev_info() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void PushMsg::clear_get_dev_info() {
+  if (get_dev_info_ != NULL) get_dev_info_->::com::letsmidi::monsys::protocol::push::GetDevInfo::Clear();
+  clear_has_get_dev_info();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetDevInfo& PushMsg::get_dev_info() const {
+  return get_dev_info_ != NULL ? *get_dev_info_ : *default_instance_->get_dev_info_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevInfo* PushMsg::mutable_get_dev_info() {
+  set_has_get_dev_info();
+  if (get_dev_info_ == NULL) get_dev_info_ = new ::com::letsmidi::monsys::protocol::push::GetDevInfo;
+  return get_dev_info_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevInfo* PushMsg::release_get_dev_info() {
+  clear_has_get_dev_info();
+  ::com::letsmidi::monsys::protocol::push::GetDevInfo* temp = get_dev_info_;
+  get_dev_info_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_dev_info(::com::letsmidi::monsys::protocol::push::GetDevInfo* get_dev_info) {
+  delete get_dev_info_;
+  get_dev_info_ = get_dev_info;
+  if (get_dev_info) {
+    set_has_get_dev_info();
+  } else {
+    clear_has_get_dev_info();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
+inline bool PushMsg::has_get_dev_info_rsp() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void PushMsg::set_has_get_dev_info_rsp() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void PushMsg::clear_has_get_dev_info_rsp() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void PushMsg::clear_get_dev_info_rsp() {
+  if (get_dev_info_rsp_ != NULL) get_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::GetDevInfoRsp::Clear();
+  clear_has_get_dev_info_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp& PushMsg::get_dev_info_rsp() const {
+  return get_dev_info_rsp_ != NULL ? *get_dev_info_rsp_ : *default_instance_->get_dev_info_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* PushMsg::mutable_get_dev_info_rsp() {
+  set_has_get_dev_info_rsp();
+  if (get_dev_info_rsp_ == NULL) get_dev_info_rsp_ = new ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp;
+  return get_dev_info_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* PushMsg::release_get_dev_info_rsp() {
+  clear_has_get_dev_info_rsp();
+  ::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* temp = get_dev_info_rsp_;
+  get_dev_info_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_get_dev_info_rsp(::com::letsmidi::monsys::protocol::push::GetDevInfoRsp* get_dev_info_rsp) {
+  delete get_dev_info_rsp_;
+  get_dev_info_rsp_ = get_dev_info_rsp;
+  if (get_dev_info_rsp) {
+    set_has_get_dev_info_rsp();
+  } else {
+    clear_has_get_dev_info_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
+inline bool PushMsg::has_set_dev_info() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void PushMsg::set_has_set_dev_info() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void PushMsg::clear_has_set_dev_info() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void PushMsg::clear_set_dev_info() {
+  if (set_dev_info_ != NULL) set_dev_info_->::com::letsmidi::monsys::protocol::push::SetDevInfo::Clear();
+  clear_has_set_dev_info();
+}
+inline const ::com::letsmidi::monsys::protocol::push::SetDevInfo& PushMsg::set_dev_info() const {
+  return set_dev_info_ != NULL ? *set_dev_info_ : *default_instance_->set_dev_info_;
+}
+inline ::com::letsmidi::monsys::protocol::push::SetDevInfo* PushMsg::mutable_set_dev_info() {
+  set_has_set_dev_info();
+  if (set_dev_info_ == NULL) set_dev_info_ = new ::com::letsmidi::monsys::protocol::push::SetDevInfo;
+  return set_dev_info_;
+}
+inline ::com::letsmidi::monsys::protocol::push::SetDevInfo* PushMsg::release_set_dev_info() {
+  clear_has_set_dev_info();
+  ::com::letsmidi::monsys::protocol::push::SetDevInfo* temp = set_dev_info_;
+  set_dev_info_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_set_dev_info(::com::letsmidi::monsys::protocol::push::SetDevInfo* set_dev_info) {
+  delete set_dev_info_;
+  set_dev_info_ = set_dev_info;
+  if (set_dev_info) {
+    set_has_set_dev_info();
+  } else {
+    clear_has_set_dev_info();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
+inline bool PushMsg::has_set_dev_info_rsp() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void PushMsg::set_has_set_dev_info_rsp() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void PushMsg::clear_has_set_dev_info_rsp() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void PushMsg::clear_set_dev_info_rsp() {
+  if (set_dev_info_rsp_ != NULL) set_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::Clear();
+  clear_has_set_dev_info_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp& PushMsg::set_dev_info_rsp() const {
+  return set_dev_info_rsp_ != NULL ? *set_dev_info_rsp_ : *default_instance_->set_dev_info_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* PushMsg::mutable_set_dev_info_rsp() {
+  set_has_set_dev_info_rsp();
+  if (set_dev_info_rsp_ == NULL) set_dev_info_rsp_ = new ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp;
+  return set_dev_info_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* PushMsg::release_set_dev_info_rsp() {
+  clear_has_set_dev_info_rsp();
+  ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* temp = set_dev_info_rsp_;
+  set_dev_info_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_set_dev_info_rsp(::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp) {
+  delete set_dev_info_rsp_;
+  set_dev_info_rsp_ = set_dev_info_rsp;
+  if (set_dev_info_rsp) {
+    set_has_set_dev_info_rsp();
+  } else {
+    clear_has_set_dev_info_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
+inline bool PushMsg::has_client_login() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void PushMsg::set_has_client_login() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void PushMsg::clear_has_client_login() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void PushMsg::clear_client_login() {
+  if (client_login_ != NULL) client_login_->::com::letsmidi::monsys::protocol::push::ClientLogin::Clear();
+  clear_has_client_login();
+}
+inline const ::com::letsmidi::monsys::protocol::push::ClientLogin& PushMsg::client_login() const {
+  return client_login_ != NULL ? *client_login_ : *default_instance_->client_login_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ClientLogin* PushMsg::mutable_client_login() {
+  set_has_client_login();
+  if (client_login_ == NULL) client_login_ = new ::com::letsmidi::monsys::protocol::push::ClientLogin;
+  return client_login_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ClientLogin* PushMsg::release_client_login() {
+  clear_has_client_login();
+  ::com::letsmidi::monsys::protocol::push::ClientLogin* temp = client_login_;
+  client_login_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_client_login(::com::letsmidi::monsys::protocol::push::ClientLogin* client_login) {
+  delete client_login_;
+  client_login_ = client_login;
+  if (client_login) {
+    set_has_client_login();
+  } else {
+    clear_has_client_login();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
+inline bool PushMsg::has_client_login_rsp() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+inline void PushMsg::set_has_client_login_rsp() {
+  _has_bits_[0] |= 0x00020000u;
+}
+inline void PushMsg::clear_has_client_login_rsp() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline void PushMsg::clear_client_login_rsp() {
+  if (client_login_rsp_ != NULL) client_login_rsp_->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::Clear();
+  clear_has_client_login_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::ClientLoginRsp& PushMsg::client_login_rsp() const {
+  return client_login_rsp_ != NULL ? *client_login_rsp_ : *default_instance_->client_login_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* PushMsg::mutable_client_login_rsp() {
+  set_has_client_login_rsp();
+  if (client_login_rsp_ == NULL) client_login_rsp_ = new ::com::letsmidi::monsys::protocol::push::ClientLoginRsp;
+  return client_login_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* PushMsg::release_client_login_rsp() {
+  clear_has_client_login_rsp();
+  ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* temp = client_login_rsp_;
+  client_login_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_client_login_rsp(::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp) {
+  delete client_login_rsp_;
+  client_login_rsp_ = client_login_rsp;
+  if (client_login_rsp) {
+    set_has_client_login_rsp();
+  } else {
+    clear_has_client_login_rsp();
   }
 }
 
@@ -946,6 +3313,227 @@ inline void Login::set_allocated_device_id(::std::string* device_id) {
 
 // -------------------------------------------------------------------
 
+// LoginRsp
+
+// required int32 code = 1;
+inline bool LoginRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void LoginRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void LoginRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void LoginRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 LoginRsp::code() const {
+  return code_;
+}
+inline void LoginRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ClientLogin
+
+// required string account = 1;
+inline bool ClientLogin::has_account() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ClientLogin::set_has_account() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ClientLogin::clear_has_account() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ClientLogin::clear_account() {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    account_->clear();
+  }
+  clear_has_account();
+}
+inline const ::std::string& ClientLogin::account() const {
+  return *account_;
+}
+inline void ClientLogin::set_account(const ::std::string& value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void ClientLogin::set_account(const char* value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void ClientLogin::set_account(const char* value, size_t size) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ClientLogin::mutable_account() {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  return account_;
+}
+inline ::std::string* ClientLogin::release_account() {
+  clear_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = account_;
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ClientLogin::set_allocated_account(::std::string* account) {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    delete account_;
+  }
+  if (account) {
+    set_has_account();
+    account_ = account;
+  } else {
+    clear_has_account();
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string password = 2;
+inline bool ClientLogin::has_password() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ClientLogin::set_has_password() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ClientLogin::clear_has_password() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ClientLogin::clear_password() {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    password_->clear();
+  }
+  clear_has_password();
+}
+inline const ::std::string& ClientLogin::password() const {
+  return *password_;
+}
+inline void ClientLogin::set_password(const ::std::string& value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void ClientLogin::set_password(const char* value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void ClientLogin::set_password(const char* value, size_t size) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ClientLogin::mutable_password() {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  return password_;
+}
+inline ::std::string* ClientLogin::release_password() {
+  clear_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = password_;
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ClientLogin::set_allocated_password(::std::string* password) {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    delete password_;
+  }
+  if (password) {
+    set_has_password();
+    password_ = password;
+  } else {
+    clear_has_password();
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// ClientLoginRsp
+
+// required int32 code = 1;
+inline bool ClientLoginRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ClientLoginRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ClientLoginRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ClientLoginRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 ClientLoginRsp::code() const {
+  return code_;
+}
+inline void ClientLoginRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
+inline int ClientLoginRsp::fgw_infos_size() const {
+  return fgw_infos_.size();
+}
+inline void ClientLoginRsp::clear_fgw_infos() {
+  fgw_infos_.Clear();
+}
+inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& ClientLoginRsp::fgw_infos(int index) const {
+  return fgw_infos_.Get(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* ClientLoginRsp::mutable_fgw_infos(int index) {
+  return fgw_infos_.Mutable(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* ClientLoginRsp::add_fgw_infos() {
+  return fgw_infos_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >&
+ClientLoginRsp::fgw_infos() const {
+  return fgw_infos_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
+ClientLoginRsp::mutable_fgw_infos() {
+  return &fgw_infos_;
+}
+
+// -------------------------------------------------------------------
+
 // Bind
 
 // required string device_id = 1;
@@ -1016,6 +3604,32 @@ inline void Bind::set_allocated_device_id(::std::string* device_id) {
     clear_has_device_id();
     device_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// BindRsp
+
+// required int32 code = 1;
+inline bool BindRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void BindRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void BindRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void BindRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 BindRsp::code() const {
+  return code_;
+}
+inline void BindRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -1094,6 +3708,87 @@ inline void Connect::set_allocated_device_id(::std::string* device_id) {
 
 // -------------------------------------------------------------------
 
+// ConnectRsp
+
+// required int32 code = 1;
+inline bool ConnectRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ConnectRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ConnectRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ConnectRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 ConnectRsp::code() const {
+  return code_;
+}
+inline void ConnectRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GetFgwList
+
+// -------------------------------------------------------------------
+
+// GetFgwListRsp
+
+// required int32 code = 1;
+inline bool GetFgwListRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetFgwListRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetFgwListRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetFgwListRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 GetFgwListRsp::code() const {
+  return code_;
+}
+inline void GetFgwListRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
+inline int GetFgwListRsp::fgw_infos_size() const {
+  return fgw_infos_.size();
+}
+inline void GetFgwListRsp::clear_fgw_infos() {
+  fgw_infos_.Clear();
+}
+inline const ::com::letsmidi::monsys::protocol::push::FGatewayInfo& GetFgwListRsp::fgw_infos(int index) const {
+  return fgw_infos_.Get(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* GetFgwListRsp::mutable_fgw_infos(int index) {
+  return fgw_infos_.Mutable(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::FGatewayInfo* GetFgwListRsp::add_fgw_infos() {
+  return fgw_infos_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >&
+GetFgwListRsp::fgw_infos() const {
+  return fgw_infos_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::FGatewayInfo >*
+GetFgwListRsp::mutable_fgw_infos() {
+  return &fgw_infos_;
+}
+
+// -------------------------------------------------------------------
+
 // GetDevList
 
 // required string device_id = 1;
@@ -1168,6 +3863,57 @@ inline void GetDevList::set_allocated_device_id(::std::string* device_id) {
 
 // -------------------------------------------------------------------
 
+// GetDevListRsp
+
+// required int32 code = 1;
+inline bool GetDevListRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetDevListRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetDevListRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetDevListRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 GetDevListRsp::code() const {
+  return code_;
+}
+inline void GetDevListRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;
+inline int GetDevListRsp::dev_infos_size() const {
+  return dev_infos_.size();
+}
+inline void GetDevListRsp::clear_dev_infos() {
+  dev_infos_.Clear();
+}
+inline const ::com::letsmidi::monsys::protocol::push::DeviceInfo& GetDevListRsp::dev_infos(int index) const {
+  return dev_infos_.Get(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::DeviceInfo* GetDevListRsp::mutable_dev_infos(int index) {
+  return dev_infos_.Mutable(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::DeviceInfo* GetDevListRsp::add_dev_infos() {
+  return dev_infos_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::DeviceInfo >&
+GetDevListRsp::dev_infos() const {
+  return dev_infos_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::DeviceInfo >*
+GetDevListRsp::mutable_dev_infos() {
+  return &dev_infos_;
+}
+
+// -------------------------------------------------------------------
+
 // GetDevInfo
 
 // required int32 addr = 1;
@@ -1190,6 +3936,82 @@ inline ::google::protobuf::int32 GetDevInfo::addr() const {
 inline void GetDevInfo::set_addr(::google::protobuf::int32 value) {
   set_has_addr();
   addr_ = value;
+}
+
+// repeated int32 item_ids = 2 [packed = true];
+inline int GetDevInfo::item_ids_size() const {
+  return item_ids_.size();
+}
+inline void GetDevInfo::clear_item_ids() {
+  item_ids_.Clear();
+}
+inline ::google::protobuf::int32 GetDevInfo::item_ids(int index) const {
+  return item_ids_.Get(index);
+}
+inline void GetDevInfo::set_item_ids(int index, ::google::protobuf::int32 value) {
+  item_ids_.Set(index, value);
+}
+inline void GetDevInfo::add_item_ids(::google::protobuf::int32 value) {
+  item_ids_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+GetDevInfo::item_ids() const {
+  return item_ids_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+GetDevInfo::mutable_item_ids() {
+  return &item_ids_;
+}
+
+// -------------------------------------------------------------------
+
+// GetDevInfoRsp
+
+// required int32 code = 1;
+inline bool GetDevInfoRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetDevInfoRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetDevInfoRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetDevInfoRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 GetDevInfoRsp::code() const {
+  return code_;
+}
+inline void GetDevInfoRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+inline int GetDevInfoRsp::id_value_pairs_size() const {
+  return id_value_pairs_.size();
+}
+inline void GetDevInfoRsp::clear_id_value_pairs() {
+  id_value_pairs_.Clear();
+}
+inline const ::com::letsmidi::monsys::protocol::push::IdValuePair& GetDevInfoRsp::id_value_pairs(int index) const {
+  return id_value_pairs_.Get(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::IdValuePair* GetDevInfoRsp::mutable_id_value_pairs(int index) {
+  return id_value_pairs_.Mutable(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::IdValuePair* GetDevInfoRsp::add_id_value_pairs() {
+  return id_value_pairs_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >&
+GetDevInfoRsp::id_value_pairs() const {
+  return id_value_pairs_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >*
+GetDevInfoRsp::mutable_id_value_pairs() {
+  return &id_value_pairs_;
 }
 
 // -------------------------------------------------------------------
@@ -1218,6 +4040,57 @@ inline void SetDevInfo::set_addr(::google::protobuf::int32 value) {
   addr_ = value;
 }
 
+// repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
+inline int SetDevInfo::id_value_pairs_size() const {
+  return id_value_pairs_.size();
+}
+inline void SetDevInfo::clear_id_value_pairs() {
+  id_value_pairs_.Clear();
+}
+inline const ::com::letsmidi::monsys::protocol::push::IdValuePair& SetDevInfo::id_value_pairs(int index) const {
+  return id_value_pairs_.Get(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::IdValuePair* SetDevInfo::mutable_id_value_pairs(int index) {
+  return id_value_pairs_.Mutable(index);
+}
+inline ::com::letsmidi::monsys::protocol::push::IdValuePair* SetDevInfo::add_id_value_pairs() {
+  return id_value_pairs_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >&
+SetDevInfo::id_value_pairs() const {
+  return id_value_pairs_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::com::letsmidi::monsys::protocol::push::IdValuePair >*
+SetDevInfo::mutable_id_value_pairs() {
+  return &id_value_pairs_;
+}
+
+// -------------------------------------------------------------------
+
+// SetDevInfoRsp
+
+// required int32 code = 1;
+inline bool SetDevInfoRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SetDevInfoRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SetDevInfoRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SetDevInfoRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 SetDevInfoRsp::code() const {
+  return code_;
+}
+inline void SetDevInfoRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // Response
@@ -1244,79 +4117,10 @@ inline void Response::set_code(::google::protobuf::int32 value) {
   code_ = value;
 }
 
-// required string desc = 2;
-inline bool Response::has_desc() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Response::set_has_desc() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Response::clear_has_desc() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Response::clear_desc() {
-  if (desc_ != &::google::protobuf::internal::kEmptyString) {
-    desc_->clear();
-  }
-  clear_has_desc();
-}
-inline const ::std::string& Response::desc() const {
-  return *desc_;
-}
-inline void Response::set_desc(const ::std::string& value) {
-  set_has_desc();
-  if (desc_ == &::google::protobuf::internal::kEmptyString) {
-    desc_ = new ::std::string;
-  }
-  desc_->assign(value);
-}
-inline void Response::set_desc(const char* value) {
-  set_has_desc();
-  if (desc_ == &::google::protobuf::internal::kEmptyString) {
-    desc_ = new ::std::string;
-  }
-  desc_->assign(value);
-}
-inline void Response::set_desc(const char* value, size_t size) {
-  set_has_desc();
-  if (desc_ == &::google::protobuf::internal::kEmptyString) {
-    desc_ = new ::std::string;
-  }
-  desc_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* Response::mutable_desc() {
-  set_has_desc();
-  if (desc_ == &::google::protobuf::internal::kEmptyString) {
-    desc_ = new ::std::string;
-  }
-  return desc_;
-}
-inline ::std::string* Response::release_desc() {
-  clear_has_desc();
-  if (desc_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = desc_;
-    desc_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void Response::set_allocated_desc(::std::string* desc) {
-  if (desc_ != &::google::protobuf::internal::kEmptyString) {
-    delete desc_;
-  }
-  if (desc) {
-    set_has_desc();
-    desc_ = desc;
-  } else {
-    clear_has_desc();
-    desc_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace push
 }  // namespace protocol
 }  // namespace monsys
 }  // namespace letsmidi
@@ -1327,8 +4131,8 @@ namespace google {
 namespace protobuf {
 
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::com::letsmidi::monsys::protocol::PushMsg_MsgType>() {
-  return ::com::letsmidi::monsys::protocol::PushMsg_MsgType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::com::letsmidi::monsys::protocol::push::MsgType>() {
+  return ::com::letsmidi::monsys::protocol::push::MsgType_descriptor();
 }
 
 }  // namespace google
