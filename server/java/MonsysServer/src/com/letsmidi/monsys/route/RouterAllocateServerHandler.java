@@ -17,11 +17,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @author zero
  *
  */
-public class RouteAllocateServerHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
+public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
 
   private final SessionManager mSessionManager;
 
-  public RouteAllocateServerHandler(SessionManager session_manager) {
+  public RouterAllocateServerHandler(SessionManager session_manager) {
     mSessionManager = session_manager;
   }
 
@@ -60,7 +60,9 @@ public class RouteAllocateServerHandler extends SimpleChannelInboundHandler<Rout
 
     mSessionManager.add(route_session);
 
-    sendTokenResponse(ctx, 0, SuperRoute.ACCESS_PORT, SuperRoute.ACCESS_PORT);
+    sendTokenResponse(ctx, 0,
+        Config.getRouterConfig().getAllocatePort(),
+        Config.getRouterConfig().getAccessPort());
   }
 
   private void sendTokenResponse(ChannelHandlerContext ctx, int code, int port_for_client, int port_for_fgw) {

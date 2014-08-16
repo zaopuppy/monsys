@@ -13,11 +13,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 // TODO: if client disconnected, clean client automatically
 // TODO: session timeout
-public class RouteAccessServerHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
+public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
 
   private final SessionManager mSessionManager;
 
-  public RouteAccessServerHandler(SessionManager session_manager) {
+  public RouterAccessServerHandler(SessionManager session_manager) {
     mSessionManager = session_manager;
   }
 

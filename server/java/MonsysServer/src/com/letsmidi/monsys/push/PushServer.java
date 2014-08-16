@@ -3,13 +3,10 @@ package com.letsmidi.monsys.push;
 import com.letsmidi.monsys.log.MyLogFormatter;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
 import com.letsmidi.monsys.util.NettyUtil;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
@@ -18,7 +15,6 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -32,7 +28,7 @@ import java.util.logging.Logger;
 // TODO: heartbeat
 public class PushServer {
   public static final String LOGGER_NAME = "push-server";
-  private static final String LOG_NAME = "pushserver.log";
+  private static final String LOG_FILE_NAME = "pushserver.log";
 
   private static final int PUSH_PORT = 1984;
   private static final int ACCESS_PORT = 1988;
@@ -41,8 +37,14 @@ public class PushServer {
 
   public static void main(String[] args) throws IOException {
 
-    Handler log_handler = new FileHandler(LOG_NAME, 1 << 20, 10000, true);
-    //log_handler.setFormatter(new MyLogFormatter());
+    initLogger();
+
+    PushServer push_server = new PushServer();
+    push_server.start();
+  }
+
+  private static void initLogger() throws IOException {
+    Handler log_handler = new FileHandler(LOG_FILE_NAME, 1 << 20, 10000, true);
 
     final Logger logger = Logger.getLogger(LOGGER_NAME);
     logger.setLevel(Level.ALL);
@@ -61,9 +63,6 @@ public class PushServer {
     //});
 
     //MyLogger.setLogger(logger);
-
-    PushServer push_server = new PushServer();
-    push_server.start();
   }
 
   public void start() {

@@ -15,4 +15,8 @@
 		<srcroot url="file://$MODULE_DIR$/../../../../sdk/mysql-connector-java-5.1.31/src"/>
 		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/mysql-connector-java-5.1.31-bin.jar!/"/>
 	</lib>
+	<levels>
+		<level name="zookeeper-3.4.6" value="project"/>
+		<level name="slf4j-api-1.6.1" value="project"/>
+	</levels>
 </component>
