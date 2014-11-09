@@ -15,6 +15,7 @@
 #include "zinner_message_ex.h"
 #include "module.h"
 #include "zzigbee_session.h"
+#include "zgenerator.h"
 
 
 class ZZigBeeHandler : public ZClientHandler {
@@ -22,6 +23,7 @@ class ZZigBeeHandler : public ZClientHandler {
   ZZigBeeHandler(int id, ZModule *module, struct event_base *base)
     : ZClientHandler(id, module, base)
     , addr_(MODULE_SERIAL, 0, -1)
+    , id_generator_(1, 0xFFFF)
   {
   }
 
@@ -76,6 +78,8 @@ class ZZigBeeHandler : public ZClientHandler {
   // TODO: they are bound, make it better for management
   SESSION_CTRL_TYPE session_ctrl_;
   // SESSION_CTRL_TYPE session_ctrl_1_;
+
+  HandlerIdGenerator id_generator_;
 
 };
 

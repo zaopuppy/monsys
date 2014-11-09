@@ -73,6 +73,8 @@ T_Session* ZSessionCtrl<T_Key, T_Session>::remove(const T_Key &key)
 
 ////////////////////////////////////////////////////////////////////////////////////
 // template <typename T_Key1, typename T_Key2, typename T_Session, typename T_Map>
+// key1 is uniq -- internal key
+// key2 is not uniq -- external key
 template <typename T_Key1, typename T_Key2, typename T_Session>
 class ZSessionCtrl2Key {
  public:
@@ -89,6 +91,7 @@ class ZSessionCtrl2Key {
   typedef typename MAP_TYPE::iterator iterator;
 
   // mapping from key1 to key2
+  // TODO: use map instead of vector
   typedef std::vector<key_pair_t> KEY_MAP_TYPE;
 
  public:

@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.test;
 
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -113,9 +114,7 @@ public class PushClient {
 
   private ChannelFuture processInput(Channel ch, String line) {
     System.out.println("processInput");
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.LOGIN);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN);
 
     Login.Builder login_builder = Login.newBuilder();
     login_builder.setDeviceId(line);

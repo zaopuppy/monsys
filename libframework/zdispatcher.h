@@ -11,7 +11,7 @@
 class ZDispatcher : public ZTimer::TimerCallback {
 private:
   ZDispatcher(struct event_base *base)
-  : routine_interval_(1000)
+  : routine_interval_(500)
   , timer_(base, this), timer_routine_id_(-1)
   {
     module_list_.clear();

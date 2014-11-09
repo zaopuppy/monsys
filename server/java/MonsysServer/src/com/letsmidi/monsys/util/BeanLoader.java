@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Initialize a Bean instance by loading a config file
+ *
  * Created by zero on 8/16/14.
  */
 public class BeanLoader {

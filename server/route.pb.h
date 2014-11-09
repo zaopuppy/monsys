@@ -173,6 +173,13 @@ class RouteMsg : public ::google::protobuf::Message {
   inline ::com::letsmidi::monsys::protocol::route::MsgType type() const;
   inline void set_type(::com::letsmidi::monsys::protocol::route::MsgType value);
 
+  // required int32 sequence = 3;
+  inline bool has_sequence() const;
+  inline void clear_sequence();
+  static const int kSequenceFieldNumber = 3;
+  inline ::google::protobuf::int32 sequence() const;
+  inline void set_sequence(::google::protobuf::int32 value);
+
   // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
   inline bool has_req_token() const;
   inline void clear_req_token();
@@ -215,6 +222,8 @@ class RouteMsg : public ::google::protobuf::Message {
   inline void clear_has_version();
   inline void set_has_type();
   inline void clear_has_type();
+  inline void set_has_sequence();
+  inline void clear_has_sequence();
   inline void set_has_req_token();
   inline void clear_has_req_token();
   inline void set_has_req_token_rsp();
@@ -232,9 +241,10 @@ class RouteMsg : public ::google::protobuf::Message {
   ::com::letsmidi::monsys::protocol::route::ReqTokenRsp* req_token_rsp_;
   ::com::letsmidi::monsys::protocol::route::Connect* connect_;
   ::com::letsmidi::monsys::protocol::route::ConnectRsp* connect_rsp_;
+  ::google::protobuf::int32 sequence_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_route_2eproto();
   friend void protobuf_AssignDesc_route_2eproto();
@@ -693,15 +703,37 @@ inline void RouteMsg::set_type(::com::letsmidi::monsys::protocol::route::MsgType
   type_ = value;
 }
 
-// optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
-inline bool RouteMsg::has_req_token() const {
+// required int32 sequence = 3;
+inline bool RouteMsg::has_sequence() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RouteMsg::set_has_req_token() {
+inline void RouteMsg::set_has_sequence() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RouteMsg::clear_has_req_token() {
+inline void RouteMsg::clear_has_sequence() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void RouteMsg::clear_sequence() {
+  sequence_ = 0;
+  clear_has_sequence();
+}
+inline ::google::protobuf::int32 RouteMsg::sequence() const {
+  return sequence_;
+}
+inline void RouteMsg::set_sequence(::google::protobuf::int32 value) {
+  set_has_sequence();
+  sequence_ = value;
+}
+
+// optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
+inline bool RouteMsg::has_req_token() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RouteMsg::set_has_req_token() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RouteMsg::clear_has_req_token() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void RouteMsg::clear_req_token() {
   if (req_token_ != NULL) req_token_->::com::letsmidi::monsys::protocol::route::ReqToken::Clear();
@@ -733,13 +765,13 @@ inline void RouteMsg::set_allocated_req_token(::com::letsmidi::monsys::protocol:
 
 // optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;
 inline bool RouteMsg::has_req_token_rsp() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void RouteMsg::set_has_req_token_rsp() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void RouteMsg::clear_has_req_token_rsp() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void RouteMsg::clear_req_token_rsp() {
   if (req_token_rsp_ != NULL) req_token_rsp_->::com::letsmidi::monsys::protocol::route::ReqTokenRsp::Clear();
@@ -771,13 +803,13 @@ inline void RouteMsg::set_allocated_req_token_rsp(::com::letsmidi::monsys::proto
 
 // optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;
 inline bool RouteMsg::has_connect() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void RouteMsg::set_has_connect() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void RouteMsg::clear_has_connect() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void RouteMsg::clear_connect() {
   if (connect_ != NULL) connect_->::com::letsmidi::monsys::protocol::route::Connect::Clear();
@@ -809,13 +841,13 @@ inline void RouteMsg::set_allocated_connect(::com::letsmidi::monsys::protocol::r
 
 // optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;
 inline bool RouteMsg::has_connect_rsp() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void RouteMsg::set_has_connect_rsp() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void RouteMsg::clear_has_connect_rsp() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void RouteMsg::clear_connect_rsp() {
   if (connect_rsp_ != NULL) connect_rsp_->::com::letsmidi::monsys::protocol::route::ConnectRsp::Clear();

@@ -33,6 +33,7 @@ GTAGS
 
 bak
 ts
+# temporary
 
 3rd/libevent-2.0/Makefile
 3rd/libevent-2.0/config.h

@@ -1,7 +1,11 @@
 package com.letsmidi.monsys.push;
 
+import com.letsmidi.monsys.Config;
+import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.log.MyLogFormatter;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
+import com.letsmidi.monsys.util.HibernateUtil;
+import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.NettyUtil;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -13,8 +17,10 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.HashedWheelTimer;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -27,15 +33,11 @@ import java.util.logging.Logger;
 //  solution: clean and disconnect old connection if new one is coming
 // TODO: heartbeat
 public class PushServer {
-  public static final String LOGGER_NAME = "push-server";
-  private static final String LOG_FILE_NAME = "pushserver.log";
+  private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 
-  private static final int PUSH_PORT = 1984;
-  private static final int ACCESS_PORT = 1988;
+  public static void main(String[] args) throws IOException, MonsysException {
 
-  private final Logger mLogger = Logger.getLogger(PushServer.LOGGER_NAME);
-
-  public static void main(String[] args) throws IOException {
+    Config.load();
 
     initLogger();
 
@@ -44,9 +46,9 @@ public class PushServer {
   }
 
   private static void initLogger() throws IOException {
-    Handler log_handler = new FileHandler(LOG_FILE_NAME, 1 << 20, 10000, true);
+    Handler log_handler = new FileHandler(Config.getPushConfig().getLogFileName(), 1 << 20, 10000, true);
 
-    final Logger logger = Logger.getLogger(LOGGER_NAME);
+    final Logger logger = Logger.getLogger(Config.getPushConfig().getLoggerName());
     logger.setLevel(Level.ALL);
     logger.addHandler(log_handler);
 
@@ -69,21 +71,36 @@ public class PushServer {
     mLogger.info("-----------------------------------");
     mLogger.info("push server start");
 
+    Class[] mapping_classes = new Class[] {
+        AccountInfo.class,
+    };
+
+    // initialize hiberate
+    if (!HibernateUtil.init(mapping_classes)) {
+      mLogger.severe("Failed to initialize hiberate, failed");
+      return;
+    }
+
+    // global timer
+    final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
+    timer.start();
+
     // push server
     NioEventLoopGroup push_boss = new NioEventLoopGroup();
     NioEventLoopGroup push_worker = new NioEventLoopGroup();
 
     ChannelFuture push_future = NettyUtil.startServer(
-        PUSH_PORT, push_boss, push_worker,
-        new LoggingHandler(LOGGER_NAME, LogLevel.INFO),
+        Config.getPushConfig().getPushPort(), push_boss, push_worker,
+        new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
         new ChannelInitializer<SocketChannel>() {
           @Override
           protected void initChannel(SocketChannel ch) throws Exception {
-            ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender(),
+            ch.pipeline().addLast(
+                new ProtobufVarint32LengthFieldPrepender(),
                 new ProtobufVarint32FrameDecoder(),
                 new ProtobufEncoder(),
                 new ProtobufDecoder(PushMsg.getDefaultInstance()),
-                new PushServerHandler());
+                new PushServerHandler(timer));
           }
         }
     );
@@ -93,16 +110,17 @@ public class PushServer {
     NioEventLoopGroup access_worker = new NioEventLoopGroup();
 
     ChannelFuture access_future = NettyUtil.startServer(
-        ACCESS_PORT, access_boss, access_worker,
-        new LoggingHandler(LOGGER_NAME, LogLevel.INFO),
+        Config.getPushConfig().getAccessPort(), access_boss, access_worker,
+        new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
         new ChannelInitializer<SocketChannel>() {
           @Override
           protected void initChannel(SocketChannel ch) throws Exception {
-            ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender(),
+            ch.pipeline().addLast(
+                new ProtobufVarint32LengthFieldPrepender(),
                 new ProtobufVarint32FrameDecoder(),
                 new ProtobufEncoder(),
                 new ProtobufDecoder(PushMsg.getDefaultInstance()),
-                new AccessServerHandler());
+                new AccessServerHandler(timer));
           }
         }
     );
@@ -117,87 +135,6 @@ public class PushServer {
       access_worker.shutdownGracefully();
     }
 
-    //ChannelFuture push_future = startPushServer();
-    //ChannelFuture ctrl_future = startAccessServer();
-    //
-    //try {
-    //  push_future.channel().closeFuture().sync();
-    //  ctrl_future.channel().closeFuture().sync();
-    //} catch (InterruptedException e) {
-    //  e.printStackTrace();
-    //}
   }
-
-//  public ChannelFuture startPushServer() {
-//    mLogger.info("startPushServer()");
-//
-//    ServerBootstrap b = new ServerBootstrap();
-//    NioEventLoopGroup boss = new NioEventLoopGroup();
-//    NioEventLoopGroup worker = new NioEventLoopGroup();
-//
-//    try {
-//      b.group(boss, worker)
-//       .channel(NioServerSocketChannel.class)
-//       .handler(new LoggingHandler(LOGGER_NAME, LogLevel.INFO))
-//       .childHandler(new ChannelInitializer<SocketChannel>() {
-//        @Override
-//        protected void initChannel(SocketChannel ch) throws Exception {
-//          ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender(),
-//                                new ProtobufVarint32FrameDecoder(),
-//                                new ProtobufEncoder(),
-//                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
-//                                new PushServerHandler());
-//        }
-//       })
-//       .option(ChannelOption.SO_BACKLOG, 128)
-//       .childOption(ChannelOption.SO_KEEPALIVE, true);
-//
-//      return b.bind(PUSH_PORT).sync();
-//      // future.channel().closeFuture().sync();
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-////    } finally {
-////      worker.shutdownGracefully();
-////      boss.shutdownGracefully();
-////    }
-//    }
-//
-//    return null;
-//  }
-//
-//  public ChannelFuture startAccessServer() {
-//    mLogger.info("startAccessServer()");
-//
-//    ServerBootstrap b = new ServerBootstrap();
-//    NioEventLoopGroup boss = new NioEventLoopGroup();
-//    NioEventLoopGroup worker = new NioEventLoopGroup(1);
-//
-//    try {
-//      b.group(boss, worker)
-//      .channel(NioServerSocketChannel.class)
-//      .handler(new LoggingHandler(LogLevel.DEBUG))
-//      .childHandler(new ChannelInitializer<SocketChannel>() {
-//        @Override
-//        protected void initChannel(SocketChannel ch) throws Exception {
-////          ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, Delimiters.lineDelimiter()),
-////                                new StringDecoder(), new StringEncoder(),
-////                                new CtrlServerHandler());
-//          ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender(),
-//                                new ProtobufVarint32FrameDecoder(),
-//                                new ProtobufEncoder(),
-//                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
-//                                new AccessServerHandler());
-//        }
-//      })
-//      .option(ChannelOption.SO_BACKLOG, 16)
-//      .childOption(ChannelOption.SO_KEEPALIVE, true);
-//
-//      return b.bind(ACCESS_PORT).sync();
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-//
-//    return null;
-//  }
-
 }
+

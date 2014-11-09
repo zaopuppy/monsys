@@ -1,0 +1,6 @@
+
+[ ] remove debugging log
+[ ] set up log4j
+[ ] set up hibernate path
+[ ] hibernate re-connecting mechanism
+

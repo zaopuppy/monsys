@@ -9,18 +9,24 @@
 
 template <typename T_Key>
 class ZSession {
- public:
-  ZSession(): key_(0), touch_time_(0), timeout_(0), closed_(false) {}
+public:
+  ZSession(const T_Key &key)
+  : key_(key), touch_time_(0)
+  , timeout_(0), closed_(false)
+  {
+    //
+  }
   virtual ~ZSession() {}
 
- public:
+public:
   virtual void doTimeout(long delta) {
     Z_LOG_D("touch_time_: [%ld]", touch_time_);
     Z_LOG_D("timeout_: [%ld]", timeout_);
     Z_LOG_D("delta: [%ld]", delta);
     touch_time_ += delta;
     if (touch_time_ > timeout_) {
-      this->close();
+      // this->close();
+      onTimeout();
       return;
     }
 
@@ -32,19 +38,19 @@ class ZSession {
     return closed_;
   }
 
-  virtual void event(ZInnerMsg *msg) = 0;
+  // virtual void event(ZInnerMsg *msg) = 0;
+  virtual void onTimeout() = 0;
 
- public:
-  // void touch() { touch_time_ = ZTime::getInMillisecond(); }
+public:
   void touch() { touch_time_ = 0; }
   T_Key getKey() { return key_; }
-  void setKey(T_Key key) { key_ = key; }
+  // void setKey(T_Key key) { key_ = key; }
   long getTimeout() { return timeout_; }
   void setTimeout(long timeout) { timeout_ = timeout; }
   void close() { closed_ = true; }
 
- private:
-  T_Key key_;
+private:
+  const T_Key key_;
   long touch_time_;
   long timeout_;
   bool closed_;
@@ -52,7 +58,8 @@ class ZSession {
 
 class ZInnerForwardSession : public ZSession<uint32_t> {
  public:
-  ZInnerForwardSession() {
+  ZInnerForwardSession(const uint32_t &key)
+  : ZSession<uint32_t>(key) {
     setTimeout(1000);
   }
 

@@ -53,9 +53,10 @@ void protobuf_AssignDesc_route_2eproto() {
       "route.proto");
   GOOGLE_CHECK(file != NULL);
   RouteMsg_descriptor_ = file->message_type(0);
-  static const int RouteMsg_offsets_[6] = {
+  static const int RouteMsg_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, version_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, sequence_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, req_token_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, req_token_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RouteMsg, connect_),
@@ -188,28 +189,28 @@ void protobuf_AddDesc_route_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\013route.proto\022\"com.letsmidi.monsys.proto"
-    "col.route\"\342\002\n\010RouteMsg\022\017\n\007version\030\001 \002(\005\022"
+    "col.route\"\364\002\n\010RouteMsg\022\017\n\007version\030\001 \002(\005\022"
     "9\n\004type\030\002 \002(\0162+.com.letsmidi.monsys.prot"
-    "ocol.route.MsgType\022\?\n\treq_token\030\n \001(\0132,."
-    "com.letsmidi.monsys.protocol.route.ReqTo"
-    "ken\022F\n\rreq_token_rsp\030\013 \001(\0132/.com.letsmid"
-    "i.monsys.protocol.route.ReqTokenRsp\022<\n\007c"
-    "onnect\030\014 \001(\0132+.com.letsmidi.monsys.proto"
-    "col.route.Connect\022C\n\013connect_rsp\030\r \001(\0132."
-    ".com.letsmidi.monsys.protocol.route.Conn"
-    "ectRsp\"\203\001\n\010ReqToken\022\r\n\005token\030\001 \002(\t\022\?\n\tad"
-    "dr_type\030\002 \002(\0162,.com.letsmidi.monsys.prot"
-    "ocol.route.AddrType\022\024\n\014client_ip_v4\030\003 \001("
-    "\005\022\021\n\tfgw_ip_v4\030\004 \001(\005\"J\n\013ReqTokenRsp\022\014\n\004c"
-    "ode\030\001 \002(\005\022\027\n\017port_for_client\030\002 \002(\005\022\024\n\014po"
-    "rt_for_fgw\030\003 \002(\005\"]\n\007Connect\022C\n\013client_ty"
-    "pe\030\001 \002(\0162..com.letsmidi.monsys.protocol."
-    "route.ClientType\022\r\n\005token\030\002 \002(\t\"\032\n\nConne"
-    "ctRsp\022\014\n\004code\030\001 \002(\005*I\n\007MsgType\022\r\n\tREQ_TO"
-    "KEN\020\001\022\021\n\rREQ_TOKEN_RSP\020\002\022\013\n\007CONNECT\020\003\022\017\n"
-    "\013CONNECT_RSP\020\004* \n\010AddrType\022\t\n\005IP_V4\020\001\022\t\n"
-    "\005IP_V6\020\002*!\n\nClientType\022\n\n\006CLIENT\020\001\022\007\n\003FG"
-    "W\020\002", 883);
+    "ocol.route.MsgType\022\020\n\010sequence\030\003 \002(\005\022\?\n\t"
+    "req_token\030\n \001(\0132,.com.letsmidi.monsys.pr"
+    "otocol.route.ReqToken\022F\n\rreq_token_rsp\030\013"
+    " \001(\0132/.com.letsmidi.monsys.protocol.rout"
+    "e.ReqTokenRsp\022<\n\007connect\030\014 \001(\0132+.com.let"
+    "smidi.monsys.protocol.route.Connect\022C\n\013c"
+    "onnect_rsp\030\r \001(\0132..com.letsmidi.monsys.p"
+    "rotocol.route.ConnectRsp\"\203\001\n\010ReqToken\022\r\n"
+    "\005token\030\001 \002(\t\022\?\n\taddr_type\030\002 \002(\0162,.com.le"
+    "tsmidi.monsys.protocol.route.AddrType\022\024\n"
+    "\014client_ip_v4\030\003 \001(\005\022\021\n\tfgw_ip_v4\030\004 \001(\005\"J"
+    "\n\013ReqTokenRsp\022\014\n\004code\030\001 \002(\005\022\027\n\017port_for_"
+    "client\030\002 \002(\005\022\024\n\014port_for_fgw\030\003 \002(\005\"]\n\007Co"
+    "nnect\022C\n\013client_type\030\001 \002(\0162..com.letsmid"
+    "i.monsys.protocol.route.ClientType\022\r\n\005to"
+    "ken\030\002 \002(\t\"\032\n\nConnectRsp\022\014\n\004code\030\001 \002(\005*I\n"
+    "\007MsgType\022\r\n\tREQ_TOKEN\020\001\022\021\n\rREQ_TOKEN_RSP"
+    "\020\002\022\013\n\007CONNECT\020\003\022\017\n\013CONNECT_RSP\020\004* \n\010Addr"
+    "Type\022\t\n\005IP_V4\020\001\022\t\n\005IP_V6\020\002*!\n\nClientType"
+    "\022\n\n\006CLIENT\020\001\022\007\n\003FGW\020\002", 901);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "route.proto", &protobuf_RegisterTypes);
   RouteMsg::default_instance_ = new RouteMsg();
@@ -281,6 +282,7 @@ bool ClientType_IsValid(int value) {
 #ifndef _MSC_VER
 const int RouteMsg::kVersionFieldNumber;
 const int RouteMsg::kTypeFieldNumber;
+const int RouteMsg::kSequenceFieldNumber;
 const int RouteMsg::kReqTokenFieldNumber;
 const int RouteMsg::kReqTokenRspFieldNumber;
 const int RouteMsg::kConnectFieldNumber;
@@ -309,6 +311,7 @@ void RouteMsg::SharedCtor() {
   _cached_size_ = 0;
   version_ = 0;
   type_ = 1;
+  sequence_ = 0;
   req_token_ = NULL;
   req_token_rsp_ = NULL;
   connect_ = NULL;
@@ -354,6 +357,7 @@ void RouteMsg::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     version_ = 0;
     type_ = 1;
+    sequence_ = 0;
     if (has_req_token()) {
       if (req_token_ != NULL) req_token_->::com::letsmidi::monsys::protocol::route::ReqToken::Clear();
     }
@@ -406,6 +410,22 @@ bool RouteMsg::MergePartialFromCodedStream(
           } else {
             mutable_unknown_fields()->AddVarint(2, value);
           }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_sequence;
+        break;
+      }
+
+      // required int32 sequence = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_sequence:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &sequence_)));
+          set_has_sequence();
         } else {
           goto handle_uninterpreted;
         }
@@ -498,6 +518,11 @@ void RouteMsg::SerializeWithCachedSizes(
       2, this->type(), output);
   }
 
+  // required int32 sequence = 3;
+  if (has_sequence()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->sequence(), output);
+  }
+
   // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
   if (has_req_token()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -539,6 +564,11 @@ void RouteMsg::SerializeWithCachedSizes(
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->type(), target);
+  }
+
+  // required int32 sequence = 3;
+  if (has_sequence()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->sequence(), target);
   }
 
   // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
@@ -591,6 +621,13 @@ int RouteMsg::ByteSize() const {
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+
+    // required int32 sequence = 3;
+    if (has_sequence()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->sequence());
     }
 
     // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
@@ -654,6 +691,9 @@ void RouteMsg::MergeFrom(const RouteMsg& from) {
     if (from.has_type()) {
       set_type(from.type());
     }
+    if (from.has_sequence()) {
+      set_sequence(from.sequence());
+    }
     if (from.has_req_token()) {
       mutable_req_token()->::com::letsmidi::monsys::protocol::route::ReqToken::MergeFrom(from.req_token());
     }
@@ -683,7 +723,7 @@ void RouteMsg::CopyFrom(const RouteMsg& from) {
 }
 
 bool RouteMsg::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   if (has_req_token()) {
     if (!this->req_token().IsInitialized()) return false;
@@ -704,6 +744,7 @@ void RouteMsg::Swap(RouteMsg* other) {
   if (other != this) {
     std::swap(version_, other->version_);
     std::swap(type_, other->type_);
+    std::swap(sequence_, other->sequence_);
     std::swap(req_token_, other->req_token_);
     std::swap(req_token_rsp_, other->req_token_rsp_);
     std::swap(connect_, other->connect_);

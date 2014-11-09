@@ -6,6 +6,7 @@ ZDispatcher *ZDispatcher::instance_ = NULL;
 
 int ZDispatcher::sendDirect(ZInnerMsg *msg)
 {
+  Z_LOG_D("ZDispatcher::sendDirect: %d", msg->msg_type_);
   ZInnerAddress dst_addr = msg->dst_addr_;
 
   // find module
@@ -66,29 +67,40 @@ ZModule* ZDispatcher::findModule(int moduleType)
   return NULL;
 }
 
+// // TODO: very bad
+// void ZDispatcher::consumeMsg()
+// {
+//   std::list<ZInnerMsg*>::iterator iter = msg_list_.begin();
+//   ZInnerMsg *msg;
+//   ZModule *module;
+//   for (; iter != msg_list_.end(); ++iter) {
+//     msg = *iter;
+//     Z_LOG_D("consume: %d", msg->msg_type_);
+//     Z_LOG_D("consume src: (module_type=%d, module_id=%d, handler_id=%d)",
+//       msg->src_addr_.module_type_,
+//       msg->src_addr_.module_id_,
+//       msg->src_addr_.handler_id_);
+//     Z_LOG_D("consume dst: (module_type=%d, module_id=%d, handler_id=%d)",
+//       msg->dst_addr_.module_type_,
+//       msg->dst_addr_.module_id_,
+//       msg->dst_addr_.handler_id_);
+//     ZInnerAddress &dst_addr = msg->dst_addr_;
+//     // find module
+//     module = findModule(dst_addr.module_type_);
+//     if (module == NULL) {
+//       Z_LOG_D("Target module [%d] is not found", dst_addr.module_type_);
+//     } else {
+//       module->sendMsg(msg);
+//     }
+//     delete *iter;
+//   }
+//   msg_list_.clear();
+// }
+
+
 void ZDispatcher::checkTimeout(long delta)
 {
   // Z_LOG_D("ZDispatcher::checkTimeout");
-
-  // ZSession *session;
-
-  // SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
-  // SESSION_CTRL_TYPE::iterator tmp_iter;
-
-  // while (iter != session_ctrl_.end()) {
-  //  // Z_LOG_D("while loop");
-  //  session = iter->second;
-  //  session->doTimeout(delta);
-  //  if (session->isComplete())  {
-  //    // Z_LOG_D("delta: [%ld]", delta);
-  //    // Z_LOG_D("timeout: [%ld]", session->getTimeout());
-  //    tmp_iter = iter;
-  //    ++iter;
-  //    session_ctrl_.erase(tmp_iter);
-  //  } else {
-  //    ++iter;
-  //  }
-  // }
 }
 
 void ZDispatcher::moduleRoutine(long delta)

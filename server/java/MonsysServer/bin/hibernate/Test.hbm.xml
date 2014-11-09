@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.letsmidi.monsys.test">
+    <class name="Test" table="test">
+        <cache usage="read-write"/>
+        <id name="id1"/>
+        <property name="id2" not-null="true"/>
+        <property name="content" not-null="true"/>
+    </class>
+</hibernate-mapping>
+
+
+
+

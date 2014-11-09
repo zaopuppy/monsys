@@ -26,6 +26,11 @@ enum MsgType {
   CLIENT_LOGIN      =   8;
   CLIENT_LOGIN_RSP  = 108;
 
+  USER_REGISTER     =   9;
+  USER_REGISTER_RSP = 109;
+
+  HEARTBEAT         =  10;
+
   RESPONSE          =  99;
 }
 
@@ -49,6 +54,7 @@ message DeviceInfo {
 message PushMsg {
   required int32 version = 1;
   required MsgType type = 2;
+  required int32 sequence = 3;
 
   optional Login login = 10;
   optional LoginRsp login_rsp = 11;
@@ -74,6 +80,10 @@ message PushMsg {
   optional ClientLogin client_login = 24;
   optional ClientLoginRsp client_login_rsp = 25;
 
+  optional UserRegister user_register = 26;
+  optional UserRegisterRsp user_register_rsp = 27;
+
+  optional Heartbeat heartbeat = 28;
 }
 
 message Login {
@@ -144,6 +154,20 @@ message SetDevInfo {
 
 message SetDevInfoRsp {
   required int32 code = 1;
+}
+
+message UserRegister {
+  required string nickname = 1;
+  required string account = 2;
+  required string password = 3;
+}
+
+message UserRegisterRsp {
+  required int32 code = 1;
+}
+
+message Heartbeat {
+  // required string payload = 1;
 }
 
 message Response {

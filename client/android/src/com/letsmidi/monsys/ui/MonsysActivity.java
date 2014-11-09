@@ -4,91 +4,90 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.letsmidi.monsys.protocol.MonsysServer;
 import com.letsmidi.monsys.protocol.MonsysServer.Listener;
-import com.letsmidi.monsys.protocol.Push.PushMsg;
+import com.letsmidi.monsys.protocol.push.Push;
 
 public class MonsysActivity extends Activity {
-    private static final String TAG = "MonsysActivity";
+  private static final String TAG = "MonsysActivity";
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
+
+  @Override
+  protected void onResume() {
+    Log.d(TAG, "onResume(): " + this);
+    super.onResume();
+    MonsysServer.INSTANCE.setListener(mMonsysListener);
+  }
+
+  @Override
+  protected void onDestroy() {
+    Log.d(TAG, "onDestory(): " + this);
+    super.onDestroy();
+  }
+
+  /**
+   * to avoid duplicated name in different interface/class
+   */
+  private final Listener mMonsysListener = new Listener() {
+    @Override
+    public void onMessage(Push.PushMsg msg) {
+      onMonsysMessage(msg);
+    }
+    //
+    //@Override
+    //public void onLoggedIn() {
+    //    onMonsysLoggedIn();
+    //}
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onException(Throwable cause) {
+      onMonsysException(cause);
     }
 
     @Override
-    protected void onResume() {
-        Log.d(TAG, "onResume(): " + this);
-        super.onResume();
-        MonsysServer.INSTANCE.setListener(mMonsysListener);
+    public void onDisconnected() {
+      onMonsysDisconnected();
     }
 
     @Override
-    protected void onDestroy() {
-        Log.d(TAG, "onDestory(): " + this);
-        super.onDestroy();
+    public void onConnected() {
+      onMonsysConnected();
     }
+  };
 
-    /**
-     * to avoid duplicated name in different interface/class
-     */
-    private final Listener mMonsysListener = new Listener() {
-        @Override
-        public void onMessage(PushMsg msg) {
-            onMonsysMessage(msg);
-        }
+  private void relogin() {
+    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
+  }
 
-        @Override
-        public void onLoggedIn() {
-            onMonsysLoggedIn();
-        }
+  public void onMonsysConnected() {
+    Log.d(TAG, "onMonsysConnected()");
+  }
 
-        @Override
-        public void onException(Throwable cause) {
-            onMonsysException(cause);
-        }
+  public void onMonsysDisconnected() {
+    Log.d(TAG, "onMonsysDisconnected(}");
+    MonsysServer.INSTANCE.close();
+    relogin();
+  }
+  //
+  //public void onMonsysLoggedIn() {
+  //    Log.d(TAG, "onMonsysLoggedIn()");
+  //}
 
-        @Override
-        public void onDisconnected() {
-            onMonsysDisconnected();
-        }
+  public void onMonsysMessage(Push.PushMsg msg) {
+    Log.d(TAG, "onMonsysMessage(" + msg.getType() + ")");
+  }
 
-        @Override
-        public void onConnected() {
-            onMonsysConnected();
-        }
-    };
-
-    private void relogin() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
-    public void onMonsysConnected() {
-        Log.d(TAG, "onMonsysConnected()");
-    }
-
-    public void onMonsysDisconnected() {
-        Log.d(TAG, "onMonsysDisconnected(}");
-        MonsysServer.INSTANCE.close();
-        relogin();
-    }
-
-    public void onMonsysLoggedIn() {
-        Log.d(TAG, "onMonsysLoggedIn()");
-    }
-
-    public void onMonsysMessage(PushMsg msg) {
-        Log.d(TAG, "onMonsysMessage(" + msg.getType() + ")");
-    }
-
-    public void onMonsysException(Throwable cause) {
-        Log.d(TAG, "onMonsysException(" + cause.toString() + ")");
-        MonsysServer.INSTANCE.close();
-        relogin();
-    }
+  public void onMonsysException(Throwable cause) {
+    Log.d(TAG, "onMonsysException(" + cause.toString() + ")");
+    MonsysServer.INSTANCE.close();
+    relogin();
+  }
 
 }
 

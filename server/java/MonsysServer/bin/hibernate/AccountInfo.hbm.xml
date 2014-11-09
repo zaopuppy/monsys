@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.letsmidi.monsys.database">
+    <class name="AccountInfo" table="account_info">
+        <cache usage="read-write"/>
+        <id name="account" />
+        <property name="password" not-null="true"/>
+        <property name="salt" not-null="true"/>
+        <property name="nickname" not-null="true"/>
+        <property name="fgwList" column="fgw_list" not-null="true"/>
+        <property name="status" not-null="true"/>
+    </class>
+    <class name="TempAccountInfo" table="temp_account_info">
+        <cache usage="read-write"/>
+        <id name="account" />
+        <property name="password" not-null="true"/>
+        <property name="salt" not-null="true"/>
+        <property name="nickname" not-null="true"/>
+        <property name="expire" not-null="true"/>
+    </class>
+</hibernate-mapping>
+
+
+

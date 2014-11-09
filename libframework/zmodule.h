@@ -42,6 +42,7 @@ public:
     while (!inner_msg_queue_.empty()) {
       msg = inner_msg_queue_.front();
       onInnerMsg(msg);
+      delete msg;
       inner_msg_queue_.pop();
     }
   }

@@ -84,6 +84,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* SetDevInfoRsp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SetDevInfoRsp_reflection_ = NULL;
+const ::google::protobuf::Descriptor* UserRegister_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  UserRegister_reflection_ = NULL;
+const ::google::protobuf::Descriptor* UserRegisterRsp_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  UserRegisterRsp_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Heartbeat_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Heartbeat_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Response_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Response_reflection_ = NULL;
@@ -149,9 +158,10 @@ void protobuf_AssignDesc_push_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(DeviceInfo));
   PushMsg_descriptor_ = file->message_type(3);
-  static const int PushMsg_offsets_[18] = {
+  static const int PushMsg_offsets_[22] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, version_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, sequence_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, login_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, bind_),
@@ -168,6 +178,9 @@ void protobuf_AssignDesc_push_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, set_dev_info_rsp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, client_login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, client_login_rsp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, user_register_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, user_register_rsp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PushMsg, heartbeat_),
   };
   PushMsg_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -426,7 +439,53 @@ void protobuf_AssignDesc_push_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SetDevInfoRsp));
-  Response_descriptor_ = file->message_type(20);
+  UserRegister_descriptor_ = file->message_type(20);
+  static const int UserRegister_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegister, nickname_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegister, account_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegister, password_),
+  };
+  UserRegister_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      UserRegister_descriptor_,
+      UserRegister::default_instance_,
+      UserRegister_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegister, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegister, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(UserRegister));
+  UserRegisterRsp_descriptor_ = file->message_type(21);
+  static const int UserRegisterRsp_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegisterRsp, code_),
+  };
+  UserRegisterRsp_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      UserRegisterRsp_descriptor_,
+      UserRegisterRsp::default_instance_,
+      UserRegisterRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegisterRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserRegisterRsp, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(UserRegisterRsp));
+  Heartbeat_descriptor_ = file->message_type(22);
+  static const int Heartbeat_offsets_[1] = {
+  };
+  Heartbeat_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Heartbeat_descriptor_,
+      Heartbeat::default_instance_,
+      Heartbeat_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Heartbeat, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Heartbeat, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Heartbeat));
+  Response_descriptor_ = file->message_type(23);
   static const int Response_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, code_),
   };
@@ -495,6 +554,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     SetDevInfoRsp_descriptor_, &SetDevInfoRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    UserRegister_descriptor_, &UserRegister::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    UserRegisterRsp_descriptor_, &UserRegisterRsp::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Heartbeat_descriptor_, &Heartbeat::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Response_descriptor_, &Response::default_instance());
 }
 
@@ -541,6 +606,12 @@ void protobuf_ShutdownFile_push_2eproto() {
   delete SetDevInfo_reflection_;
   delete SetDevInfoRsp::default_instance_;
   delete SetDevInfoRsp_reflection_;
+  delete UserRegister::default_instance_;
+  delete UserRegister_reflection_;
+  delete UserRegisterRsp::default_instance_;
+  delete UserRegisterRsp_reflection_;
+  delete Heartbeat::default_instance_;
+  delete Heartbeat_reflection_;
   delete Response::default_instance_;
   delete Response_reflection_;
 }
@@ -557,65 +628,76 @@ void protobuf_AddDesc_push_2eproto() {
     "lue\030\002 \002(\005\"6\n\014FGatewayInfo\022\n\n\002id\030\001 \002(\t\022\014\n"
     "\004name\030\002 \002(\t\022\014\n\004desc\030\003 \002(\t\"6\n\nDeviceInfo\022"
     "\014\n\004addr\030\001 \002(\005\022\014\n\004type\030\002 \002(\005\022\014\n\004name\030\003 \002("
-    "\t\"\232\t\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002"
+    "\t\"\204\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002"
     " \002(\0162*.com.letsmidi.monsys.protocol.push"
-    ".MsgType\0227\n\005login\030\n \001(\0132(.com.letsmidi.m"
-    "onsys.protocol.push.Login\022>\n\tlogin_rsp\030\013"
-    " \001(\0132+.com.letsmidi.monsys.protocol.push"
-    ".LoginRsp\0225\n\004bind\030\014 \001(\0132\'.com.letsmidi.m"
-    "onsys.protocol.push.Bind\022<\n\010bind_rsp\030\r \001"
-    "(\0132*.com.letsmidi.monsys.protocol.push.B"
-    "indRsp\022;\n\007connect\030\016 \001(\0132*.com.letsmidi.m"
-    "onsys.protocol.push.Connect\022B\n\013connect_r"
-    "sp\030\017 \001(\0132-.com.letsmidi.monsys.protocol."
-    "push.ConnectRsp\022C\n\014get_fgw_list\030\020 \001(\0132-."
-    "com.letsmidi.monsys.protocol.push.GetFgw"
-    "List\022J\n\020get_fgw_list_rsp\030\021 \001(\01320.com.let"
-    "smidi.monsys.protocol.push.GetFgwListRsp"
-    "\022C\n\014get_dev_list\030\022 \001(\0132-.com.letsmidi.mo"
-    "nsys.protocol.push.GetDevList\022J\n\020get_dev"
-    "_list_rsp\030\023 \001(\01320.com.letsmidi.monsys.pr"
-    "otocol.push.GetDevListRsp\022C\n\014get_dev_inf"
-    "o\030\024 \001(\0132-.com.letsmidi.monsys.protocol.p"
-    "ush.GetDevInfo\022J\n\020get_dev_info_rsp\030\025 \001(\013"
-    "20.com.letsmidi.monsys.protocol.push.Get"
-    "DevInfoRsp\022C\n\014set_dev_info\030\026 \001(\0132-.com.l"
-    "etsmidi.monsys.protocol.push.SetDevInfo\022"
-    "J\n\020set_dev_info_rsp\030\027 \001(\01320.com.letsmidi"
-    ".monsys.protocol.push.SetDevInfoRsp\022D\n\014c"
-    "lient_login\030\030 \001(\0132..com.letsmidi.monsys."
-    "protocol.push.ClientLogin\022K\n\020client_logi"
-    "n_rsp\030\031 \001(\01321.com.letsmidi.monsys.protoc"
-    "ol.push.ClientLoginRsp\"\032\n\005Login\022\021\n\tdevic"
-    "e_id\030\001 \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013"
-    "ClientLogin\022\017\n\007account\030\001 \002(\t\022\020\n\010password"
-    "\030\002 \002(\t\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B"
-    "\n\tfgw_infos\030\002 \003(\0132/.com.letsmidi.monsys."
-    "protocol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tde"
-    "vice_id\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034"
-    "\n\007Connect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectR"
-    "sp\022\014\n\004code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgw"
-    "ListRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\013"
-    "2/.com.letsmidi.monsys.protocol.push.FGa"
-    "tewayInfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002"
-    "(\t\"_\n\rGetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev"
-    "_infos\030\002 \003(\0132-.com.letsmidi.monsys.proto"
-    "col.push.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004add"
-    "r\030\001 \002(\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevI"
-    "nfoRsp\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002"
-    " \003(\0132..com.letsmidi.monsys.protocol.push"
-    ".IdValuePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005"
-    "\022F\n\016id_value_pairs\030\002 \003(\0132..com.letsmidi."
-    "monsys.protocol.push.IdValuePair\"\035\n\rSetD"
-    "evInfoRsp\022\014\n\004code\030\001 \002(\005\"\030\n\010Response\022\014\n\004c"
-    "ode\030\001 \002(\005*\257\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGI"
-    "N_RSP\020e\022\010\n\004BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNE"
-    "CT\020\003\022\017\n\013CONNECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022"
-    "\024\n\020GET_FGW_LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022"
-    "\024\n\020GET_DEV_LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022"
-    "\024\n\020GET_DEV_INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022"
-    "\024\n\020SET_DEV_INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022"
-    "\024\n\020CLIENT_LOGIN_RSP\020l\022\014\n\010RESPONSE\020c", 2555);
+    ".MsgType\022\020\n\010sequence\030\003 \002(\005\0227\n\005login\030\n \001("
+    "\0132(.com.letsmidi.monsys.protocol.push.Lo"
+    "gin\022>\n\tlogin_rsp\030\013 \001(\0132+.com.letsmidi.mo"
+    "nsys.protocol.push.LoginRsp\0225\n\004bind\030\014 \001("
+    "\0132\'.com.letsmidi.monsys.protocol.push.Bi"
+    "nd\022<\n\010bind_rsp\030\r \001(\0132*.com.letsmidi.mons"
+    "ys.protocol.push.BindRsp\022;\n\007connect\030\016 \001("
+    "\0132*.com.letsmidi.monsys.protocol.push.Co"
+    "nnect\022B\n\013connect_rsp\030\017 \001(\0132-.com.letsmid"
+    "i.monsys.protocol.push.ConnectRsp\022C\n\014get"
+    "_fgw_list\030\020 \001(\0132-.com.letsmidi.monsys.pr"
+    "otocol.push.GetFgwList\022J\n\020get_fgw_list_r"
+    "sp\030\021 \001(\01320.com.letsmidi.monsys.protocol."
+    "push.GetFgwListRsp\022C\n\014get_dev_list\030\022 \001(\013"
+    "2-.com.letsmidi.monsys.protocol.push.Get"
+    "DevList\022J\n\020get_dev_list_rsp\030\023 \001(\01320.com."
+    "letsmidi.monsys.protocol.push.GetDevList"
+    "Rsp\022C\n\014get_dev_info\030\024 \001(\0132-.com.letsmidi"
+    ".monsys.protocol.push.GetDevInfo\022J\n\020get_"
+    "dev_info_rsp\030\025 \001(\01320.com.letsmidi.monsys"
+    ".protocol.push.GetDevInfoRsp\022C\n\014set_dev_"
+    "info\030\026 \001(\0132-.com.letsmidi.monsys.protoco"
+    "l.push.SetDevInfo\022J\n\020set_dev_info_rsp\030\027 "
+    "\001(\01320.com.letsmidi.monsys.protocol.push."
+    "SetDevInfoRsp\022D\n\014client_login\030\030 \001(\0132..co"
+    "m.letsmidi.monsys.protocol.push.ClientLo"
+    "gin\022K\n\020client_login_rsp\030\031 \001(\01321.com.lets"
+    "midi.monsys.protocol.push.ClientLoginRsp"
+    "\022F\n\ruser_register\030\032 \001(\0132/.com.letsmidi.m"
+    "onsys.protocol.push.UserRegister\022M\n\021user"
+    "_register_rsp\030\033 \001(\01322.com.letsmidi.monsy"
+    "s.protocol.push.UserRegisterRsp\022\?\n\theart"
+    "beat\030\034 \001(\0132,.com.letsmidi.monsys.protoco"
+    "l.push.Heartbeat\"\032\n\005Login\022\021\n\tdevice_id\030\001"
+    " \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013Client"
+    "Login\022\017\n\007account\030\001 \002(\t\022\020\n\010password\030\002 \002(\t"
+    "\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_"
+    "infos\030\002 \003(\0132/.com.letsmidi.monsys.protoc"
+    "ol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tdevice_i"
+    "d\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034\n\007Conn"
+    "ect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectRsp\022\014\n\004"
+    "code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgwListRs"
+    "p\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com"
+    ".letsmidi.monsys.protocol.push.FGatewayI"
+    "nfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002(\t\"_\n\r"
+    "GetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev_infos"
+    "\030\002 \003(\0132-.com.letsmidi.monsys.protocol.pu"
+    "sh.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004addr\030\001 \002("
+    "\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevInfoRsp"
+    "\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132."
+    ".com.letsmidi.monsys.protocol.push.IdVal"
+    "uePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005\022F\n\016id"
+    "_value_pairs\030\002 \003(\0132..com.letsmidi.monsys"
+    ".protocol.push.IdValuePair\"\035\n\rSetDevInfo"
+    "Rsp\022\014\n\004code\030\001 \002(\005\"C\n\014UserRegister\022\020\n\010nic"
+    "kname\030\001 \002(\t\022\017\n\007account\030\002 \002(\t\022\020\n\010password"
+    "\030\003 \002(\t\"\037\n\017UserRegisterRsp\022\014\n\004code\030\001 \002(\005\""
+    "\013\n\tHeartbeat\"\030\n\010Response\022\014\n\004code\030\001 \002(\005*\350"
+    "\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGIN_RSP\020e\022\010\n\004"
+    "BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n\013CON"
+    "NECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_FGW_"
+    "LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_DEV_"
+    "LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_DEV_"
+    "INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_DEV_"
+    "INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022\024\n\020CLIENT_L"
+    "OGIN_RSP\020l\022\021\n\rUSER_REGISTER\020\t\022\025\n\021USER_RE"
+    "GISTER_RSP\020m\022\r\n\tHEARTBEAT\020\n\022\014\n\010RESPONSE\020"
+    "c", 2961);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "push.proto", &protobuf_RegisterTypes);
   IdValuePair::default_instance_ = new IdValuePair();
@@ -638,6 +720,9 @@ void protobuf_AddDesc_push_2eproto() {
   GetDevInfoRsp::default_instance_ = new GetDevInfoRsp();
   SetDevInfo::default_instance_ = new SetDevInfo();
   SetDevInfoRsp::default_instance_ = new SetDevInfoRsp();
+  UserRegister::default_instance_ = new UserRegister();
+  UserRegisterRsp::default_instance_ = new UserRegisterRsp();
+  Heartbeat::default_instance_ = new Heartbeat();
   Response::default_instance_ = new Response();
   IdValuePair::default_instance_->InitAsDefaultInstance();
   FGatewayInfo::default_instance_->InitAsDefaultInstance();
@@ -659,6 +744,9 @@ void protobuf_AddDesc_push_2eproto() {
   GetDevInfoRsp::default_instance_->InitAsDefaultInstance();
   SetDevInfo::default_instance_->InitAsDefaultInstance();
   SetDevInfoRsp::default_instance_->InitAsDefaultInstance();
+  UserRegister::default_instance_->InitAsDefaultInstance();
+  UserRegisterRsp::default_instance_->InitAsDefaultInstance();
+  Heartbeat::default_instance_->InitAsDefaultInstance();
   Response::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_push_2eproto);
 }
@@ -683,6 +771,8 @@ bool MsgType_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+    case 9:
+    case 10:
     case 99:
     case 101:
     case 102:
@@ -692,6 +782,7 @@ bool MsgType_IsValid(int value) {
     case 106:
     case 107:
     case 108:
+    case 109:
       return true;
     default:
       return false;
@@ -1599,6 +1690,7 @@ void DeviceInfo::Swap(DeviceInfo* other) {
 #ifndef _MSC_VER
 const int PushMsg::kVersionFieldNumber;
 const int PushMsg::kTypeFieldNumber;
+const int PushMsg::kSequenceFieldNumber;
 const int PushMsg::kLoginFieldNumber;
 const int PushMsg::kLoginRspFieldNumber;
 const int PushMsg::kBindFieldNumber;
@@ -1615,6 +1707,9 @@ const int PushMsg::kSetDevInfoFieldNumber;
 const int PushMsg::kSetDevInfoRspFieldNumber;
 const int PushMsg::kClientLoginFieldNumber;
 const int PushMsg::kClientLoginRspFieldNumber;
+const int PushMsg::kUserRegisterFieldNumber;
+const int PushMsg::kUserRegisterRspFieldNumber;
+const int PushMsg::kHeartbeatFieldNumber;
 #endif  // !_MSC_VER
 
 PushMsg::PushMsg()
@@ -1639,6 +1734,9 @@ void PushMsg::InitAsDefaultInstance() {
   set_dev_info_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp*>(&::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::default_instance());
   client_login_ = const_cast< ::com::letsmidi::monsys::protocol::push::ClientLogin*>(&::com::letsmidi::monsys::protocol::push::ClientLogin::default_instance());
   client_login_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::ClientLoginRsp*>(&::com::letsmidi::monsys::protocol::push::ClientLoginRsp::default_instance());
+  user_register_ = const_cast< ::com::letsmidi::monsys::protocol::push::UserRegister*>(&::com::letsmidi::monsys::protocol::push::UserRegister::default_instance());
+  user_register_rsp_ = const_cast< ::com::letsmidi::monsys::protocol::push::UserRegisterRsp*>(&::com::letsmidi::monsys::protocol::push::UserRegisterRsp::default_instance());
+  heartbeat_ = const_cast< ::com::letsmidi::monsys::protocol::push::Heartbeat*>(&::com::letsmidi::monsys::protocol::push::Heartbeat::default_instance());
 }
 
 PushMsg::PushMsg(const PushMsg& from)
@@ -1651,6 +1749,7 @@ void PushMsg::SharedCtor() {
   _cached_size_ = 0;
   version_ = 0;
   type_ = 1;
+  sequence_ = 0;
   login_ = NULL;
   login_rsp_ = NULL;
   bind_ = NULL;
@@ -1667,6 +1766,9 @@ void PushMsg::SharedCtor() {
   set_dev_info_rsp_ = NULL;
   client_login_ = NULL;
   client_login_rsp_ = NULL;
+  user_register_ = NULL;
+  user_register_rsp_ = NULL;
+  heartbeat_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1692,6 +1794,9 @@ void PushMsg::SharedDtor() {
     delete set_dev_info_rsp_;
     delete client_login_;
     delete client_login_rsp_;
+    delete user_register_;
+    delete user_register_rsp_;
+    delete heartbeat_;
   }
 }
 
@@ -1720,6 +1825,7 @@ void PushMsg::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     version_ = 0;
     type_ = 1;
+    sequence_ = 0;
     if (has_login()) {
       if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::push::Login::Clear();
     }
@@ -1735,11 +1841,11 @@ void PushMsg::Clear() {
     if (has_connect()) {
       if (connect_ != NULL) connect_->::com::letsmidi::monsys::protocol::push::Connect::Clear();
     }
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (has_connect_rsp()) {
       if (connect_rsp_ != NULL) connect_rsp_->::com::letsmidi::monsys::protocol::push::ConnectRsp::Clear();
     }
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (has_get_fgw_list()) {
       if (get_fgw_list_ != NULL) get_fgw_list_->::com::letsmidi::monsys::protocol::push::GetFgwList::Clear();
     }
@@ -1761,16 +1867,25 @@ void PushMsg::Clear() {
     if (has_set_dev_info()) {
       if (set_dev_info_ != NULL) set_dev_info_->::com::letsmidi::monsys::protocol::push::SetDevInfo::Clear();
     }
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_set_dev_info_rsp()) {
       if (set_dev_info_rsp_ != NULL) set_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::Clear();
     }
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_client_login()) {
       if (client_login_ != NULL) client_login_->::com::letsmidi::monsys::protocol::push::ClientLogin::Clear();
     }
     if (has_client_login_rsp()) {
       if (client_login_rsp_ != NULL) client_login_rsp_->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::Clear();
+    }
+    if (has_user_register()) {
+      if (user_register_ != NULL) user_register_->::com::letsmidi::monsys::protocol::push::UserRegister::Clear();
+    }
+    if (has_user_register_rsp()) {
+      if (user_register_rsp_ != NULL) user_register_rsp_->::com::letsmidi::monsys::protocol::push::UserRegisterRsp::Clear();
+    }
+    if (has_heartbeat()) {
+      if (heartbeat_ != NULL) heartbeat_->::com::letsmidi::monsys::protocol::push::Heartbeat::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1812,6 +1927,22 @@ bool PushMsg::MergePartialFromCodedStream(
           } else {
             mutable_unknown_fields()->AddVarint(2, value);
           }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_sequence;
+        break;
+      }
+
+      // required int32 sequence = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_sequence:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &sequence_)));
+          set_has_sequence();
         } else {
           goto handle_uninterpreted;
         }
@@ -2039,6 +2170,48 @@ bool PushMsg::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(210)) goto parse_user_register;
+        break;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+      case 26: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_register:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_user_register()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(218)) goto parse_user_register_rsp;
+        break;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+      case 27: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_register_rsp:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_user_register_rsp()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(226)) goto parse_heartbeat;
+        break;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+      case 28: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_heartbeat:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_heartbeat()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2070,6 +2243,11 @@ void PushMsg::SerializeWithCachedSizes(
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->type(), output);
+  }
+
+  // required int32 sequence = 3;
+  if (has_sequence()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->sequence(), output);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
@@ -2168,6 +2346,24 @@ void PushMsg::SerializeWithCachedSizes(
       25, this->client_login_rsp(), output);
   }
 
+  // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+  if (has_user_register()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      26, this->user_register(), output);
+  }
+
+  // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+  if (has_user_register_rsp()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      27, this->user_register_rsp(), output);
+  }
+
+  // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+  if (has_heartbeat()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      28, this->heartbeat(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2185,6 +2381,11 @@ void PushMsg::SerializeWithCachedSizes(
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->type(), target);
+  }
+
+  // required int32 sequence = 3;
+  if (has_sequence()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->sequence(), target);
   }
 
   // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
@@ -2299,6 +2500,27 @@ void PushMsg::SerializeWithCachedSizes(
         25, this->client_login_rsp(), target);
   }
 
+  // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+  if (has_user_register()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        26, this->user_register(), target);
+  }
+
+  // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+  if (has_user_register_rsp()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        27, this->user_register_rsp(), target);
+  }
+
+  // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+  if (has_heartbeat()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        28, this->heartbeat(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -2321,6 +2543,13 @@ int PushMsg::ByteSize() const {
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+
+    // required int32 sequence = 3;
+    if (has_sequence()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->sequence());
     }
 
     // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
@@ -2358,6 +2587,8 @@ int PushMsg::ByteSize() const {
           this->connect());
     }
 
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
     if (has_connect_rsp()) {
       total_size += 1 +
@@ -2365,8 +2596,6 @@ int PushMsg::ByteSize() const {
           this->connect_rsp());
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
     if (has_get_fgw_list()) {
       total_size += 2 +
@@ -2416,6 +2645,8 @@ int PushMsg::ByteSize() const {
           this->set_dev_info());
     }
 
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
     if (has_set_dev_info_rsp()) {
       total_size += 2 +
@@ -2423,8 +2654,6 @@ int PushMsg::ByteSize() const {
           this->set_dev_info_rsp());
     }
 
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
     if (has_client_login()) {
       total_size += 2 +
@@ -2437,6 +2666,27 @@ int PushMsg::ByteSize() const {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->client_login_rsp());
+    }
+
+    // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+    if (has_user_register()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->user_register());
+    }
+
+    // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+    if (has_user_register_rsp()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->user_register_rsp());
+    }
+
+    // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+    if (has_heartbeat()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->heartbeat());
     }
 
   }
@@ -2472,6 +2722,9 @@ void PushMsg::MergeFrom(const PushMsg& from) {
     if (from.has_type()) {
       set_type(from.type());
     }
+    if (from.has_sequence()) {
+      set_sequence(from.sequence());
+    }
     if (from.has_login()) {
       mutable_login()->::com::letsmidi::monsys::protocol::push::Login::MergeFrom(from.login());
     }
@@ -2487,11 +2740,11 @@ void PushMsg::MergeFrom(const PushMsg& from) {
     if (from.has_connect()) {
       mutable_connect()->::com::letsmidi::monsys::protocol::push::Connect::MergeFrom(from.connect());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_connect_rsp()) {
       mutable_connect_rsp()->::com::letsmidi::monsys::protocol::push::ConnectRsp::MergeFrom(from.connect_rsp());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_get_fgw_list()) {
       mutable_get_fgw_list()->::com::letsmidi::monsys::protocol::push::GetFgwList::MergeFrom(from.get_fgw_list());
     }
@@ -2513,16 +2766,25 @@ void PushMsg::MergeFrom(const PushMsg& from) {
     if (from.has_set_dev_info()) {
       mutable_set_dev_info()->::com::letsmidi::monsys::protocol::push::SetDevInfo::MergeFrom(from.set_dev_info());
     }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_set_dev_info_rsp()) {
       mutable_set_dev_info_rsp()->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::MergeFrom(from.set_dev_info_rsp());
     }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_client_login()) {
       mutable_client_login()->::com::letsmidi::monsys::protocol::push::ClientLogin::MergeFrom(from.client_login());
     }
     if (from.has_client_login_rsp()) {
       mutable_client_login_rsp()->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::MergeFrom(from.client_login_rsp());
+    }
+    if (from.has_user_register()) {
+      mutable_user_register()->::com::letsmidi::monsys::protocol::push::UserRegister::MergeFrom(from.user_register());
+    }
+    if (from.has_user_register_rsp()) {
+      mutable_user_register_rsp()->::com::letsmidi::monsys::protocol::push::UserRegisterRsp::MergeFrom(from.user_register_rsp());
+    }
+    if (from.has_heartbeat()) {
+      mutable_heartbeat()->::com::letsmidi::monsys::protocol::push::Heartbeat::MergeFrom(from.heartbeat());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -2541,7 +2803,7 @@ void PushMsg::CopyFrom(const PushMsg& from) {
 }
 
 bool PushMsg::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   if (has_login()) {
     if (!this->login().IsInitialized()) return false;
@@ -2588,6 +2850,12 @@ bool PushMsg::IsInitialized() const {
   if (has_client_login_rsp()) {
     if (!this->client_login_rsp().IsInitialized()) return false;
   }
+  if (has_user_register()) {
+    if (!this->user_register().IsInitialized()) return false;
+  }
+  if (has_user_register_rsp()) {
+    if (!this->user_register_rsp().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -2595,6 +2863,7 @@ void PushMsg::Swap(PushMsg* other) {
   if (other != this) {
     std::swap(version_, other->version_);
     std::swap(type_, other->type_);
+    std::swap(sequence_, other->sequence_);
     std::swap(login_, other->login_);
     std::swap(login_rsp_, other->login_rsp_);
     std::swap(bind_, other->bind_);
@@ -2611,6 +2880,9 @@ void PushMsg::Swap(PushMsg* other) {
     std::swap(set_dev_info_rsp_, other->set_dev_info_rsp_);
     std::swap(client_login_, other->client_login_);
     std::swap(client_login_rsp_, other->client_login_rsp_);
+    std::swap(user_register_, other->user_register_);
+    std::swap(user_register_rsp_, other->user_register_rsp_);
+    std::swap(heartbeat_, other->heartbeat_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -6336,6 +6608,711 @@ void SetDevInfoRsp::Swap(SetDevInfoRsp* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = SetDevInfoRsp_descriptor_;
   metadata.reflection = SetDevInfoRsp_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int UserRegister::kNicknameFieldNumber;
+const int UserRegister::kAccountFieldNumber;
+const int UserRegister::kPasswordFieldNumber;
+#endif  // !_MSC_VER
+
+UserRegister::UserRegister()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void UserRegister::InitAsDefaultInstance() {
+}
+
+UserRegister::UserRegister(const UserRegister& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void UserRegister::SharedCtor() {
+  _cached_size_ = 0;
+  nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+UserRegister::~UserRegister() {
+  SharedDtor();
+}
+
+void UserRegister::SharedDtor() {
+  if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+    delete nickname_;
+  }
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    delete account_;
+  }
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    delete password_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void UserRegister::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserRegister::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return UserRegister_descriptor_;
+}
+
+const UserRegister& UserRegister::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
+  return *default_instance_;
+}
+
+UserRegister* UserRegister::default_instance_ = NULL;
+
+UserRegister* UserRegister::New() const {
+  return new UserRegister;
+}
+
+void UserRegister::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_nickname()) {
+      if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+        nickname_->clear();
+      }
+    }
+    if (has_account()) {
+      if (account_ != &::google::protobuf::internal::kEmptyString) {
+        account_->clear();
+      }
+    }
+    if (has_password()) {
+      if (password_ != &::google::protobuf::internal::kEmptyString) {
+        password_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool UserRegister::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string nickname = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_nickname()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->nickname().data(), this->nickname().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_account;
+        break;
+      }
+
+      // required string account = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_account:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_account()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->account().data(), this->account().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_password;
+        break;
+      }
+
+      // required string password = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_password:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_password()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->password().data(), this->password().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void UserRegister::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required string nickname = 1;
+  if (has_nickname()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->nickname().data(), this->nickname().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->nickname(), output);
+  }
+
+  // required string account = 2;
+  if (has_account()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->account().data(), this->account().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->account(), output);
+  }
+
+  // required string password = 3;
+  if (has_password()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->password().data(), this->password().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->password(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* UserRegister::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required string nickname = 1;
+  if (has_nickname()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->nickname().data(), this->nickname().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->nickname(), target);
+  }
+
+  // required string account = 2;
+  if (has_account()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->account().data(), this->account().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->account(), target);
+  }
+
+  // required string password = 3;
+  if (has_password()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->password().data(), this->password().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->password(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int UserRegister::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string nickname = 1;
+    if (has_nickname()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->nickname());
+    }
+
+    // required string account = 2;
+    if (has_account()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->account());
+    }
+
+    // required string password = 3;
+    if (has_password()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->password());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserRegister::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const UserRegister* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const UserRegister*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void UserRegister::MergeFrom(const UserRegister& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_nickname()) {
+      set_nickname(from.nickname());
+    }
+    if (from.has_account()) {
+      set_account(from.account());
+    }
+    if (from.has_password()) {
+      set_password(from.password());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void UserRegister::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserRegister::CopyFrom(const UserRegister& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserRegister::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  return true;
+}
+
+void UserRegister::Swap(UserRegister* other) {
+  if (other != this) {
+    std::swap(nickname_, other->nickname_);
+    std::swap(account_, other->account_);
+    std::swap(password_, other->password_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata UserRegister::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = UserRegister_descriptor_;
+  metadata.reflection = UserRegister_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int UserRegisterRsp::kCodeFieldNumber;
+#endif  // !_MSC_VER
+
+UserRegisterRsp::UserRegisterRsp()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void UserRegisterRsp::InitAsDefaultInstance() {
+}
+
+UserRegisterRsp::UserRegisterRsp(const UserRegisterRsp& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void UserRegisterRsp::SharedCtor() {
+  _cached_size_ = 0;
+  code_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+UserRegisterRsp::~UserRegisterRsp() {
+  SharedDtor();
+}
+
+void UserRegisterRsp::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void UserRegisterRsp::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserRegisterRsp::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return UserRegisterRsp_descriptor_;
+}
+
+const UserRegisterRsp& UserRegisterRsp::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
+  return *default_instance_;
+}
+
+UserRegisterRsp* UserRegisterRsp::default_instance_ = NULL;
+
+UserRegisterRsp* UserRegisterRsp::New() const {
+  return new UserRegisterRsp;
+}
+
+void UserRegisterRsp::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    code_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool UserRegisterRsp::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 code = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &code_)));
+          set_has_code();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void UserRegisterRsp::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required int32 code = 1;
+  if (has_code()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* UserRegisterRsp::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int32 code = 1;
+  if (has_code()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int UserRegisterRsp::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 code = 1;
+    if (has_code()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->code());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserRegisterRsp::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const UserRegisterRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const UserRegisterRsp*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void UserRegisterRsp::MergeFrom(const UserRegisterRsp& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_code()) {
+      set_code(from.code());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void UserRegisterRsp::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserRegisterRsp::CopyFrom(const UserRegisterRsp& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserRegisterRsp::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void UserRegisterRsp::Swap(UserRegisterRsp* other) {
+  if (other != this) {
+    std::swap(code_, other->code_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata UserRegisterRsp::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = UserRegisterRsp_descriptor_;
+  metadata.reflection = UserRegisterRsp_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+Heartbeat::Heartbeat()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Heartbeat::InitAsDefaultInstance() {
+}
+
+Heartbeat::Heartbeat(const Heartbeat& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Heartbeat::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Heartbeat::~Heartbeat() {
+  SharedDtor();
+}
+
+void Heartbeat::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void Heartbeat::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Heartbeat::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Heartbeat_descriptor_;
+}
+
+const Heartbeat& Heartbeat::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_push_2eproto();
+  return *default_instance_;
+}
+
+Heartbeat* Heartbeat::default_instance_ = NULL;
+
+Heartbeat* Heartbeat::New() const {
+  return new Heartbeat;
+}
+
+void Heartbeat::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Heartbeat::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      return true;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
+  }
+  return true;
+#undef DO_
+}
+
+void Heartbeat::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Heartbeat::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Heartbeat::ByteSize() const {
+  int total_size = 0;
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Heartbeat::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Heartbeat* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Heartbeat*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Heartbeat::MergeFrom(const Heartbeat& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Heartbeat::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Heartbeat::CopyFrom(const Heartbeat& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Heartbeat::IsInitialized() const {
+
+  return true;
+}
+
+void Heartbeat::Swap(Heartbeat* other) {
+  if (other != this) {
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Heartbeat::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Heartbeat_descriptor_;
+  metadata.reflection = Heartbeat_reflection_;
   return metadata;
 }
 

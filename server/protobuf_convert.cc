@@ -2,6 +2,14 @@
 
 #include "libbase/zlog.h"
 
+PushMsg* new_pushmsg(MsgType type)
+{
+  PushMsg *msg = new PushMsg();
+  msg->set_version(1);
+  msg->set_type(type);
+  return msg;
+}
+
 ZInnerMsg* push2inner(const GetDevList &msg)
 {
   ZInnerGetDevListReq *req = new ZInnerGetDevListReq();

@@ -1,7 +1,8 @@
 
 .PHONY: all fgw center clean
 
-all: fgw center
+# all: fgw center
+all: fgw
 
 fgw:
 	make -f fgw.mk

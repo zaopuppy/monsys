@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.test;
 
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -33,9 +34,7 @@ public class PushClientHandler extends SimpleChannelInboundHandler<PushMsg> {
   }
 
   private void login(ChannelHandlerContext ctx) {
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.LOGIN);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN);
 
     Login.Builder login = Login.newBuilder();
     login.setDeviceId("DEVID-Z");
@@ -46,9 +45,7 @@ public class PushClientHandler extends SimpleChannelInboundHandler<PushMsg> {
   }
 
   private void sendTestMsg(Channel channel) {
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.LOGIN);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN);
 
     Login.Builder login_builder = Login.newBuilder();
     login_builder.setDeviceId("test-device-id");

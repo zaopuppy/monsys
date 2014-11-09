@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.letsmidi.monsys.R;
 import com.letsmidi.monsys.protocol.MonsysHelper;
 import com.letsmidi.monsys.protocol.MonsysHelper.BindCallback;

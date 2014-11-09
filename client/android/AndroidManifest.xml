@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -37,16 +37,19 @@
             android:name="com.letsmidi.monsys.ui.SmartLightActivity"
             android:label="@string/app_name" >
         </activity>
+        <!--
         <activity
             android:name="com.letsmidi.monsys.MainFragActivity"
             android:label="@string/app_name" >
         </activity>
+        -->
         <activity 
             android:name="com.letsmidi.monsys.ui.LoginActivity" >
         </activity>
         <activity 
             android:name="com.letsmidi.monsys.ui.BindFgwActivity">
         </activity>
+        <activity android:name=".ui.ConfigActivity" />
     </application>
 
 </manifest>

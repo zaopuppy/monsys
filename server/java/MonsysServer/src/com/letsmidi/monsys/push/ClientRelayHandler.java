@@ -1,6 +1,8 @@
 package com.letsmidi.monsys.push;
 
+import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.protocol.push.Push.*;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +14,7 @@ import java.util.logging.Logger;
 public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
   private final Channel mRelayChannel;
   private String mFgwList;
-  private final Logger mLogger = Logger.getLogger(PushServer.LOGGER_NAME);
+  private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 
   public ClientRelayHandler(Channel ch) {
     mRelayChannel = ch;
@@ -25,7 +27,9 @@ public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
 
   @Override
   public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-    mLogger.info("Channel closed");
+    mLogger.info(String.format("Channel closed, local=(%s), remote=(%s)",
+        ctx.channel().localAddress().toString(),
+        ctx.channel().remoteAddress().toString()));
     if (mRelayChannel.isActive()) {
       mRelayChannel.flush();
       mRelayChannel.close();
@@ -36,12 +40,14 @@ public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
     cause.printStackTrace();
+    mLogger.severe(cause.toString());
+    mLogger.severe("msg: " + cause.getMessage());
     ctx.close();
   }
 
   @Override
   protected void channelRead0(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-    mLogger.info("received: " + msg.getType());
+    // mLogger.info("received: " + msg.getType());
     if (msg.getType() == MsgType.GET_FGW_LIST) {
       processGetFgwList(ctx, msg);
       return;
@@ -58,9 +64,8 @@ public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
   }
 
   private void processConnect(ChannelHandlerContext ctx, PushMsg msg) {
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.CONNECT_RSP);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CONNECT_RSP);
+    builder.setSequence(msg.getSequence());
 
     ConnectRsp.Builder rsp = ConnectRsp.newBuilder();
     rsp.setCode(0);
@@ -71,14 +76,13 @@ public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
   }
 
   private void processGetFgwList(ChannelHandlerContext ctx, PushMsg msg) {
-    mLogger.info("processGetFgwList");
+    // mLogger.info("processGetFgwList");
     if (!msg.hasGetFgwList()) {
       return;
     }
 
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.GET_FGW_LIST_RSP);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.GET_FGW_LIST_RSP);
+    builder.setSequence(msg.getSequence());
 
     GetFgwListRsp.Builder rsp = GetFgwListRsp.newBuilder();
     rsp.setCode(0);

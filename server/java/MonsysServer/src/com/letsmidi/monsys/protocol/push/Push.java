@@ -78,9 +78,21 @@ public final class Push {
      */
     CLIENT_LOGIN_RSP(15, 108),
     /**
+     * <code>USER_REGISTER = 9;</code>
+     */
+    USER_REGISTER(16, 9),
+    /**
+     * <code>USER_REGISTER_RSP = 109;</code>
+     */
+    USER_REGISTER_RSP(17, 109),
+    /**
+     * <code>HEARTBEAT = 10;</code>
+     */
+    HEARTBEAT(18, 10),
+    /**
      * <code>RESPONSE = 99;</code>
      */
-    RESPONSE(16, 99),
+    RESPONSE(19, 99),
     ;
 
     /**
@@ -148,6 +160,18 @@ public final class Push {
      */
     public static final int CLIENT_LOGIN_RSP_VALUE = 108;
     /**
+     * <code>USER_REGISTER = 9;</code>
+     */
+    public static final int USER_REGISTER_VALUE = 9;
+    /**
+     * <code>USER_REGISTER_RSP = 109;</code>
+     */
+    public static final int USER_REGISTER_RSP_VALUE = 109;
+    /**
+     * <code>HEARTBEAT = 10;</code>
+     */
+    public static final int HEARTBEAT_VALUE = 10;
+    /**
      * <code>RESPONSE = 99;</code>
      */
     public static final int RESPONSE_VALUE = 99;
@@ -173,6 +197,9 @@ public final class Push {
         case 107: return SET_DEV_INFO_RSP;
         case 8: return CLIENT_LOGIN;
         case 108: return CLIENT_LOGIN_RSP;
+        case 9: return USER_REGISTER;
+        case 109: return USER_REGISTER_RSP;
+        case 10: return HEARTBEAT;
         case 99: return RESPONSE;
         default: return null;
       }
@@ -2205,6 +2232,16 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.MsgType getType();
 
+    // required int32 sequence = 3;
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    boolean hasSequence();
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    int getSequence();
+
     // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
@@ -2428,6 +2465,48 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
      */
     com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder getClientLoginRspOrBuilder();
+
+    // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    boolean hasUserRegister();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.UserRegister getUserRegister();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder getUserRegisterOrBuilder();
+
+    // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    boolean hasUserRegisterRsp();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp getUserRegisterRsp();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder getUserRegisterRspOrBuilder();
+
+    // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    boolean hasHeartbeat();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.Heartbeat getHeartbeat();
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder getHeartbeatOrBuilder();
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushMsg}
@@ -2496,9 +2575,14 @@ public final class Push {
               }
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              sequence_ = input.readInt32();
+              break;
+            }
             case 82: {
               com.letsmidi.monsys.protocol.push.Push.Login.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = login_.toBuilder();
               }
               login_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.Login.PARSER, extensionRegistry);
@@ -2506,12 +2590,12 @@ public final class Push {
                 subBuilder.mergeFrom(login_);
                 login_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               break;
             }
             case 90: {
               com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 subBuilder = loginRsp_.toBuilder();
               }
               loginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.LoginRsp.PARSER, extensionRegistry);
@@ -2519,12 +2603,12 @@ public final class Push {
                 subBuilder.mergeFrom(loginRsp_);
                 loginRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               break;
             }
             case 98: {
               com.letsmidi.monsys.protocol.push.Push.Bind.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+              if (((bitField0_ & 0x00000020) == 0x00000020)) {
                 subBuilder = bind_.toBuilder();
               }
               bind_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.Bind.PARSER, extensionRegistry);
@@ -2532,12 +2616,12 @@ public final class Push {
                 subBuilder.mergeFrom(bind_);
                 bind_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               break;
             }
             case 106: {
               com.letsmidi.monsys.protocol.push.Push.BindRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000020) == 0x00000020)) {
+              if (((bitField0_ & 0x00000040) == 0x00000040)) {
                 subBuilder = bindRsp_.toBuilder();
               }
               bindRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.BindRsp.PARSER, extensionRegistry);
@@ -2545,12 +2629,12 @@ public final class Push {
                 subBuilder.mergeFrom(bindRsp_);
                 bindRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000040;
               break;
             }
             case 114: {
               com.letsmidi.monsys.protocol.push.Push.Connect.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000040) == 0x00000040)) {
+              if (((bitField0_ & 0x00000080) == 0x00000080)) {
                 subBuilder = connect_.toBuilder();
               }
               connect_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.Connect.PARSER, extensionRegistry);
@@ -2558,12 +2642,12 @@ public final class Push {
                 subBuilder.mergeFrom(connect_);
                 connect_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000080;
               break;
             }
             case 122: {
               com.letsmidi.monsys.protocol.push.Push.ConnectRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000080) == 0x00000080)) {
+              if (((bitField0_ & 0x00000100) == 0x00000100)) {
                 subBuilder = connectRsp_.toBuilder();
               }
               connectRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.ConnectRsp.PARSER, extensionRegistry);
@@ -2571,12 +2655,12 @@ public final class Push {
                 subBuilder.mergeFrom(connectRsp_);
                 connectRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000100;
               break;
             }
             case 130: {
               com.letsmidi.monsys.protocol.push.Push.GetFgwList.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000100) == 0x00000100)) {
+              if (((bitField0_ & 0x00000200) == 0x00000200)) {
                 subBuilder = getFgwList_.toBuilder();
               }
               getFgwList_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetFgwList.PARSER, extensionRegistry);
@@ -2584,12 +2668,12 @@ public final class Push {
                 subBuilder.mergeFrom(getFgwList_);
                 getFgwList_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000100;
+              bitField0_ |= 0x00000200;
               break;
             }
             case 138: {
               com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000200) == 0x00000200)) {
+              if (((bitField0_ & 0x00000400) == 0x00000400)) {
                 subBuilder = getFgwListRsp_.toBuilder();
               }
               getFgwListRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.PARSER, extensionRegistry);
@@ -2597,12 +2681,12 @@ public final class Push {
                 subBuilder.mergeFrom(getFgwListRsp_);
                 getFgwListRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000200;
+              bitField0_ |= 0x00000400;
               break;
             }
             case 146: {
               com.letsmidi.monsys.protocol.push.Push.GetDevList.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000400) == 0x00000400)) {
+              if (((bitField0_ & 0x00000800) == 0x00000800)) {
                 subBuilder = getDevList_.toBuilder();
               }
               getDevList_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetDevList.PARSER, extensionRegistry);
@@ -2610,12 +2694,12 @@ public final class Push {
                 subBuilder.mergeFrom(getDevList_);
                 getDevList_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000400;
+              bitField0_ |= 0x00000800;
               break;
             }
             case 154: {
               com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000800) == 0x00000800)) {
+              if (((bitField0_ & 0x00001000) == 0x00001000)) {
                 subBuilder = getDevListRsp_.toBuilder();
               }
               getDevListRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.PARSER, extensionRegistry);
@@ -2623,12 +2707,12 @@ public final class Push {
                 subBuilder.mergeFrom(getDevListRsp_);
                 getDevListRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000800;
+              bitField0_ |= 0x00001000;
               break;
             }
             case 162: {
               com.letsmidi.monsys.protocol.push.Push.GetDevInfo.Builder subBuilder = null;
-              if (((bitField0_ & 0x00001000) == 0x00001000)) {
+              if (((bitField0_ & 0x00002000) == 0x00002000)) {
                 subBuilder = getDevInfo_.toBuilder();
               }
               getDevInfo_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetDevInfo.PARSER, extensionRegistry);
@@ -2636,12 +2720,12 @@ public final class Push {
                 subBuilder.mergeFrom(getDevInfo_);
                 getDevInfo_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00001000;
+              bitField0_ |= 0x00002000;
               break;
             }
             case 170: {
               com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00002000) == 0x00002000)) {
+              if (((bitField0_ & 0x00004000) == 0x00004000)) {
                 subBuilder = getDevInfoRsp_.toBuilder();
               }
               getDevInfoRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.PARSER, extensionRegistry);
@@ -2649,12 +2733,12 @@ public final class Push {
                 subBuilder.mergeFrom(getDevInfoRsp_);
                 getDevInfoRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00002000;
+              bitField0_ |= 0x00004000;
               break;
             }
             case 178: {
               com.letsmidi.monsys.protocol.push.Push.SetDevInfo.Builder subBuilder = null;
-              if (((bitField0_ & 0x00004000) == 0x00004000)) {
+              if (((bitField0_ & 0x00008000) == 0x00008000)) {
                 subBuilder = setDevInfo_.toBuilder();
               }
               setDevInfo_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.SetDevInfo.PARSER, extensionRegistry);
@@ -2662,12 +2746,12 @@ public final class Push {
                 subBuilder.mergeFrom(setDevInfo_);
                 setDevInfo_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00004000;
+              bitField0_ |= 0x00008000;
               break;
             }
             case 186: {
               com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00008000) == 0x00008000)) {
+              if (((bitField0_ & 0x00010000) == 0x00010000)) {
                 subBuilder = setDevInfoRsp_.toBuilder();
               }
               setDevInfoRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.PARSER, extensionRegistry);
@@ -2675,12 +2759,12 @@ public final class Push {
                 subBuilder.mergeFrom(setDevInfoRsp_);
                 setDevInfoRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00008000;
+              bitField0_ |= 0x00010000;
               break;
             }
             case 194: {
               com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder subBuilder = null;
-              if (((bitField0_ & 0x00010000) == 0x00010000)) {
+              if (((bitField0_ & 0x00020000) == 0x00020000)) {
                 subBuilder = clientLogin_.toBuilder();
               }
               clientLogin_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.ClientLogin.PARSER, extensionRegistry);
@@ -2688,12 +2772,12 @@ public final class Push {
                 subBuilder.mergeFrom(clientLogin_);
                 clientLogin_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00010000;
+              bitField0_ |= 0x00020000;
               break;
             }
             case 202: {
               com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00020000) == 0x00020000)) {
+              if (((bitField0_ & 0x00040000) == 0x00040000)) {
                 subBuilder = clientLoginRsp_.toBuilder();
               }
               clientLoginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.PARSER, extensionRegistry);
@@ -2701,7 +2785,46 @@ public final class Push {
                 subBuilder.mergeFrom(clientLoginRsp_);
                 clientLoginRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00020000;
+              bitField0_ |= 0x00040000;
+              break;
+            }
+            case 210: {
+              com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder subBuilder = null;
+              if (((bitField0_ & 0x00080000) == 0x00080000)) {
+                subBuilder = userRegister_.toBuilder();
+              }
+              userRegister_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.UserRegister.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(userRegister_);
+                userRegister_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00080000;
+              break;
+            }
+            case 218: {
+              com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder subBuilder = null;
+              if (((bitField0_ & 0x00100000) == 0x00100000)) {
+                subBuilder = userRegisterRsp_.toBuilder();
+              }
+              userRegisterRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(userRegisterRsp_);
+                userRegisterRsp_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00100000;
+              break;
+            }
+            case 226: {
+              com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder subBuilder = null;
+              if (((bitField0_ & 0x00200000) == 0x00200000)) {
+                subBuilder = heartbeat_.toBuilder();
+              }
+              heartbeat_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.Heartbeat.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(heartbeat_);
+                heartbeat_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00200000;
               break;
             }
           }
@@ -2776,6 +2899,22 @@ public final class Push {
       return type_;
     }
 
+    // required int32 sequence = 3;
+    public static final int SEQUENCE_FIELD_NUMBER = 3;
+    private int sequence_;
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    public boolean hasSequence() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    public int getSequence() {
+      return sequence_;
+    }
+
     // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
     public static final int LOGIN_FIELD_NUMBER = 10;
     private com.letsmidi.monsys.protocol.push.Push.Login login_;
@@ -2783,7 +2922,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
      */
     public boolean hasLogin() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
@@ -2805,7 +2944,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
      */
     public boolean hasLoginRsp() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
@@ -2827,7 +2966,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
      */
     public boolean hasBind() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
@@ -2849,7 +2988,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
      */
     public boolean hasBindRsp() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
@@ -2871,7 +3010,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
      */
     public boolean hasConnect() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
@@ -2893,7 +3032,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
      */
     public boolean hasConnectRsp() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
@@ -2915,7 +3054,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
      */
     public boolean hasGetFgwList() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
@@ -2937,7 +3076,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
      */
     public boolean hasGetFgwListRsp() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
@@ -2959,7 +3098,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
      */
     public boolean hasGetDevList() {
-      return ((bitField0_ & 0x00000400) == 0x00000400);
+      return ((bitField0_ & 0x00000800) == 0x00000800);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
@@ -2981,7 +3120,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
      */
     public boolean hasGetDevListRsp() {
-      return ((bitField0_ & 0x00000800) == 0x00000800);
+      return ((bitField0_ & 0x00001000) == 0x00001000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
@@ -3003,7 +3142,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
      */
     public boolean hasGetDevInfo() {
-      return ((bitField0_ & 0x00001000) == 0x00001000);
+      return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
@@ -3025,7 +3164,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
      */
     public boolean hasGetDevInfoRsp() {
-      return ((bitField0_ & 0x00002000) == 0x00002000);
+      return ((bitField0_ & 0x00004000) == 0x00004000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
@@ -3047,7 +3186,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
      */
     public boolean hasSetDevInfo() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
+      return ((bitField0_ & 0x00008000) == 0x00008000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
@@ -3069,7 +3208,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
      */
     public boolean hasSetDevInfoRsp() {
-      return ((bitField0_ & 0x00008000) == 0x00008000);
+      return ((bitField0_ & 0x00010000) == 0x00010000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
@@ -3091,7 +3230,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
      */
     public boolean hasClientLogin() {
-      return ((bitField0_ & 0x00010000) == 0x00010000);
+      return ((bitField0_ & 0x00020000) == 0x00020000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
@@ -3113,7 +3252,7 @@ public final class Push {
      * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
      */
     public boolean hasClientLoginRsp() {
-      return ((bitField0_ & 0x00020000) == 0x00020000);
+      return ((bitField0_ & 0x00040000) == 0x00040000);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
@@ -3128,9 +3267,76 @@ public final class Push {
       return clientLoginRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+    public static final int USER_REGISTER_FIELD_NUMBER = 26;
+    private com.letsmidi.monsys.protocol.push.Push.UserRegister userRegister_;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    public boolean hasUserRegister() {
+      return ((bitField0_ & 0x00080000) == 0x00080000);
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.UserRegister getUserRegister() {
+      return userRegister_;
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder getUserRegisterOrBuilder() {
+      return userRegister_;
+    }
+
+    // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+    public static final int USER_REGISTER_RSP_FIELD_NUMBER = 27;
+    private com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp userRegisterRsp_;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    public boolean hasUserRegisterRsp() {
+      return ((bitField0_ & 0x00100000) == 0x00100000);
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp getUserRegisterRsp() {
+      return userRegisterRsp_;
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder getUserRegisterRspOrBuilder() {
+      return userRegisterRsp_;
+    }
+
+    // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+    public static final int HEARTBEAT_FIELD_NUMBER = 28;
+    private com.letsmidi.monsys.protocol.push.Push.Heartbeat heartbeat_;
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    public boolean hasHeartbeat() {
+      return ((bitField0_ & 0x00200000) == 0x00200000);
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.Heartbeat getHeartbeat() {
+      return heartbeat_;
+    }
+    /**
+     * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+     */
+    public com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder getHeartbeatOrBuilder() {
+      return heartbeat_;
+    }
+
     private void initFields() {
       version_ = 0;
       type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
+      sequence_ = 0;
       login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
       loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
       bind_ = com.letsmidi.monsys.protocol.push.Push.Bind.getDefaultInstance();
@@ -3147,6 +3353,9 @@ public final class Push {
       setDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.getDefaultInstance();
       clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
       clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+      userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
+      userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
+      heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3158,6 +3367,10 @@ public final class Push {
         return false;
       }
       if (!hasType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSequence()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3251,6 +3464,18 @@ public final class Push {
           return false;
         }
       }
+      if (hasUserRegister()) {
+        if (!getUserRegister().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasUserRegisterRsp()) {
+        if (!getUserRegisterRsp().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3265,52 +3490,64 @@ public final class Push {
         output.writeEnum(2, type_.getNumber());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(10, login_);
+        output.writeInt32(3, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(11, loginRsp_);
+        output.writeMessage(10, login_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeMessage(12, bind_);
+        output.writeMessage(11, loginRsp_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeMessage(13, bindRsp_);
+        output.writeMessage(12, bind_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeMessage(14, connect_);
+        output.writeMessage(13, bindRsp_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeMessage(15, connectRsp_);
+        output.writeMessage(14, connect_);
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeMessage(16, getFgwList_);
+        output.writeMessage(15, connectRsp_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeMessage(17, getFgwListRsp_);
+        output.writeMessage(16, getFgwList_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
-        output.writeMessage(18, getDevList_);
+        output.writeMessage(17, getFgwListRsp_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
-        output.writeMessage(19, getDevListRsp_);
+        output.writeMessage(18, getDevList_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
-        output.writeMessage(20, getDevInfo_);
+        output.writeMessage(19, getDevListRsp_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        output.writeMessage(21, getDevInfoRsp_);
+        output.writeMessage(20, getDevInfo_);
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        output.writeMessage(22, setDevInfo_);
+        output.writeMessage(21, getDevInfoRsp_);
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
-        output.writeMessage(23, setDevInfoRsp_);
+        output.writeMessage(22, setDevInfo_);
       }
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
-        output.writeMessage(24, clientLogin_);
+        output.writeMessage(23, setDevInfoRsp_);
       }
       if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        output.writeMessage(24, clientLogin_);
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
         output.writeMessage(25, clientLoginRsp_);
+      }
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+        output.writeMessage(26, userRegister_);
+      }
+      if (((bitField0_ & 0x00100000) == 0x00100000)) {
+        output.writeMessage(27, userRegisterRsp_);
+      }
+      if (((bitField0_ & 0x00200000) == 0x00200000)) {
+        output.writeMessage(28, heartbeat_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -3331,67 +3568,83 @@ public final class Push {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, login_);
+          .computeInt32Size(3, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, loginRsp_);
+          .computeMessageSize(10, login_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, bind_);
+          .computeMessageSize(11, loginRsp_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(13, bindRsp_);
+          .computeMessageSize(12, bind_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(14, connect_);
+          .computeMessageSize(13, bindRsp_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(15, connectRsp_);
+          .computeMessageSize(14, connect_);
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(16, getFgwList_);
+          .computeMessageSize(15, connectRsp_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(17, getFgwListRsp_);
+          .computeMessageSize(16, getFgwList_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(18, getDevList_);
+          .computeMessageSize(17, getFgwListRsp_);
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(19, getDevListRsp_);
+          .computeMessageSize(18, getDevList_);
       }
       if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(20, getDevInfo_);
+          .computeMessageSize(19, getDevListRsp_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(21, getDevInfoRsp_);
+          .computeMessageSize(20, getDevInfo_);
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(22, setDevInfo_);
+          .computeMessageSize(21, getDevInfoRsp_);
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(23, setDevInfoRsp_);
+          .computeMessageSize(22, setDevInfo_);
       }
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(24, clientLogin_);
+          .computeMessageSize(23, setDevInfoRsp_);
       }
       if (((bitField0_ & 0x00020000) == 0x00020000)) {
         size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(24, clientLogin_);
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+        size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(25, clientLoginRsp_);
+      }
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(26, userRegister_);
+      }
+      if (((bitField0_ & 0x00100000) == 0x00100000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(27, userRegisterRsp_);
+      }
+      if (((bitField0_ & 0x00200000) == 0x00200000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(28, heartbeat_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3517,6 +3770,9 @@ public final class Push {
           getSetDevInfoRspFieldBuilder();
           getClientLoginFieldBuilder();
           getClientLoginRspFieldBuilder();
+          getUserRegisterFieldBuilder();
+          getUserRegisterRspFieldBuilder();
+          getHeartbeatFieldBuilder();
         }
       }
       private static Builder create() {
@@ -3529,102 +3785,122 @@ public final class Push {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
         bitField0_ = (bitField0_ & ~0x00000002);
+        sequence_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (loginBuilder_ == null) {
           login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
         } else {
           loginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (loginRspBuilder_ == null) {
           loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
         } else {
           loginRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         if (bindBuilder_ == null) {
           bind_ = com.letsmidi.monsys.protocol.push.Push.Bind.getDefaultInstance();
         } else {
           bindBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         if (bindRspBuilder_ == null) {
           bindRsp_ = com.letsmidi.monsys.protocol.push.Push.BindRsp.getDefaultInstance();
         } else {
           bindRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         if (connectBuilder_ == null) {
           connect_ = com.letsmidi.monsys.protocol.push.Push.Connect.getDefaultInstance();
         } else {
           connectBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000080);
         if (connectRspBuilder_ == null) {
           connectRsp_ = com.letsmidi.monsys.protocol.push.Push.ConnectRsp.getDefaultInstance();
         } else {
           connectRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000100);
         if (getFgwListBuilder_ == null) {
           getFgwList_ = com.letsmidi.monsys.protocol.push.Push.GetFgwList.getDefaultInstance();
         } else {
           getFgwListBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000200);
         if (getFgwListRspBuilder_ == null) {
           getFgwListRsp_ = com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.getDefaultInstance();
         } else {
           getFgwListRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000400);
         if (getDevListBuilder_ == null) {
           getDevList_ = com.letsmidi.monsys.protocol.push.Push.GetDevList.getDefaultInstance();
         } else {
           getDevListBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00000800);
         if (getDevListRspBuilder_ == null) {
           getDevListRsp_ = com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.getDefaultInstance();
         } else {
           getDevListRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000800);
+        bitField0_ = (bitField0_ & ~0x00001000);
         if (getDevInfoBuilder_ == null) {
           getDevInfo_ = com.letsmidi.monsys.protocol.push.Push.GetDevInfo.getDefaultInstance();
         } else {
           getDevInfoBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00001000);
+        bitField0_ = (bitField0_ & ~0x00002000);
         if (getDevInfoRspBuilder_ == null) {
           getDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.getDefaultInstance();
         } else {
           getDevInfoRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00004000);
         if (setDevInfoBuilder_ == null) {
           setDevInfo_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfo.getDefaultInstance();
         } else {
           setDevInfoBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00008000);
         if (setDevInfoRspBuilder_ == null) {
           setDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.getDefaultInstance();
         } else {
           setDevInfoRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00008000);
+        bitField0_ = (bitField0_ & ~0x00010000);
         if (clientLoginBuilder_ == null) {
           clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
         } else {
           clientLoginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00010000);
+        bitField0_ = (bitField0_ & ~0x00020000);
         if (clientLoginRspBuilder_ == null) {
           clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
         } else {
           clientLoginRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00020000);
+        bitField0_ = (bitField0_ & ~0x00040000);
+        if (userRegisterBuilder_ == null) {
+          userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
+        } else {
+          userRegisterBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00080000);
+        if (userRegisterRspBuilder_ == null) {
+          userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
+        } else {
+          userRegisterRspBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00100000);
+        if (heartbeatBuilder_ == null) {
+          heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
+        } else {
+          heartbeatBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00200000);
         return this;
       }
 
@@ -3664,130 +3940,158 @@ public final class Push {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
+        result.sequence_ = sequence_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
         if (loginBuilder_ == null) {
           result.login_ = login_;
         } else {
           result.login_ = loginBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
         }
         if (loginRspBuilder_ == null) {
           result.loginRsp_ = loginRsp_;
         } else {
           result.loginRsp_ = loginRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
         }
         if (bindBuilder_ == null) {
           result.bind_ = bind_;
         } else {
           result.bind_ = bindBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
         }
         if (bindRspBuilder_ == null) {
           result.bindRsp_ = bindRsp_;
         } else {
           result.bindRsp_ = bindRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
-          to_bitField0_ |= 0x00000040;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
         }
         if (connectBuilder_ == null) {
           result.connect_ = connect_;
         } else {
           result.connect_ = connectBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
-          to_bitField0_ |= 0x00000080;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
         }
         if (connectRspBuilder_ == null) {
           result.connectRsp_ = connectRsp_;
         } else {
           result.connectRsp_ = connectRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
-          to_bitField0_ |= 0x00000100;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
         }
         if (getFgwListBuilder_ == null) {
           result.getFgwList_ = getFgwList_;
         } else {
           result.getFgwList_ = getFgwListBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
-          to_bitField0_ |= 0x00000200;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
         }
         if (getFgwListRspBuilder_ == null) {
           result.getFgwListRsp_ = getFgwListRsp_;
         } else {
           result.getFgwListRsp_ = getFgwListRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
-          to_bitField0_ |= 0x00000400;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
         }
         if (getDevListBuilder_ == null) {
           result.getDevList_ = getDevList_;
         } else {
           result.getDevList_ = getDevListBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
-          to_bitField0_ |= 0x00000800;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
         }
         if (getDevListRspBuilder_ == null) {
           result.getDevListRsp_ = getDevListRsp_;
         } else {
           result.getDevListRsp_ = getDevListRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
-          to_bitField0_ |= 0x00001000;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00002000;
         }
         if (getDevInfoBuilder_ == null) {
           result.getDevInfo_ = getDevInfo_;
         } else {
           result.getDevInfo_ = getDevInfoBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
-          to_bitField0_ |= 0x00002000;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
         }
         if (getDevInfoRspBuilder_ == null) {
           result.getDevInfoRsp_ = getDevInfoRsp_;
         } else {
           result.getDevInfoRsp_ = getDevInfoRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
-          to_bitField0_ |= 0x00004000;
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
         }
         if (setDevInfoBuilder_ == null) {
           result.setDevInfo_ = setDevInfo_;
         } else {
           result.setDevInfo_ = setDevInfoBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
-          to_bitField0_ |= 0x00008000;
+        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+          to_bitField0_ |= 0x00010000;
         }
         if (setDevInfoRspBuilder_ == null) {
           result.setDevInfoRsp_ = setDevInfoRsp_;
         } else {
           result.setDevInfoRsp_ = setDevInfoRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
-          to_bitField0_ |= 0x00010000;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00020000;
         }
         if (clientLoginBuilder_ == null) {
           result.clientLogin_ = clientLogin_;
         } else {
           result.clientLogin_ = clientLoginBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
-          to_bitField0_ |= 0x00020000;
+        if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+          to_bitField0_ |= 0x00040000;
         }
         if (clientLoginRspBuilder_ == null) {
           result.clientLoginRsp_ = clientLoginRsp_;
         } else {
           result.clientLoginRsp_ = clientLoginRspBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
+          to_bitField0_ |= 0x00080000;
+        }
+        if (userRegisterBuilder_ == null) {
+          result.userRegister_ = userRegister_;
+        } else {
+          result.userRegister_ = userRegisterBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00100000) == 0x00100000)) {
+          to_bitField0_ |= 0x00100000;
+        }
+        if (userRegisterRspBuilder_ == null) {
+          result.userRegisterRsp_ = userRegisterRsp_;
+        } else {
+          result.userRegisterRsp_ = userRegisterRspBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00200000) == 0x00200000)) {
+          to_bitField0_ |= 0x00200000;
+        }
+        if (heartbeatBuilder_ == null) {
+          result.heartbeat_ = heartbeat_;
+        } else {
+          result.heartbeat_ = heartbeatBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -3810,6 +4114,9 @@ public final class Push {
         }
         if (other.hasType()) {
           setType(other.getType());
+        }
+        if (other.hasSequence()) {
+          setSequence(other.getSequence());
         }
         if (other.hasLogin()) {
           mergeLogin(other.getLogin());
@@ -3859,6 +4166,15 @@ public final class Push {
         if (other.hasClientLoginRsp()) {
           mergeClientLoginRsp(other.getClientLoginRsp());
         }
+        if (other.hasUserRegister()) {
+          mergeUserRegister(other.getUserRegister());
+        }
+        if (other.hasUserRegisterRsp()) {
+          mergeUserRegisterRsp(other.getUserRegisterRsp());
+        }
+        if (other.hasHeartbeat()) {
+          mergeHeartbeat(other.getHeartbeat());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -3869,6 +4185,10 @@ public final class Push {
           return false;
         }
         if (!hasType()) {
+          
+          return false;
+        }
+        if (!hasSequence()) {
           
           return false;
         }
@@ -3958,6 +4278,18 @@ public final class Push {
         }
         if (hasClientLoginRsp()) {
           if (!getClientLoginRsp().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasUserRegister()) {
+          if (!getUserRegister().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasUserRegisterRsp()) {
+          if (!getUserRegisterRsp().isInitialized()) {
             
             return false;
           }
@@ -4053,6 +4385,39 @@ public final class Push {
         return this;
       }
 
+      // required int32 sequence = 3;
+      private int sequence_ ;
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public boolean hasSequence() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public int getSequence() {
+        return sequence_;
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public Builder setSequence(int value) {
+        bitField0_ |= 0x00000004;
+        sequence_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public Builder clearSequence() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        sequence_ = 0;
+        onChanged();
+        return this;
+      }
+
       // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
       private com.letsmidi.monsys.protocol.push.Push.Login login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
@@ -4061,7 +4426,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
        */
       public boolean hasLogin() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
@@ -4086,7 +4451,7 @@ public final class Push {
         } else {
           loginBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -4100,7 +4465,7 @@ public final class Push {
         } else {
           loginBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -4108,7 +4473,7 @@ public final class Push {
        */
       public Builder mergeLogin(com.letsmidi.monsys.protocol.push.Push.Login value) {
         if (loginBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               login_ != com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance()) {
             login_ =
               com.letsmidi.monsys.protocol.push.Push.Login.newBuilder(login_).mergeFrom(value).buildPartial();
@@ -4119,7 +4484,7 @@ public final class Push {
         } else {
           loginBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -4132,14 +4497,14 @@ public final class Push {
         } else {
           loginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.Login.Builder getLoginBuilder() {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getLoginFieldBuilder().getBuilder();
       }
@@ -4178,7 +4543,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
        */
       public boolean hasLoginRsp() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
@@ -4203,7 +4568,7 @@ public final class Push {
         } else {
           loginRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -4217,7 +4582,7 @@ public final class Push {
         } else {
           loginRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -4225,7 +4590,7 @@ public final class Push {
        */
       public Builder mergeLoginRsp(com.letsmidi.monsys.protocol.push.Push.LoginRsp value) {
         if (loginRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
               loginRsp_ != com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance()) {
             loginRsp_ =
               com.letsmidi.monsys.protocol.push.Push.LoginRsp.newBuilder(loginRsp_).mergeFrom(value).buildPartial();
@@ -4236,7 +4601,7 @@ public final class Push {
         } else {
           loginRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -4249,14 +4614,14 @@ public final class Push {
         } else {
           loginRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder getLoginRspBuilder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
         return getLoginRspFieldBuilder().getBuilder();
       }
@@ -4295,7 +4660,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
        */
       public boolean hasBind() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
@@ -4320,7 +4685,7 @@ public final class Push {
         } else {
           bindBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -4334,7 +4699,7 @@ public final class Push {
         } else {
           bindBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -4342,7 +4707,7 @@ public final class Push {
        */
       public Builder mergeBind(com.letsmidi.monsys.protocol.push.Push.Bind value) {
         if (bindBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
               bind_ != com.letsmidi.monsys.protocol.push.Push.Bind.getDefaultInstance()) {
             bind_ =
               com.letsmidi.monsys.protocol.push.Push.Bind.newBuilder(bind_).mergeFrom(value).buildPartial();
@@ -4353,7 +4718,7 @@ public final class Push {
         } else {
           bindBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -4366,14 +4731,14 @@ public final class Push {
         } else {
           bindBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.Bind.Builder getBindBuilder() {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         onChanged();
         return getBindFieldBuilder().getBuilder();
       }
@@ -4412,7 +4777,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
        */
       public boolean hasBindRsp() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
@@ -4437,7 +4802,7 @@ public final class Push {
         } else {
           bindRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4451,7 +4816,7 @@ public final class Push {
         } else {
           bindRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4459,7 +4824,7 @@ public final class Push {
        */
       public Builder mergeBindRsp(com.letsmidi.monsys.protocol.push.Push.BindRsp value) {
         if (bindRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+          if (((bitField0_ & 0x00000040) == 0x00000040) &&
               bindRsp_ != com.letsmidi.monsys.protocol.push.Push.BindRsp.getDefaultInstance()) {
             bindRsp_ =
               com.letsmidi.monsys.protocol.push.Push.BindRsp.newBuilder(bindRsp_).mergeFrom(value).buildPartial();
@@ -4470,7 +4835,7 @@ public final class Push {
         } else {
           bindRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -4483,14 +4848,14 @@ public final class Push {
         } else {
           bindRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.BindRsp.Builder getBindRspBuilder() {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         onChanged();
         return getBindRspFieldBuilder().getBuilder();
       }
@@ -4529,7 +4894,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
        */
       public boolean hasConnect() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
@@ -4554,7 +4919,7 @@ public final class Push {
         } else {
           connectBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000080;
         return this;
       }
       /**
@@ -4568,7 +4933,7 @@ public final class Push {
         } else {
           connectBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000080;
         return this;
       }
       /**
@@ -4576,7 +4941,7 @@ public final class Push {
        */
       public Builder mergeConnect(com.letsmidi.monsys.protocol.push.Push.Connect value) {
         if (connectBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) == 0x00000040) &&
+          if (((bitField0_ & 0x00000080) == 0x00000080) &&
               connect_ != com.letsmidi.monsys.protocol.push.Push.Connect.getDefaultInstance()) {
             connect_ =
               com.letsmidi.monsys.protocol.push.Push.Connect.newBuilder(connect_).mergeFrom(value).buildPartial();
@@ -4587,7 +4952,7 @@ public final class Push {
         } else {
           connectBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000080;
         return this;
       }
       /**
@@ -4600,14 +4965,14 @@ public final class Push {
         } else {
           connectBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000080);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.Connect.Builder getConnectBuilder() {
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000080;
         onChanged();
         return getConnectFieldBuilder().getBuilder();
       }
@@ -4646,7 +5011,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
        */
       public boolean hasConnectRsp() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
@@ -4671,7 +5036,7 @@ public final class Push {
         } else {
           connectRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000100;
         return this;
       }
       /**
@@ -4685,7 +5050,7 @@ public final class Push {
         } else {
           connectRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000100;
         return this;
       }
       /**
@@ -4693,7 +5058,7 @@ public final class Push {
        */
       public Builder mergeConnectRsp(com.letsmidi.monsys.protocol.push.Push.ConnectRsp value) {
         if (connectRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000080) == 0x00000080) &&
+          if (((bitField0_ & 0x00000100) == 0x00000100) &&
               connectRsp_ != com.letsmidi.monsys.protocol.push.Push.ConnectRsp.getDefaultInstance()) {
             connectRsp_ =
               com.letsmidi.monsys.protocol.push.Push.ConnectRsp.newBuilder(connectRsp_).mergeFrom(value).buildPartial();
@@ -4704,7 +5069,7 @@ public final class Push {
         } else {
           connectRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000100;
         return this;
       }
       /**
@@ -4717,14 +5082,14 @@ public final class Push {
         } else {
           connectRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.ConnectRsp.Builder getConnectRspBuilder() {
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000100;
         onChanged();
         return getConnectRspFieldBuilder().getBuilder();
       }
@@ -4763,7 +5128,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
        */
       public boolean hasGetFgwList() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
@@ -4788,7 +5153,7 @@ public final class Push {
         } else {
           getFgwListBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         return this;
       }
       /**
@@ -4802,7 +5167,7 @@ public final class Push {
         } else {
           getFgwListBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         return this;
       }
       /**
@@ -4810,7 +5175,7 @@ public final class Push {
        */
       public Builder mergeGetFgwList(com.letsmidi.monsys.protocol.push.Push.GetFgwList value) {
         if (getFgwListBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+          if (((bitField0_ & 0x00000200) == 0x00000200) &&
               getFgwList_ != com.letsmidi.monsys.protocol.push.Push.GetFgwList.getDefaultInstance()) {
             getFgwList_ =
               com.letsmidi.monsys.protocol.push.Push.GetFgwList.newBuilder(getFgwList_).mergeFrom(value).buildPartial();
@@ -4821,7 +5186,7 @@ public final class Push {
         } else {
           getFgwListBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         return this;
       }
       /**
@@ -4834,14 +5199,14 @@ public final class Push {
         } else {
           getFgwListBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000200);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetFgwList.Builder getGetFgwListBuilder() {
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         onChanged();
         return getGetFgwListFieldBuilder().getBuilder();
       }
@@ -4880,7 +5245,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
        */
       public boolean hasGetFgwListRsp() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
@@ -4905,7 +5270,7 @@ public final class Push {
         } else {
           getFgwListRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000400;
         return this;
       }
       /**
@@ -4919,7 +5284,7 @@ public final class Push {
         } else {
           getFgwListRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000400;
         return this;
       }
       /**
@@ -4927,7 +5292,7 @@ public final class Push {
        */
       public Builder mergeGetFgwListRsp(com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp value) {
         if (getFgwListRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+          if (((bitField0_ & 0x00000400) == 0x00000400) &&
               getFgwListRsp_ != com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.getDefaultInstance()) {
             getFgwListRsp_ =
               com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.newBuilder(getFgwListRsp_).mergeFrom(value).buildPartial();
@@ -4938,7 +5303,7 @@ public final class Push {
         } else {
           getFgwListRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000400;
         return this;
       }
       /**
@@ -4951,14 +5316,14 @@ public final class Push {
         } else {
           getFgwListRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.Builder getGetFgwListRspBuilder() {
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000400;
         onChanged();
         return getGetFgwListRspFieldBuilder().getBuilder();
       }
@@ -4997,7 +5362,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
        */
       public boolean hasGetDevList() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
@@ -5022,7 +5387,7 @@ public final class Push {
         } else {
           getDevListBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00000800;
         return this;
       }
       /**
@@ -5036,7 +5401,7 @@ public final class Push {
         } else {
           getDevListBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00000800;
         return this;
       }
       /**
@@ -5044,7 +5409,7 @@ public final class Push {
        */
       public Builder mergeGetDevList(com.letsmidi.monsys.protocol.push.Push.GetDevList value) {
         if (getDevListBuilder_ == null) {
-          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+          if (((bitField0_ & 0x00000800) == 0x00000800) &&
               getDevList_ != com.letsmidi.monsys.protocol.push.Push.GetDevList.getDefaultInstance()) {
             getDevList_ =
               com.letsmidi.monsys.protocol.push.Push.GetDevList.newBuilder(getDevList_).mergeFrom(value).buildPartial();
@@ -5055,7 +5420,7 @@ public final class Push {
         } else {
           getDevListBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00000800;
         return this;
       }
       /**
@@ -5068,14 +5433,14 @@ public final class Push {
         } else {
           getDevListBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetDevList.Builder getGetDevListBuilder() {
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00000800;
         onChanged();
         return getGetDevListFieldBuilder().getBuilder();
       }
@@ -5114,7 +5479,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
        */
       public boolean hasGetDevListRsp() {
-        return ((bitField0_ & 0x00000800) == 0x00000800);
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
@@ -5139,7 +5504,7 @@ public final class Push {
         } else {
           getDevListRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00001000;
         return this;
       }
       /**
@@ -5153,7 +5518,7 @@ public final class Push {
         } else {
           getDevListRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00001000;
         return this;
       }
       /**
@@ -5161,7 +5526,7 @@ public final class Push {
        */
       public Builder mergeGetDevListRsp(com.letsmidi.monsys.protocol.push.Push.GetDevListRsp value) {
         if (getDevListRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000800) == 0x00000800) &&
+          if (((bitField0_ & 0x00001000) == 0x00001000) &&
               getDevListRsp_ != com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.getDefaultInstance()) {
             getDevListRsp_ =
               com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.newBuilder(getDevListRsp_).mergeFrom(value).buildPartial();
@@ -5172,7 +5537,7 @@ public final class Push {
         } else {
           getDevListRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00001000;
         return this;
       }
       /**
@@ -5185,14 +5550,14 @@ public final class Push {
         } else {
           getDevListRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000800);
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.Builder getGetDevListRspBuilder() {
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00001000;
         onChanged();
         return getGetDevListRspFieldBuilder().getBuilder();
       }
@@ -5231,7 +5596,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
        */
       public boolean hasGetDevInfo() {
-        return ((bitField0_ & 0x00001000) == 0x00001000);
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
@@ -5256,7 +5621,7 @@ public final class Push {
         } else {
           getDevInfoBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00002000;
         return this;
       }
       /**
@@ -5270,7 +5635,7 @@ public final class Push {
         } else {
           getDevInfoBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00002000;
         return this;
       }
       /**
@@ -5278,7 +5643,7 @@ public final class Push {
        */
       public Builder mergeGetDevInfo(com.letsmidi.monsys.protocol.push.Push.GetDevInfo value) {
         if (getDevInfoBuilder_ == null) {
-          if (((bitField0_ & 0x00001000) == 0x00001000) &&
+          if (((bitField0_ & 0x00002000) == 0x00002000) &&
               getDevInfo_ != com.letsmidi.monsys.protocol.push.Push.GetDevInfo.getDefaultInstance()) {
             getDevInfo_ =
               com.letsmidi.monsys.protocol.push.Push.GetDevInfo.newBuilder(getDevInfo_).mergeFrom(value).buildPartial();
@@ -5289,7 +5654,7 @@ public final class Push {
         } else {
           getDevInfoBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00002000;
         return this;
       }
       /**
@@ -5302,14 +5667,14 @@ public final class Push {
         } else {
           getDevInfoBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00001000);
+        bitField0_ = (bitField0_ & ~0x00002000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetDevInfo.Builder getGetDevInfoBuilder() {
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00002000;
         onChanged();
         return getGetDevInfoFieldBuilder().getBuilder();
       }
@@ -5348,7 +5713,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
        */
       public boolean hasGetDevInfoRsp() {
-        return ((bitField0_ & 0x00002000) == 0x00002000);
+        return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
@@ -5373,7 +5738,7 @@ public final class Push {
         } else {
           getDevInfoRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00004000;
         return this;
       }
       /**
@@ -5387,7 +5752,7 @@ public final class Push {
         } else {
           getDevInfoRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00004000;
         return this;
       }
       /**
@@ -5395,7 +5760,7 @@ public final class Push {
        */
       public Builder mergeGetDevInfoRsp(com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp value) {
         if (getDevInfoRspBuilder_ == null) {
-          if (((bitField0_ & 0x00002000) == 0x00002000) &&
+          if (((bitField0_ & 0x00004000) == 0x00004000) &&
               getDevInfoRsp_ != com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.getDefaultInstance()) {
             getDevInfoRsp_ =
               com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.newBuilder(getDevInfoRsp_).mergeFrom(value).buildPartial();
@@ -5406,7 +5771,7 @@ public final class Push {
         } else {
           getDevInfoRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00004000;
         return this;
       }
       /**
@@ -5419,14 +5784,14 @@ public final class Push {
         } else {
           getDevInfoRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.Builder getGetDevInfoRspBuilder() {
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00004000;
         onChanged();
         return getGetDevInfoRspFieldBuilder().getBuilder();
       }
@@ -5465,7 +5830,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
        */
       public boolean hasSetDevInfo() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+        return ((bitField0_ & 0x00008000) == 0x00008000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
@@ -5490,7 +5855,7 @@ public final class Push {
         } else {
           setDevInfoBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         return this;
       }
       /**
@@ -5504,7 +5869,7 @@ public final class Push {
         } else {
           setDevInfoBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         return this;
       }
       /**
@@ -5512,7 +5877,7 @@ public final class Push {
        */
       public Builder mergeSetDevInfo(com.letsmidi.monsys.protocol.push.Push.SetDevInfo value) {
         if (setDevInfoBuilder_ == null) {
-          if (((bitField0_ & 0x00004000) == 0x00004000) &&
+          if (((bitField0_ & 0x00008000) == 0x00008000) &&
               setDevInfo_ != com.letsmidi.monsys.protocol.push.Push.SetDevInfo.getDefaultInstance()) {
             setDevInfo_ =
               com.letsmidi.monsys.protocol.push.Push.SetDevInfo.newBuilder(setDevInfo_).mergeFrom(value).buildPartial();
@@ -5523,7 +5888,7 @@ public final class Push {
         } else {
           setDevInfoBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         return this;
       }
       /**
@@ -5536,14 +5901,14 @@ public final class Push {
         } else {
           setDevInfoBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.SetDevInfo.Builder getSetDevInfoBuilder() {
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         onChanged();
         return getSetDevInfoFieldBuilder().getBuilder();
       }
@@ -5582,7 +5947,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
        */
       public boolean hasSetDevInfoRsp() {
-        return ((bitField0_ & 0x00008000) == 0x00008000);
+        return ((bitField0_ & 0x00010000) == 0x00010000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
@@ -5607,7 +5972,7 @@ public final class Push {
         } else {
           setDevInfoRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -5621,7 +5986,7 @@ public final class Push {
         } else {
           setDevInfoRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -5629,7 +5994,7 @@ public final class Push {
        */
       public Builder mergeSetDevInfoRsp(com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp value) {
         if (setDevInfoRspBuilder_ == null) {
-          if (((bitField0_ & 0x00008000) == 0x00008000) &&
+          if (((bitField0_ & 0x00010000) == 0x00010000) &&
               setDevInfoRsp_ != com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.getDefaultInstance()) {
             setDevInfoRsp_ =
               com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.newBuilder(setDevInfoRsp_).mergeFrom(value).buildPartial();
@@ -5640,7 +6005,7 @@ public final class Push {
         } else {
           setDevInfoRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -5653,14 +6018,14 @@ public final class Push {
         } else {
           setDevInfoRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00008000);
+        bitField0_ = (bitField0_ & ~0x00010000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.Builder getSetDevInfoRspBuilder() {
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00010000;
         onChanged();
         return getSetDevInfoRspFieldBuilder().getBuilder();
       }
@@ -5699,7 +6064,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
        */
       public boolean hasClientLogin() {
-        return ((bitField0_ & 0x00010000) == 0x00010000);
+        return ((bitField0_ & 0x00020000) == 0x00020000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
@@ -5724,7 +6089,7 @@ public final class Push {
         } else {
           clientLoginBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -5738,7 +6103,7 @@ public final class Push {
         } else {
           clientLoginBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -5746,7 +6111,7 @@ public final class Push {
        */
       public Builder mergeClientLogin(com.letsmidi.monsys.protocol.push.Push.ClientLogin value) {
         if (clientLoginBuilder_ == null) {
-          if (((bitField0_ & 0x00010000) == 0x00010000) &&
+          if (((bitField0_ & 0x00020000) == 0x00020000) &&
               clientLogin_ != com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance()) {
             clientLogin_ =
               com.letsmidi.monsys.protocol.push.Push.ClientLogin.newBuilder(clientLogin_).mergeFrom(value).buildPartial();
@@ -5757,7 +6122,7 @@ public final class Push {
         } else {
           clientLoginBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -5770,14 +6135,14 @@ public final class Push {
         } else {
           clientLoginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00010000);
+        bitField0_ = (bitField0_ & ~0x00020000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder getClientLoginBuilder() {
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00020000;
         onChanged();
         return getClientLoginFieldBuilder().getBuilder();
       }
@@ -5816,7 +6181,7 @@ public final class Push {
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
        */
       public boolean hasClientLoginRsp() {
-        return ((bitField0_ & 0x00020000) == 0x00020000);
+        return ((bitField0_ & 0x00040000) == 0x00040000);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
@@ -5841,7 +6206,7 @@ public final class Push {
         } else {
           clientLoginRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00020000;
+        bitField0_ |= 0x00040000;
         return this;
       }
       /**
@@ -5855,7 +6220,7 @@ public final class Push {
         } else {
           clientLoginRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00020000;
+        bitField0_ |= 0x00040000;
         return this;
       }
       /**
@@ -5863,7 +6228,7 @@ public final class Push {
        */
       public Builder mergeClientLoginRsp(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp value) {
         if (clientLoginRspBuilder_ == null) {
-          if (((bitField0_ & 0x00020000) == 0x00020000) &&
+          if (((bitField0_ & 0x00040000) == 0x00040000) &&
               clientLoginRsp_ != com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance()) {
             clientLoginRsp_ =
               com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.newBuilder(clientLoginRsp_).mergeFrom(value).buildPartial();
@@ -5874,7 +6239,7 @@ public final class Push {
         } else {
           clientLoginRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00020000;
+        bitField0_ |= 0x00040000;
         return this;
       }
       /**
@@ -5887,14 +6252,14 @@ public final class Push {
         } else {
           clientLoginRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00020000);
+        bitField0_ = (bitField0_ & ~0x00040000);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
        */
       public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder getClientLoginRspBuilder() {
-        bitField0_ |= 0x00020000;
+        bitField0_ |= 0x00040000;
         onChanged();
         return getClientLoginRspFieldBuilder().getBuilder();
       }
@@ -5923,6 +6288,357 @@ public final class Push {
           clientLoginRsp_ = null;
         }
         return clientLoginRspBuilder_;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+      private com.letsmidi.monsys.protocol.push.Push.UserRegister userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.UserRegister, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder> userRegisterBuilder_;
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public boolean hasUserRegister() {
+        return ((bitField0_ & 0x00080000) == 0x00080000);
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegister getUserRegister() {
+        if (userRegisterBuilder_ == null) {
+          return userRegister_;
+        } else {
+          return userRegisterBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public Builder setUserRegister(com.letsmidi.monsys.protocol.push.Push.UserRegister value) {
+        if (userRegisterBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          userRegister_ = value;
+          onChanged();
+        } else {
+          userRegisterBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00080000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public Builder setUserRegister(
+          com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder builderForValue) {
+        if (userRegisterBuilder_ == null) {
+          userRegister_ = builderForValue.build();
+          onChanged();
+        } else {
+          userRegisterBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00080000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public Builder mergeUserRegister(com.letsmidi.monsys.protocol.push.Push.UserRegister value) {
+        if (userRegisterBuilder_ == null) {
+          if (((bitField0_ & 0x00080000) == 0x00080000) &&
+              userRegister_ != com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance()) {
+            userRegister_ =
+              com.letsmidi.monsys.protocol.push.Push.UserRegister.newBuilder(userRegister_).mergeFrom(value).buildPartial();
+          } else {
+            userRegister_ = value;
+          }
+          onChanged();
+        } else {
+          userRegisterBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00080000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public Builder clearUserRegister() {
+        if (userRegisterBuilder_ == null) {
+          userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
+          onChanged();
+        } else {
+          userRegisterBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00080000);
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder getUserRegisterBuilder() {
+        bitField0_ |= 0x00080000;
+        onChanged();
+        return getUserRegisterFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder getUserRegisterOrBuilder() {
+        if (userRegisterBuilder_ != null) {
+          return userRegisterBuilder_.getMessageOrBuilder();
+        } else {
+          return userRegister_;
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.UserRegister, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder> 
+          getUserRegisterFieldBuilder() {
+        if (userRegisterBuilder_ == null) {
+          userRegisterBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.letsmidi.monsys.protocol.push.Push.UserRegister, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder>(
+                  userRegister_,
+                  getParentForChildren(),
+                  isClean());
+          userRegister_ = null;
+        }
+        return userRegisterBuilder_;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+      private com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder> userRegisterRspBuilder_;
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public boolean hasUserRegisterRsp() {
+        return ((bitField0_ & 0x00100000) == 0x00100000);
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp getUserRegisterRsp() {
+        if (userRegisterRspBuilder_ == null) {
+          return userRegisterRsp_;
+        } else {
+          return userRegisterRspBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public Builder setUserRegisterRsp(com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp value) {
+        if (userRegisterRspBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          userRegisterRsp_ = value;
+          onChanged();
+        } else {
+          userRegisterRspBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00100000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public Builder setUserRegisterRsp(
+          com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder builderForValue) {
+        if (userRegisterRspBuilder_ == null) {
+          userRegisterRsp_ = builderForValue.build();
+          onChanged();
+        } else {
+          userRegisterRspBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00100000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public Builder mergeUserRegisterRsp(com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp value) {
+        if (userRegisterRspBuilder_ == null) {
+          if (((bitField0_ & 0x00100000) == 0x00100000) &&
+              userRegisterRsp_ != com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance()) {
+            userRegisterRsp_ =
+              com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.newBuilder(userRegisterRsp_).mergeFrom(value).buildPartial();
+          } else {
+            userRegisterRsp_ = value;
+          }
+          onChanged();
+        } else {
+          userRegisterRspBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00100000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public Builder clearUserRegisterRsp() {
+        if (userRegisterRspBuilder_ == null) {
+          userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
+          onChanged();
+        } else {
+          userRegisterRspBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00100000);
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder getUserRegisterRspBuilder() {
+        bitField0_ |= 0x00100000;
+        onChanged();
+        return getUserRegisterRspFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder getUserRegisterRspOrBuilder() {
+        if (userRegisterRspBuilder_ != null) {
+          return userRegisterRspBuilder_.getMessageOrBuilder();
+        } else {
+          return userRegisterRsp_;
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder> 
+          getUserRegisterRspFieldBuilder() {
+        if (userRegisterRspBuilder_ == null) {
+          userRegisterRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder>(
+                  userRegisterRsp_,
+                  getParentForChildren(),
+                  isClean());
+          userRegisterRsp_ = null;
+        }
+        return userRegisterRspBuilder_;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+      private com.letsmidi.monsys.protocol.push.Push.Heartbeat heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.Heartbeat, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder, com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder> heartbeatBuilder_;
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public boolean hasHeartbeat() {
+        return ((bitField0_ & 0x00200000) == 0x00200000);
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.Heartbeat getHeartbeat() {
+        if (heartbeatBuilder_ == null) {
+          return heartbeat_;
+        } else {
+          return heartbeatBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public Builder setHeartbeat(com.letsmidi.monsys.protocol.push.Push.Heartbeat value) {
+        if (heartbeatBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          heartbeat_ = value;
+          onChanged();
+        } else {
+          heartbeatBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00200000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public Builder setHeartbeat(
+          com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder builderForValue) {
+        if (heartbeatBuilder_ == null) {
+          heartbeat_ = builderForValue.build();
+          onChanged();
+        } else {
+          heartbeatBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00200000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public Builder mergeHeartbeat(com.letsmidi.monsys.protocol.push.Push.Heartbeat value) {
+        if (heartbeatBuilder_ == null) {
+          if (((bitField0_ & 0x00200000) == 0x00200000) &&
+              heartbeat_ != com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance()) {
+            heartbeat_ =
+              com.letsmidi.monsys.protocol.push.Push.Heartbeat.newBuilder(heartbeat_).mergeFrom(value).buildPartial();
+          } else {
+            heartbeat_ = value;
+          }
+          onChanged();
+        } else {
+          heartbeatBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00200000;
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public Builder clearHeartbeat() {
+        if (heartbeatBuilder_ == null) {
+          heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
+          onChanged();
+        } else {
+          heartbeatBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00200000);
+        return this;
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder getHeartbeatBuilder() {
+        bitField0_ |= 0x00200000;
+        onChanged();
+        return getHeartbeatFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      public com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder getHeartbeatOrBuilder() {
+        if (heartbeatBuilder_ != null) {
+          return heartbeatBuilder_.getMessageOrBuilder();
+        } else {
+          return heartbeat_;
+        }
+      }
+      /**
+       * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.letsmidi.monsys.protocol.push.Push.Heartbeat, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder, com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder> 
+          getHeartbeatFieldBuilder() {
+        if (heartbeatBuilder_ == null) {
+          heartbeatBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.letsmidi.monsys.protocol.push.Push.Heartbeat, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder, com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder>(
+                  heartbeat_,
+                  getParentForChildren(),
+                  isClean());
+          heartbeat_ = null;
+        }
+        return heartbeatBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.PushMsg)
@@ -14881,6 +15597,1534 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
   }
 
+  public interface UserRegisterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required string nickname = 1;
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    boolean hasNickname();
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    java.lang.String getNickname();
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNicknameBytes();
+
+    // required string account = 2;
+    /**
+     * <code>required string account = 2;</code>
+     */
+    boolean hasAccount();
+    /**
+     * <code>required string account = 2;</code>
+     */
+    java.lang.String getAccount();
+    /**
+     * <code>required string account = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getAccountBytes();
+
+    // required string password = 3;
+    /**
+     * <code>required string password = 3;</code>
+     */
+    boolean hasPassword();
+    /**
+     * <code>required string password = 3;</code>
+     */
+    java.lang.String getPassword();
+    /**
+     * <code>required string password = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getPasswordBytes();
+  }
+  /**
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegister}
+   */
+  public static final class UserRegister extends
+      com.google.protobuf.GeneratedMessage
+      implements UserRegisterOrBuilder {
+    // Use UserRegister.newBuilder() to construct.
+    private UserRegister(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private UserRegister(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final UserRegister defaultInstance;
+    public static UserRegister getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public UserRegister getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserRegister(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              nickname_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              account_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              password_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.letsmidi.monsys.protocol.push.Push.UserRegister.class, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<UserRegister> PARSER =
+        new com.google.protobuf.AbstractParser<UserRegister>() {
+      public UserRegister parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserRegister(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserRegister> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required string nickname = 1;
+    public static final int NICKNAME_FIELD_NUMBER = 1;
+    private java.lang.Object nickname_;
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    public boolean hasNickname() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    public java.lang.String getNickname() {
+      java.lang.Object ref = nickname_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          nickname_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string nickname = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNicknameBytes() {
+      java.lang.Object ref = nickname_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nickname_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required string account = 2;
+    public static final int ACCOUNT_FIELD_NUMBER = 2;
+    private java.lang.Object account_;
+    /**
+     * <code>required string account = 2;</code>
+     */
+    public boolean hasAccount() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required string account = 2;</code>
+     */
+    public java.lang.String getAccount() {
+      java.lang.Object ref = account_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          account_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string account = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAccountBytes() {
+      java.lang.Object ref = account_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        account_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required string password = 3;
+    public static final int PASSWORD_FIELD_NUMBER = 3;
+    private java.lang.Object password_;
+    /**
+     * <code>required string password = 3;</code>
+     */
+    public boolean hasPassword() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string password = 3;</code>
+     */
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          password_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string password = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      nickname_ = "";
+      account_ = "";
+      password_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasNickname()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAccount()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPassword()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getNicknameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getAccountBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getPasswordBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getNicknameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getAccountBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getPasswordBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegister parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.UserRegister prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegister}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.letsmidi.monsys.protocol.push.Push.UserRegister.class, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder.class);
+      }
+
+      // Construct using com.letsmidi.monsys.protocol.push.Push.UserRegister.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        nickname_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        account_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        password_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegister getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegister build() {
+        com.letsmidi.monsys.protocol.push.Push.UserRegister result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegister buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.UserRegister result = new com.letsmidi.monsys.protocol.push.Push.UserRegister(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.nickname_ = nickname_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.account_ = account_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.password_ = password_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.UserRegister) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.UserRegister)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.UserRegister other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance()) return this;
+        if (other.hasNickname()) {
+          bitField0_ |= 0x00000001;
+          nickname_ = other.nickname_;
+          onChanged();
+        }
+        if (other.hasAccount()) {
+          bitField0_ |= 0x00000002;
+          account_ = other.account_;
+          onChanged();
+        }
+        if (other.hasPassword()) {
+          bitField0_ |= 0x00000004;
+          password_ = other.password_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasNickname()) {
+          
+          return false;
+        }
+        if (!hasAccount()) {
+          
+          return false;
+        }
+        if (!hasPassword()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.letsmidi.monsys.protocol.push.Push.UserRegister parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.UserRegister) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required string nickname = 1;
+      private java.lang.Object nickname_ = "";
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public boolean hasNickname() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public java.lang.String getNickname() {
+        java.lang.Object ref = nickname_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          nickname_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNicknameBytes() {
+        java.lang.Object ref = nickname_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nickname_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public Builder setNickname(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        nickname_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public Builder clearNickname() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        nickname_ = getDefaultInstance().getNickname();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string nickname = 1;</code>
+       */
+      public Builder setNicknameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        nickname_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required string account = 2;
+      private java.lang.Object account_ = "";
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public boolean hasAccount() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public java.lang.String getAccount() {
+        java.lang.Object ref = account_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          account_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAccountBytes() {
+        java.lang.Object ref = account_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          account_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public Builder setAccount(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        account_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public Builder clearAccount() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        account_ = getDefaultInstance().getAccount();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string account = 2;</code>
+       */
+      public Builder setAccountBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        account_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required string password = 3;
+      private java.lang.Object password_ = "";
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public boolean hasPassword() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public java.lang.String getPassword() {
+        java.lang.Object ref = password_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          password_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPasswordBytes() {
+        java.lang.Object ref = password_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          password_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public Builder setPassword(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        password_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public Builder clearPassword() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        password_ = getDefaultInstance().getPassword();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string password = 3;</code>
+       */
+      public Builder setPasswordBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        password_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.UserRegister)
+    }
+
+    static {
+      defaultInstance = new UserRegister(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegister)
+  }
+
+  public interface UserRegisterRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required int32 code = 1;
+    /**
+     * <code>required int32 code = 1;</code>
+     */
+    boolean hasCode();
+    /**
+     * <code>required int32 code = 1;</code>
+     */
+    int getCode();
+  }
+  /**
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegisterRsp}
+   */
+  public static final class UserRegisterRsp extends
+      com.google.protobuf.GeneratedMessage
+      implements UserRegisterRspOrBuilder {
+    // Use UserRegisterRsp.newBuilder() to construct.
+    private UserRegisterRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private UserRegisterRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final UserRegisterRsp defaultInstance;
+    public static UserRegisterRsp getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public UserRegisterRsp getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserRegisterRsp(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              code_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.class, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<UserRegisterRsp> PARSER =
+        new com.google.protobuf.AbstractParser<UserRegisterRsp>() {
+      public UserRegisterRsp parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserRegisterRsp(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserRegisterRsp> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required int32 code = 1;
+    public static final int CODE_FIELD_NUMBER = 1;
+    private int code_;
+    /**
+     * <code>required int32 code = 1;</code>
+     */
+    public boolean hasCode() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required int32 code = 1;</code>
+     */
+    public int getCode() {
+      return code_;
+    }
+
+    private void initFields() {
+      code_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasCode()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, code_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, code_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegisterRsp}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.class, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder.class);
+      }
+
+      // Construct using com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        code_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp build() {
+        com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp result = new com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.code_ = code_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance()) return this;
+        if (other.hasCode()) {
+          setCode(other.getCode());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasCode()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required int32 code = 1;
+      private int code_ ;
+      /**
+       * <code>required int32 code = 1;</code>
+       */
+      public boolean hasCode() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required int32 code = 1;</code>
+       */
+      public int getCode() {
+        return code_;
+      }
+      /**
+       * <code>required int32 code = 1;</code>
+       */
+      public Builder setCode(int value) {
+        bitField0_ |= 0x00000001;
+        code_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 code = 1;</code>
+       */
+      public Builder clearCode() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        code_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
+    }
+
+    static {
+      defaultInstance = new UserRegisterRsp(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
+  }
+
+  public interface HeartbeatOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.Heartbeat}
+   *
+   * <pre>
+   * required string payload = 1;
+   * </pre>
+   */
+  public static final class Heartbeat extends
+      com.google.protobuf.GeneratedMessage
+      implements HeartbeatOrBuilder {
+    // Use Heartbeat.newBuilder() to construct.
+    private Heartbeat(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Heartbeat(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Heartbeat defaultInstance;
+    public static Heartbeat getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Heartbeat getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Heartbeat(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.letsmidi.monsys.protocol.push.Push.Heartbeat.class, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Heartbeat> PARSER =
+        new com.google.protobuf.AbstractParser<Heartbeat>() {
+      public Heartbeat parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Heartbeat(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Heartbeat> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.push.Push.Heartbeat parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.Heartbeat prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.Heartbeat}
+     *
+     * <pre>
+     * required string payload = 1;
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.letsmidi.monsys.protocol.push.Push.Heartbeat.class, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder.class);
+      }
+
+      // Construct using com.letsmidi.monsys.protocol.push.Push.Heartbeat.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.Heartbeat getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.Heartbeat build() {
+        com.letsmidi.monsys.protocol.push.Push.Heartbeat result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.letsmidi.monsys.protocol.push.Push.Heartbeat buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.Heartbeat result = new com.letsmidi.monsys.protocol.push.Push.Heartbeat(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.Heartbeat) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.Heartbeat)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.Heartbeat other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.letsmidi.monsys.protocol.push.Push.Heartbeat parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.Heartbeat) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.Heartbeat)
+    }
+
+    static {
+      defaultInstance = new Heartbeat(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Heartbeat)
+  }
+
   public interface ResponseOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
@@ -15386,6 +17630,21 @@ public final class Push {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -15404,65 +17663,76 @@ public final class Push {
       "lue\030\002 \002(\005\"6\n\014FGatewayInfo\022\n\n\002id\030\001 \002(\t\022\014\n" +
       "\004name\030\002 \002(\t\022\014\n\004desc\030\003 \002(\t\"6\n\nDeviceInfo\022" +
       "\014\n\004addr\030\001 \002(\005\022\014\n\004type\030\002 \002(\005\022\014\n\004name\030\003 \002(" +
-      "\t\"\232\t\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002" +
+      "\t\"\204\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002" +
       " \002(\0162*.com.letsmidi.monsys.protocol.push" +
-      ".MsgType\0227\n\005login\030\n \001(\0132(.com.letsmidi.m" +
-      "onsys.protocol.push.Login\022>\n\tlogin_rsp\030\013" +
-      " \001(\0132+.com.letsmidi.monsys.protocol.push",
-      ".LoginRsp\0225\n\004bind\030\014 \001(\0132\'.com.letsmidi.m" +
-      "onsys.protocol.push.Bind\022<\n\010bind_rsp\030\r \001" +
-      "(\0132*.com.letsmidi.monsys.protocol.push.B" +
-      "indRsp\022;\n\007connect\030\016 \001(\0132*.com.letsmidi.m" +
-      "onsys.protocol.push.Connect\022B\n\013connect_r" +
-      "sp\030\017 \001(\0132-.com.letsmidi.monsys.protocol." +
-      "push.ConnectRsp\022C\n\014get_fgw_list\030\020 \001(\0132-." +
-      "com.letsmidi.monsys.protocol.push.GetFgw" +
-      "List\022J\n\020get_fgw_list_rsp\030\021 \001(\01320.com.let" +
-      "smidi.monsys.protocol.push.GetFgwListRsp",
-      "\022C\n\014get_dev_list\030\022 \001(\0132-.com.letsmidi.mo" +
-      "nsys.protocol.push.GetDevList\022J\n\020get_dev" +
-      "_list_rsp\030\023 \001(\01320.com.letsmidi.monsys.pr" +
-      "otocol.push.GetDevListRsp\022C\n\014get_dev_inf" +
-      "o\030\024 \001(\0132-.com.letsmidi.monsys.protocol.p" +
-      "ush.GetDevInfo\022J\n\020get_dev_info_rsp\030\025 \001(\013" +
-      "20.com.letsmidi.monsys.protocol.push.Get" +
-      "DevInfoRsp\022C\n\014set_dev_info\030\026 \001(\0132-.com.l" +
-      "etsmidi.monsys.protocol.push.SetDevInfo\022" +
-      "J\n\020set_dev_info_rsp\030\027 \001(\01320.com.letsmidi",
-      ".monsys.protocol.push.SetDevInfoRsp\022D\n\014c" +
-      "lient_login\030\030 \001(\0132..com.letsmidi.monsys." +
-      "protocol.push.ClientLogin\022K\n\020client_logi" +
-      "n_rsp\030\031 \001(\01321.com.letsmidi.monsys.protoc" +
-      "ol.push.ClientLoginRsp\"\032\n\005Login\022\021\n\tdevic" +
-      "e_id\030\001 \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013" +
-      "ClientLogin\022\017\n\007account\030\001 \002(\t\022\020\n\010password" +
-      "\030\002 \002(\t\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B" +
-      "\n\tfgw_infos\030\002 \003(\0132/.com.letsmidi.monsys." +
-      "protocol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tde",
-      "vice_id\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034" +
-      "\n\007Connect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectR" +
-      "sp\022\014\n\004code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgw" +
-      "ListRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\013" +
-      "2/.com.letsmidi.monsys.protocol.push.FGa" +
-      "tewayInfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002" +
-      "(\t\"_\n\rGetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev" +
-      "_infos\030\002 \003(\0132-.com.letsmidi.monsys.proto" +
-      "col.push.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004add" +
-      "r\030\001 \002(\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevI",
-      "nfoRsp\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002" +
-      " \003(\0132..com.letsmidi.monsys.protocol.push" +
-      ".IdValuePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005" +
-      "\022F\n\016id_value_pairs\030\002 \003(\0132..com.letsmidi." +
-      "monsys.protocol.push.IdValuePair\"\035\n\rSetD" +
-      "evInfoRsp\022\014\n\004code\030\001 \002(\005\"\030\n\010Response\022\014\n\004c" +
-      "ode\030\001 \002(\005*\257\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGI" +
-      "N_RSP\020e\022\010\n\004BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNE" +
-      "CT\020\003\022\017\n\013CONNECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022" +
-      "\024\n\020GET_FGW_LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022",
-      "\024\n\020GET_DEV_LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022" +
-      "\024\n\020GET_DEV_INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022" +
-      "\024\n\020SET_DEV_INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022" +
-      "\024\n\020CLIENT_LOGIN_RSP\020l\022\014\n\010RESPONSE\020c"
+      ".MsgType\022\020\n\010sequence\030\003 \002(\005\0227\n\005login\030\n \001(" +
+      "\0132(.com.letsmidi.monsys.protocol.push.Lo" +
+      "gin\022>\n\tlogin_rsp\030\013 \001(\0132+.com.letsmidi.mo",
+      "nsys.protocol.push.LoginRsp\0225\n\004bind\030\014 \001(" +
+      "\0132\'.com.letsmidi.monsys.protocol.push.Bi" +
+      "nd\022<\n\010bind_rsp\030\r \001(\0132*.com.letsmidi.mons" +
+      "ys.protocol.push.BindRsp\022;\n\007connect\030\016 \001(" +
+      "\0132*.com.letsmidi.monsys.protocol.push.Co" +
+      "nnect\022B\n\013connect_rsp\030\017 \001(\0132-.com.letsmid" +
+      "i.monsys.protocol.push.ConnectRsp\022C\n\014get" +
+      "_fgw_list\030\020 \001(\0132-.com.letsmidi.monsys.pr" +
+      "otocol.push.GetFgwList\022J\n\020get_fgw_list_r" +
+      "sp\030\021 \001(\01320.com.letsmidi.monsys.protocol.",
+      "push.GetFgwListRsp\022C\n\014get_dev_list\030\022 \001(\013" +
+      "2-.com.letsmidi.monsys.protocol.push.Get" +
+      "DevList\022J\n\020get_dev_list_rsp\030\023 \001(\01320.com." +
+      "letsmidi.monsys.protocol.push.GetDevList" +
+      "Rsp\022C\n\014get_dev_info\030\024 \001(\0132-.com.letsmidi" +
+      ".monsys.protocol.push.GetDevInfo\022J\n\020get_" +
+      "dev_info_rsp\030\025 \001(\01320.com.letsmidi.monsys" +
+      ".protocol.push.GetDevInfoRsp\022C\n\014set_dev_" +
+      "info\030\026 \001(\0132-.com.letsmidi.monsys.protoco" +
+      "l.push.SetDevInfo\022J\n\020set_dev_info_rsp\030\027 ",
+      "\001(\01320.com.letsmidi.monsys.protocol.push." +
+      "SetDevInfoRsp\022D\n\014client_login\030\030 \001(\0132..co" +
+      "m.letsmidi.monsys.protocol.push.ClientLo" +
+      "gin\022K\n\020client_login_rsp\030\031 \001(\01321.com.lets" +
+      "midi.monsys.protocol.push.ClientLoginRsp" +
+      "\022F\n\ruser_register\030\032 \001(\0132/.com.letsmidi.m" +
+      "onsys.protocol.push.UserRegister\022M\n\021user" +
+      "_register_rsp\030\033 \001(\01322.com.letsmidi.monsy" +
+      "s.protocol.push.UserRegisterRsp\022?\n\theart" +
+      "beat\030\034 \001(\0132,.com.letsmidi.monsys.protoco",
+      "l.push.Heartbeat\"\032\n\005Login\022\021\n\tdevice_id\030\001" +
+      " \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013Client" +
+      "Login\022\017\n\007account\030\001 \002(\t\022\020\n\010password\030\002 \002(\t" +
+      "\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_" +
+      "infos\030\002 \003(\0132/.com.letsmidi.monsys.protoc" +
+      "ol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tdevice_i" +
+      "d\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034\n\007Conn" +
+      "ect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectRsp\022\014\n\004" +
+      "code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgwListRs" +
+      "p\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com",
+      ".letsmidi.monsys.protocol.push.FGatewayI" +
+      "nfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002(\t\"_\n\r" +
+      "GetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev_infos" +
+      "\030\002 \003(\0132-.com.letsmidi.monsys.protocol.pu" +
+      "sh.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004addr\030\001 \002(" +
+      "\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevInfoRsp" +
+      "\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132." +
+      ".com.letsmidi.monsys.protocol.push.IdVal" +
+      "uePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005\022F\n\016id" +
+      "_value_pairs\030\002 \003(\0132..com.letsmidi.monsys",
+      ".protocol.push.IdValuePair\"\035\n\rSetDevInfo" +
+      "Rsp\022\014\n\004code\030\001 \002(\005\"C\n\014UserRegister\022\020\n\010nic" +
+      "kname\030\001 \002(\t\022\017\n\007account\030\002 \002(\t\022\020\n\010password" +
+      "\030\003 \002(\t\"\037\n\017UserRegisterRsp\022\014\n\004code\030\001 \002(\005\"" +
+      "\013\n\tHeartbeat\"\030\n\010Response\022\014\n\004code\030\001 \002(\005*\350" +
+      "\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGIN_RSP\020e\022\010\n\004" +
+      "BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n\013CON" +
+      "NECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_FGW_" +
+      "LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_DEV_" +
+      "LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_DEV_",
+      "INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_DEV_" +
+      "INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022\024\n\020CLIENT_L" +
+      "OGIN_RSP\020l\022\021\n\rUSER_REGISTER\020\t\022\025\n\021USER_RE" +
+      "GISTER_RSP\020m\022\r\n\tHEARTBEAT\020\n\022\014\n\010RESPONSE\020" +
+      "c"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -15492,7 +17762,7 @@ public final class Push {
           internal_static_com_letsmidi_monsys_protocol_push_PushMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor,
-              new java.lang.String[] { "Version", "Type", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", });
+              new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", "UserRegister", "UserRegisterRsp", "Heartbeat", });
           internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor =
             getDescriptor().getMessageTypes().get(4);
           internal_static_com_letsmidi_monsys_protocol_push_Login_fieldAccessorTable = new
@@ -15589,8 +17859,26 @@ public final class Push {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor,
               new java.lang.String[] { "Code", });
-          internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor =
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor =
             getDescriptor().getMessageTypes().get(20);
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor,
+              new java.lang.String[] { "Nickname", "Account", "Password", });
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor =
+            getDescriptor().getMessageTypes().get(21);
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor =
+            getDescriptor().getMessageTypes().get(22);
+          internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor,
+              new java.lang.String[] { });
+          internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor =
+            getDescriptor().getMessageTypes().get(23);
           internal_static_com_letsmidi_monsys_protocol_push_Response_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor,

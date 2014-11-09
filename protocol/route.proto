@@ -21,6 +21,7 @@ enum ClientType {
 message RouteMsg {
   required int32 version = 1;
   required MsgType type = 2;
+  required int32 sequence = 3;
 
   optional ReqToken req_token = 10;
   optional ReqTokenRsp req_token_rsp = 11;

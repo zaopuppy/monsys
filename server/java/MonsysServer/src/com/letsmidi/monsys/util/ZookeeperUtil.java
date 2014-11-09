@@ -1,6 +1,6 @@
 package com.letsmidi.monsys.util;
 
-import com.letsmidi.monsys.route.Config;
+import com.letsmidi.monsys.Config;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
 

@@ -5,11 +5,12 @@
 
 #include "libframework/zframework.h"
 
+#include "zgenerator.h"
 #include "module.h"
 #include "fgw_client_session.h"
 #include "push.pb.h"
 
-using namespace com::letsmidi::monsys::protocol;
+using namespace com::letsmidi::monsys::protocol::push;
 
 class FGWClientHandler : public ZClientHandler {
 public:
@@ -17,6 +18,7 @@ public:
     : ZClientHandler(id, module, base), state_(STATE_UNREGISTERED)
     , timer_(base, this)
     , login_timer_id(-1)
+    , id_generator_(1, 0xFFFFFF)
   {}
 
 public:
@@ -44,7 +46,7 @@ protected:
 
   void sendRsp(const char *text_msg, int status);
 
-  FGWClientSession* createSession(ZInnerMsg *inner_msg);
+  // FGWClientSession* createSession(ZInnerMsg *inner_msg);
 
   typedef ZSessionCtrl2Key<uint32_t, uint32_t, FGWClientSession> SESSION_CTRL_TYPE;
 
@@ -62,6 +64,7 @@ private:
 
   SESSION_CTRL_TYPE session_ctrl_;
 
+
   // state-machine
   int state_;
 
@@ -69,6 +72,9 @@ private:
   int login_timer_id;
 
   char out_buf_[2048];
+
+  HandlerIdGenerator id_generator_;
+
 };
 
 #endif // _FGW_CLIENT_HANDLER_H__

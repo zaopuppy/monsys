@@ -1,11 +1,13 @@
 package com.letsmidi.monsys.route;
 
+import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.protocol.route.Route.RouteMsg;
-import com.letsmidi.monsys.route.session.Session;
+import com.letsmidi.monsys.session.Session;
 import com.letsmidi.monsys.route.session.RouteSession;
-import com.letsmidi.monsys.route.session.SessionManager;
+import com.letsmidi.monsys.session.SessionManager;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -66,9 +68,7 @@ public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Rou
   }
 
   private void sendTokenResponse(ChannelHandlerContext ctx, int code, int port_for_client, int port_for_fgw) {
-    RouteMsg.Builder builder = RouteMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(Route.MsgType.REQ_TOKEN_RSP);
+    RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN_RSP);
 
     Route.ReqTokenRsp.Builder token_rsp = Route.ReqTokenRsp.newBuilder();
     token_rsp.setCode(code);

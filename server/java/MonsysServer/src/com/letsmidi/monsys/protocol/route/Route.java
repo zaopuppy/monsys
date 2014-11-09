@@ -295,6 +295,16 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.MsgType getType();
 
+    // required int32 sequence = 3;
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    boolean hasSequence();
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    int getSequence();
+
     // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
@@ -418,9 +428,14 @@ public final class Route {
               }
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              sequence_ = input.readInt32();
+              break;
+            }
             case 82: {
               com.letsmidi.monsys.protocol.route.Route.ReqToken.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = reqToken_.toBuilder();
               }
               reqToken_ = input.readMessage(com.letsmidi.monsys.protocol.route.Route.ReqToken.PARSER, extensionRegistry);
@@ -428,12 +443,12 @@ public final class Route {
                 subBuilder.mergeFrom(reqToken_);
                 reqToken_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               break;
             }
             case 90: {
               com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 subBuilder = reqTokenRsp_.toBuilder();
               }
               reqTokenRsp_ = input.readMessage(com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.PARSER, extensionRegistry);
@@ -441,12 +456,12 @@ public final class Route {
                 subBuilder.mergeFrom(reqTokenRsp_);
                 reqTokenRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               break;
             }
             case 98: {
               com.letsmidi.monsys.protocol.route.Route.Connect.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+              if (((bitField0_ & 0x00000020) == 0x00000020)) {
                 subBuilder = connect_.toBuilder();
               }
               connect_ = input.readMessage(com.letsmidi.monsys.protocol.route.Route.Connect.PARSER, extensionRegistry);
@@ -454,12 +469,12 @@ public final class Route {
                 subBuilder.mergeFrom(connect_);
                 connect_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               break;
             }
             case 106: {
               com.letsmidi.monsys.protocol.route.Route.ConnectRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000020) == 0x00000020)) {
+              if (((bitField0_ & 0x00000040) == 0x00000040)) {
                 subBuilder = connectRsp_.toBuilder();
               }
               connectRsp_ = input.readMessage(com.letsmidi.monsys.protocol.route.Route.ConnectRsp.PARSER, extensionRegistry);
@@ -467,7 +482,7 @@ public final class Route {
                 subBuilder.mergeFrom(connectRsp_);
                 connectRsp_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000040;
               break;
             }
           }
@@ -542,6 +557,22 @@ public final class Route {
       return type_;
     }
 
+    // required int32 sequence = 3;
+    public static final int SEQUENCE_FIELD_NUMBER = 3;
+    private int sequence_;
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    public boolean hasSequence() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 sequence = 3;</code>
+     */
+    public int getSequence() {
+      return sequence_;
+    }
+
     // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
     public static final int REQ_TOKEN_FIELD_NUMBER = 10;
     private com.letsmidi.monsys.protocol.route.Route.ReqToken reqToken_;
@@ -549,7 +580,7 @@ public final class Route {
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
      */
     public boolean hasReqToken() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
@@ -571,7 +602,7 @@ public final class Route {
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
      */
     public boolean hasReqTokenRsp() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
@@ -593,7 +624,7 @@ public final class Route {
      * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
      */
     public boolean hasConnect() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
@@ -615,7 +646,7 @@ public final class Route {
      * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
      */
     public boolean hasConnectRsp() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
@@ -633,6 +664,7 @@ public final class Route {
     private void initFields() {
       version_ = 0;
       type_ = com.letsmidi.monsys.protocol.route.Route.MsgType.REQ_TOKEN;
+      sequence_ = 0;
       reqToken_ = com.letsmidi.monsys.protocol.route.Route.ReqToken.getDefaultInstance();
       reqTokenRsp_ = com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.getDefaultInstance();
       connect_ = com.letsmidi.monsys.protocol.route.Route.Connect.getDefaultInstance();
@@ -648,6 +680,10 @@ public final class Route {
         return false;
       }
       if (!hasType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSequence()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -689,15 +725,18 @@ public final class Route {
         output.writeEnum(2, type_.getNumber());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(10, reqToken_);
+        output.writeInt32(3, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(11, reqTokenRsp_);
+        output.writeMessage(10, reqToken_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeMessage(12, connect_);
+        output.writeMessage(11, reqTokenRsp_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeMessage(12, connect_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeMessage(13, connectRsp_);
       }
       getUnknownFields().writeTo(output);
@@ -719,17 +758,21 @@ public final class Route {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, reqToken_);
+          .computeInt32Size(3, sequence_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, reqTokenRsp_);
+          .computeMessageSize(10, reqToken_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, connect_);
+          .computeMessageSize(11, reqTokenRsp_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(12, connect_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(13, connectRsp_);
       }
@@ -857,30 +900,32 @@ public final class Route {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = com.letsmidi.monsys.protocol.route.Route.MsgType.REQ_TOKEN;
         bitField0_ = (bitField0_ & ~0x00000002);
+        sequence_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (reqTokenBuilder_ == null) {
           reqToken_ = com.letsmidi.monsys.protocol.route.Route.ReqToken.getDefaultInstance();
         } else {
           reqTokenBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (reqTokenRspBuilder_ == null) {
           reqTokenRsp_ = com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.getDefaultInstance();
         } else {
           reqTokenRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         if (connectBuilder_ == null) {
           connect_ = com.letsmidi.monsys.protocol.route.Route.Connect.getDefaultInstance();
         } else {
           connectBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         if (connectRspBuilder_ == null) {
           connectRsp_ = com.letsmidi.monsys.protocol.route.Route.ConnectRsp.getDefaultInstance();
         } else {
           connectRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -920,29 +965,33 @@ public final class Route {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
+        result.sequence_ = sequence_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
         if (reqTokenBuilder_ == null) {
           result.reqToken_ = reqToken_;
         } else {
           result.reqToken_ = reqTokenBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
         }
         if (reqTokenRspBuilder_ == null) {
           result.reqTokenRsp_ = reqTokenRsp_;
         } else {
           result.reqTokenRsp_ = reqTokenRspBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
         }
         if (connectBuilder_ == null) {
           result.connect_ = connect_;
         } else {
           result.connect_ = connectBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
         }
         if (connectRspBuilder_ == null) {
           result.connectRsp_ = connectRsp_;
@@ -971,6 +1020,9 @@ public final class Route {
         if (other.hasType()) {
           setType(other.getType());
         }
+        if (other.hasSequence()) {
+          setSequence(other.getSequence());
+        }
         if (other.hasReqToken()) {
           mergeReqToken(other.getReqToken());
         }
@@ -993,6 +1045,10 @@ public final class Route {
           return false;
         }
         if (!hasType()) {
+          
+          return false;
+        }
+        if (!hasSequence()) {
           
           return false;
         }
@@ -1111,6 +1167,39 @@ public final class Route {
         return this;
       }
 
+      // required int32 sequence = 3;
+      private int sequence_ ;
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public boolean hasSequence() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public int getSequence() {
+        return sequence_;
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public Builder setSequence(int value) {
+        bitField0_ |= 0x00000004;
+        sequence_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 sequence = 3;</code>
+       */
+      public Builder clearSequence() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        sequence_ = 0;
+        onChanged();
+        return this;
+      }
+
       // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
       private com.letsmidi.monsys.protocol.route.Route.ReqToken reqToken_ = com.letsmidi.monsys.protocol.route.Route.ReqToken.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
@@ -1119,7 +1208,7 @@ public final class Route {
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
        */
       public boolean hasReqToken() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
@@ -1144,7 +1233,7 @@ public final class Route {
         } else {
           reqTokenBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1158,7 +1247,7 @@ public final class Route {
         } else {
           reqTokenBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1166,7 +1255,7 @@ public final class Route {
        */
       public Builder mergeReqToken(com.letsmidi.monsys.protocol.route.Route.ReqToken value) {
         if (reqTokenBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               reqToken_ != com.letsmidi.monsys.protocol.route.Route.ReqToken.getDefaultInstance()) {
             reqToken_ =
               com.letsmidi.monsys.protocol.route.Route.ReqToken.newBuilder(reqToken_).mergeFrom(value).buildPartial();
@@ -1177,7 +1266,7 @@ public final class Route {
         } else {
           reqTokenBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1190,14 +1279,14 @@ public final class Route {
         } else {
           reqTokenBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
        */
       public com.letsmidi.monsys.protocol.route.Route.ReqToken.Builder getReqTokenBuilder() {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getReqTokenFieldBuilder().getBuilder();
       }
@@ -1236,7 +1325,7 @@ public final class Route {
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
        */
       public boolean hasReqTokenRsp() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
@@ -1261,7 +1350,7 @@ public final class Route {
         } else {
           reqTokenRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1275,7 +1364,7 @@ public final class Route {
         } else {
           reqTokenRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1283,7 +1372,7 @@ public final class Route {
        */
       public Builder mergeReqTokenRsp(com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp value) {
         if (reqTokenRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
               reqTokenRsp_ != com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.getDefaultInstance()) {
             reqTokenRsp_ =
               com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.newBuilder(reqTokenRsp_).mergeFrom(value).buildPartial();
@@ -1294,7 +1383,7 @@ public final class Route {
         } else {
           reqTokenRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1307,14 +1396,14 @@ public final class Route {
         } else {
           reqTokenRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
        */
       public com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.Builder getReqTokenRspBuilder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
         return getReqTokenRspFieldBuilder().getBuilder();
       }
@@ -1353,7 +1442,7 @@ public final class Route {
        * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
        */
       public boolean hasConnect() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
@@ -1378,7 +1467,7 @@ public final class Route {
         } else {
           connectBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1392,7 +1481,7 @@ public final class Route {
         } else {
           connectBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1400,7 +1489,7 @@ public final class Route {
        */
       public Builder mergeConnect(com.letsmidi.monsys.protocol.route.Route.Connect value) {
         if (connectBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
               connect_ != com.letsmidi.monsys.protocol.route.Route.Connect.getDefaultInstance()) {
             connect_ =
               com.letsmidi.monsys.protocol.route.Route.Connect.newBuilder(connect_).mergeFrom(value).buildPartial();
@@ -1411,7 +1500,7 @@ public final class Route {
         } else {
           connectBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1424,14 +1513,14 @@ public final class Route {
         } else {
           connectBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
        */
       public com.letsmidi.monsys.protocol.route.Route.Connect.Builder getConnectBuilder() {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         onChanged();
         return getConnectFieldBuilder().getBuilder();
       }
@@ -1470,7 +1559,7 @@ public final class Route {
        * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
        */
       public boolean hasConnectRsp() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
@@ -1495,7 +1584,7 @@ public final class Route {
         } else {
           connectRspBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -1509,7 +1598,7 @@ public final class Route {
         } else {
           connectRspBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -1517,7 +1606,7 @@ public final class Route {
        */
       public Builder mergeConnectRsp(com.letsmidi.monsys.protocol.route.Route.ConnectRsp value) {
         if (connectRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+          if (((bitField0_ & 0x00000040) == 0x00000040) &&
               connectRsp_ != com.letsmidi.monsys.protocol.route.Route.ConnectRsp.getDefaultInstance()) {
             connectRsp_ =
               com.letsmidi.monsys.protocol.route.Route.ConnectRsp.newBuilder(connectRsp_).mergeFrom(value).buildPartial();
@@ -1528,7 +1617,7 @@ public final class Route {
         } else {
           connectRspBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         return this;
       }
       /**
@@ -1541,14 +1630,14 @@ public final class Route {
         } else {
           connectRspBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
        */
       public com.letsmidi.monsys.protocol.route.Route.ConnectRsp.Builder getConnectRspBuilder() {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         onChanged();
         return getConnectRspFieldBuilder().getBuilder();
       }
@@ -3991,28 +4080,28 @@ public final class Route {
   static {
     java.lang.String[] descriptorData = {
       "\n\013route.proto\022\"com.letsmidi.monsys.proto" +
-      "col.route\"\342\002\n\010RouteMsg\022\017\n\007version\030\001 \002(\005\022" +
+      "col.route\"\364\002\n\010RouteMsg\022\017\n\007version\030\001 \002(\005\022" +
       "9\n\004type\030\002 \002(\0162+.com.letsmidi.monsys.prot" +
-      "ocol.route.MsgType\022?\n\treq_token\030\n \001(\0132,." +
-      "com.letsmidi.monsys.protocol.route.ReqTo" +
-      "ken\022F\n\rreq_token_rsp\030\013 \001(\0132/.com.letsmid" +
-      "i.monsys.protocol.route.ReqTokenRsp\022<\n\007c" +
-      "onnect\030\014 \001(\0132+.com.letsmidi.monsys.proto" +
-      "col.route.Connect\022C\n\013connect_rsp\030\r \001(\0132." +
-      ".com.letsmidi.monsys.protocol.route.Conn",
-      "ectRsp\"\203\001\n\010ReqToken\022\r\n\005token\030\001 \002(\t\022?\n\tad" +
-      "dr_type\030\002 \002(\0162,.com.letsmidi.monsys.prot" +
-      "ocol.route.AddrType\022\024\n\014client_ip_v4\030\003 \001(" +
-      "\005\022\021\n\tfgw_ip_v4\030\004 \001(\005\"J\n\013ReqTokenRsp\022\014\n\004c" +
-      "ode\030\001 \002(\005\022\027\n\017port_for_client\030\002 \002(\005\022\024\n\014po" +
-      "rt_for_fgw\030\003 \002(\005\"]\n\007Connect\022C\n\013client_ty" +
-      "pe\030\001 \002(\0162..com.letsmidi.monsys.protocol." +
-      "route.ClientType\022\r\n\005token\030\002 \002(\t\"\032\n\nConne" +
-      "ctRsp\022\014\n\004code\030\001 \002(\005*I\n\007MsgType\022\r\n\tREQ_TO" +
-      "KEN\020\001\022\021\n\rREQ_TOKEN_RSP\020\002\022\013\n\007CONNECT\020\003\022\017\n",
-      "\013CONNECT_RSP\020\004* \n\010AddrType\022\t\n\005IP_V4\020\001\022\t\n" +
-      "\005IP_V6\020\002*!\n\nClientType\022\n\n\006CLIENT\020\001\022\007\n\003FG" +
-      "W\020\002"
+      "ocol.route.MsgType\022\020\n\010sequence\030\003 \002(\005\022?\n\t" +
+      "req_token\030\n \001(\0132,.com.letsmidi.monsys.pr" +
+      "otocol.route.ReqToken\022F\n\rreq_token_rsp\030\013" +
+      " \001(\0132/.com.letsmidi.monsys.protocol.rout" +
+      "e.ReqTokenRsp\022<\n\007connect\030\014 \001(\0132+.com.let" +
+      "smidi.monsys.protocol.route.Connect\022C\n\013c" +
+      "onnect_rsp\030\r \001(\0132..com.letsmidi.monsys.p",
+      "rotocol.route.ConnectRsp\"\203\001\n\010ReqToken\022\r\n" +
+      "\005token\030\001 \002(\t\022?\n\taddr_type\030\002 \002(\0162,.com.le" +
+      "tsmidi.monsys.protocol.route.AddrType\022\024\n" +
+      "\014client_ip_v4\030\003 \001(\005\022\021\n\tfgw_ip_v4\030\004 \001(\005\"J" +
+      "\n\013ReqTokenRsp\022\014\n\004code\030\001 \002(\005\022\027\n\017port_for_" +
+      "client\030\002 \002(\005\022\024\n\014port_for_fgw\030\003 \002(\005\"]\n\007Co" +
+      "nnect\022C\n\013client_type\030\001 \002(\0162..com.letsmid" +
+      "i.monsys.protocol.route.ClientType\022\r\n\005to" +
+      "ken\030\002 \002(\t\"\032\n\nConnectRsp\022\014\n\004code\030\001 \002(\005*I\n" +
+      "\007MsgType\022\r\n\tREQ_TOKEN\020\001\022\021\n\rREQ_TOKEN_RSP",
+      "\020\002\022\013\n\007CONNECT\020\003\022\017\n\013CONNECT_RSP\020\004* \n\010Addr" +
+      "Type\022\t\n\005IP_V4\020\001\022\t\n\005IP_V6\020\002*!\n\nClientType" +
+      "\022\n\n\006CLIENT\020\001\022\007\n\003FGW\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4024,7 +4113,7 @@ public final class Route {
           internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor,
-              new java.lang.String[] { "Version", "Type", "ReqToken", "ReqTokenRsp", "Connect", "ConnectRsp", });
+              new java.lang.String[] { "Version", "Type", "Sequence", "ReqToken", "ReqTokenRsp", "Connect", "ConnectRsp", });
           internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_com_letsmidi_monsys_protocol_route_ReqToken_fieldAccessorTable = new

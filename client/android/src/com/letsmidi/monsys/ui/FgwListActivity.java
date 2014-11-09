@@ -13,10 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.letsmidi.monsys.FgwInfo;
 import com.letsmidi.monsys.R;
 import com.letsmidi.monsys.protocol.MonsysServer;
-import com.letsmidi.monsys.protocol.Push.ConnectRsp;
-import com.letsmidi.monsys.protocol.Push.FGatewayInfo;
-import com.letsmidi.monsys.protocol.Push.MsgType;
-import com.letsmidi.monsys.protocol.Push.PushMsg;
+import com.letsmidi.monsys.protocol.push.Push.ConnectRsp;
+import com.letsmidi.monsys.protocol.push.Push.FGatewayInfo;
+import com.letsmidi.monsys.protocol.push.Push.MsgType;
+import com.letsmidi.monsys.protocol.push.Push.PushMsg;
 
 import java.util.LinkedList;
 import java.util.List;

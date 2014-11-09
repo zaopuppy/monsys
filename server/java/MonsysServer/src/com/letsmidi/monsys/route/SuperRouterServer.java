@@ -1,8 +1,9 @@
 package com.letsmidi.monsys.route;
 
+import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.log.MyLogFormatter;
 import com.letsmidi.monsys.log.MyLogger;
-import com.letsmidi.monsys.route.session.SessionManager;
+import com.letsmidi.monsys.session.SessionManager;
 import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.ZookeeperUtil;
 import io.netty.channel.ChannelFuture;
@@ -127,9 +128,9 @@ public class SuperRouterServer {
 
     public byte[] encode() {
       StringBuilder builder = new StringBuilder(1024);
-      builder.append(Config.getCommonConfig().getHostName()).append('|')
-          .append(Config.getRouterConfig().getAllocatePort()).append('|')
-          .append(Config.getRouterConfig().getAccessPort());
+      builder.append(mHost).append('|')
+          .append(mAllocatePort).append('|')
+          .append(mAccessPort);
       return builder.toString().getBytes();
     }
 
@@ -145,7 +146,7 @@ public class SuperRouterServer {
 
       setHost(fields[0]);
       setAllocatePort(Integer.parseInt(fields[1]));
-      setAccessPort(Integer.parseInt(fields[1]));
+      setAccessPort(Integer.parseInt(fields[2]));
 
       return true;
     }
@@ -164,7 +165,8 @@ public class SuperRouterServer {
     info.setAccessPort(Config.getRouterConfig().getAccessPort());
 
     return ZookeeperUtil.register(
-        Config.getCommonConfig().getZookeeperNameServicePath(),
+        Config.getCommonConfig().getZookeeperNameServicePath()
+            + '/' + Config.getRouterConfig().getNameServicePath(),
         Config.getRouterConfig().getNameServiceNode(),
         info.encode());
   }

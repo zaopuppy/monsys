@@ -22,7 +22,7 @@ public:
 class HandlerIdGenerator : public z::Generator<handler_id_t, handler_id_t> {
 public:
   HandlerIdGenerator(handler_id_t min, handler_id_t max)
-  : min_(min), max_(max), closed_(false), last_(min - 1)
+  : min_(min), max_(max), closed_(false), last_(min)
   {}
 
 public:
@@ -32,17 +32,16 @@ public:
       return last_;
     }
 
-    if (last_ + 1 > max_) {
-      last_ = min_ - 1;
-    } else {
-      ++last_;
+    if (last_ > max_) {
+      last_ = min_;
     }
 
-    return last_;
+    return last_++;
   }
   virtual void close() { closed_ = true; }
   virtual bool closed() { return closed_; }
   // virtual void throwException() = 0;
+
 private:
   const handler_id_t min_;
   const handler_id_t max_;

@@ -1,9 +1,11 @@
 package com.letsmidi.monsys.push;
 
+import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.handler.RelayHandler;
 import com.letsmidi.monsys.protocol.push.Push.Login;
 import com.letsmidi.monsys.protocol.push.Push.MsgType;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -28,7 +30,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 
   private static final String PROMPT = "> ";
 
-  private final Logger mLogger = Logger.getLogger(PushServer.LOGGER_NAME);
+  private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 
   static {
     CMD_MAP.put("connect", new Command() {
@@ -40,7 +42,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
         }
 
         String device_id = args[1];
-        ChannelManager.FgwInfo fgw = ChannelManager.INSTANCE.find(device_id);
+        PushChannelManager.FgwInfo fgw = PushChannelManager.INSTANCE.find(device_id);
         if (fgw == null) {
           ctx.write("gw not connected yet\n");
           return;
@@ -82,8 +84,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-      PushMsg.Builder builder = PushMsg.newBuilder();
-      builder.setType(MsgType.LOGIN);
+      PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN);
 
       Login.Builder login = Login.newBuilder();
       login.setDeviceId(msg);

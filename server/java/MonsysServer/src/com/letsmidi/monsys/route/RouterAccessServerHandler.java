@@ -6,7 +6,8 @@ import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.protocol.route.Route.RouteMsg;
 import com.letsmidi.monsys.route.session.RouteSession;
-import com.letsmidi.monsys.route.session.SessionManager;
+import com.letsmidi.monsys.session.SessionManager;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -143,9 +144,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
   }
 
   private void sendConnectRsp(Channel ch, int code) {
-    RouteMsg.Builder builder = RouteMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(Route.MsgType.CONNECT_RSP);
+    RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT_RSP);
 
     Route.ConnectRsp.Builder connect_rsp = Route.ConnectRsp.newBuilder();
     connect_rsp.setCode(code);

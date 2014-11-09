@@ -42,6 +42,12 @@
 
     mysql -h 192.168.2.105 -u monsys -pmonsys
 
+查询/设置连接超时
 
+    mysql> show global variables like '%time%' ;
+
+update it make it something like 28800
+
+    mysql> SET GLOBAL wait_timeout = 28800;
 
 

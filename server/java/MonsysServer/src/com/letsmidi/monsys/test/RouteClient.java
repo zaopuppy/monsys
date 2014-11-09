@@ -2,6 +2,7 @@ package com.letsmidi.monsys.test;
 
 import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -121,9 +122,7 @@ public class RouteClient {
     final String token = "ae@#dawz";
 
     if (line.startsWith("request")) {
-      Route.RouteMsg.Builder builder = Route.RouteMsg.newBuilder();
-      builder.setVersion(1);
-      builder.setType(Route.MsgType.REQ_TOKEN);
+      Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN);
 
       Route.ReqToken.Builder req_token = Route.ReqToken.newBuilder();
       req_token.setToken(token);
@@ -137,9 +136,7 @@ public class RouteClient {
     } else if (line.equals("token")) {
       System.out.println("token: " + token);
     } else if (line.startsWith("connect")) {
-      Route.RouteMsg.Builder builder = Route.RouteMsg.newBuilder();
-      builder.setVersion(1);
-      builder.setType(Route.MsgType.CONNECT);
+      Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT);
 
       Route.Connect.Builder connect = Route.Connect.newBuilder();
       connect.setToken(token);
@@ -153,9 +150,7 @@ public class RouteClient {
 
       return ch.writeAndFlush(builder.build());
     } else {
-      Route.RouteMsg.Builder builder = Route.RouteMsg.newBuilder();
-      builder.setVersion(1);
-      builder.setType(Route.MsgType.CONNECT);
+      Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT);
 
       Route.Connect.Builder connect = Route.Connect.newBuilder();
       connect.setToken(line);

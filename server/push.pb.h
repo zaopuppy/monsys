@@ -58,6 +58,9 @@ class GetDevInfo;
 class GetDevInfoRsp;
 class SetDevInfo;
 class SetDevInfoRsp;
+class UserRegister;
+class UserRegisterRsp;
+class Heartbeat;
 class Response;
 
 enum MsgType {
@@ -77,11 +80,14 @@ enum MsgType {
   SET_DEV_INFO_RSP = 107,
   CLIENT_LOGIN = 8,
   CLIENT_LOGIN_RSP = 108,
+  USER_REGISTER = 9,
+  USER_REGISTER_RSP = 109,
+  HEARTBEAT = 10,
   RESPONSE = 99
 };
 bool MsgType_IsValid(int value);
 const MsgType MsgType_MIN = LOGIN;
-const MsgType MsgType_MAX = CLIENT_LOGIN_RSP;
+const MsgType MsgType_MAX = USER_REGISTER_RSP;
 const int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MsgType_descriptor();
@@ -480,6 +486,13 @@ class PushMsg : public ::google::protobuf::Message {
   inline ::com::letsmidi::monsys::protocol::push::MsgType type() const;
   inline void set_type(::com::letsmidi::monsys::protocol::push::MsgType value);
 
+  // required int32 sequence = 3;
+  inline bool has_sequence() const;
+  inline void clear_sequence();
+  static const int kSequenceFieldNumber = 3;
+  inline ::google::protobuf::int32 sequence() const;
+  inline void set_sequence(::google::protobuf::int32 value);
+
   // optional .com.letsmidi.monsys.protocol.push.Login login = 10;
   inline bool has_login() const;
   inline void clear_login();
@@ -624,12 +637,41 @@ class PushMsg : public ::google::protobuf::Message {
   inline ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* release_client_login_rsp();
   inline void set_allocated_client_login_rsp(::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp);
 
+  // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+  inline bool has_user_register() const;
+  inline void clear_user_register();
+  static const int kUserRegisterFieldNumber = 26;
+  inline const ::com::letsmidi::monsys::protocol::push::UserRegister& user_register() const;
+  inline ::com::letsmidi::monsys::protocol::push::UserRegister* mutable_user_register();
+  inline ::com::letsmidi::monsys::protocol::push::UserRegister* release_user_register();
+  inline void set_allocated_user_register(::com::letsmidi::monsys::protocol::push::UserRegister* user_register);
+
+  // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+  inline bool has_user_register_rsp() const;
+  inline void clear_user_register_rsp();
+  static const int kUserRegisterRspFieldNumber = 27;
+  inline const ::com::letsmidi::monsys::protocol::push::UserRegisterRsp& user_register_rsp() const;
+  inline ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* mutable_user_register_rsp();
+  inline ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* release_user_register_rsp();
+  inline void set_allocated_user_register_rsp(::com::letsmidi::monsys::protocol::push::UserRegisterRsp* user_register_rsp);
+
+  // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+  inline bool has_heartbeat() const;
+  inline void clear_heartbeat();
+  static const int kHeartbeatFieldNumber = 28;
+  inline const ::com::letsmidi::monsys::protocol::push::Heartbeat& heartbeat() const;
+  inline ::com::letsmidi::monsys::protocol::push::Heartbeat* mutable_heartbeat();
+  inline ::com::letsmidi::monsys::protocol::push::Heartbeat* release_heartbeat();
+  inline void set_allocated_heartbeat(::com::letsmidi::monsys::protocol::push::Heartbeat* heartbeat);
+
   // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushMsg)
  private:
   inline void set_has_version();
   inline void clear_has_version();
   inline void set_has_type();
   inline void clear_has_type();
+  inline void set_has_sequence();
+  inline void clear_has_sequence();
   inline void set_has_login();
   inline void clear_has_login();
   inline void set_has_login_rsp();
@@ -662,6 +704,12 @@ class PushMsg : public ::google::protobuf::Message {
   inline void clear_has_client_login();
   inline void set_has_client_login_rsp();
   inline void clear_has_client_login_rsp();
+  inline void set_has_user_register();
+  inline void clear_has_user_register();
+  inline void set_has_user_register_rsp();
+  inline void clear_has_user_register_rsp();
+  inline void set_has_heartbeat();
+  inline void clear_has_heartbeat();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -683,9 +731,13 @@ class PushMsg : public ::google::protobuf::Message {
   ::com::letsmidi::monsys::protocol::push::SetDevInfoRsp* set_dev_info_rsp_;
   ::com::letsmidi::monsys::protocol::push::ClientLogin* client_login_;
   ::com::letsmidi::monsys::protocol::push::ClientLoginRsp* client_login_rsp_;
+  ::com::letsmidi::monsys::protocol::push::UserRegister* user_register_;
+  ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* user_register_rsp_;
+  ::com::letsmidi::monsys::protocol::push::Heartbeat* heartbeat_;
+  ::google::protobuf::int32 sequence_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(22 + 31) / 32];
 
   friend void  protobuf_AddDesc_push_2eproto();
   friend void protobuf_AssignDesc_push_2eproto();
@@ -2117,6 +2169,277 @@ class SetDevInfoRsp : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class UserRegister : public ::google::protobuf::Message {
+ public:
+  UserRegister();
+  virtual ~UserRegister();
+
+  UserRegister(const UserRegister& from);
+
+  inline UserRegister& operator=(const UserRegister& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserRegister& default_instance();
+
+  void Swap(UserRegister* other);
+
+  // implements Message ----------------------------------------------
+
+  UserRegister* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UserRegister& from);
+  void MergeFrom(const UserRegister& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string nickname = 1;
+  inline bool has_nickname() const;
+  inline void clear_nickname();
+  static const int kNicknameFieldNumber = 1;
+  inline const ::std::string& nickname() const;
+  inline void set_nickname(const ::std::string& value);
+  inline void set_nickname(const char* value);
+  inline void set_nickname(const char* value, size_t size);
+  inline ::std::string* mutable_nickname();
+  inline ::std::string* release_nickname();
+  inline void set_allocated_nickname(::std::string* nickname);
+
+  // required string account = 2;
+  inline bool has_account() const;
+  inline void clear_account();
+  static const int kAccountFieldNumber = 2;
+  inline const ::std::string& account() const;
+  inline void set_account(const ::std::string& value);
+  inline void set_account(const char* value);
+  inline void set_account(const char* value, size_t size);
+  inline ::std::string* mutable_account();
+  inline ::std::string* release_account();
+  inline void set_allocated_account(::std::string* account);
+
+  // required string password = 3;
+  inline bool has_password() const;
+  inline void clear_password();
+  static const int kPasswordFieldNumber = 3;
+  inline const ::std::string& password() const;
+  inline void set_password(const ::std::string& value);
+  inline void set_password(const char* value);
+  inline void set_password(const char* value, size_t size);
+  inline ::std::string* mutable_password();
+  inline ::std::string* release_password();
+  inline void set_allocated_password(::std::string* password);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegister)
+ private:
+  inline void set_has_nickname();
+  inline void clear_has_nickname();
+  inline void set_has_account();
+  inline void clear_has_account();
+  inline void set_has_password();
+  inline void clear_has_password();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* nickname_;
+  ::std::string* account_;
+  ::std::string* password_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static UserRegister* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class UserRegisterRsp : public ::google::protobuf::Message {
+ public:
+  UserRegisterRsp();
+  virtual ~UserRegisterRsp();
+
+  UserRegisterRsp(const UserRegisterRsp& from);
+
+  inline UserRegisterRsp& operator=(const UserRegisterRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserRegisterRsp& default_instance();
+
+  void Swap(UserRegisterRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  UserRegisterRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UserRegisterRsp& from);
+  void MergeFrom(const UserRegisterRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 code_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static UserRegisterRsp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Heartbeat : public ::google::protobuf::Message {
+ public:
+  Heartbeat();
+  virtual ~Heartbeat();
+
+  Heartbeat(const Heartbeat& from);
+
+  inline Heartbeat& operator=(const Heartbeat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Heartbeat& default_instance();
+
+  void Swap(Heartbeat* other);
+
+  // implements Message ----------------------------------------------
+
+  Heartbeat* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Heartbeat& from);
+  void MergeFrom(const Heartbeat& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Heartbeat)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  friend void  protobuf_AddDesc_push_2eproto();
+  friend void protobuf_AssignDesc_push_2eproto();
+  friend void protobuf_ShutdownFile_push_2eproto();
+
+  void InitAsDefaultInstance();
+  static Heartbeat* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Response : public ::google::protobuf::Message {
  public:
   Response();
@@ -2629,15 +2952,37 @@ inline void PushMsg::set_type(::com::letsmidi::monsys::protocol::push::MsgType v
   type_ = value;
 }
 
-// optional .com.letsmidi.monsys.protocol.push.Login login = 10;
-inline bool PushMsg::has_login() const {
+// required int32 sequence = 3;
+inline bool PushMsg::has_sequence() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void PushMsg::set_has_login() {
+inline void PushMsg::set_has_sequence() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void PushMsg::clear_has_login() {
+inline void PushMsg::clear_has_sequence() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushMsg::clear_sequence() {
+  sequence_ = 0;
+  clear_has_sequence();
+}
+inline ::google::protobuf::int32 PushMsg::sequence() const {
+  return sequence_;
+}
+inline void PushMsg::set_sequence(::google::protobuf::int32 value) {
+  set_has_sequence();
+  sequence_ = value;
+}
+
+// optional .com.letsmidi.monsys.protocol.push.Login login = 10;
+inline bool PushMsg::has_login() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushMsg::set_has_login() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushMsg::clear_has_login() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void PushMsg::clear_login() {
   if (login_ != NULL) login_->::com::letsmidi::monsys::protocol::push::Login::Clear();
@@ -2669,13 +3014,13 @@ inline void PushMsg::set_allocated_login(::com::letsmidi::monsys::protocol::push
 
 // optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;
 inline bool PushMsg::has_login_rsp() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void PushMsg::set_has_login_rsp() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void PushMsg::clear_has_login_rsp() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void PushMsg::clear_login_rsp() {
   if (login_rsp_ != NULL) login_rsp_->::com::letsmidi::monsys::protocol::push::LoginRsp::Clear();
@@ -2707,13 +3052,13 @@ inline void PushMsg::set_allocated_login_rsp(::com::letsmidi::monsys::protocol::
 
 // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
 inline bool PushMsg::has_bind() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void PushMsg::set_has_bind() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void PushMsg::clear_has_bind() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void PushMsg::clear_bind() {
   if (bind_ != NULL) bind_->::com::letsmidi::monsys::protocol::push::Bind::Clear();
@@ -2745,13 +3090,13 @@ inline void PushMsg::set_allocated_bind(::com::letsmidi::monsys::protocol::push:
 
 // optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
 inline bool PushMsg::has_bind_rsp() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void PushMsg::set_has_bind_rsp() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void PushMsg::clear_has_bind_rsp() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void PushMsg::clear_bind_rsp() {
   if (bind_rsp_ != NULL) bind_rsp_->::com::letsmidi::monsys::protocol::push::BindRsp::Clear();
@@ -2783,13 +3128,13 @@ inline void PushMsg::set_allocated_bind_rsp(::com::letsmidi::monsys::protocol::p
 
 // optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
 inline bool PushMsg::has_connect() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void PushMsg::set_has_connect() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void PushMsg::clear_has_connect() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void PushMsg::clear_connect() {
   if (connect_ != NULL) connect_->::com::letsmidi::monsys::protocol::push::Connect::Clear();
@@ -2821,13 +3166,13 @@ inline void PushMsg::set_allocated_connect(::com::letsmidi::monsys::protocol::pu
 
 // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
 inline bool PushMsg::has_connect_rsp() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void PushMsg::set_has_connect_rsp() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void PushMsg::clear_has_connect_rsp() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void PushMsg::clear_connect_rsp() {
   if (connect_rsp_ != NULL) connect_rsp_->::com::letsmidi::monsys::protocol::push::ConnectRsp::Clear();
@@ -2859,13 +3204,13 @@ inline void PushMsg::set_allocated_connect_rsp(::com::letsmidi::monsys::protocol
 
 // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
 inline bool PushMsg::has_get_fgw_list() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 inline void PushMsg::set_has_get_fgw_list() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
 }
 inline void PushMsg::clear_has_get_fgw_list() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void PushMsg::clear_get_fgw_list() {
   if (get_fgw_list_ != NULL) get_fgw_list_->::com::letsmidi::monsys::protocol::push::GetFgwList::Clear();
@@ -2897,13 +3242,13 @@ inline void PushMsg::set_allocated_get_fgw_list(::com::letsmidi::monsys::protoco
 
 // optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
 inline bool PushMsg::has_get_fgw_list_rsp() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void PushMsg::set_has_get_fgw_list_rsp() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void PushMsg::clear_has_get_fgw_list_rsp() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void PushMsg::clear_get_fgw_list_rsp() {
   if (get_fgw_list_rsp_ != NULL) get_fgw_list_rsp_->::com::letsmidi::monsys::protocol::push::GetFgwListRsp::Clear();
@@ -2935,13 +3280,13 @@ inline void PushMsg::set_allocated_get_fgw_list_rsp(::com::letsmidi::monsys::pro
 
 // optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
 inline bool PushMsg::has_get_dev_list() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void PushMsg::set_has_get_dev_list() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void PushMsg::clear_has_get_dev_list() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void PushMsg::clear_get_dev_list() {
   if (get_dev_list_ != NULL) get_dev_list_->::com::letsmidi::monsys::protocol::push::GetDevList::Clear();
@@ -2973,13 +3318,13 @@ inline void PushMsg::set_allocated_get_dev_list(::com::letsmidi::monsys::protoco
 
 // optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
 inline bool PushMsg::has_get_dev_list_rsp() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 inline void PushMsg::set_has_get_dev_list_rsp() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00001000u;
 }
 inline void PushMsg::clear_has_get_dev_list_rsp() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void PushMsg::clear_get_dev_list_rsp() {
   if (get_dev_list_rsp_ != NULL) get_dev_list_rsp_->::com::letsmidi::monsys::protocol::push::GetDevListRsp::Clear();
@@ -3011,13 +3356,13 @@ inline void PushMsg::set_allocated_get_dev_list_rsp(::com::letsmidi::monsys::pro
 
 // optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
 inline bool PushMsg::has_get_dev_info() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 inline void PushMsg::set_has_get_dev_info() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
 }
 inline void PushMsg::clear_has_get_dev_info() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void PushMsg::clear_get_dev_info() {
   if (get_dev_info_ != NULL) get_dev_info_->::com::letsmidi::monsys::protocol::push::GetDevInfo::Clear();
@@ -3049,13 +3394,13 @@ inline void PushMsg::set_allocated_get_dev_info(::com::letsmidi::monsys::protoco
 
 // optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
 inline bool PushMsg::has_get_dev_info_rsp() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
 inline void PushMsg::set_has_get_dev_info_rsp() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00004000u;
 }
 inline void PushMsg::clear_has_get_dev_info_rsp() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 inline void PushMsg::clear_get_dev_info_rsp() {
   if (get_dev_info_rsp_ != NULL) get_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::GetDevInfoRsp::Clear();
@@ -3087,13 +3432,13 @@ inline void PushMsg::set_allocated_get_dev_info_rsp(::com::letsmidi::monsys::pro
 
 // optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
 inline bool PushMsg::has_set_dev_info() const {
-  return (_has_bits_[0] & 0x00004000u) != 0;
+  return (_has_bits_[0] & 0x00008000u) != 0;
 }
 inline void PushMsg::set_has_set_dev_info() {
-  _has_bits_[0] |= 0x00004000u;
+  _has_bits_[0] |= 0x00008000u;
 }
 inline void PushMsg::clear_has_set_dev_info() {
-  _has_bits_[0] &= ~0x00004000u;
+  _has_bits_[0] &= ~0x00008000u;
 }
 inline void PushMsg::clear_set_dev_info() {
   if (set_dev_info_ != NULL) set_dev_info_->::com::letsmidi::monsys::protocol::push::SetDevInfo::Clear();
@@ -3125,13 +3470,13 @@ inline void PushMsg::set_allocated_set_dev_info(::com::letsmidi::monsys::protoco
 
 // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
 inline bool PushMsg::has_set_dev_info_rsp() const {
-  return (_has_bits_[0] & 0x00008000u) != 0;
+  return (_has_bits_[0] & 0x00010000u) != 0;
 }
 inline void PushMsg::set_has_set_dev_info_rsp() {
-  _has_bits_[0] |= 0x00008000u;
+  _has_bits_[0] |= 0x00010000u;
 }
 inline void PushMsg::clear_has_set_dev_info_rsp() {
-  _has_bits_[0] &= ~0x00008000u;
+  _has_bits_[0] &= ~0x00010000u;
 }
 inline void PushMsg::clear_set_dev_info_rsp() {
   if (set_dev_info_rsp_ != NULL) set_dev_info_rsp_->::com::letsmidi::monsys::protocol::push::SetDevInfoRsp::Clear();
@@ -3163,13 +3508,13 @@ inline void PushMsg::set_allocated_set_dev_info_rsp(::com::letsmidi::monsys::pro
 
 // optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;
 inline bool PushMsg::has_client_login() const {
-  return (_has_bits_[0] & 0x00010000u) != 0;
+  return (_has_bits_[0] & 0x00020000u) != 0;
 }
 inline void PushMsg::set_has_client_login() {
-  _has_bits_[0] |= 0x00010000u;
+  _has_bits_[0] |= 0x00020000u;
 }
 inline void PushMsg::clear_has_client_login() {
-  _has_bits_[0] &= ~0x00010000u;
+  _has_bits_[0] &= ~0x00020000u;
 }
 inline void PushMsg::clear_client_login() {
   if (client_login_ != NULL) client_login_->::com::letsmidi::monsys::protocol::push::ClientLogin::Clear();
@@ -3201,13 +3546,13 @@ inline void PushMsg::set_allocated_client_login(::com::letsmidi::monsys::protoco
 
 // optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;
 inline bool PushMsg::has_client_login_rsp() const {
-  return (_has_bits_[0] & 0x00020000u) != 0;
+  return (_has_bits_[0] & 0x00040000u) != 0;
 }
 inline void PushMsg::set_has_client_login_rsp() {
-  _has_bits_[0] |= 0x00020000u;
+  _has_bits_[0] |= 0x00040000u;
 }
 inline void PushMsg::clear_has_client_login_rsp() {
-  _has_bits_[0] &= ~0x00020000u;
+  _has_bits_[0] &= ~0x00040000u;
 }
 inline void PushMsg::clear_client_login_rsp() {
   if (client_login_rsp_ != NULL) client_login_rsp_->::com::letsmidi::monsys::protocol::push::ClientLoginRsp::Clear();
@@ -3234,6 +3579,120 @@ inline void PushMsg::set_allocated_client_login_rsp(::com::letsmidi::monsys::pro
     set_has_client_login_rsp();
   } else {
     clear_has_client_login_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
+inline bool PushMsg::has_user_register() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+inline void PushMsg::set_has_user_register() {
+  _has_bits_[0] |= 0x00080000u;
+}
+inline void PushMsg::clear_has_user_register() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+inline void PushMsg::clear_user_register() {
+  if (user_register_ != NULL) user_register_->::com::letsmidi::monsys::protocol::push::UserRegister::Clear();
+  clear_has_user_register();
+}
+inline const ::com::letsmidi::monsys::protocol::push::UserRegister& PushMsg::user_register() const {
+  return user_register_ != NULL ? *user_register_ : *default_instance_->user_register_;
+}
+inline ::com::letsmidi::monsys::protocol::push::UserRegister* PushMsg::mutable_user_register() {
+  set_has_user_register();
+  if (user_register_ == NULL) user_register_ = new ::com::letsmidi::monsys::protocol::push::UserRegister;
+  return user_register_;
+}
+inline ::com::letsmidi::monsys::protocol::push::UserRegister* PushMsg::release_user_register() {
+  clear_has_user_register();
+  ::com::letsmidi::monsys::protocol::push::UserRegister* temp = user_register_;
+  user_register_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_user_register(::com::letsmidi::monsys::protocol::push::UserRegister* user_register) {
+  delete user_register_;
+  user_register_ = user_register;
+  if (user_register) {
+    set_has_user_register();
+  } else {
+    clear_has_user_register();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
+inline bool PushMsg::has_user_register_rsp() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+inline void PushMsg::set_has_user_register_rsp() {
+  _has_bits_[0] |= 0x00100000u;
+}
+inline void PushMsg::clear_has_user_register_rsp() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+inline void PushMsg::clear_user_register_rsp() {
+  if (user_register_rsp_ != NULL) user_register_rsp_->::com::letsmidi::monsys::protocol::push::UserRegisterRsp::Clear();
+  clear_has_user_register_rsp();
+}
+inline const ::com::letsmidi::monsys::protocol::push::UserRegisterRsp& PushMsg::user_register_rsp() const {
+  return user_register_rsp_ != NULL ? *user_register_rsp_ : *default_instance_->user_register_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* PushMsg::mutable_user_register_rsp() {
+  set_has_user_register_rsp();
+  if (user_register_rsp_ == NULL) user_register_rsp_ = new ::com::letsmidi::monsys::protocol::push::UserRegisterRsp;
+  return user_register_rsp_;
+}
+inline ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* PushMsg::release_user_register_rsp() {
+  clear_has_user_register_rsp();
+  ::com::letsmidi::monsys::protocol::push::UserRegisterRsp* temp = user_register_rsp_;
+  user_register_rsp_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_user_register_rsp(::com::letsmidi::monsys::protocol::push::UserRegisterRsp* user_register_rsp) {
+  delete user_register_rsp_;
+  user_register_rsp_ = user_register_rsp;
+  if (user_register_rsp) {
+    set_has_user_register_rsp();
+  } else {
+    clear_has_user_register_rsp();
+  }
+}
+
+// optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
+inline bool PushMsg::has_heartbeat() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+inline void PushMsg::set_has_heartbeat() {
+  _has_bits_[0] |= 0x00200000u;
+}
+inline void PushMsg::clear_has_heartbeat() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+inline void PushMsg::clear_heartbeat() {
+  if (heartbeat_ != NULL) heartbeat_->::com::letsmidi::monsys::protocol::push::Heartbeat::Clear();
+  clear_has_heartbeat();
+}
+inline const ::com::letsmidi::monsys::protocol::push::Heartbeat& PushMsg::heartbeat() const {
+  return heartbeat_ != NULL ? *heartbeat_ : *default_instance_->heartbeat_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Heartbeat* PushMsg::mutable_heartbeat() {
+  set_has_heartbeat();
+  if (heartbeat_ == NULL) heartbeat_ = new ::com::letsmidi::monsys::protocol::push::Heartbeat;
+  return heartbeat_;
+}
+inline ::com::letsmidi::monsys::protocol::push::Heartbeat* PushMsg::release_heartbeat() {
+  clear_has_heartbeat();
+  ::com::letsmidi::monsys::protocol::push::Heartbeat* temp = heartbeat_;
+  heartbeat_ = NULL;
+  return temp;
+}
+inline void PushMsg::set_allocated_heartbeat(::com::letsmidi::monsys::protocol::push::Heartbeat* heartbeat) {
+  delete heartbeat_;
+  heartbeat_ = heartbeat;
+  if (heartbeat) {
+    set_has_heartbeat();
+  } else {
+    clear_has_heartbeat();
   }
 }
 
@@ -4090,6 +4549,250 @@ inline void SetDevInfoRsp::set_code(::google::protobuf::int32 value) {
   set_has_code();
   code_ = value;
 }
+
+// -------------------------------------------------------------------
+
+// UserRegister
+
+// required string nickname = 1;
+inline bool UserRegister::has_nickname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserRegister::set_has_nickname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserRegister::clear_has_nickname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserRegister::clear_nickname() {
+  if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+    nickname_->clear();
+  }
+  clear_has_nickname();
+}
+inline const ::std::string& UserRegister::nickname() const {
+  return *nickname_;
+}
+inline void UserRegister::set_nickname(const ::std::string& value) {
+  set_has_nickname();
+  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+    nickname_ = new ::std::string;
+  }
+  nickname_->assign(value);
+}
+inline void UserRegister::set_nickname(const char* value) {
+  set_has_nickname();
+  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+    nickname_ = new ::std::string;
+  }
+  nickname_->assign(value);
+}
+inline void UserRegister::set_nickname(const char* value, size_t size) {
+  set_has_nickname();
+  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+    nickname_ = new ::std::string;
+  }
+  nickname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserRegister::mutable_nickname() {
+  set_has_nickname();
+  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+    nickname_ = new ::std::string;
+  }
+  return nickname_;
+}
+inline ::std::string* UserRegister::release_nickname() {
+  clear_has_nickname();
+  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = nickname_;
+    nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserRegister::set_allocated_nickname(::std::string* nickname) {
+  if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+    delete nickname_;
+  }
+  if (nickname) {
+    set_has_nickname();
+    nickname_ = nickname;
+  } else {
+    clear_has_nickname();
+    nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string account = 2;
+inline bool UserRegister::has_account() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UserRegister::set_has_account() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UserRegister::clear_has_account() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UserRegister::clear_account() {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    account_->clear();
+  }
+  clear_has_account();
+}
+inline const ::std::string& UserRegister::account() const {
+  return *account_;
+}
+inline void UserRegister::set_account(const ::std::string& value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void UserRegister::set_account(const char* value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(value);
+}
+inline void UserRegister::set_account(const char* value, size_t size) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  account_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserRegister::mutable_account() {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
+  }
+  return account_;
+}
+inline ::std::string* UserRegister::release_account() {
+  clear_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = account_;
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserRegister::set_allocated_account(::std::string* account) {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    delete account_;
+  }
+  if (account) {
+    set_has_account();
+    account_ = account;
+  } else {
+    clear_has_account();
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string password = 3;
+inline bool UserRegister::has_password() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void UserRegister::set_has_password() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void UserRegister::clear_has_password() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void UserRegister::clear_password() {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    password_->clear();
+  }
+  clear_has_password();
+}
+inline const ::std::string& UserRegister::password() const {
+  return *password_;
+}
+inline void UserRegister::set_password(const ::std::string& value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void UserRegister::set_password(const char* value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void UserRegister::set_password(const char* value, size_t size) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserRegister::mutable_password() {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  return password_;
+}
+inline ::std::string* UserRegister::release_password() {
+  clear_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = password_;
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserRegister::set_allocated_password(::std::string* password) {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    delete password_;
+  }
+  if (password) {
+    set_has_password();
+    password_ = password;
+  } else {
+    clear_has_password();
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// UserRegisterRsp
+
+// required int32 code = 1;
+inline bool UserRegisterRsp::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserRegisterRsp::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserRegisterRsp::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserRegisterRsp::clear_code() {
+  code_ = 0;
+  clear_has_code();
+}
+inline ::google::protobuf::int32 UserRegisterRsp::code() const {
+  return code_;
+}
+inline void UserRegisterRsp::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// Heartbeat
 
 // -------------------------------------------------------------------
 

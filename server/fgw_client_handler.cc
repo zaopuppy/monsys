@@ -9,7 +9,8 @@
 #include "protobuf_helper.h"
 #include "protobuf_convert.h"
 
-using namespace com::letsmidi::monsys::protocol;
+using namespace com::letsmidi::monsys::protocol::push;
+// namespace ns_push = com::letsmidi::monsys::protocol::push;
 
 void FGWClientHandler::setState(int new_state)
 {
@@ -23,18 +24,88 @@ int FGWClientHandler::init()
   addr_.handler_id_ = getId();
 
   state_ = STATE_UNREGISTERED;
-  // state_ = STATE_REGISTERED;
 
   return OK;
+}
+
+int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
+{
+  Z_LOG_D("FGWClientHandler::onRead()");
+  trace_bin(buf, buf_len);
+
+  int rv = FAIL;
+  switch (state_) {
+    case STATE_UNREGISTERED:
+      rv = onRead_Unregistered(buf, buf_len);
+      break;
+    case STATE_WAIT_FOR_SERVER:
+      rv = onRead_WaitForServer(buf, buf_len);
+      break;
+    case STATE_REGISTERED:
+      rv = onRead_Registered(buf, buf_len);
+      break;
+    default:
+      rv = FAIL;
+  }
+
+  return rv;
+}
+
+int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
+{
+  Z_LOG_D("FGWClientHandler::onInnerMsg");
+  Z_LOG_D("inner message type: %d", msg->msg_type_);
+
+  uint32_t inner_seq = msg->seq_;
+
+  FGWClientSession *session = session_ctrl_.findByKey1(inner_seq);
+  if (session == NULL) {
+    Z_LOG_E("Failed to find session by inner key: %u", inner_seq);
+    return FAIL;
+  }
+
+  session->event(msg);
+  if (session->isComplete()) {
+    session_ctrl_.removeByKey1(inner_seq);
+    delete session;
+    session = NULL;
+  }
+
+  return OK;
+}
+
+void FGWClientHandler::routine(long delta)
+{
+  FGWClientSession *session;
+
+  SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
+  SESSION_CTRL_TYPE::iterator tmp_iter;
+
+  while (iter != session_ctrl_.end()) {
+    session = iter->second;
+    session->doTimeout(delta);
+    if (session->isComplete()) {
+      tmp_iter = iter;
+      ++iter;
+
+      delete tmp_iter->second;
+      session_ctrl_.erase(tmp_iter);
+
+    } else {
+      ++iter;
+    }
+  }
+
 }
 
 void FGWClientHandler::fgwLogin()
 {
   Z_LOG_D("FGWClientHandler::registerFGW()");
 
-  PushMsg push_msg;// = new PushMsg();
+  PushMsg push_msg;
   push_msg.set_version(1);
   push_msg.set_type(LOGIN);
+  push_msg.set_sequence(0);
 
   Login *login = new Login();
   login->set_device_id("DEVID-Z");
@@ -60,10 +131,10 @@ void FGWClientHandler::fgwLogin()
 
 void FGWClientHandler::close()
 {
-  ::close(fd_);
-  fd_ = -1;
   event_free(read_event_);
   read_event_ = NULL;
+  ::close(fd_);
+  fd_ = -1;
 }
 
 int FGWClientHandler::onRead_Unregistered(char *buf, uint32_t buf_len)
@@ -89,7 +160,7 @@ int FGWClientHandler::processLoginRsp(PushMsg *push_msg)
     return FAIL;
   }
 
-  Z_LOG_D("Good, loged in success");
+  Z_LOG_D("Good, logged in success");
 
   setState(STATE_REGISTERED);
 
@@ -122,26 +193,6 @@ int FGWClientHandler::onRead_WaitForServer(char *buf, uint32_t buf_len)
   return processLoginRsp(&push_msg);
 }
 
-FGWClientSession* FGWClientHandler::createSession(ZInnerMsg *inner_msg)
-{
-  Z_LOG_D("FGWClientHandler::createSession()");
-
-  switch (inner_msg->msg_type_)
-  {
-    case Z_ZB_GET_DEV_LIST_REQ:
-    case Z_ZB_GET_DEV_REQ:
-    case Z_ZB_SET_DEV_REQ:
-    case Z_ZB_PRE_BIND_REQ:
-    case Z_ZB_BIND_REQ:
-      return new FGWClientSession(this);
-    default:
-    {
-      Z_LOG_E("Unknown message type");
-      return NULL;
-    }
-  }
-}
-
 int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 {
   Z_LOG_D("FGWClientHandler::onRead_Registered()");
@@ -154,9 +205,6 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
     return -1;
   }
 
-  // Z_LOG_D("Received message from FGW server");
-  // trace_bin(buf, buf_len);
-
   // --------------------------------
   PushMsg push_msg;
 
@@ -168,124 +216,26 @@ int FGWClientHandler::onRead_Registered(char *buf, uint32_t buf_len)
 
   Z_LOG_D("push msg type=%s received", push_msg.GetTypeName().c_str());
 
-  ZInnerMsg *inner_msg = push2inner(push_msg);
-  if (NULL == inner_msg) {
-    Z_LOG_E("Failed to convert push to inner");
-    return FAIL;
-  }
-
-  inner_msg->src_addr_.module_type_ = getModuleType();
-  inner_msg->src_addr_.handler_id_ = getId();
-  inner_msg->dst_addr_.module_type_ = MODULE_SERIAL;
-  inner_msg->dst_addr_.handler_id_ = ANY_ID;
-
-  ZDispatcher::instance()->sendDirect(inner_msg);
-
-  return OK;
-
-  // // decode
-  // json_t* jmsg = decodeWebApiMsg(buf, buf_len);
-
-  // // sequence
-  // json_t *jseq = json_object_get(jmsg, "seq");
-  // if (jseq == NULL || !json_is_integer(jseq)) {
-  //  return -1;
-  // }
-
-  // ZInnerMsg *inner_msg = json2Inner(jmsg);
-  // if (inner_msg == NULL) {
-  //   sendRsp("bad request", 400);
-  //   return -1;
-  // }
-  // inner_msg->seq_ = json_integer_value(jseq);
-
-  // FGWClientSession *session = createSession(inner_msg);
-  // if (NULL == session) {
-  //   return FAIL;
-  // }
-
-  // session->event(inner_msg);
-  // if (!session->isComplete()) {
-  //   Z_LOG_D("Added: key1=%u, key2=%u", inner_msg->seq_, inner_msg->seq_);
-
-  //   session_ctrl_.add(inner_msg->seq_, inner_msg->seq_, session);
-  // } else {
-  //   delete session;
-  //   session = NULL;
-  // }
-
-  // return OK;
-}
-
-int FGWClientHandler::onRead(char *buf, uint32_t buf_len)
-{
-  Z_LOG_D("FGWClientHandler::onRead()");
-  trace_bin(buf, buf_len);
-
-  int rv = FAIL;
-  switch (state_) {
-    case STATE_UNREGISTERED:
-      rv = onRead_Unregistered(buf, buf_len);
-      break;
-    case STATE_WAIT_FOR_SERVER:
-      rv = onRead_WaitForServer(buf, buf_len);
-      break;
-    case STATE_REGISTERED:
-      rv = onRead_Registered(buf, buf_len);
-      break;
-    default:
-      rv = FAIL;
-  }
-
-  return rv;
-}
-
-int FGWClientHandler::onInnerMsg(ZInnerMsg *msg)
-{
-  Z_LOG_D("FGWClientHandler::onInnerMsg");
-  Z_LOG_D("inner message type: %d", msg->msg_type_);
-
-  PushMsg *push_msg = inner2push(*msg);
-
-  int rv = protobuf_encode(push_msg, out_buf_, sizeof(out_buf_));
-  if (rv < 0) {
-    Z_LOG_E("Failed to encode push message");
-    return FAIL;
-  }
-
-  send(out_buf_, rv);
-
-  return OK;
-}
-
-void FGWClientHandler::routine(long delta)
-{
-  // --- FOR DEBUGGING ONLY ---
-  return;
-  // --- FOR DEBUGGING ONLY ---
-
-  // Z_LOG_D("FGWClientHandler::routine()");
-
-  FGWClientSession *session;
-
-  SESSION_CTRL_TYPE::iterator iter = session_ctrl_.begin();
-  SESSION_CTRL_TYPE::iterator tmp_iter;
-
-  while (iter != session_ctrl_.end()) {
-    session = iter->second;
-    session->doTimeout(delta);
-    if (session->isComplete()) {
-      tmp_iter = iter;
-      ++iter;
-
-      delete tmp_iter->second;
-      session_ctrl_.erase(tmp_iter);
-
-    } else {
-      ++iter;
+  {
+    FGWClientSession *s = session_ctrl_.findByKey2(push_msg.sequence());
+    if (s != NULL) {
+      Z_LOG_E("Duplicated session, external key: %u", push_msg.sequence());
+      return FAIL;
     }
   }
 
+  uint32_t inner_seq = id_generator_.next();
+  FGWClientForwardSession *session = new FGWClientForwardSession(this, inner_seq);
+  if (!session->init()) {
+    return FAIL;
+  }
+
+  session->event(&push_msg);
+  if (!session->isComplete()) {
+    session_ctrl_.add(inner_seq, push_msg.sequence(), session);
+  }
+
+  return OK;
 }
 
 int FGWClientHandler::send(const char *buf, uint32_t buf_len)

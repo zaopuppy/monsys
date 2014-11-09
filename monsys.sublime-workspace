@@ -1,0 +1,2658 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"zstr",
+				"zstr_t	typedef"
+			],
+			[
+				"zstr_ini",
+				"zstr_init_const(zstr_t *str, const char *init_val)	zstr_t *"
+			],
+			[
+				"ra",
+				"raw	char *"
+			],
+			[
+				"zs",
+				"zstr_t	typedef"
+			],
+			[
+				"Z_L",
+				"Z_LOG_E(_format, ...)	macro"
+			],
+			[
+				"Z",
+				"Z_LOG_E(_format, ...)	macro"
+			],
+			[
+				"getline",
+				"getline(char_type *__s, streamsize __n, char_type __delim)	__istream_type &"
+			],
+			[
+				"Z_LO",
+				"Z_LOG_D(_format, ...)	macro"
+			],
+			[
+				"mod",
+				"module_id_	int"
+			],
+			[
+				"module",
+				"module_type_"
+			],
+			[
+				"ZIn",
+				"ZInnerAddress	struct"
+			],
+			[
+				"msg",
+				"msg_list_	std::list<ZInnerMsg *>"
+			],
+			[
+				"ZInn",
+				"ZInnerMsg	class"
+			],
+			[
+				"FGWCli",
+				"FGWClientForwardSession"
+			],
+			[
+				"Z_LOG",
+				"Z_LOG_E(_format, ...)	macro"
+			],
+			[
+				"fin",
+				"findByKey2(const unsigned int &key2)	FGWClientSession *"
+			],
+			[
+				"proto",
+				"protobuf_encode"
+			],
+			[
+				"inner",
+				"inner_seq	uint32_t"
+			],
+			[
+				"FGWC",
+				"FGWClientForwardSession	class"
+			],
+			[
+				"session",
+				"session_ctrl_	SESSION_CTRL_TYPE"
+			],
+			[
+				"inn",
+				"inner_seq	uint32_t"
+			],
+			[
+				"event",
+				"event(com::letsmidi::monsys::protocol::push::PushMsg *msg)	void"
+			],
+			[
+				"uint",
+				"uint32_t	typedef"
+			],
+			[
+				"prot",
+				"protobuf_encode(::google::protobuf::Message *msg, char *buf, int buf_len)	int"
+			],
+			[
+				"push",
+				"push_msg	PushMsg *"
+			],
+			[
+				"dev",
+				"add_dev_infos()	::com::letsmidi::monsys::protocol::DeviceInfo *"
+			],
+			[
+				"ZInnerGetDev",
+				"ZInnerGetDevListRsp	class"
+			],
+			[
+				"id",
+				"id_value_pairs(int index) const	const ::com::letsmidi::monsys::protocol::IdValuePair &"
+			],
+			[
+				"push2i",
+				"push2inner(const com::letsmidi::monsys::protocol::SetDevInfo &msg)	ZInnerMsg *"
+			],
+			[
+				"Zin",
+				"ZInnerMsg	class"
+			],
+			[
+				"get",
+				"get_dev_list() const	const ::com::letsmidi::monsys::protocol::GetDevList &"
+			],
+			[
+				"has_get_de",
+				"has_get_dev_list() const	bool"
+			],
+			[
+				"type",
+				"GetTypeName() const	string"
+			],
+			[
+				"item",
+				"item_ids(int index) const	::google::protobuf::int32"
+			],
+			[
+				"i",
+				"ids() const	const ::google::protobuf::RepeatedField< ::google::protobuf::int32> &"
+			],
+			[
+				"inne",
+				"inner_msg	ZInnerMsg *"
+			],
+			[
+				"ZIne",
+				"ZInnerMsg	class"
+			],
+			[
+				"has_log",
+				"has_login_rsp() const	bool"
+			],
+			[
+				"process",
+				"processLoginRsp(com::letsmidi::monsys::protocol::PushMsg *push_msg)	int"
+			],
+			[
+				"buf",
+				"buf_len	uint32_t"
+			],
+			[
+				"bu",
+				"buf_len	int"
+			],
+			[
+				"Seri",
+				"SerializeToArray(void *data, int size) const	bool"
+			],
+			[
+				"login",
+				"login	Login *"
+			],
+			[
+				"set",
+				"set_device_id(const char *value)	void"
+			],
+			[
+				"pre-",
+				"pre-bind"
+			],
+			[
+				"ex",
+				"ext_key"
+			],
+			[
+				"get-d",
+				"get-dev-list"
+			],
+			[
+				"hand",
+				"handler_id"
+			],
+			[
+				"han",
+				"handler_type"
+			],
+			[
+				"ZINN",
+				"ZInnerBindRsp()	constructor"
+			],
+			[
+				"ZInner",
+				"ZInnerBindRsp	class"
+			],
+			[
+				"ZZBBind",
+				"ZZBBindRsp	class"
+			],
+			[
+				"Z_ID_ZB_B",
+				"Z_ID_ZB_BIND_RSP	const uint8_t"
+			],
+			[
+				"Z_ZB_B",
+				"Z_ZB_BIND_REQ	enum <anonymous>"
+			],
+			[
+				"Z_ZB_BIND",
+				"Z_ZB_BIND_RSP	enum <anonymous>"
+			],
+			[
+				"accou",
+				"account"
+			],
+			[
+				"acc",
+				"account"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"pre-bind",
+				"pre-bind-rsp"
+			],
+			[
+				"MODUL",
+				"MODULE_FGW_SERVER"
+			],
+			[
+				"check",
+				"check_user_and_fgw"
+			],
+			[
+				"fgw",
+				"fgw_id"
+			],
+			[
+				"IN",
+				"STATE_INIT	ZBStream::state_t"
+			],
+			[
+				"tim",
+				"timeout"
+			],
+			[
+				"value",
+				"value_set"
+			],
+			[
+				"add",
+				"addHandler  (function)"
+			],
+			[
+				"logg",
+				"logging"
+			],
+			[
+				"ser",
+				"serial_dev	const char*"
+			],
+			[
+				"_STATE_",
+				"_STATE_LOGGED_IN  (variable)"
+			],
+			[
+				"FGWH",
+				"FGWHandlerLoggedIn"
+			],
+			[
+				"get-f",
+				"get-fgw-list"
+			],
+			[
+				"account",
+				"account"
+			],
+			[
+				"get-dev-",
+				"get-dev-info"
+			],
+			[
+				"load",
+				"loads  (function)"
+			],
+			[
+				"Stream",
+				"StreamServer"
+			],
+			[
+				"log",
+				"logger"
+			],
+			[
+				"COm",
+				"CommonServer"
+			],
+			[
+				"SIGIN",
+				"SIGINT  (variable)"
+			],
+			[
+				"json_inter",
+				"json_integer_value(const json_t *integer)	json_int_t"
+			],
+			[
+				"WAIT",
+				"WAIT_FOR_RSP	enum <anonymous>"
+			],
+			[
+				"event_base_loop",
+				"event_base_loop(struct event_base *, int)	int"
+			],
+			[
+				"ZInne",
+				"ZInnerMsg	class"
+			],
+			[
+				"getMod",
+				"getModuleType()	int"
+			],
+			[
+				"FGWClient",
+				"FGWClientSession	class"
+			],
+			[
+				"ZWeb",
+				"ZWebApiForwardSession"
+			],
+			[
+				"create",
+				"createSession"
+			],
+			[
+				"ms",
+				"msg	ZInnerMsg *"
+			],
+			[
+				"close",
+				"closed_	bool"
+			],
+			[
+				"WAI",
+				"WAIT_FOR_RSP	enum <anonymous>"
+			],
+			[
+				"ZInnerPre",
+				"ZInnerPreBindReq	class"
+			],
+			[
+				"handl",
+				"handler_id	int"
+			],
+			[
+				"modul",
+				"module_type_	int"
+			],
+			[
+				"send",
+				"sendJson(json_t *jmsg)	int"
+			],
+			[
+				"ZInnerPreB",
+				"ZInnerPreBindRsp	class"
+			],
+			[
+				"ZIN",
+				"ZInnerPreBindReq	class"
+			],
+			[
+				"Z_ZB_PRE",
+				"Z_ZB_PRE_BIND_REQ	enum <anonymous>"
+			],
+			[
+				"ZINn",
+				"ZInnerBindReq()	constructor"
+			],
+			[
+				"json2In",
+				"json2InnerBindReq"
+			],
+			[
+				"Z_ZB_PRE_",
+				"Z_ZB_PRE_BIND_RSP	enum <anonymous>"
+			],
+			[
+				"margin",
+				"margin_left"
+			],
+			[
+				"on",
+				"on_timer"
+			],
+			[
+				"g_",
+				"g_noti_block"
+			],
+			[
+				"not",
+				"noti_block"
+			],
+			[
+				"g",
+				"g_counter"
+			],
+			[
+				"fu",
+				"fun	Function"
+			],
+			[
+				"devi",
+				"device_id"
+			],
+			[
+				"app",
+				"append"
+			],
+			[
+				"auth",
+				"authenticated"
+			],
+			[
+				"pas",
+				"pass"
+			],
+			[
+				"fil",
+				"filter"
+			],
+			[
+				"pa",
+				"param	test_param_t"
+			],
+			[
+				"re",
+				"registerPersistTimeout(void *arg, const struct timeval *timeout)	void"
+			],
+			[
+				"test_",
+				"test_param_t	typedef"
+			],
+			[
+				"conn",
+				"conn_	MYSQL *"
+			],
+			[
+				"ZZ",
+				"ZZBBroadcastInd	class"
+			],
+			[
+				"EXP",
+				"EXPECT_EQ(expected, actual)	macro"
+			],
+			[
+				"EXPE",
+				"EXPECT_GE(val1, val2)	macro"
+			],
+			[
+				"ZBB",
+				"ZZBBroadcastInd	class"
+			],
+			[
+				"z_dec",
+				"z_decode_integer16(uint16_t *val, char *buf, uint32_t buf_len)	int"
+			],
+			[
+				"len",
+				"len_	uint16_t"
+			],
+			[
+				"z_enco",
+				"z_encode_integer16(uint16_t val, char *buf, uint32_t buf_len)	int"
+			],
+			[
+				"handler",
+				"handler_id_generator_	int"
+			],
+			[
+				"find",
+				"final_id	handler_id_t"
+			],
+			[
+				"clo",
+				"closed_	bool"
+			],
+			[
+				"MAX",
+				"MAX_HANDLER_ID	const handler_id_t"
+			],
+			[
+				"ZServer",
+				"ZServerHandler	class"
+			],
+			[
+				"ECHO",
+				"ECHO_SERVER_PORT	const int"
+			],
+			[
+				"PUSH_SE",
+				"PUSH_SERVER_PORT	const int"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "server/protobuf_convert.cc",
+			"settings":
+			{
+				"buffer_size": 3744,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/fgw_client_handler.cc",
+			"settings":
+			{
+				"buffer_size": 6192,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/zconfig.h",
+			"settings":
+			{
+				"buffer_size": 876,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "libbase/zstring.c",
+			"settings":
+			{
+				"buffer_size": 2054,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/fgw_client_session.h",
+			"settings":
+			{
+				"buffer_size": 2729,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/fgw.cc",
+			"settings":
+			{
+				"buffer_size": 2448,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/config.cfg",
+			"settings":
+			{
+				"buffer_size": 177,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/zconfig.cc",
+			"settings":
+			{
+				"buffer_size": 988,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/include/c++/4.2.1/fstream",
+			"settings":
+			{
+				"buffer_size": 25760,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "libbase/zstring.h",
+			"settings":
+			{
+				"buffer_size": 532,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"syntaxpl",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"syntaxpla",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"syntaxplain",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"syntax pla",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"preview",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"syntax",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"prev",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"previ",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"syntaxsql",
+				"Set Syntax: SQL"
+			],
+			[
+				"syntaxc",
+				"Set Syntax: C"
+			],
+			[
+				"upda",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"review",
+				"Markdown Preview: Open Markdown Cheat sheet"
+			],
+			[
+				"syntaxmake",
+				"Set Syntax: Makefile"
+			],
+			[
+				"markdownpre",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"syntaxma",
+				"Set Syntax: Markdown"
+			],
+			[
+				"syntmarkdown",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"syntaxmark",
+				"Set Syntax: Markdown"
+			],
+			[
+				"synt",
+				"Set Syntax: Markdown"
+			],
+			[
+				"syn",
+				"Set Syntax: Markdown"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"subli",
+				"Preferences: SublimeClang Settings – Default"
+			],
+			[
+				"sublimeclan",
+				"Preferences: SublimeClang Settings – User"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 383.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Data/workspaces/monsys/libbase/algorithm/zstring_search.cc",
+		"/Volumes/Data/Documents/notes/unicom-dd-wrt.txt",
+		"/Volumes/Data/workspaces/game/unity/2D Platformer/Assets/Scripts/Bomb.cs",
+		"/Volumes/Data/workspaces/game/unity/2D Platformer/Assets/Scripts/Destroyer.cs",
+		"/Volumes/Data/workspaces/monsys/server/zzigbee_handler.cc",
+		"/Volumes/Data/workspaces/monsys/libframework/zmodule.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zsession.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client_session.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zdispatcher.cc",
+		"/Volumes/Data/workspaces/monsys/server/module.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client_handler.cc",
+		"/Volumes/Data/workspaces/monsys/server/zzigbee_session.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zinner_message.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zdispatcher.h",
+		"/Volumes/Data/workspaces/monsys/server/zinner_message_ex.h",
+		"/Volumes/Data/workspaces/monsys/server/zserial.cc",
+		"/Volumes/Data/workspaces/monsys/server/fgw.cc",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client_handler.h",
+		"/Volumes/Data/workspaces/monsys/server/zgenerator.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zsession_ctrl.h",
+		"/Volumes/Data/workspaces/monsys/server/protobuf_convert.cc",
+		"/Volumes/Data/workspaces/monsys/server/protobuf_convert.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zclient.h",
+		"/Volumes/Data/workspaces/monsys/server/Makefile",
+		"/Volumes/Data/workspaces/monsys/server/fgw.mk",
+		"/Volumes/Data/workspaces/monsys/libzigbee/zzigbee_message.h",
+		"/Volumes/Data/workspaces/monsys/server/zzigbee_handler.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client_session.cc",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client.session.cc",
+		"/Volumes/Data/workspaces/monsys/libzigbee/zb_msg.h",
+		"/Volumes/Data/workspaces/monsys/server/push.pb.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_server_handler.cc",
+		"/Volumes/Data/workspaces/monsys/server/fgw_server_handler.h",
+		"/Volumes/Data/workspaces/monsys/server/fgw_session.h",
+		"/Volumes/Data/workspaces/monsys/protocol/push.proto",
+		"/Volumes/Data/workspaces/monsys/protocol/route.proto",
+		"/Volumes/Data/workspaces/monsys/server/java/MonsysServer/run.sh",
+		"/Volumes/Data/workspaces/monsys/server/push.pb.cc",
+		"/Volumes/Data/workspaces/monsys/server/protobuf_helper.h",
+		"/Volumes/Data/workspaces/monsys/doc/algorithm.md",
+		"/Volumes/Data/workspaces/monsys/server/protobuf_helper.cc",
+		"/Volumes/Data/workspaces/monsys/server/java/MonsysServer/push.proto",
+		"/Volumes/Data/workspaces/monsys/server/java/MonsysServer/route.proto",
+		"/Volumes/Data/workspaces/monsys/libzigbee/zbdefines.h",
+		"/Volumes/Data/workspaces/monsys/server/webapi_msg.cc",
+		"/Volumes/Data/workspaces/monsys/server/zwebapi_handler.cc",
+		"/Volumes/Data/workspaces/monsys/database/monsys_db.sql",
+		"/Volumes/Data/Download/speed_up/data/ip-down",
+		"/Volumes/Data/workspaces/monsys/server/zwebapi_handler.h",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/repeated_field.h",
+		"/Volumes/Data/workspaces/monsys/server/zinner_message_ex.cc",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/message_lite.h",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/io/coded_stream.h",
+		"/Volumes/Data/workspaces/monsys/server/webapi_msg.h",
+		"/Volumes/Data/workspaces/monsys/server/push_msg.cc",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/message.h",
+		"/Volumes/Data/workspaces/monsys/server/protocol_helper.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zclient_handler.h",
+		"/Volumes/Data/workspaces/monsys/libframework/zhandler.h",
+		"/Volumes/Data/workspaces/monsys/server/center.cc",
+		"/Volumes/Data/workspaces/monsys/server/zconfig.h",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/wire_format_lite_inl.h",
+		"/Volumes/Data/workspaces/monsys/libs/include/google/protobuf/wire_format_lite.h",
+		"/Volumes/Data/workspaces/monsys/server/python/webapi_server.py",
+		"/Volumes/Data/workspaces/monsys/server/todo.txt",
+		"/Volumes/Data/workspaces/monsys/server/python/msg.py",
+		"/Volumes/Data/workspaces/monsys/server/python/dispatcher.py",
+		"/Volumes/Data/workspaces/monsys/server/fgw_client.cc",
+		"/Volumes/Data/workspaces/monsys/libframework/zclient.cc",
+		"/Volumes/Data/workspaces/monsys/server/python/fgw_server.py",
+		"/Volumes/Data/workspaces/monsys/interface.txt",
+		"/Volumes/Data/Documents/yangfengrong/denwa.txt",
+		"/Volumes/Data/workspaces/monsys/server/python/fgw_manager.py",
+		"/Volumes/Data/workspaces/monsys/server/python/center.py",
+		"/Volumes/Data/workspaces/monsys/server/python/env.py",
+		"/Volumes/Data/workspaces/monsys/web/python/monsys.py",
+		"/Volumes/Data/workspaces/monsys/server/python/database.py",
+		"/Volumes/Data/workspaces/monsys/server/python/simple_handler.py",
+		"/Volumes/Data/workspaces/monsys/server/python/session.py",
+		"/Volumes/Data/workspaces/monsys/design/interface.md",
+		"/Volumes/Data/workspaces/monsys/design/server.txt",
+		"/Volumes/Data/Documents/yangfengrong/reply_2014-04-21.txt",
+		"/Volumes/Data/Documents/yangfengrong/yangfengrong_00211847_y00211847.txt",
+		"/Volumes/Data/Documents/yangfengrong/call_2014-04-20.txt",
+		"/Volumes/VAR/mushishi_and_natsumeyuujinchou.txt",
+		"/Volumes/Data/workspaces/monsys/tools/flickr_fetcher.py",
+		"/Volumes/Data/workspaces/monsys/server/python/context.py",
+		"/Volumes/Data/workspaces/monsys/libzigbee/zzigbee_message.cc",
+		"/Volumes/Data/workspaces/monsys/server/zwebapi_session.h",
+		"/Volumes/Data/workspaces/monsys/libzigbee/zbdevice_manager.cc",
+		"/Volumes/Data/workspaces/monsys/server/fgw_server.cc",
+		"/Volumes/Data/Documents/yangfengrong/TO_YFR.txt",
+		"/Volumes/Data/workspaces/monsys/server/zb_stream.cc",
+		"/Volumes/Data/workspaces/monsys/server/zb_stream.h",
+		"/Volumes/Data/workspaces/monsys/server/python/log.py",
+		"/Volumes/Data/workspaces/monsys/doc/python/gevent.md",
+		"/Volumes/Data/workspaces/monsys/libframework/zdata_buffer.h",
+		"/Volumes/Data/workspaces/monsys/server/test_zbstream.cc",
+		"/Volumes/Data/workspaces/monsys/server/python/core_wireless_control.py",
+		"/Volumes/Data/workspaces/monsys/server/python/fgw.py",
+		"/Volumes/Data/workspaces/monsys/server/python/fgw_client.py",
+		"/Volumes/Data/workspaces/monsys/server/python/module_define.py",
+		"/Volumes/Data/workspaces/monsys/server/python/simple_client.py",
+		"/Volumes/Data/workspaces/monsys/server/python/simple_server.py",
+		"/Volumes/Data/workspaces/monsys/libframework/ztimer.h",
+		"/Volumes/Data/workspaces/python/kaa.py",
+		"/Volumes/Data/workspaces/monsys/server/python/test.py",
+		"/Volumes/Data/workspaces/monsys/server/python/util.py",
+		"/Volumes/Data/workspaces/monsys/server/python/logger.py",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/User/Python.sublime-settings",
+		"/Volumes/Data/workspaces/monsys/doc/mysql.md",
+		"/Volumes/Data/workspaces/monsys/mysqltest.cc",
+		"/Volumes/Data/Documents/yangfengrong/hate.txt",
+		"/Volumes/VAR/learning/纸牌屋/纸牌屋（BBC）.House.of.Cards.S01E01.BluRay.Chi_Eng-深影字幕组.srt",
+		"/Volumes/VAR/learning/纸牌屋/纸牌屋（BBC）.House.of.Cards.S01E03.BluRay.Chi_Eng-深影字幕组.srt",
+		"/Volumes/Data/workspaces/monsys/server/dispatcher.py",
+		"/Volumes/Data/workspaces/monsys/server/simple_server.py",
+		"/Volumes/Data/workspaces/monsys/server/center.py",
+		"/Volumes/Data/workspaces/monsys/server/webapi_server.py",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Volumes/Data/workspaces/monsys/monsys.sublime-project",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/DashDoc/Default (OSX).sublime-keymap",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/DashDoc/DashDoc.sublime-settings",
+		"/Users/zero/Library/Application Support/Sublime Text 2/Packages/User/DashDoc.sublime-settings",
+		"/Volumes/Data/workspaces/e5730/info.txt"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"*.h, *.cc",
+			"server/*.h,server/*.cc",
+			"*.h,*.cc",
+			"*.h *.cc",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"long",
+			"size_t",
+			"p",
+			"line",
+			"buf",
+			"fgw",
+			"delete",
+			"msg",
+			"request",
+			"session",
+			"static",
+			"FGWClientForwardSession",
+			"ZInnerMsg",
+			"INIT",
+			"out_buf_",
+			"FGWClientLoginSession",
+			"FGWClientForwardSession",
+			"timer_",
+			"inner",
+			"id_generator_",
+			"ZSession",
+			"arguments",
+			"FGWClientSession",
+			"XXX",
+			"session_ctrl_",
+			"T_Key1",
+			"PushLoginSession",
+			"fgwLogin",
+			"createSession",
+			"~PushMsg",
+			"8765",
+			"ReqTokenRsp",
+			"ReqToken",
+			"ZInnerGetDevInfoRsp",
+			"->",
+			"debugg",
+			"ZItemPair",
+			"createLoginReq",
+			"ZInnerMsg",
+			"null",
+			"repeat",
+			"PUshMsg",
+			"Connect",
+			"CodedOutputStream",
+			"buf",
+			"send",
+			"encode_len",
+			"buf_len",
+			"varint",
+			"fgwLogin",
+			"job",
+			"_conn",
+			"GetDevInfoSession",
+			"is",
+			"session",
+			"ext_seq",
+			"session",
+			"se s si o n",
+			"dispatcher.send",
+			"dispatcher",
+			"self.addr",
+			"dispatcher.send",
+			"msg",
+			"_fgw_id",
+			"check_user_and_fgw",
+			"_dispatcher",
+			"env",
+			"_dispatcher",
+			"dispatcher",
+			"ZZBBindReq",
+			"\"ext-key\"",
+			"\"key\"",
+			"\"ext-key\"",
+			"\"key\"",
+			"StdoutHandler",
+			"processLoginRsp",
+			"STATE_UNREGISTERED",
+			"jstatus",
+			"jst",
+			"conn",
+			"login",
+			"_STATE_INIT",
+			"wide with",
+			"print",
+			"logger",
+			";",
+			"data",
+			"print",
+			"h",
+			"zigbee_handler",
+			"sendmsg",
+			"sendMsg",
+			"msg_list",
+			"msg_list_",
+			"sen",
+			"send",
+			"jobj",
+			"session",
+			"ZInnerGetDevListReq",
+			"fgw-id",
+			"rv",
+			"ZInnerPreBindReq",
+			"ZInnerPreBindRsp",
+			"inner_msg",
+			"json2InnerBindReq",
+			"jcmd",
+			"ZInnerPreBindReq",
+			"ZInnerPreBindRsp",
+			"ZInnerPreBindReq",
+			"ZInnerGetDevInfoRsp",
+			"ZInnerGetDevInfoReq",
+			"width",
+			"g_timer_text",
+			"text",
+			"g_noti_block",
+			"noti_block",
+			"g_setting",
+			"setting",
+			"p",
+			"h1",
+			"noti_block",
+			"BindHandler",
+			"strip",
+			"rv",
+			"register",
+			"get_secure",
+			"signin",
+			"json_to_html"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Z_LOG_D",
+			"",
+			"Z_LOG_D",
+			". ",
+			", ",
+			"Z_LOG_D",
+			"long"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "server/protobuf_convert.cc",
+					"settings":
+					{
+						"buffer_size": 3744,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								149,
+								149
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "server/fgw_client_handler.cc",
+					"settings":
+					{
+						"buffer_size": 6192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1088,
+								1088
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 598.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "server/zconfig.h",
+					"settings":
+					{
+						"buffer_size": 876,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								567,
+								567
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "libbase/zstring.c",
+					"settings":
+					{
+						"buffer_size": 2054,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1480,
+								1480
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1327.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server/fgw_client_session.h",
+					"settings":
+					{
+						"buffer_size": 2729,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								254,
+								254
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "server/fgw.cc",
+					"settings":
+					{
+						"buffer_size": 2448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1430,
+								1430
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 496.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 6,
+					"file": "server/config.cfg",
+					"settings":
+					{
+						"buffer_size": 177,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								136,
+								136
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "server/zconfig.cc",
+					"settings":
+					{
+						"buffer_size": 988,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								955,
+								955
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/usr/include/c++/4.2.1/fstream",
+					"settings":
+					{
+						"buffer_size": 25760,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								17068,
+								17068
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8763.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "libbase/zstring.h",
+					"settings":
+					{
+						"buffer_size": 532,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "libbase/zstring.c",
+					"settings":
+					{
+						"buffer_size": 2054,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								318,
+								318
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.377657255901,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.clang":
+	{
+		"height": 237.0
+	},
+	"output.exec":
+	{
+		"height": 275.0
+	},
+	"output.markdown":
+	{
+		"height": 112.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"zstring.c",
+				"libbase/zstring.c"
+			],
+			[
+				"zstring.h",
+				"libbase/zstring.h"
+			],
+			[
+				"fgw",
+				"server/fgw.cc"
+			],
+			[
+				"zigbeesession",
+				"server/zzigbee_session.h"
+			],
+			[
+				"zigbeehand",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"fgwsession",
+				"server/fgw_client_session.h"
+			],
+			[
+				"config.cfg",
+				"server/config.cfg"
+			],
+			[
+				"serverconfig",
+				"server/zconfig.h"
+			],
+			[
+				"fgwclienthand",
+				"server/fgw_client_handler.cc"
+			],
+			[
+				"protobuf",
+				"server/protobuf_convert.cc"
+			],
+			[
+				"fgw.cc",
+				"server/fgw.cc"
+			],
+			[
+				"zserial",
+				"server/zserial.cc"
+			],
+			[
+				"zmodule",
+				"libframework/zmodule.h"
+			],
+			[
+				"zinner",
+				"server/zinner_message_ex.h"
+			],
+			[
+				"zsession",
+				"libframework/zsession.h"
+			],
+			[
+				"fgwclientses",
+				"server/fgw_client_session.h"
+			],
+			[
+				"zigbee",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"zdis",
+				"libframework/zdispatcher.h"
+			],
+			[
+				"fgwclient",
+				"server/fgw_client.h"
+			],
+			[
+				"make",
+				"server/Makefile"
+			],
+			[
+				"fgw.mk",
+				"server/fgw.mk"
+			],
+			[
+				"fgw_client",
+				"server/fgw_client_session.cc"
+			],
+			[
+				"zbmsg",
+				"libzigbee/zb_msg.h"
+			],
+			[
+				"zigbeesess",
+				"server/zzigbee_session.h"
+			],
+			[
+				"zdispa",
+				"libframework/zdispatcher.h"
+			],
+			[
+				"pro",
+				"server/protobuf_convert.h"
+			],
+			[
+				"proto",
+				"server/protobuf_convert.cc"
+			],
+			[
+				"push",
+				"server/push.pb.h"
+			],
+			[
+				"fgw_sere",
+				"server/fgw_server_handler.cc"
+			],
+			[
+				"fgw_client_hand",
+				"server/fgw_client_handler.h"
+			],
+			[
+				"prohelp",
+				"server/protobuf_helper.cc"
+			],
+			[
+				"conver",
+				"server/protobuf_convert.cc"
+			],
+			[
+				"fgwclienthan",
+				"server/fgw_client_handler.h"
+			],
+			[
+				"fgw.",
+				"server/fgw.cc"
+			],
+			[
+				"run.sh",
+				"server/java/MonsysServer/run.sh"
+			],
+			[
+				"webapi_",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"fgw_server",
+				"server/fgw_server_handler.cc"
+			],
+			[
+				"push.prot",
+				"server/java/MonsysServer/push.proto"
+			],
+			[
+				"zigbee_handl",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"zigbee_hand",
+				"server/zzigbee_handler.h"
+			],
+			[
+				"fgw_cli",
+				"server/fgw_client_handler.cc"
+			],
+			[
+				"zinn",
+				"server/zinner_message_ex.h"
+			],
+			[
+				"web",
+				"server/webapi_msg.cc"
+			],
+			[
+				"fgw_client_sess",
+				"server/fgw_client_session.h"
+			],
+			[
+				"prot",
+				"server/protobuf_helper.h"
+			],
+			[
+				"webapi",
+				"server/webapi_msg.h"
+			],
+			[
+				"push.pb",
+				"server/push.pb.cc"
+			],
+			[
+				"push.",
+				"server/push.pb.h"
+			],
+			[
+				"coded_strea",
+				"libs/include/google/protobuf/io/coded_stream.h"
+			],
+			[
+				"protobuf_h",
+				"server/protobuf_helper.h"
+			],
+			[
+				"fgw_server_ha",
+				"server/fgw_server_handler.h"
+			],
+			[
+				"push.pbcc",
+				"server/push.pb.cc"
+			],
+			[
+				"zconfig",
+				"server/zconfig.h"
+			],
+			[
+				"center",
+				"server/center.cc"
+			],
+			[
+				"message.h",
+				"libs/include/google/protobuf/message.h"
+			],
+			[
+				"push.pb.h",
+				"server/push.pb.h"
+			],
+			[
+				"sim",
+				"server/python/simple_handler.py"
+			],
+			[
+				"databasepy",
+				"server/python/database.py"
+			],
+			[
+				"fgw_server.py",
+				"server/python/fgw_server.py"
+			],
+			[
+				"session.py",
+				"server/python/session.py"
+			],
+			[
+				"zclient",
+				"libframework/zclient.cc"
+			],
+			[
+				"fgw_client.cc",
+				"server/fgw_client.cc"
+			],
+			[
+				"dispatcher.py",
+				"server/python/dispatcher.py"
+			],
+			[
+				"simp",
+				"server/python/simple_handler.py"
+			],
+			[
+				"webapi_server",
+				"server/python/webapi_server.py"
+			],
+			[
+				"center.py",
+				"server/python/center.py"
+			],
+			[
+				"todo",
+				"server/todo.txt"
+			],
+			[
+				"zigbeemessage",
+				"libzigbee/zzigbee_message.cc"
+			],
+			[
+				"zigbeehandl",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"database",
+				"server/python/database.py"
+			],
+			[
+				"zbdev",
+				"libzigbee/zbdevice_manager.cc"
+			],
+			[
+				"fgw_clienthand",
+				"server/fgw_client_handler.cc"
+			],
+			[
+				"monsys.py",
+				"web/python/monsys.py"
+			],
+			[
+				"inter",
+				"interface.txt"
+			],
+			[
+				"dispatch",
+				"server/python/dispatcher.py"
+			],
+			[
+				"fgw_server.p",
+				"server/python/fgw_server.py"
+			],
+			[
+				"webapi_hand",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"fgw_server_han",
+				"server/fgw_server_handler.cc"
+			],
+			[
+				"zbdef",
+				"libzigbee/zbdefines.h"
+			],
+			[
+				"zigbee_message",
+				"libzigbee/zzigbee_message.cc"
+			],
+			[
+				"zdevi",
+				"libzigbee/zbdevice_manager.cc"
+			],
+			[
+				"zbstream.h",
+				"server/zb_stream.h"
+			],
+			[
+				"zbstr",
+				"server/zb_stream.cc"
+			],
+			[
+				"zzigbee_mess",
+				"libzigbee/zzigbee_message.h"
+			],
+			[
+				"zb_m",
+				"libzigbee/zb_msg.h"
+			],
+			[
+				"module",
+				"server/module.h"
+			],
+			[
+				"zdata",
+				"libframework/zdata_buffer.h"
+			],
+			[
+				"test_z",
+				"server/test_zbstream.cc"
+			],
+			[
+				"zbstream",
+				"server/zb_stream.cc"
+			],
+			[
+				"webapiserver",
+				"server/python/webapi_server.py"
+			],
+			[
+				"zigbee_han",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"dispa",
+				"server/python/dispatcher.py"
+			],
+			[
+				"log.py",
+				"server/python/log.py"
+			],
+			[
+				"simple_ha",
+				"server/python/simple_handler.py"
+			],
+			[
+				"cen",
+				"server/center.cc"
+			],
+			[
+				"webserver",
+				"server/python/webapi_server.py"
+			],
+			[
+				"fgw_serverpy",
+				"server/python/fgw_server.py"
+			],
+			[
+				"zigbe",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"serial",
+				"server/zserial.cc"
+			],
+			[
+				"webms",
+				"server/webapi_msg.cc"
+			],
+			[
+				"fgw_server_hand",
+				"server/fgw_server_handler.h"
+			],
+			[
+				"test.py",
+				"server/python/test.py"
+			],
+			[
+				"my",
+				"mysqltest.cc"
+			],
+			[
+				"webmsg",
+				"server/webapi_msg.cc"
+			],
+			[
+				"webapi_han",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"dis",
+				"server/dispatcher.py"
+			],
+			[
+				"webapi_ser",
+				"server/webapi_server.py"
+			],
+			[
+				"center.p",
+				"server/center.py"
+			],
+			[
+				"webapi_handl",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"webapimsg",
+				"server/webapi_msg.cc"
+			],
+			[
+				"zwebapi_handler",
+				"server/zwebapi_handler.h"
+			],
+			[
+				"zwebapihandl",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"zwebapi",
+				"server/zwebapi_handler.cc"
+			],
+			[
+				"zzigbee_hand",
+				"server/zzigbee_handler.cc"
+			],
+			[
+				"zclient_han",
+				"libframework/zclient_handler.h"
+			],
+			[
+				"zzigbee_mod",
+				"server/zzigbee_module.h"
+			],
+			[
+				"zserver",
+				"libframework/zserver.cc"
+			],
+			[
+				"zserver.h",
+				"libframework/zserver.h"
+			],
+			[
+				"zdisp",
+				"libframework/zdispatcher.h"
+			],
+			[
+				"zclien",
+				"libframework/zclient.cc"
+			],
+			[
+				"zclient.h",
+				"libframework/zclient.h"
+			],
+			[
+				"zmodu",
+				"libframework/zmodule.h"
+			],
+			[
+				"fgw_clie",
+				"server/fgw_client.h"
+			],
+			[
+				"fgw_sess",
+				"server/fgw_session.h"
+			],
+			[
+				"zigbeesessio",
+				"server/zzigbee_session.h"
+			],
+			[
+				"fgw_client_handler",
+				"server/fgw_client_handler.h"
+			],
+			[
+				"fgw_client_se",
+				"server/fgw_client_session.h"
+			],
+			[
+				"fgwma",
+				"server/fgw_manager.cc"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 235.0,
+	"status_bar_visible": true
+}

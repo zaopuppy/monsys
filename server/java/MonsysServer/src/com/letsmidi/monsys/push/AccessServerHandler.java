@@ -1,14 +1,24 @@
 package com.letsmidi.monsys.push;
 
-import com.letsmidi.monsys.database.Database;
-import com.letsmidi.monsys.protocol.push.Push.*;
+import com.letsmidi.monsys.Config;
+import com.letsmidi.monsys.database.AccountInfo;
+import com.letsmidi.monsys.protocol.push.Push.ClientLogin;
+import com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp;
+import com.letsmidi.monsys.protocol.push.Push.Connect;
+import com.letsmidi.monsys.protocol.push.Push.ConnectRsp;
+import com.letsmidi.monsys.protocol.push.Push.FGatewayInfo;
+import com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp;
+import com.letsmidi.monsys.protocol.push.Push.MsgType;
+import com.letsmidi.monsys.protocol.push.Push.PushMsg;
+import com.letsmidi.monsys.protocol.push.Push.UserRegister;
+import com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp;
+import com.letsmidi.monsys.util.HibernateUtil;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.HashedWheelTimer;
+import org.hibernate.Session;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -22,13 +32,23 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
   private enum State {
     STATE_WAIT_FOR_LOGIN,
     STATE_LOGGED_IN,
-  };
+  }
 
   private static final int RECONNECT_WAIT_TIME = 5; // in seconds
 
   private State mState = State.STATE_WAIT_FOR_LOGIN;
   private String mFgwList = null;
-  private final Logger mLogger = Logger.getLogger(PushServer.LOGGER_NAME);
+
+  //private final HashedWheelTimer mTimer;
+  //private final SessionManager<Integer> mSessionManager;
+  //private IdGenerator mIdGenerator = new IdGenerator(1, 0xFFFFFF);
+
+  private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
+
+  public AccessServerHandler(HashedWheelTimer timer) {
+    //mTimer = timer;
+    //mSessionManager = new SessionManager<>(timer);
+  }
 
   @Override
   public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -58,9 +78,20 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     }
   }
 
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    cause.printStackTrace();
+    mLogger.severe(cause.toString());
+    mLogger.severe("msg: " + cause.getMessage());
+    super.exceptionCaught(ctx, cause);
+  }
+
   private void onRead_WaitForLogin(ChannelHandlerContext ctx, PushMsg msg) {
     mLogger.info("onRead_WaitForLogin()");
     switch (msg.getType()) {
+      case USER_REGISTER:
+        processUserRegister(ctx, msg);
+        break;
       case CLIENT_LOGIN:
         processClientLogin(ctx, msg);
         break;
@@ -87,15 +118,95 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     }
   }
 
+  private void processUserRegister(ChannelHandlerContext ctx, PushMsg msg) {
+    if (msg.getType() != MsgType.USER_REGISTER || !msg.hasUserRegister()) {
+      mLogger.severe("Bad request: " + msg.getType());
+      ctx.close();
+      return;
+    }
+
+    UserRegister user_register = msg.getUserRegister();
+
+    // check arguments
+    if (user_register.getAccount().length() < 3 ||
+        user_register.getPassword().length() < 3 ||
+        user_register.getNickname().length() < 3) {
+      mLogger.severe("Bad parameters");
+      ctx.close();
+      return;
+    }
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+
+    try {
+      AccountInfo account_info =
+          (AccountInfo) session.get(AccountInfo.class, user_register.getAccount());
+      if (account_info != null) {
+        mLogger.warning("account already exists: " + user_register.getAccount());
+        ctx.close();
+        return;
+      }
+
+      // TODO: mail server is needed for mail validation
+      //TempAccountInfo temp_account_info =
+      //    (TempAccountInfo) session.load(TempAccountInfo.class, user_register.getAccount());
+      //if (temp_account_info != null) {
+      //  mLogger.warning("this account is waiting for activate");
+      //  ctx.close();
+      //  return;
+      //}
+      //
+      //mLogger.info("account doesn't exist");
+      //
+      //// insert into temp table
+      //temp_account_info = new TempAccountInfo();
+      //temp_account_info.setAccount(user_register.getAccount());
+      //temp_account_info.setPassword(user_register.getPassword());
+      //temp_account_info.setNickname(user_register.getNickname());
+      //temp_account_info.setSalt("abc");
+      //temp_account_info.setExpire(new Date());
+      //session.beginTransaction();
+      //session.save(temp_account_info);
+      //session.getTransaction().commit();
+      //
+      //// send mail (use message queue)
+      //sendEmail();
+
+      account_info = new AccountInfo();
+      account_info.setAccount(user_register.getAccount());
+      account_info.setPassword(user_register.getPassword());
+      account_info.setNickname(user_register.getNickname());
+      account_info.setFgwList("");
+      account_info.setSalt("abc");
+      account_info.setStatus(AccountInfo.Status.NORMAL.value());
+
+      session.beginTransaction();
+      session.save(account_info);
+      session.getTransaction().commit();
+
+      mLogger.info("new account added");
+
+      sendUserRegisterRsp(ctx, msg, 0);
+
+      // done
+    } finally {
+      session.close();
+    }
+  }
+
+  // TODO: use stand-alone thread/process/module instead of sending directly
+  //private void sendEmail() {
+  //  String validate_url = "";
+  //}
+
   private void processGetFgwList(ChannelHandlerContext ctx, PushMsg msg) {
     mLogger.info("processGetFgwList");
     if (!msg.hasGetFgwList()) {
       return;
     }
 
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.GET_FGW_LIST_RSP);
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.GET_FGW_LIST_RSP);
+    builder.setSequence(builder.getSequence());
 
     GetFgwListRsp.Builder rsp = GetFgwListRsp.newBuilder();
     rsp.setCode(0);
@@ -118,13 +229,15 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
   private class WaitForFgwTask implements Runnable {
     private final String mDeviceId;
     private final ChannelHandlerContext mContext;
-    private final Logger mLogger = Logger.getLogger(PushServer.LOGGER_NAME);
+    private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
     private int mRetryTimes;
+    private final PushMsg mMsg;
 
-    public WaitForFgwTask(ChannelHandlerContext ctx, String device_id, int retry_times) {
+    public WaitForFgwTask(ChannelHandlerContext ctx, PushMsg msg, String device_id, int retry_times) {
       mContext = ctx;
       mDeviceId = device_id;
       mRetryTimes = retry_times;
+      mMsg = msg;
     }
 
     @Override
@@ -136,7 +249,7 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
       }
       --mRetryTimes;
 
-      ChannelManager.FgwInfo fgw_again = ChannelManager.INSTANCE.find(mDeviceId);
+      PushChannelManager.FgwInfo fgw_again = PushChannelManager.INSTANCE.find(mDeviceId);
       if (fgw_again == null) {
         mLogger.severe("fgw still not connected");
         // mContext.close();
@@ -150,7 +263,7 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
         return;
       }
 
-      setupRelayChannels(mContext, fgw_again);
+      setupRelayChannels(mContext, mMsg, fgw_again);
     }
   }
 
@@ -167,7 +280,7 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     final String device_id = connect_req.getDeviceId();
 
-    ChannelManager.FgwInfo fgw = ChannelManager.INSTANCE.find(device_id);
+    PushChannelManager.FgwInfo fgw = PushChannelManager.INSTANCE.find(device_id);
     if (fgw == null) {
       mLogger.severe("gw not connected yet");
       ctx.close();
@@ -181,14 +294,14 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
       mLogger.info("close existing client channel then wait");
       fgw.channel.close();
       // ctx.executor().schedule(new WaitForFgwTask(ctx, device_id, 2), RECONNECT_WAIT_TIME, TimeUnit.SECONDS);
-      new WaitForFgwTask(ctx, device_id, 2).run();
+      new WaitForFgwTask(ctx, msg, device_id, 2).run();
       return;
     }
 
-    setupRelayChannels(ctx, fgw);
+    setupRelayChannels(ctx, msg, fgw);
   }
 
-  private void setupRelayChannels(final ChannelHandlerContext ctx, ChannelManager.FgwInfo fgw) {
+  private void setupRelayChannels(final ChannelHandlerContext ctx, PushMsg msg, PushChannelManager.FgwInfo fgw) {
     fgw.channel.pipeline().remove(PushServerHandler.class);
     fgw.channel.pipeline().addLast(new FgwRelayHandler(ctx.channel()));
 
@@ -198,13 +311,12 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     handler.setFgwList(this.mFgwList);
     ctx.channel().pipeline().addLast(handler);
 
-    sendConnectRsp(ctx, 0);
+    sendConnectRsp(ctx, msg, 0);
   }
 
   private void processClientLogin(ChannelHandlerContext ctx, PushMsg msg) {
     mLogger.info("processClientLogin()");
 
-    // --- FOR DEBUGGING ONLY ---
     if (msg.getType() != MsgType.CLIENT_LOGIN || !msg.hasClientLogin()) {
       mLogger.severe("ClientLogin expected, but received: " + msg.getType());
       ctx.close();
@@ -213,78 +325,74 @@ public class AccessServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     ClientLogin login = msg.getClientLogin();
 
-    Connection conn = null;
-    Statement stmt = null;
-    ResultSet result = null;
+    Session session = HibernateUtil.getSessionFactory().openSession();
+
     try {
-      conn = Database.INSTANCE.getConnection();
-      stmt = conn.createStatement();
-      result = stmt.executeQuery(
-          String.format(
-              "select fgw_list from account_info where account = '%s' and password = '%s'",
-              login.getAccount(), login.getPassword()));
-      if (!result.next()) {
-        mLogger.severe("Empty result set");
+      AccountInfo info = (AccountInfo) session.load(AccountInfo.class, login.getAccount());
+      if (info == null) {
+        mLogger.severe("bad account");
         ctx.close();
         return;
       }
 
-      String fgw_list = result.getString(1);
+      if (!info.getPassword().equals(login.getPassword())) {
+        mLogger.severe("bad password");
+        ctx.close();
+        return;
+      }
+
+      if (info.getStatus() != AccountInfo.Status.NORMAL.value()) {
+        mLogger.severe("account not validated yet");
+        ctx.close();
+        return;
+      }
+
+      String fgw_list = info.getFgwList();
 
       this.mFgwList = fgw_list;
 
-      sendClientLoginRsp(ctx, fgw_list);
+      sendClientLoginRsp(ctx, msg, fgw_list);
 
       setState(State.STATE_LOGGED_IN);
 
-    } catch (SQLException e) {
-      e.printStackTrace();
     } finally {
-      if (result != null) {
-        try { result.close(); } catch (Exception e) { e.printStackTrace(); }
-      }
-      if (stmt != null) {
-        try { stmt.close(); } catch (Exception e) { e.printStackTrace(); }
-      }
-      if (conn != null) {
-        try { conn.close(); } catch (Exception e) { e.printStackTrace(); }
-      }
+      session.close();
     }
+
   }
 
-  private void sendClientLoginRsp(ChannelHandlerContext ctx, String fgw_list) {
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.CLIENT_LOGIN_RSP);
+  private void sendClientLoginRsp(ChannelHandlerContext ctx, PushMsg msg, String fgw_list) {
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CLIENT_LOGIN_RSP);
+    builder.setSequence(msg.getSequence());
 
     ClientLoginRsp.Builder rsp = ClientLoginRsp.newBuilder();
     rsp.setCode(0);
-
-    //        if (fgw_list != null) {
-    //            for (String fgw: fgw_list.split("\\|")) {
-    //                if (fgw.length() <= 0) {
-    //                    continue;
-    //                }
-    //                FGatewayInfo.Builder info = FGatewayInfo.newBuilder();
-    //                info.set
-    //                rsp.addFgwInfos(value);
-    //            }
-    //        }
 
     builder.setClientLoginRsp(rsp);
 
     ctx.writeAndFlush(builder.build());
   }
 
-  private void sendConnectRsp(ChannelHandlerContext ctx, int code) {
-    PushMsg.Builder builder = PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(MsgType.CONNECT_RSP);
+  private void sendConnectRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CONNECT_RSP);
+    builder.setSequence(msg.getSequence());
 
     ConnectRsp.Builder rsp = ConnectRsp.newBuilder();
     rsp.setCode(code);
 
     builder.setConnectRsp(rsp);
+
+    ctx.writeAndFlush(builder.build());
+  }
+
+  private void sendUserRegisterRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
+    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.USER_REGISTER_RSP);
+    builder.setSequence(msg.getSequence());
+
+    UserRegisterRsp.Builder rsp = UserRegisterRsp.newBuilder();
+    rsp.setCode(code);
+
+    builder.setUserRegisterRsp(rsp);
 
     ctx.writeAndFlush(builder.build());
   }

@@ -48,10 +48,6 @@ int ZZigBeeHandler::onInnerMsg(ZInnerMsg *msg)
 
 void ZZigBeeHandler::routine(long delta)
 {
-  // --- FOR DEBUGGING ONLY ---
-  return;
-  // --- FOR DEBUGGING ONLY ---
-
   // Z_LOG_D("ZZigBeeHandler::routine()");
 
   ZZigBeeSession *session;
@@ -349,6 +345,14 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevListReq *msg)
   rsp->seq_ = msg->seq_;
   rsp->dst_addr_ = msg->src_addr_;
 
+  Z_LOG_D("request from: (type=%d, id=%d)",
+    msg->src_addr_.module_type_,
+    msg->src_addr_.handler_id_);
+
+  Z_LOG_D("response to: (type=%d, id=%d)",
+    rsp->dst_addr_.module_type_,
+    rsp->dst_addr_.handler_id_);
+
   ZZBDevInfo *info = NULL;
 
   // --- for debugging only ---
@@ -400,6 +404,7 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
   // --- for debugging only ---
   {
     ZInnerGetDevInfoRsp *rsp = new ZInnerGetDevInfoRsp();
+    rsp->seq_ = msg->seq_;
     ZItemPair pair;
 
     for (uint32_t i = 0; i < msg->item_ids_.size(); ++i)
@@ -431,8 +436,8 @@ int ZZigBeeHandler::processMsg(ZInnerGetDevInfoReq *msg)
   // save session
   {
     // TODO: get inner sequence from ZBGet
-    ZZigBeeSession *session = new ZZigBeeSession();
-    session->setKey(msg->seq_);
+    ZZigBeeSession *session = new ZZigBeeSession(msg->seq_);
+    // session->setKey(msg->seq_);
     session->src_addr_ = msg->src_addr_;
     session->dst_addr_ = msg->dst_addr_;
     // session->extern_key_.u32 = (req.addr_ << 16) | 0x00;
@@ -461,6 +466,7 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
 
   // -- for debugging only --
   ZInnerSetDevInfoRsp *rsp = new ZInnerSetDevInfoRsp();
+  rsp->seq_ = msg->seq_;
   rsp->status_ = 0;
   rsp->dst_addr_ = msg->src_addr_;
   ZDispatcher::instance()->sendDirect(rsp);
@@ -500,8 +506,8 @@ int ZZigBeeHandler::processMsg(ZInnerSetDevInfoReq *msg)
     // save session
     {
       // TODO: get inner sequence from ZBGet
-      ZZigBeeSession *session = new ZZigBeeSession();
-      session->setKey(msg->seq_);
+      ZZigBeeSession *session = new ZZigBeeSession(msg->seq_);
+      // session->setKey(msg->seq_);
       session->src_addr_ = msg->src_addr_;
       session->dst_addr_ = msg->dst_addr_;
 
@@ -537,8 +543,8 @@ int ZZigBeeHandler::processMsg(ZInnerBindReq *msg)
     Z_LOG_D("write over");
     {
       // TODO: get inner sequence from ZBGet
-      ZZigBeeSession *session = new ZZigBeeSession();
-      session->setKey(msg->seq_);
+      ZZigBeeSession *session = new ZZigBeeSession(msg->seq_);
+      // session->setKey(msg->seq_);
       session->src_addr_ = msg->src_addr_;
       session->dst_addr_ = msg->dst_addr_;
 
