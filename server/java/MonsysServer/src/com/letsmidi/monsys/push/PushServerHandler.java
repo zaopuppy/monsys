@@ -16,11 +16,11 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
   private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 
   private enum STATE {
-    WAITING_FOR_REG,
-    REGISTERED,
+    WAITING_FOR_LOGIN,
+    LOGGED_IN,
   }
 
-  private STATE mState = STATE.WAITING_FOR_REG;
+  private STATE mState = STATE.WAITING_FOR_LOGIN;
 
   //private final SessionManager<Integer> mSessionManager;
 
@@ -30,17 +30,16 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
   @Override
   protected void channelRead0(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-    // System.out.println("received: [" + msg.getType().name() + "]");
     mLogger.info("current state: " + mState.name());
     switch (mState) {
-      case WAITING_FOR_REG:
+      case WAITING_FOR_LOGIN:
       {
-        onWaitingForReg(ctx, msg);
+        onWaitingForLogin(ctx, msg);
         break;
       }
-      case REGISTERED:
+      case LOGGED_IN:
       {
-        onRegistered(ctx, msg);
+        onLoggedIn(ctx, msg);
         break;
       }
       default:
@@ -48,8 +47,8 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     }
   }
 
-  private void onWaitingForReg(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-    mLogger.info("onWaitingForReg: " + msg.getType());
+  private void onWaitingForLogin(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
+    mLogger.info("onWaitingForLogin: " + msg.getType());
     if (!msg.getType().equals(MsgType.LOGIN) || !msg.hasLogin()) {
       mLogger.severe("Loggin first please");
       ctx.close();
@@ -63,7 +62,7 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
       return;
     }
 
-    mState = STATE.REGISTERED;
+    mState = STATE.LOGGED_IN;
 
     mLogger.info("Logged in successfully: " + login.getDeviceId());
 
@@ -78,8 +77,8 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     ctx.writeAndFlush(builder.build());
   }
 
-  private void onRegistered(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-    mLogger.info("onRegistered: " + msg.getType());
+  private void onLoggedIn(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
+    mLogger.info("onLoggedIn: " + msg.getType());
   }
 
   @Override

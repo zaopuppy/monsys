@@ -75,7 +75,7 @@ public class PushServer {
         AccountInfo.class,
     };
 
-    // initialize hiberate
+    // initialize hibernate
     if (!HibernateUtil.init(mapping_classes)) {
       mLogger.severe("Failed to initialize hiberate, failed");
       return;
@@ -85,12 +85,13 @@ public class PushServer {
     final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
     timer.start();
 
+    NioEventLoopGroup shared_worker = new NioEventLoopGroup();
+
     // push server
-    NioEventLoopGroup push_boss = new NioEventLoopGroup();
-    NioEventLoopGroup push_worker = new NioEventLoopGroup();
+    NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
 
     ChannelFuture push_future = NettyUtil.startServer(
-        Config.getPushConfig().getPushPort(), push_boss, push_worker,
+        Config.getPushConfig().getPushPort(), push_boss, shared_worker,
         new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
         new ChannelInitializer<SocketChannel>() {
           @Override
@@ -106,11 +107,11 @@ public class PushServer {
     );
 
     // access server
-    NioEventLoopGroup access_boss = new NioEventLoopGroup();
+    NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
     NioEventLoopGroup access_worker = new NioEventLoopGroup();
 
     ChannelFuture access_future = NettyUtil.startServer(
-        Config.getPushConfig().getAccessPort(), access_boss, access_worker,
+        Config.getPushConfig().getAccessPort(), access_boss, shared_worker,
         new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
         new ChannelInitializer<SocketChannel>() {
           @Override
@@ -131,8 +132,9 @@ public class PushServer {
     } catch (InterruptedException e) {
       e.printStackTrace();
     } finally {
+      push_boss.shutdownGracefully();
       access_boss.shutdownGracefully();
-      access_worker.shutdownGracefully();
+      shared_worker.shutdownGracefully();
     }
 
   }

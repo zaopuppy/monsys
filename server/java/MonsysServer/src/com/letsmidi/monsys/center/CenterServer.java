@@ -52,7 +52,7 @@ public class CenterServer {
 
     MyLogger.i("starting route & access server...");
 
-    // initialize hiberate
+    // initialize hibernate
     Class[] mapping_classes = new Class[] {
         AccountInfo.class,
     };
@@ -89,9 +89,10 @@ public class CenterServer {
             Config.getCenterConfig().getPushServerPort()
         );
 
-    ServiceManager.INSTANCE.register(
-        "push",
-        new ServiceManager.ChannelService(center_push_future.channel()));
+    // TODO
+    //ServiceManager.INSTANCE.register(
+    //    "push",
+    //    new ServiceManager.ChannelService(center_push_future.channel()));
 
     // -------------------------------------------------------
     // for connecting to SuperRouter (as CLIENT)
@@ -117,9 +118,10 @@ public class CenterServer {
             Config.getCenterConfig().getRouterServerPort()
         );
 
-    ServiceManager.INSTANCE.register(
-        "router",
-        new ServiceManager.ChannelService(center_router_future.channel()));
+    // TODO
+    //ServiceManager.INSTANCE.register(
+    //    "router",
+    //    new ServiceManager.ChannelService(center_router_future.channel()));
 
     // -------------------------------------------------------
     // for accepting client (as SERVER)
@@ -222,8 +224,8 @@ public class CenterServer {
 
     // initLogger();
 
-    CenterServer route = new CenterServer();
-    route.start();
+    CenterServer server = new CenterServer();
+    server.start();
   }
 
   private static void initLogger() throws IOException {

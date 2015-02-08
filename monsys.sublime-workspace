@@ -560,6 +560,14 @@
 			}
 		},
 		{
+			"file": "libframework/zclient.cc",
+			"settings":
+			{
+				"buffer_size": 6622,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "server/fgw.cc",
 			"settings":
 			{
@@ -596,6 +604,30 @@
 			"settings":
 			{
 				"buffer_size": 532,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/fgw_client.h",
+			"settings":
+			{
+				"buffer_size": 489,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "libframework/zclient.h",
+			"settings":
+			{
+				"buffer_size": 1964,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "doc/misc.md",
+			"settings":
+			{
+				"buffer_size": 375,
 				"line_ending": "Unix"
 			}
 		}
@@ -1030,7 +1062,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -1335,8 +1367,8 @@
 						"selection":
 						[
 							[
-								1480,
-								1480
+								1252,
+								1252
 							]
 						],
 						"settings":
@@ -1445,10 +1477,12 @@
 							},
 							"codeintel_tooltips": "popup",
 							"sublime_auto_complete": true,
-							"syntax": "Packages/C++/C.tmLanguage"
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1327.0,
+						"translation.y": 197.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1587,6 +1621,34 @@
 				},
 				{
 					"buffer": 5,
+					"file": "libframework/zclient.cc",
+					"settings":
+					{
+						"buffer_size": 6622,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6483,
+								6483
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3921.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "server/fgw.cc",
 					"settings":
 					{
@@ -1616,11 +1678,11 @@
 			]
 		},
 		{
-			"selected": 4,
+			"selected": 8,
 			"sheets":
 			[
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "server/config.cfg",
 					"settings":
 					{
@@ -1646,7 +1708,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "server/zconfig.cc",
 					"settings":
 					{
@@ -1767,7 +1829,9 @@
 							},
 							"codeintel_tooltips": "popup",
 							"sublime_auto_complete": true,
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1776,7 +1840,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "/usr/include/c++/4.2.1/fstream",
 					"settings":
 					{
@@ -1804,7 +1868,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 10,
 					"file": "libbase/zstring.h",
 					"settings":
 					{
@@ -1945,8 +2009,8 @@
 						"selection":
 						[
 							[
-								318,
-								318
+								1209,
+								1209
 							]
 						],
 						"settings":
@@ -2058,6 +2122,114 @@
 							"syntax": "Packages/C++/C.tmLanguage"
 						},
 						"translation.x": 0.0,
+						"translation.y": 1091.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "server/fgw.cc",
+					"settings":
+					{
+						"buffer_size": 2448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1706,
+								1706
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 497.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "server/fgw_client.h",
+					"settings":
+					{
+						"buffer_size": 489,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								146,
+								146
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "libframework/zclient.h",
+					"settings":
+					{
+						"buffer_size": 1964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								594,
+								594
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 173.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "doc/misc.md",
+					"settings":
+					{
+						"buffer_size": 375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								373,
+								373
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -2094,7 +2266,7 @@
 		"cols":
 		[
 			0.0,
-			0.377657255901,
+			0.510328515335,
 			1.0
 		],
 		"rows":
@@ -2126,6 +2298,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"mis",
+				"doc/misc.md"
+			],
+			[
+				"zclient",
+				"libframework/zclient.cc"
+			],
+			[
+				"fgw.cc",
+				"server/fgw.cc"
+			],
 			[
 				"zstring.c",
 				"libbase/zstring.c"
@@ -2165,10 +2349,6 @@
 			[
 				"protobuf",
 				"server/protobuf_convert.cc"
-			],
-			[
-				"fgw.cc",
-				"server/fgw.cc"
 			],
 			[
 				"zserial",
@@ -2365,10 +2545,6 @@
 			[
 				"session.py",
 				"server/python/session.py"
-			],
-			[
-				"zclient",
-				"libframework/zclient.cc"
 			],
 			[
 				"fgw_client.cc",
@@ -2633,10 +2809,6 @@
 			[
 				"fgw_client_se",
 				"server/fgw_client_session.h"
-			],
-			[
-				"fgwma",
-				"server/fgw_manager.cc"
 			]
 		],
 		"width": 0.0

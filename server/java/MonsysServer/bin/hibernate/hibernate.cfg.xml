@@ -62,9 +62,9 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
-        <mapping resource="hibernate/Test.hbm.xml"/>
         <!--
         <mapping resource="hibernate/AccountInfo.hbm.xml"/>
+        <mapping resource="hibernate/Test.hbm.xml"/>
         -->
 
         <!--
