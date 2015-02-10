@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.util;
 
+import com.letsmidi.monsys.protocol.Client;
 import com.letsmidi.monsys.protocol.center.Center;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.route.Route;
@@ -8,31 +9,46 @@ import com.letsmidi.monsys.protocol.route.Route;
  * Created by zero on 8/24/14.
  */
 public class MsgUtil {
+    public static final int VERSION = 1;
 
-  public static Center.CenterMsg.Builder newCenterMsgBuilder(Center.MsgType type) {
-    Center.CenterMsg.Builder builder = Center.CenterMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(type);
+    private static final SequenceGenerator mSeqenceGenerator = new SequenceGenerator(1, 0xFFFFFFFE);
 
-    return builder;
-  }
+    public static Client.ClientMsg.Builder newClientMsgBuilder(Client.MsgType type) {
+        Client.ClientMsg.Builder builder = Client.ClientMsg.newBuilder();
+        builder.setVersion(VERSION);
+        builder.setType(type);
+        builder.setSequence(mSeqenceGenerator.next());
 
-  public static Push.PushMsg.Builder newPushMsgBuilder(Push.MsgType type) {
-    Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(type);
-    // TODO: should be various every time
-    //builder.setSequence(4);
+        return builder;
+    }
 
-    return builder;
-  }
+    public static Center.CenterMsg.Builder newCenterMsgBuilder(Center.MsgType type) {
+        Center.CenterMsg.Builder builder = Center.CenterMsg.newBuilder();
+        builder.setVersion(1);
+        builder.setType(type);
+        builder.setSequence(mSeqenceGenerator.next());
 
-  public static Route.RouteMsg.Builder newRouteMsgBuilder(Route.MsgType type) {
-    Route.RouteMsg.Builder builder = Route.RouteMsg.newBuilder();
-    builder.setVersion(1);
-    builder.setType(type);
-    //builder.setSequence(5);
+        return builder;
+    }
 
-    return builder;
-  }
+    public static Push.PushMsg.Builder newPushMsgBuilder(Push.MsgType type) {
+        Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
+        builder.setVersion(1);
+        builder.setType(type);
+        // TODO: should be various every time
+        builder.setSequence(mSeqenceGenerator.next());
+
+        return builder;
+    }
+
+    public static Route.RouteMsg.Builder newRouteMsgBuilder(Route.MsgType type) {
+        Route.RouteMsg.Builder builder = Route.RouteMsg.newBuilder();
+        builder.setVersion(1);
+        builder.setType(type);
+        builder.setSequence(mSeqenceGenerator.next());
+
+        return builder;
+    }
+
+
 }
