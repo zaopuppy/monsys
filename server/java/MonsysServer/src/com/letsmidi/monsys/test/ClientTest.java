@@ -33,6 +33,10 @@ public class ClientTest {
         mRemotePort = remotePort;
     }
 
+    private void log(String msg) {
+        System.out.println(msg);
+    }
+
     public void start() {
         Bootstrap b = new Bootstrap();
         NioEventLoopGroup worker = new NioEventLoopGroup(1);
@@ -75,6 +79,10 @@ public class ClientTest {
             ChannelFuture last_future = null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             for (;;) {
+                if (!ch.isActive()) {
+                    log("disconnected");
+                    break;
+                }
                 String line = reader.readLine().trim();
                 System.out.println("input: [" + line + "]");
                 if (line.equals("exit")) {

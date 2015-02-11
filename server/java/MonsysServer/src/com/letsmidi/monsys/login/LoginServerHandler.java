@@ -9,6 +9,7 @@ import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.HashedWheelTimer;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
 public class LoginServerHandler extends SimpleChannelInboundHandler<Client.ClientMsg> {
@@ -122,7 +123,9 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<Client.Clien
             sendClientLoginRsp(ctx, msg);
 
             setState(STATE.LOGGED_IN);
-
+        } catch (ObjectNotFoundException e) {
+            mLogger.info("not record found");
+            ctx.close();
         } finally {
             session.close();
         }

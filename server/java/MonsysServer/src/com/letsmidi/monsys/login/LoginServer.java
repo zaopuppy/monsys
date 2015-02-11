@@ -8,11 +8,9 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.log.MyLogFormatter;
-import com.letsmidi.monsys.protocol.push.Push.PushMsg;
-import com.letsmidi.monsys.push.AccessServerHandler;
+import com.letsmidi.monsys.protocol.Client;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.NettyUtil;
@@ -107,7 +105,7 @@ public class LoginServer {
                                 new ProtobufVarint32LengthFieldPrepender(),
                                 new ProtobufVarint32FrameDecoder(),
                                 new ProtobufEncoder(),
-                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                                new ProtobufDecoder(Client.ClientMsg.getDefaultInstance()),
                                 new LoginServerHandler(timer));
                     }
                 }
