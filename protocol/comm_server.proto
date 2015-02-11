@@ -1,0 +1,33 @@
+package com.letsmidi.monsys.protocol.commserver;
+
+enum MsgType {
+  HEARTBEAT     = 1;
+
+  REGISTER      = 3;
+  REGISTER_RSP  = 4;
+}
+
+message CommServerMsg {
+  // head
+  required uint32 version = 1;
+  required MsgType type = 2;
+  required uint32 sequence = 3;
+  // required uint32 reserved = 4;
+
+  // login
+  optional Register register = 5;
+  optional RegisterRsp register_rsp = 6;
+
+}
+
+message Register {
+  required string ip_v4_addr = 1;
+  required uint32 port = 2;
+}
+
+message RegisterRsp {
+  required uint32 code = 1;
+}
+
+
+

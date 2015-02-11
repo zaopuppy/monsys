@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.protocol;
+package com.letsmidi.monsys.protocol.client;
 
 enum MsgType {
   HEARTBEAT     = 1;

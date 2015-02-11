@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 
 import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.log.MyLogFormatter;
-import com.letsmidi.monsys.protocol.Client;
+import com.letsmidi.monsys.protocol.client.Client.ClientMsg;
+import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.NettyUtil;
@@ -105,8 +106,8 @@ public class LoginServer {
                                 new ProtobufVarint32LengthFieldPrepender(),
                                 new ProtobufVarint32FrameDecoder(),
                                 new ProtobufEncoder(),
-                                new ProtobufDecoder(Client.ClientMsg.getDefaultInstance()),
-                                new LoginServerHandler(timer));
+                                new ProtobufDecoder(ClientMsg.getDefaultInstance()),
+                                new ClientHandler(timer));
                     }
                 }
         );
@@ -114,24 +115,24 @@ public class LoginServer {
         future_list.add(client_future);
 
         // listen servers
-        //NioEventLoopGroup msg_server_boss = new NioEventLoopGroup(1);
-        //ChannelFuture msg_server_future = NettyUtil.startServer(
-        //        LoginConfig.MsgServerListenPort, msg_server_boss, shared_worker,
-        //        new LoggingHandler(LoginConfig.LoggerName, LogLevel.INFO),
-        //        new ChannelInitializer<SocketChannel>() {
-        //            @Override
-        //            protected void initChannel(SocketChannel ch) throws Exception {
-        //                ch.pipeline().addLast(
-        //                        new ProtobufVarint32LengthFieldPrepender(),
-        //                        new ProtobufVarint32FrameDecoder(),
-        //                        new ProtobufEncoder(),
-        //                        new ProtobufDecoder(PushMsg.getDefaultInstance()),
-        //                        new MsgServerHandler(timer));
-        //            }
-        //        }
-        //);
-        //group_list.add(msg_server_boss);
-        //future_list.add(msg_server_future);
+        NioEventLoopGroup msg_server_boss = new NioEventLoopGroup(1);
+        ChannelFuture msg_server_future = NettyUtil.startServer(
+                LoginConfig.CommServerListenPort, msg_server_boss, shared_worker,
+                new LoggingHandler(LoginConfig.LoggerName, LogLevel.INFO),
+                new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(
+                                new ProtobufVarint32LengthFieldPrepender(),
+                                new ProtobufVarint32FrameDecoder(),
+                                new ProtobufEncoder(),
+                                new ProtobufDecoder(CommServer.CommServerMsg.getDefaultInstance()),
+                                new CommServerHandler(timer));
+                    }
+                }
+        );
+        group_list.add(msg_server_boss);
+        future_list.add(msg_server_future);
 
         // wait
         future_list.forEach(f -> {

@@ -1,6 +1,6 @@
 package com.letsmidi.monsys.test;
 
-import com.letsmidi.monsys.protocol.Client;
+import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

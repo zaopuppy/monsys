@@ -3,7 +3,7 @@ package com.letsmidi.monsys.login;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.database.AccountInfo;
-import com.letsmidi.monsys.protocol.Client;
+import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +12,7 @@ import io.netty.util.HashedWheelTimer;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
-public class LoginServerHandler extends SimpleChannelInboundHandler<Client.ClientMsg> {
+public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg> {
     private final Logger mLogger = Logger.getLogger(LoginConfig.LoggerName);
 
     private enum STATE {
@@ -24,7 +24,7 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<Client.Clien
 
     //private final SessionManager<Integer> mSessionManager;
 
-    public LoginServerHandler(HashedWheelTimer timer) {
+    public ClientHandler(HashedWheelTimer timer) {
         //mSessionManager = new SessionManager<>(timer);
     }
 

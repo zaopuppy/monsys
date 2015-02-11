@@ -1,6 +1,6 @@
 package com.letsmidi.monsys.util;
 
-import com.letsmidi.monsys.protocol.Client;
+import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.center.Center;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.route.Route;
