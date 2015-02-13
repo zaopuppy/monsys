@@ -39,18 +39,18 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {
         mLogger.info("current state: " + mState.name());
-        switch (getState()) {
-            case WAITING_FOR_LOGIN:
+        //switch (getState()) {
+        //    case WAITING_FOR_LOGIN:
                 onWaitingForLogin(ctx, msg);
-                break;
+                //break;
             //case LOGGED_IN:
             //{
             //  onLoggedIn(ctx, msg);
             //  break;
             //}
-            default:
-                break;
-        }
+            //default:
+            //    break;
+        //}
     }
 
     private void onWaitingForLogin(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {

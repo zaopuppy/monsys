@@ -49,8 +49,16 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {
         System.out.println("received: [" + msg.getType().name() + "]");
-        if (msg.getType() == Client.MsgType.LOGIN_RSP) {
-            System.out.println("login response code: " + msg.getLoginRsp().getCode());
+        switch (msg.getType()) {
+            case LOGIN_RSP:
+                log("login response code: " + msg.getLoginRsp().getCode());
+                break;
+            case REQUEST_COMM_SERVER_RSP:
+                Client.RequestCommServerRsp rsp = msg.getRequestCommServerRsp();
+                log("code=" + rsp.getCode() + ", " + rsp.getIpV4Addr() + ":" + rsp.getPort());
+                break;
+            default:
+                break;
         }
     }
 

@@ -81,7 +81,7 @@ public class LoginServer {
 
     public void start() {
         mLogger.info("-----------------------------------");
-        mLogger.info("push server start");
+        mLogger.info("login server start");
 
         // global timer
         final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);

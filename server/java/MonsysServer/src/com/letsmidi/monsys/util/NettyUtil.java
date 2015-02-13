@@ -13,7 +13,7 @@ public class NettyUtil {
         int port, NioEventLoopGroup boss, NioEventLoopGroup worker,
         ChannelHandler handler, ChannelHandler child_handler) {
 
-        MyLogger.i("startPushServer()");
+        MyLogger.i("startServer()");
 
         ServerBootstrap b = new ServerBootstrap();
 

@@ -18,10 +18,6 @@ TDB = (
 )
 
 
-def issubsetof(set1, set2):
-    return False
-
-
 def apriori(db, minsup, minconf):
     k_items = {}
 
