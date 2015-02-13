@@ -6,4 +6,6 @@ public class LoginConfig {
 
     public static final int ClientListenPort = 1986;
     public static final int CommServerListenPort = 1987;
+
+    public static final int MAX_SERVER_NUM = 32;
 }

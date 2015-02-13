@@ -65,33 +65,43 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
                 }
                 handleLogin(ctx, msg);
                 break;
+            case REQUEST_COMM_SERVER:
+                handleRequestCommServer(ctx, msg);
+                break;
             default:
                 mLogger.severe("Unknown message type");
                 ctx.close();
                 break;
         }
-
-        //Client.Login login = msg.getLogin();
-        //PushChannelManager.FgwInfo fgw = new PushChannelManager.FgwInfo(login.getDeviceId(), ctx.channel());
-        //if (!PushChannelManager.INSTANCE.add(fgw)) {
-        //    ctx.close();
-        //    return;
-        //}
-        //
-        //mState = STATE.LOGGED_IN;
-        //
-        //mLogger.info("Logged in successfully: " + login.getDeviceId());
-        //
-        //PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN_RSP);
-        //builder.setSequence(msg.getSequence());
-        //
-        //LoginRsp.Builder login_rsp = LoginRsp.newBuilder();
-        //login_rsp.setCode(0);
-        //
-        //builder.setLoginRsp(login_rsp);
-        //
-        //ctx.writeAndFlush(builder.build());
     }
+
+    private void handleRequestCommServer(ChannelHandlerContext ctx, Client.ClientMsg msg) {
+        InMemInfo.CommServerInfo comm_server_info = InMemInfo.INSTANCE.chooseCommServer();
+        sendRequestCommServerRsp(ctx, msg, comm_server_info);
+    }
+
+    private void sendRequestCommServerRsp(ChannelHandlerContext ctx, Client.ClientMsg msg, InMemInfo.CommServerInfo info) {
+        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.REQUEST_COMM_SERVER_RSP);
+
+        Client.RequestCommServerRsp.Builder rsp = Client.RequestCommServerRsp.newBuilder();
+
+        if (info == null) {
+            mLogger.warning("not comm server available");
+
+            rsp.setIpV4Addr("");
+            rsp.setPort(0);
+            rsp.setCode(-1);
+        } else {
+            rsp.setIpV4Addr(info.ipV4Addr);
+            rsp.setPort(info.port);
+            rsp.setCode(0);
+        }
+
+        builder.setRequestCommServerRsp(rsp);
+
+        ctx.write(builder.build());
+    }
+
 
     private void handleLogin(ChannelHandlerContext ctx, Client.ClientMsg msg) {
         mLogger.info("handleLogin");
@@ -141,13 +151,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
         builder.setLoginRsp(rsp);
 
-        ctx.writeAndFlush(builder.build());
+        ctx.write(builder.build());
     }
-
-
-    //private void onLoggedIn(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-    //    mLogger.info("onLoggedIn: " + msg.getType());
-    //}
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

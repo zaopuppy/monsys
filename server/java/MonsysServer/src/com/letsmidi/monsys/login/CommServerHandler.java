@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.login;
 
+import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.protocol.commserver.CommServer;
@@ -39,6 +40,11 @@ public class CommServerHandler extends SimpleChannelInboundHandler<CommServer.Co
          * ChannelHandlerContext.* methods => the operation will start from this `ChannelHandler`
          * to flow through the ChannelPipeline.
          */
+        InMemInfo.CommServerInfo info = new InMemInfo.CommServerInfo();
+        InetSocketAddress addr = (InetSocketAddress) ctx.channel().localAddress();
+        info.ipV4Addr = addr.getHostName();
+        info.port = addr.getPort();
+        InMemInfo.INSTANCE.getCommServerList().add(info);
     }
 
     @Override
@@ -53,6 +59,8 @@ public class CommServerHandler extends SimpleChannelInboundHandler<CommServer.Co
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         mLogger.severe("Channel closed");
         super.channelInactive(ctx);
+
+        InMemInfo.INSTANCE.getCommServerList().remove(ctx.channel());
     }
 
 }
