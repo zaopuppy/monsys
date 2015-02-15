@@ -99,7 +99,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
         builder.setRequestCommServerRsp(rsp);
 
-        ctx.write(builder.build());
+        ctx.writeAndFlush(builder.build());
     }
 
 
@@ -151,7 +151,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
         builder.setLoginRsp(rsp);
 
-        ctx.write(builder.build());
+        ctx.writeAndFlush(builder.build());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.letsmidi.monsys.util;
 
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.center.Center;
+import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.route.Route;
 
@@ -12,6 +13,16 @@ public class MsgUtil {
     public static final int VERSION = 1;
 
     private static final SequenceGenerator mSeqenceGenerator = new SequenceGenerator(1, 0xFFFFFFFE);
+
+
+    public static CommServer.CommServerMsg.Builder newCommServerMsgBuilder(CommServer.MsgType type) {
+        CommServer.CommServerMsg.Builder builder = CommServer.CommServerMsg.newBuilder();
+        builder.setVersion(VERSION);
+        builder.setType(type);
+        builder.setSequence(mSeqenceGenerator.next());
+
+        return builder;
+    }
 
     public static Client.ClientMsg.Builder newClientMsgBuilder(Client.MsgType type) {
         Client.ClientMsg.Builder builder = Client.ClientMsg.newBuilder();

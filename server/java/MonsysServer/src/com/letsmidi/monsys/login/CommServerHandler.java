@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.protocol.commserver.CommServer;
+import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.HashedWheelTimer;
@@ -45,6 +46,15 @@ public class CommServerHandler extends SimpleChannelInboundHandler<CommServer.Co
         info.ipV4Addr = addr.getHostName();
         info.port = addr.getPort();
         InMemInfo.INSTANCE.getCommServerList().add(info);
+
+        CommServer.CommServerMsg.Builder builder = MsgUtil.newCommServerMsgBuilder(CommServer.MsgType.REGISTER_RSP);
+
+        CommServer.RegisterRsp.Builder register_rsp = CommServer.RegisterRsp.newBuilder();
+        register_rsp.setCode(0);
+
+        builder.setRegisterRsp(register_rsp);
+
+        ctx.writeAndFlush(builder.build());
     }
 
     @Override
