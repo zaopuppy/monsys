@@ -10,19 +10,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class NettyUtil {
     public static ChannelFuture startServer(
-        int port, NioEventLoopGroup boss, NioEventLoopGroup worker,
-        ChannelHandler handler, ChannelHandler child_handler) {
+            int port, NioEventLoopGroup boss, NioEventLoopGroup worker,
+            ChannelHandler handler, ChannelHandler child_handler) {
 
         MyLogger.i("startServer()");
 
         ServerBootstrap b = new ServerBootstrap();
 
         b.group(boss, worker)
-         .channel(NioServerSocketChannel.class)
-         .handler(handler)
-         .childHandler(child_handler)
-         .option(ChannelOption.SO_BACKLOG, 128)
-         .childOption(ChannelOption.SO_KEEPALIVE, true);
+                .channel(NioServerSocketChannel.class)
+                .handler(handler)
+                .childHandler(child_handler)
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
 
         return b.bind(port);
     }

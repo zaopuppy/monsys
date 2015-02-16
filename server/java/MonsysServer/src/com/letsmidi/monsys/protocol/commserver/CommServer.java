@@ -4,2264 +4,2464 @@
 package com.letsmidi.monsys.protocol.commserver;
 
 public final class CommServer {
-  private CommServer() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-  }
-  /**
-   * Protobuf enum {@code com.letsmidi.monsys.protocol.commserver.MsgType}
-   */
-  public enum MsgType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>HEARTBEAT = 1;</code>
-     */
-    HEARTBEAT(0, 1),
-    /**
-     * <code>REGISTER = 3;</code>
-     */
-    REGISTER(1, 3),
-    /**
-     * <code>REGISTER_RSP = 4;</code>
-     */
-    REGISTER_RSP(2, 4),
-    ;
-
-    /**
-     * <code>HEARTBEAT = 1;</code>
-     */
-    public static final int HEARTBEAT_VALUE = 1;
-    /**
-     * <code>REGISTER = 3;</code>
-     */
-    public static final int REGISTER_VALUE = 3;
-    /**
-     * <code>REGISTER_RSP = 4;</code>
-     */
-    public static final int REGISTER_RSP_VALUE = 4;
-
-
-    public final int getNumber() { return value; }
-
-    public static MsgType valueOf(int value) {
-      switch (value) {
-        case 1: return HEARTBEAT;
-        case 3: return REGISTER;
-        case 4: return REGISTER_RSP;
-        default: return null;
-      }
+    private CommServer() {
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistry registry) {
+    }
+
+    /**
+     * Protobuf enum {@code com.letsmidi.monsys.protocol.commserver.MsgType}
+     */
+    public enum MsgType
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>HEARTBEAT = 1;</code>
+         */
+        HEARTBEAT(0, 1),
+        /**
+         * <code>REGISTER = 3;</code>
+         */
+        REGISTER(1, 3),
+        /**
+         * <code>REGISTER_RSP = 4;</code>
+         */
+        REGISTER_RSP(2, 4),;
+
+        /**
+         * <code>HEARTBEAT = 1;</code>
+         */
+        public static final int HEARTBEAT_VALUE = 1;
+        /**
+         * <code>REGISTER = 3;</code>
+         */
+        public static final int REGISTER_VALUE = 3;
+        /**
+         * <code>REGISTER_RSP = 4;</code>
+         */
+        public static final int REGISTER_RSP_VALUE = 4;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        public static MsgType valueOf(int value) {
+            switch (value) {
+                case 1:
+                    return HEARTBEAT;
+                case 3:
+                    return REGISTER;
+                case 4:
+                    return REGISTER_RSP;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
         internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static com.google.protobuf.Internal.EnumLiteMap<MsgType>
-        internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
-            public MsgType findValueByNumber(int number) {
-              return MsgType.valueOf(number);
-            }
-          };
+            return internalValueMap;
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        private static com.google.protobuf.Internal.EnumLiteMap<MsgType>
+                internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
+                    public MsgType findValueByNumber(int number) {
+                        return MsgType.valueOf(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(index);
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(index);
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final MsgType[] VALUES = values();
-
-    public static MsgType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int index;
-    private final int value;
-
-    private MsgType(int index, int value) {
-      this.index = index;
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.commserver.MsgType)
-  }
-
-  public interface CommServerMsgOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-
-    // required uint32 version = 1;
-    /**
-     * <code>required uint32 version = 1;</code>
-     *
-     * <pre>
-     * head
-     * </pre>
-     */
-    boolean hasVersion();
-    /**
-     * <code>required uint32 version = 1;</code>
-     *
-     * <pre>
-     * head
-     * </pre>
-     */
-    int getVersion();
-
-    // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
-    /**
-     * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-     */
-    boolean hasType();
-    /**
-     * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-     */
-    com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType();
-
-    // required uint32 sequence = 3;
-    /**
-     * <code>required uint32 sequence = 3;</code>
-     *
-     * <pre>
-     * required uint32 reserved = 4;
-     * </pre>
-     */
-    boolean hasSequence();
-    /**
-     * <code>required uint32 sequence = 3;</code>
-     *
-     * <pre>
-     * required uint32 reserved = 4;
-     * </pre>
-     */
-    int getSequence();
-
-    // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    boolean hasRegister();
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister();
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder();
-
-    // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    boolean hasRegisterRsp();
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp();
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder();
-  }
-  /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.CommServerMsg}
-   */
-  public static final class CommServerMsg extends
-      com.google.protobuf.GeneratedMessage
-      implements CommServerMsgOrBuilder {
-    // Use CommServerMsg.newBuilder() to construct.
-    private CommServerMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-      this.unknownFields = builder.getUnknownFields();
-    }
-    private CommServerMsg(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final CommServerMsg defaultInstance;
-    public static CommServerMsg getDefaultInstance() {
-      return defaultInstance;
-    }
-
-    public CommServerMsg getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-      return this.unknownFields;
-    }
-    private CommServerMsg(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              version_ = input.readUInt32();
-              break;
-            }
-            case 16: {
-              int rawValue = input.readEnum();
-              com.letsmidi.monsys.protocol.commserver.CommServer.MsgType value = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(2, rawValue);
-              } else {
-                bitField0_ |= 0x00000002;
-                type_ = value;
-              }
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              sequence_ = input.readUInt32();
-              break;
-            }
-            case 42: {
-              com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) == 0x00000008)) {
-                subBuilder = register_.toBuilder();
-              }
-              register_ = input.readMessage(com.letsmidi.monsys.protocol.commserver.CommServer.Register.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(register_);
-                register_ = subBuilder.buildPartial();
-              }
-              bitField0_ |= 0x00000008;
-              break;
-            }
-            case 50: {
-              com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000010) == 0x00000010)) {
-                subBuilder = registerRsp_.toBuilder();
-              }
-              registerRsp_ = input.readMessage(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(registerRsp_);
-                registerRsp_ = subBuilder.buildPartial();
-              }
-              bitField0_ |= 0x00000010;
-              break;
-            }
-          }
+            return com.letsmidi.monsys.protocol.commserver.CommServer.getDescriptor().getEnumTypes().get(0);
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
-    }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.class, com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.Builder.class);
-    }
+        private static final MsgType[] VALUES = values();
 
-    public static com.google.protobuf.Parser<CommServerMsg> PARSER =
-        new com.google.protobuf.AbstractParser<CommServerMsg>() {
-      public CommServerMsg parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CommServerMsg(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CommServerMsg> getParserForType() {
-      return PARSER;
-    }
-
-    private int bitField0_;
-    // required uint32 version = 1;
-    public static final int VERSION_FIELD_NUMBER = 1;
-    private int version_;
-    /**
-     * <code>required uint32 version = 1;</code>
-     *
-     * <pre>
-     * head
-     * </pre>
-     */
-    public boolean hasVersion() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required uint32 version = 1;</code>
-     *
-     * <pre>
-     * head
-     * </pre>
-     */
-    public int getVersion() {
-      return version_;
-    }
-
-    // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
-    public static final int TYPE_FIELD_NUMBER = 2;
-    private com.letsmidi.monsys.protocol.commserver.CommServer.MsgType type_;
-    /**
-     * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-     */
-    public boolean hasType() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-     */
-    public com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType() {
-      return type_;
-    }
-
-    // required uint32 sequence = 3;
-    public static final int SEQUENCE_FIELD_NUMBER = 3;
-    private int sequence_;
-    /**
-     * <code>required uint32 sequence = 3;</code>
-     *
-     * <pre>
-     * required uint32 reserved = 4;
-     * </pre>
-     */
-    public boolean hasSequence() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required uint32 sequence = 3;</code>
-     *
-     * <pre>
-     * required uint32 reserved = 4;
-     * </pre>
-     */
-    public int getSequence() {
-      return sequence_;
-    }
-
-    // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
-    public static final int REGISTER_FIELD_NUMBER = 5;
-    private com.letsmidi.monsys.protocol.commserver.CommServer.Register register_;
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    public boolean hasRegister() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    public com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister() {
-      return register_;
-    }
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-     *
-     * <pre>
-     * login
-     * </pre>
-     */
-    public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder() {
-      return register_;
-    }
-
-    // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
-    public static final int REGISTER_RSP_FIELD_NUMBER = 6;
-    private com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp registerRsp_;
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    public boolean hasRegisterRsp() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
-    }
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp() {
-      return registerRsp_;
-    }
-    /**
-     * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-     */
-    public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder() {
-      return registerRsp_;
-    }
-
-    private void initFields() {
-      version_ = 0;
-      type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
-      sequence_ = 0;
-      register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
-      registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-
-      if (!hasVersion()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasType()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasSequence()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (hasRegister()) {
-        if (!getRegister().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
+        public static MsgType valueOf(
+                com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException(
+                        "EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
         }
-      }
-      if (hasRegisterRsp()) {
-        if (!getRegisterRsp().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
+
+        private final int index;
+        private final int value;
+
+        private MsgType(int index, int value) {
+            this.index = index;
+            this.value = value;
         }
-      }
-      memoizedIsInitialized = 1;
-      return true;
+
+        // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.commserver.MsgType)
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, version_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeEnum(2, type_.getNumber());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeUInt32(3, sequence_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(5, register_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeMessage(6, registerRsp_);
-      }
-      getUnknownFields().writeTo(output);
+    public interface CommServerMsgOrBuilder
+            extends com.google.protobuf.MessageOrBuilder {
+
+        // required uint32 version = 1;
+
+        /**
+         * <code>required uint32 version = 1;</code>
+         * <p>
+         * <pre>
+         * head
+         * </pre>
+         */
+        boolean hasVersion();
+
+        /**
+         * <code>required uint32 version = 1;</code>
+         * <p>
+         * <pre>
+         * head
+         * </pre>
+         */
+        int getVersion();
+
+        // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
+
+        /**
+         * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+         */
+        boolean hasType();
+
+        /**
+         * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+         */
+        com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType();
+
+        // required uint32 sequence = 3;
+
+        /**
+         * <code>required uint32 sequence = 3;</code>
+         * <p>
+         * <pre>
+         * required uint32 reserved = 4;
+         * </pre>
+         */
+        boolean hasSequence();
+
+        /**
+         * <code>required uint32 sequence = 3;</code>
+         * <p>
+         * <pre>
+         * required uint32 reserved = 4;
+         * </pre>
+         */
+        int getSequence();
+
+        // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        boolean hasRegister();
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister();
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder();
+
+        // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        boolean hasRegisterRsp();
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp();
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder();
     }
 
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, version_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, type_.getNumber());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, sequence_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, register_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, registerRsp_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.CommServerMsg}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsgOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
-      }
+    public static final class CommServerMsg extends
+            com.google.protobuf.GeneratedMessage
+            implements CommServerMsgOrBuilder {
+        // Use CommServerMsg.newBuilder() to construct.
+        private CommServerMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+            this.unknownFields = builder.getUnknownFields();
+        }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.class, com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.Builder.class);
-      }
+        private CommServerMsg(boolean noInit) {
+            this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+        }
 
-      // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
+        private static final CommServerMsg defaultInstance;
 
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getRegisterFieldBuilder();
-          getRegisterRspFieldBuilder();
+        public static CommServerMsg getDefaultInstance() {
+            return defaultInstance;
         }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
 
-      public Builder clear() {
-        super.clear();
-        version_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        sequence_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        if (registerBuilder_ == null) {
-          register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
-        } else {
-          registerBuilder_.clear();
+        public CommServerMsg getDefaultInstanceForType() {
+            return defaultInstance;
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        if (registerRspBuilder_ == null) {
-          registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
-        } else {
-          registerRspBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000010);
-        return this;
-      }
 
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
+        private final com.google.protobuf.UnknownFieldSet unknownFields;
 
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
-      }
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+            return this.unknownFields;
+        }
 
-      public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.getDefaultInstance();
-      }
+        private CommServerMsg(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            initFields();
+            int mutable_bitField0_ = 0;
+            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+                    com.google.protobuf.UnknownFieldSet.newBuilder();
+            try {
+                boolean done = false;
+                while (!done) {
+                    int tag = input.readTag();
+                    switch (tag) {
+                        case 0:
+                            done = true;
+                            break;
+                        default: {
+                            if (!parseUnknownField(input, unknownFields,
+                                    extensionRegistry, tag)) {
+                                done = true;
+                            }
+                            break;
+                        }
+                        case 8: {
+                            bitField0_ |= 0x00000001;
+                            version_ = input.readUInt32();
+                            break;
+                        }
+                        case 16: {
+                            int rawValue = input.readEnum();
+                            com.letsmidi.monsys.protocol.commserver.CommServer.MsgType value = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.valueOf(rawValue);
+                            if (value == null) {
+                                unknownFields.mergeVarintField(2, rawValue);
+                            } else {
+                                bitField0_ |= 0x00000002;
+                                type_ = value;
+                            }
+                            break;
+                        }
+                        case 24: {
+                            bitField0_ |= 0x00000004;
+                            sequence_ = input.readUInt32();
+                            break;
+                        }
+                        case 42: {
+                            com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder subBuilder = null;
+                            if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                                subBuilder = register_.toBuilder();
+                            }
+                            register_ = input.readMessage(com.letsmidi.monsys.protocol.commserver.CommServer.Register.PARSER, extensionRegistry);
+                            if (subBuilder != null) {
+                                subBuilder.mergeFrom(register_);
+                                register_ = subBuilder.buildPartial();
+                            }
+                            bitField0_ |= 0x00000008;
+                            break;
+                        }
+                        case 50: {
+                            com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder subBuilder = null;
+                            if (((bitField0_ & 0x00000010) == 0x00000010)) {
+                                subBuilder = registerRsp_.toBuilder();
+                            }
+                            registerRsp_ = input.readMessage(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.PARSER, extensionRegistry);
+                            if (subBuilder != null) {
+                                subBuilder.mergeFrom(registerRsp_);
+                                registerRsp_ = subBuilder.buildPartial();
+                            }
+                            bitField0_ |= 0x00000010;
+                            break;
+                        }
+                    }
+                }
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(this);
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(
+                        e.getMessage()).setUnfinishedMessage(this);
+            } finally {
+                this.unknownFields = unknownFields.build();
+                makeExtensionsImmutable();
+            }
+        }
 
-      public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg build() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
         }
-        return result;
-      }
 
-      public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg buildPartial() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg result = new com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.class, com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.Builder.class);
         }
-        result.version_ = version_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.type_ = type_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.sequence_ = sequence_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        if (registerBuilder_ == null) {
-          result.register_ = register_;
-        } else {
-          result.register_ = registerBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
-        }
-        if (registerRspBuilder_ == null) {
-          result.registerRsp_ = registerRsp_;
-        } else {
-          result.registerRsp_ = registerRspBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
 
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg) {
-          return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
+        public static com.google.protobuf.Parser<CommServerMsg> PARSER =
+                new com.google.protobuf.AbstractParser<CommServerMsg>() {
+                    public CommServerMsg parsePartialFrom(
+                            com.google.protobuf.CodedInputStream input,
+                            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                            throws com.google.protobuf.InvalidProtocolBufferException {
+                        return new CommServerMsg(input, extensionRegistry);
+                    }
+                };
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg other) {
-        if (other == com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.getDefaultInstance()) return this;
-        if (other.hasVersion()) {
-          setVersion(other.getVersion());
+        @java.lang.Override
+        public com.google.protobuf.Parser<CommServerMsg> getParserForType() {
+            return PARSER;
         }
-        if (other.hasType()) {
-          setType(other.getType());
-        }
-        if (other.hasSequence()) {
-          setSequence(other.getSequence());
-        }
-        if (other.hasRegister()) {
-          mergeRegister(other.getRegister());
-        }
-        if (other.hasRegisterRsp()) {
-          mergeRegisterRsp(other.getRegisterRsp());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
 
-      public final boolean isInitialized() {
-        if (!hasVersion()) {
-          
-          return false;
-        }
-        if (!hasType()) {
-          
-          return false;
-        }
-        if (!hasSequence()) {
-          
-          return false;
-        }
-        if (hasRegister()) {
-          if (!getRegister().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasRegisterRsp()) {
-          if (!getRegisterRsp().isInitialized()) {
-            
-            return false;
-          }
-        }
-        return true;
-      }
+        private int bitField0_;
+        // required uint32 version = 1;
+        public static final int VERSION_FIELD_NUMBER = 1;
+        private int version_;
 
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
+        /**
+         * <code>required uint32 version = 1;</code>
+         * <p>
+         * <pre>
+         * head
+         * </pre>
+         */
+        public boolean hasVersion() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        return this;
-      }
-      private int bitField0_;
 
-      // required uint32 version = 1;
-      private int version_ ;
-      /**
-       * <code>required uint32 version = 1;</code>
-       *
-       * <pre>
-       * head
-       * </pre>
-       */
-      public boolean hasVersion() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required uint32 version = 1;</code>
-       *
-       * <pre>
-       * head
-       * </pre>
-       */
-      public int getVersion() {
-        return version_;
-      }
-      /**
-       * <code>required uint32 version = 1;</code>
-       *
-       * <pre>
-       * head
-       * </pre>
-       */
-      public Builder setVersion(int value) {
-        bitField0_ |= 0x00000001;
-        version_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required uint32 version = 1;</code>
-       *
-       * <pre>
-       * head
-       * </pre>
-       */
-      public Builder clearVersion() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        version_ = 0;
-        onChanged();
-        return this;
-      }
+        /**
+         * <code>required uint32 version = 1;</code>
+         * <p>
+         * <pre>
+         * head
+         * </pre>
+         */
+        public int getVersion() {
+            return version_;
+        }
 
-      // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
-      private com.letsmidi.monsys.protocol.commserver.CommServer.MsgType type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
-      /**
-       * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-       */
-      public boolean hasType() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType() {
-        return type_;
-      }
-      /**
-       * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-       */
-      public Builder setType(com.letsmidi.monsys.protocol.commserver.CommServer.MsgType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
-       */
-      public Builder clearType() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
-        onChanged();
-        return this;
-      }
+        // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
+        public static final int TYPE_FIELD_NUMBER = 2;
+        private com.letsmidi.monsys.protocol.commserver.CommServer.MsgType type_;
 
-      // required uint32 sequence = 3;
-      private int sequence_ ;
-      /**
-       * <code>required uint32 sequence = 3;</code>
-       *
-       * <pre>
-       * required uint32 reserved = 4;
-       * </pre>
-       */
-      public boolean hasSequence() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required uint32 sequence = 3;</code>
-       *
-       * <pre>
-       * required uint32 reserved = 4;
-       * </pre>
-       */
-      public int getSequence() {
-        return sequence_;
-      }
-      /**
-       * <code>required uint32 sequence = 3;</code>
-       *
-       * <pre>
-       * required uint32 reserved = 4;
-       * </pre>
-       */
-      public Builder setSequence(int value) {
-        bitField0_ |= 0x00000004;
-        sequence_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required uint32 sequence = 3;</code>
-       *
-       * <pre>
-       * required uint32 reserved = 4;
-       * </pre>
-       */
-      public Builder clearSequence() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        sequence_ = 0;
-        onChanged();
-        return this;
-      }
+        /**
+         * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+         */
+        public boolean hasType() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
 
-      // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
-      private com.letsmidi.monsys.protocol.commserver.CommServer.Register register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder> registerBuilder_;
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public boolean hasRegister() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister() {
-        if (registerBuilder_ == null) {
-          return register_;
-        } else {
-          return registerBuilder_.getMessage();
+        /**
+         * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+         */
+        public com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType() {
+            return type_;
         }
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public Builder setRegister(com.letsmidi.monsys.protocol.commserver.CommServer.Register value) {
-        if (registerBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          register_ = value;
-          onChanged();
-        } else {
-          registerBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000008;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public Builder setRegister(
-          com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder builderForValue) {
-        if (registerBuilder_ == null) {
-          register_ = builderForValue.build();
-          onChanged();
-        } else {
-          registerBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000008;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public Builder mergeRegister(com.letsmidi.monsys.protocol.commserver.CommServer.Register value) {
-        if (registerBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
-              register_ != com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance()) {
-            register_ =
-              com.letsmidi.monsys.protocol.commserver.CommServer.Register.newBuilder(register_).mergeFrom(value).buildPartial();
-          } else {
-            register_ = value;
-          }
-          onChanged();
-        } else {
-          registerBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000008;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public Builder clearRegister() {
-        if (registerBuilder_ == null) {
-          register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
-          onChanged();
-        } else {
-          registerBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder getRegisterBuilder() {
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return getRegisterFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder() {
-        if (registerBuilder_ != null) {
-          return registerBuilder_.getMessageOrBuilder();
-        } else {
-          return register_;
-        }
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
-       *
-       * <pre>
-       * login
-       * </pre>
-       */
-      private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder> 
-          getRegisterFieldBuilder() {
-        if (registerBuilder_ == null) {
-          registerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder>(
-                  register_,
-                  getParentForChildren(),
-                  isClean());
-          register_ = null;
-        }
-        return registerBuilder_;
-      }
 
-      // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
-      private com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder> registerRspBuilder_;
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public boolean hasRegisterRsp() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp() {
-        if (registerRspBuilder_ == null) {
-          return registerRsp_;
-        } else {
-          return registerRspBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public Builder setRegisterRsp(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp value) {
-        if (registerRspBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          registerRsp_ = value;
-          onChanged();
-        } else {
-          registerRspBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public Builder setRegisterRsp(
-          com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder builderForValue) {
-        if (registerRspBuilder_ == null) {
-          registerRsp_ = builderForValue.build();
-          onChanged();
-        } else {
-          registerRspBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public Builder mergeRegisterRsp(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp value) {
-        if (registerRspBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010) &&
-              registerRsp_ != com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance()) {
-            registerRsp_ =
-              com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.newBuilder(registerRsp_).mergeFrom(value).buildPartial();
-          } else {
-            registerRsp_ = value;
-          }
-          onChanged();
-        } else {
-          registerRspBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000010;
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public Builder clearRegisterRsp() {
-        if (registerRspBuilder_ == null) {
-          registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
-          onChanged();
-        } else {
-          registerRspBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000010);
-        return this;
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder getRegisterRspBuilder() {
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return getRegisterRspFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder() {
-        if (registerRspBuilder_ != null) {
-          return registerRspBuilder_.getMessageOrBuilder();
-        } else {
-          return registerRsp_;
-        }
-      }
-      /**
-       * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder> 
-          getRegisterRspFieldBuilder() {
-        if (registerRspBuilder_ == null) {
-          registerRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder>(
-                  registerRsp_,
-                  getParentForChildren(),
-                  isClean());
-          registerRsp_ = null;
-        }
-        return registerRspBuilder_;
-      }
+        // required uint32 sequence = 3;
+        public static final int SEQUENCE_FIELD_NUMBER = 3;
+        private int sequence_;
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
+        /**
+         * <code>required uint32 sequence = 3;</code>
+         * <p>
+         * <pre>
+         * required uint32 reserved = 4;
+         * </pre>
+         */
+        public boolean hasSequence() {
+            return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+
+        /**
+         * <code>required uint32 sequence = 3;</code>
+         * <p>
+         * <pre>
+         * required uint32 reserved = 4;
+         * </pre>
+         */
+        public int getSequence() {
+            return sequence_;
+        }
+
+        // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
+        public static final int REGISTER_FIELD_NUMBER = 5;
+        private com.letsmidi.monsys.protocol.commserver.CommServer.Register register_;
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        public boolean hasRegister() {
+            return ((bitField0_ & 0x00000008) == 0x00000008);
+        }
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        public com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister() {
+            return register_;
+        }
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+         * <p>
+         * <pre>
+         * login
+         * </pre>
+         */
+        public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder() {
+            return register_;
+        }
+
+        // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
+        public static final int REGISTER_RSP_FIELD_NUMBER = 6;
+        private com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp registerRsp_;
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        public boolean hasRegisterRsp() {
+            return ((bitField0_ & 0x00000010) == 0x00000010);
+        }
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp() {
+            return registerRsp_;
+        }
+
+        /**
+         * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+         */
+        public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder() {
+            return registerRsp_;
+        }
+
+        private void initFields() {
+            version_ = 0;
+            type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
+            sequence_ = 0;
+            register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
+            registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+
+            if (!hasVersion()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            if (!hasType()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            if (!hasSequence()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            if (hasRegister()) {
+                if (!getRegister().isInitialized()) {
+                    memoizedIsInitialized = 0;
+                    return false;
+                }
+            }
+            if (hasRegisterRsp()) {
+                if (!getRegisterRsp().isInitialized()) {
+                    memoizedIsInitialized = 0;
+                    return false;
+                }
+            }
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            getSerializedSize();
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                output.writeUInt32(1, version_);
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                output.writeEnum(2, type_.getNumber());
+            }
+            if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                output.writeUInt32(3, sequence_);
+            }
+            if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                output.writeMessage(5, register_);
+            }
+            if (((bitField0_ & 0x00000010) == 0x00000010)) {
+                output.writeMessage(6, registerRsp_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        private int memoizedSerializedSize = -1;
+
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(1, version_);
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(2, type_.getNumber());
+            }
+            if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(3, sequence_);
+            }
+            if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(5, register_);
+            }
+            if (((bitField0_ & 0x00000010) == 0x00000010)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(6, registerRsp_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        private static final long serialVersionUID = 0L;
+
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+                throws java.io.ObjectStreamException {
+            return super.writeReplace();
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return Builder.create();
+        }
+
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        public Builder toBuilder() {
+            return newBuilder(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.CommServerMsg}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder>
+                implements com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsgOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
+            }
+
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(
+                                com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.class, com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.Builder.class);
+            }
+
+            // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.newBuilder()
+            private Builder() {
+                maybeForceBuilderInitialization();
+            }
+
+            private Builder(
+                    com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+                maybeForceBuilderInitialization();
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+                    getRegisterFieldBuilder();
+                    getRegisterRspFieldBuilder();
+                }
+            }
+
+            private static Builder create() {
+                return new Builder();
+            }
+
+            public Builder clear() {
+                super.clear();
+                version_ = 0;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
+                bitField0_ = (bitField0_ & ~0x00000002);
+                sequence_ = 0;
+                bitField0_ = (bitField0_ & ~0x00000004);
+                if (registerBuilder_ == null) {
+                    register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
+                } else {
+                    registerBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000008);
+                if (registerRspBuilder_ == null) {
+                    registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
+                } else {
+                    registerRspBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000010);
+                return this;
+            }
+
+            public Builder clone() {
+                return create().mergeFrom(buildPartial());
+            }
+
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg getDefaultInstanceForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.getDefaultInstance();
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg build() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg buildPartial() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg result = new com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg(this);
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+                    to_bitField0_ |= 0x00000001;
+                }
+                result.version_ = version_;
+                if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+                    to_bitField0_ |= 0x00000002;
+                }
+                result.type_ = type_;
+                if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+                    to_bitField0_ |= 0x00000004;
+                }
+                result.sequence_ = sequence_;
+                if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+                    to_bitField0_ |= 0x00000008;
+                }
+                if (registerBuilder_ == null) {
+                    result.register_ = register_;
+                } else {
+                    result.register_ = registerBuilder_.build();
+                }
+                if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+                    to_bitField0_ |= 0x00000010;
+                }
+                if (registerRspBuilder_ == null) {
+                    result.registerRsp_ = registerRsp_;
+                } else {
+                    result.registerRsp_ = registerRspBuilder_.build();
+                }
+                result.bitField0_ = to_bitField0_;
+                onBuilt();
+                return result;
+            }
+
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg) {
+                    return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg other) {
+                if (other == com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg.getDefaultInstance())
+                    return this;
+                if (other.hasVersion()) {
+                    setVersion(other.getVersion());
+                }
+                if (other.hasType()) {
+                    setType(other.getType());
+                }
+                if (other.hasSequence()) {
+                    setSequence(other.getSequence());
+                }
+                if (other.hasRegister()) {
+                    mergeRegister(other.getRegister());
+                }
+                if (other.hasRegisterRsp()) {
+                    mergeRegisterRsp(other.getRegisterRsp());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                return this;
+            }
+
+            public final boolean isInitialized() {
+                if (!hasVersion()) {
+
+                    return false;
+                }
+                if (!hasType()) {
+
+                    return false;
+                }
+                if (!hasSequence()) {
+
+                    return false;
+                }
+                if (hasRegister()) {
+                    if (!getRegister().isInitialized()) {
+
+                        return false;
+                    }
+                }
+                if (hasRegisterRsp()) {
+                    if (!getRegisterRsp().isInitialized()) {
+
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            public Builder mergeFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg parsedMessage = null;
+                try {
+                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.CommServerMsg) e.getUnfinishedMessage();
+                    throw e;
+                } finally {
+                    if (parsedMessage != null) {
+                        mergeFrom(parsedMessage);
+                    }
+                }
+                return this;
+            }
+
+            private int bitField0_;
+
+            // required uint32 version = 1;
+            private int version_;
+
+            /**
+             * <code>required uint32 version = 1;</code>
+             * <p>
+             * <pre>
+             * head
+             * </pre>
+             */
+            public boolean hasVersion() {
+                return ((bitField0_ & 0x00000001) == 0x00000001);
+            }
+
+            /**
+             * <code>required uint32 version = 1;</code>
+             * <p>
+             * <pre>
+             * head
+             * </pre>
+             */
+            public int getVersion() {
+                return version_;
+            }
+
+            /**
+             * <code>required uint32 version = 1;</code>
+             * <p>
+             * <pre>
+             * head
+             * </pre>
+             */
+            public Builder setVersion(int value) {
+                bitField0_ |= 0x00000001;
+                version_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required uint32 version = 1;</code>
+             * <p>
+             * <pre>
+             * head
+             * </pre>
+             */
+            public Builder clearVersion() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                version_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
+            private com.letsmidi.monsys.protocol.commserver.CommServer.MsgType type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
+
+            /**
+             * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+             */
+            public boolean hasType() {
+                return ((bitField0_ & 0x00000002) == 0x00000002);
+            }
+
+            /**
+             * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.MsgType getType() {
+                return type_;
+            }
+
+            /**
+             * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+             */
+            public Builder setType(com.letsmidi.monsys.protocol.commserver.CommServer.MsgType value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000002;
+                type_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;</code>
+             */
+            public Builder clearType() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                type_ = com.letsmidi.monsys.protocol.commserver.CommServer.MsgType.HEARTBEAT;
+                onChanged();
+                return this;
+            }
+
+            // required uint32 sequence = 3;
+            private int sequence_;
+
+            /**
+             * <code>required uint32 sequence = 3;</code>
+             * <p>
+             * <pre>
+             * required uint32 reserved = 4;
+             * </pre>
+             */
+            public boolean hasSequence() {
+                return ((bitField0_ & 0x00000004) == 0x00000004);
+            }
+
+            /**
+             * <code>required uint32 sequence = 3;</code>
+             * <p>
+             * <pre>
+             * required uint32 reserved = 4;
+             * </pre>
+             */
+            public int getSequence() {
+                return sequence_;
+            }
+
+            /**
+             * <code>required uint32 sequence = 3;</code>
+             * <p>
+             * <pre>
+             * required uint32 reserved = 4;
+             * </pre>
+             */
+            public Builder setSequence(int value) {
+                bitField0_ |= 0x00000004;
+                sequence_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required uint32 sequence = 3;</code>
+             * <p>
+             * <pre>
+             * required uint32 reserved = 4;
+             * </pre>
+             */
+            public Builder clearSequence() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                sequence_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
+            private com.letsmidi.monsys.protocol.commserver.CommServer.Register register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
+            private com.google.protobuf.SingleFieldBuilder<
+                    com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder> registerBuilder_;
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public boolean hasRegister() {
+                return ((bitField0_ & 0x00000008) == 0x00000008);
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.Register getRegister() {
+                if (registerBuilder_ == null) {
+                    return register_;
+                } else {
+                    return registerBuilder_.getMessage();
+                }
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public Builder setRegister(com.letsmidi.monsys.protocol.commserver.CommServer.Register value) {
+                if (registerBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    register_ = value;
+                    onChanged();
+                } else {
+                    registerBuilder_.setMessage(value);
+                }
+                bitField0_ |= 0x00000008;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public Builder setRegister(
+                    com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder builderForValue) {
+                if (registerBuilder_ == null) {
+                    register_ = builderForValue.build();
+                    onChanged();
+                } else {
+                    registerBuilder_.setMessage(builderForValue.build());
+                }
+                bitField0_ |= 0x00000008;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public Builder mergeRegister(com.letsmidi.monsys.protocol.commserver.CommServer.Register value) {
+                if (registerBuilder_ == null) {
+                    if (((bitField0_ & 0x00000008) == 0x00000008) &&
+                            register_ != com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance()) {
+                        register_ =
+                                com.letsmidi.monsys.protocol.commserver.CommServer.Register.newBuilder(register_).mergeFrom(value).buildPartial();
+                    } else {
+                        register_ = value;
+                    }
+                    onChanged();
+                } else {
+                    registerBuilder_.mergeFrom(value);
+                }
+                bitField0_ |= 0x00000008;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public Builder clearRegister() {
+                if (registerBuilder_ == null) {
+                    register_ = com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
+                    onChanged();
+                } else {
+                    registerBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000008);
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder getRegisterBuilder() {
+                bitField0_ |= 0x00000008;
+                onChanged();
+                return getRegisterFieldBuilder().getBuilder();
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder getRegisterOrBuilder() {
+                if (registerBuilder_ != null) {
+                    return registerBuilder_.getMessageOrBuilder();
+                } else {
+                    return register_;
+                }
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;</code>
+             * <p>
+             * <pre>
+             * login
+             * </pre>
+             */
+            private com.google.protobuf.SingleFieldBuilder<
+                    com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder>
+            getRegisterFieldBuilder() {
+                if (registerBuilder_ == null) {
+                    registerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                            com.letsmidi.monsys.protocol.commserver.CommServer.Register, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder>(
+                            register_,
+                            getParentForChildren(),
+                            isClean());
+                    register_ = null;
+                }
+                return registerBuilder_;
+            }
+
+            // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
+            private com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
+            private com.google.protobuf.SingleFieldBuilder<
+                    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder> registerRspBuilder_;
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public boolean hasRegisterRsp() {
+                return ((bitField0_ & 0x00000010) == 0x00000010);
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getRegisterRsp() {
+                if (registerRspBuilder_ == null) {
+                    return registerRsp_;
+                } else {
+                    return registerRspBuilder_.getMessage();
+                }
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public Builder setRegisterRsp(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp value) {
+                if (registerRspBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    registerRsp_ = value;
+                    onChanged();
+                } else {
+                    registerRspBuilder_.setMessage(value);
+                }
+                bitField0_ |= 0x00000010;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public Builder setRegisterRsp(
+                    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder builderForValue) {
+                if (registerRspBuilder_ == null) {
+                    registerRsp_ = builderForValue.build();
+                    onChanged();
+                } else {
+                    registerRspBuilder_.setMessage(builderForValue.build());
+                }
+                bitField0_ |= 0x00000010;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public Builder mergeRegisterRsp(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp value) {
+                if (registerRspBuilder_ == null) {
+                    if (((bitField0_ & 0x00000010) == 0x00000010) &&
+                            registerRsp_ != com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance()) {
+                        registerRsp_ =
+                                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.newBuilder(registerRsp_).mergeFrom(value).buildPartial();
+                    } else {
+                        registerRsp_ = value;
+                    }
+                    onChanged();
+                } else {
+                    registerRspBuilder_.mergeFrom(value);
+                }
+                bitField0_ |= 0x00000010;
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public Builder clearRegisterRsp() {
+                if (registerRspBuilder_ == null) {
+                    registerRsp_ = com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
+                    onChanged();
+                } else {
+                    registerRspBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000010);
+                return this;
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder getRegisterRspBuilder() {
+                bitField0_ |= 0x00000010;
+                onChanged();
+                return getRegisterRspFieldBuilder().getBuilder();
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder getRegisterRspOrBuilder() {
+                if (registerRspBuilder_ != null) {
+                    return registerRspBuilder_.getMessageOrBuilder();
+                } else {
+                    return registerRsp_;
+                }
+            }
+
+            /**
+             * <code>optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;</code>
+             */
+            private com.google.protobuf.SingleFieldBuilder<
+                    com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder>
+            getRegisterRspFieldBuilder() {
+                if (registerRspBuilder_ == null) {
+                    registerRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                            com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder>(
+                            registerRsp_,
+                            getParentForChildren(),
+                            isClean());
+                    registerRsp_ = null;
+                }
+                return registerRspBuilder_;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
+        }
+
+        static {
+            defaultInstance = new CommServerMsg(true);
+            defaultInstance.initFields();
+        }
+
+        // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
     }
 
-    static {
-      defaultInstance = new CommServerMsg(true);
-      defaultInstance.initFields();
-    }
+    public interface RegisterOrBuilder
+            extends com.google.protobuf.MessageOrBuilder {
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
-  }
+        // required string ip_v4_addr = 1;
 
-  public interface RegisterOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        boolean hasIpV4Addr();
 
-    // required string ip_v4_addr = 1;
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    boolean hasIpV4Addr();
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    java.lang.String getIpV4Addr();
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        java.lang.String getIpV4Addr();
+
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        com.google.protobuf.ByteString
         getIpV4AddrBytes();
 
-    // required uint32 port = 2;
-    /**
-     * <code>required uint32 port = 2;</code>
-     */
-    boolean hasPort();
-    /**
-     * <code>required uint32 port = 2;</code>
-     */
-    int getPort();
-  }
-  /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.Register}
-   */
-  public static final class Register extends
-      com.google.protobuf.GeneratedMessage
-      implements RegisterOrBuilder {
-    // Use Register.newBuilder() to construct.
-    private Register(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-      this.unknownFields = builder.getUnknownFields();
-    }
-    private Register(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+        // required uint32 port = 2;
 
-    private static final Register defaultInstance;
-    public static Register getDefaultInstance() {
-      return defaultInstance;
+        /**
+         * <code>required uint32 port = 2;</code>
+         */
+        boolean hasPort();
+
+        /**
+         * <code>required uint32 port = 2;</code>
+         */
+        int getPort();
     }
 
-    public Register getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-      return this.unknownFields;
-    }
-    private Register(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              ipV4Addr_ = input.readBytes();
-              break;
-            }
-            case 16: {
-              bitField0_ |= 0x00000002;
-              port_ = input.readUInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.commserver.CommServer.Register.class, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder.class);
-    }
-
-    public static com.google.protobuf.Parser<Register> PARSER =
-        new com.google.protobuf.AbstractParser<Register>() {
-      public Register parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Register(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Register> getParserForType() {
-      return PARSER;
-    }
-
-    private int bitField0_;
-    // required string ip_v4_addr = 1;
-    public static final int IP_V4_ADDR_FIELD_NUMBER = 1;
-    private java.lang.Object ipV4Addr_;
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    public boolean hasIpV4Addr() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    public java.lang.String getIpV4Addr() {
-      java.lang.Object ref = ipV4Addr_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          ipV4Addr_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string ip_v4_addr = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIpV4AddrBytes() {
-      java.lang.Object ref = ipV4Addr_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        ipV4Addr_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    // required uint32 port = 2;
-    public static final int PORT_FIELD_NUMBER = 2;
-    private int port_;
-    /**
-     * <code>required uint32 port = 2;</code>
-     */
-    public boolean hasPort() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required uint32 port = 2;</code>
-     */
-    public int getPort() {
-      return port_;
-    }
-
-    private void initFields() {
-      ipV4Addr_ = "";
-      port_ = 0;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-
-      if (!hasIpV4Addr()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasPort()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getIpV4AddrBytes());
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeUInt32(2, port_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getIpV4AddrBytes());
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, port_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.Register prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.Register}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.commserver.CommServer.Register.class, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder.class);
-      }
-
-      // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.Register.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+    public static final class Register extends
+            com.google.protobuf.GeneratedMessage
+            implements RegisterOrBuilder {
+        // Use Register.newBuilder() to construct.
+        private Register(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+            this.unknownFields = builder.getUnknownFields();
         }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
 
-      public Builder clear() {
-        super.clear();
-        ipV4Addr_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
-        port_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
-      }
-
-      public com.letsmidi.monsys.protocol.commserver.CommServer.Register getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
-      }
-
-      public com.letsmidi.monsys.protocol.commserver.CommServer.Register build() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.Register result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        private Register(boolean noInit) {
+            this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
         }
-        return result;
-      }
 
-      public com.letsmidi.monsys.protocol.commserver.CommServer.Register buildPartial() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.Register result = new com.letsmidi.monsys.protocol.commserver.CommServer.Register(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
+        private static final Register defaultInstance;
+
+        public static Register getDefaultInstance() {
+            return defaultInstance;
         }
-        result.ipV4Addr_ = ipV4Addr_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
+
+        public Register getDefaultInstanceForType() {
+            return defaultInstance;
         }
-        result.port_ = port_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
 
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.Register) {
-          return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.Register)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
+        private final com.google.protobuf.UnknownFieldSet unknownFields;
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.Register other) {
-        if (other == com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance()) return this;
-        if (other.hasIpV4Addr()) {
-          bitField0_ |= 0x00000001;
-          ipV4Addr_ = other.ipV4Addr_;
-          onChanged();
-        }
-        if (other.hasPort()) {
-          setPort(other.getPort());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        if (!hasIpV4Addr()) {
-          
-          return false;
-        }
-        if (!hasPort()) {
-          
-          return false;
-        }
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.letsmidi.monsys.protocol.commserver.CommServer.Register parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.Register) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      // required string ip_v4_addr = 1;
-      private java.lang.Object ipV4Addr_ = "";
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public boolean hasIpV4Addr() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public java.lang.String getIpV4Addr() {
-        java.lang.Object ref = ipV4Addr_;
-        if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          ipV4Addr_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getIpV4AddrBytes() {
-        java.lang.Object ref = ipV4Addr_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          ipV4Addr_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public Builder setIpV4Addr(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        ipV4Addr_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public Builder clearIpV4Addr() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        ipV4Addr_ = getDefaultInstance().getIpV4Addr();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string ip_v4_addr = 1;</code>
-       */
-      public Builder setIpV4AddrBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        ipV4Addr_ = value;
-        onChanged();
-        return this;
-      }
-
-      // required uint32 port = 2;
-      private int port_ ;
-      /**
-       * <code>required uint32 port = 2;</code>
-       */
-      public boolean hasPort() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required uint32 port = 2;</code>
-       */
-      public int getPort() {
-        return port_;
-      }
-      /**
-       * <code>required uint32 port = 2;</code>
-       */
-      public Builder setPort(int value) {
-        bitField0_ |= 0x00000002;
-        port_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required uint32 port = 2;</code>
-       */
-      public Builder clearPort() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        port_ = 0;
-        onChanged();
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.Register)
-    }
-
-    static {
-      defaultInstance = new Register(true);
-      defaultInstance.initFields();
-    }
-
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.Register)
-  }
-
-  public interface RegisterRspOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-
-    // required uint32 code = 1;
-    /**
-     * <code>required uint32 code = 1;</code>
-     */
-    boolean hasCode();
-    /**
-     * <code>required uint32 code = 1;</code>
-     */
-    int getCode();
-  }
-  /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.RegisterRsp}
-   */
-  public static final class RegisterRsp extends
-      com.google.protobuf.GeneratedMessage
-      implements RegisterRspOrBuilder {
-    // Use RegisterRsp.newBuilder() to construct.
-    private RegisterRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-      this.unknownFields = builder.getUnknownFields();
-    }
-    private RegisterRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final RegisterRsp defaultInstance;
-    public static RegisterRsp getDefaultInstance() {
-      return defaultInstance;
-    }
-
-    public RegisterRsp getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
-      return this.unknownFields;
-    }
-    private RegisterRsp(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              code_ = input.readUInt32();
-              break;
-            }
-          }
+            return this.unknownFields;
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
+
+        private Register(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            initFields();
+            int mutable_bitField0_ = 0;
+            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+                    com.google.protobuf.UnknownFieldSet.newBuilder();
+            try {
+                boolean done = false;
+                while (!done) {
+                    int tag = input.readTag();
+                    switch (tag) {
+                        case 0:
+                            done = true;
+                            break;
+                        default: {
+                            if (!parseUnknownField(input, unknownFields,
+                                    extensionRegistry, tag)) {
+                                done = true;
+                            }
+                            break;
+                        }
+                        case 10: {
+                            bitField0_ |= 0x00000001;
+                            ipV4Addr_ = input.readBytes();
+                            break;
+                        }
+                        case 16: {
+                            bitField0_ |= 0x00000002;
+                            port_ = input.readUInt32();
+                            break;
+                        }
+                    }
+                }
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(this);
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(
+                        e.getMessage()).setUnfinishedMessage(this);
+            } finally {
+                this.unknownFields = unknownFields.build();
+                makeExtensionsImmutable();
+            }
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
-    }
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
+        }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.class, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder.class);
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            com.letsmidi.monsys.protocol.commserver.CommServer.Register.class, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder.class);
+        }
+
+        public static com.google.protobuf.Parser<Register> PARSER =
+                new com.google.protobuf.AbstractParser<Register>() {
+                    public Register parsePartialFrom(
+                            com.google.protobuf.CodedInputStream input,
+                            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                            throws com.google.protobuf.InvalidProtocolBufferException {
+                        return new Register(input, extensionRegistry);
+                    }
+                };
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Register> getParserForType() {
+            return PARSER;
+        }
+
+        private int bitField0_;
+        // required string ip_v4_addr = 1;
+        public static final int IP_V4_ADDR_FIELD_NUMBER = 1;
+        private java.lang.Object ipV4Addr_;
+
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        public boolean hasIpV4Addr() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        public java.lang.String getIpV4Addr() {
+            java.lang.Object ref = ipV4Addr_;
+            if (ref instanceof java.lang.String) {
+                return (java.lang.String) ref;
+            } else {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                if (bs.isValidUtf8()) {
+                    ipV4Addr_ = s;
+                }
+                return s;
+            }
+        }
+
+        /**
+         * <code>required string ip_v4_addr = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+        getIpV4AddrBytes() {
+            java.lang.Object ref = ipV4Addr_;
+            if (ref instanceof java.lang.String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8(
+                                (java.lang.String) ref);
+                ipV4Addr_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        // required uint32 port = 2;
+        public static final int PORT_FIELD_NUMBER = 2;
+        private int port_;
+
+        /**
+         * <code>required uint32 port = 2;</code>
+         */
+        public boolean hasPort() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+
+        /**
+         * <code>required uint32 port = 2;</code>
+         */
+        public int getPort() {
+            return port_;
+        }
+
+        private void initFields() {
+            ipV4Addr_ = "";
+            port_ = 0;
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+
+            if (!hasIpV4Addr()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            if (!hasPort()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            getSerializedSize();
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                output.writeBytes(1, getIpV4AddrBytes());
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                output.writeUInt32(2, port_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        private int memoizedSerializedSize = -1;
+
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBytesSize(1, getIpV4AddrBytes());
+            }
+            if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(2, port_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        private static final long serialVersionUID = 0L;
+
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+                throws java.io.ObjectStreamException {
+            return super.writeReplace();
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.Register parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return Builder.create();
+        }
+
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.Register prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        public Builder toBuilder() {
+            return newBuilder(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.Register}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder>
+                implements com.letsmidi.monsys.protocol.commserver.CommServer.RegisterOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
+            }
+
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(
+                                com.letsmidi.monsys.protocol.commserver.CommServer.Register.class, com.letsmidi.monsys.protocol.commserver.CommServer.Register.Builder.class);
+            }
+
+            // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.Register.newBuilder()
+            private Builder() {
+                maybeForceBuilderInitialization();
+            }
+
+            private Builder(
+                    com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+                maybeForceBuilderInitialization();
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+                }
+            }
+
+            private static Builder create() {
+                return new Builder();
+            }
+
+            public Builder clear() {
+                super.clear();
+                ipV4Addr_ = "";
+                bitField0_ = (bitField0_ & ~0x00000001);
+                port_ = 0;
+                bitField0_ = (bitField0_ & ~0x00000002);
+                return this;
+            }
+
+            public Builder clone() {
+                return create().mergeFrom(buildPartial());
+            }
+
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.Register getDefaultInstanceForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance();
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.Register build() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.Register result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.Register buildPartial() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.Register result = new com.letsmidi.monsys.protocol.commserver.CommServer.Register(this);
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+                    to_bitField0_ |= 0x00000001;
+                }
+                result.ipV4Addr_ = ipV4Addr_;
+                if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+                    to_bitField0_ |= 0x00000002;
+                }
+                result.port_ = port_;
+                result.bitField0_ = to_bitField0_;
+                onBuilt();
+                return result;
+            }
+
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.Register) {
+                    return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.Register) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.Register other) {
+                if (other == com.letsmidi.monsys.protocol.commserver.CommServer.Register.getDefaultInstance())
+                    return this;
+                if (other.hasIpV4Addr()) {
+                    bitField0_ |= 0x00000001;
+                    ipV4Addr_ = other.ipV4Addr_;
+                    onChanged();
+                }
+                if (other.hasPort()) {
+                    setPort(other.getPort());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                return this;
+            }
+
+            public final boolean isInitialized() {
+                if (!hasIpV4Addr()) {
+
+                    return false;
+                }
+                if (!hasPort()) {
+
+                    return false;
+                }
+                return true;
+            }
+
+            public Builder mergeFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                com.letsmidi.monsys.protocol.commserver.CommServer.Register parsedMessage = null;
+                try {
+                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.Register) e.getUnfinishedMessage();
+                    throw e;
+                } finally {
+                    if (parsedMessage != null) {
+                        mergeFrom(parsedMessage);
+                    }
+                }
+                return this;
+            }
+
+            private int bitField0_;
+
+            // required string ip_v4_addr = 1;
+            private java.lang.Object ipV4Addr_ = "";
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public boolean hasIpV4Addr() {
+                return ((bitField0_ & 0x00000001) == 0x00000001);
+            }
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public java.lang.String getIpV4Addr() {
+                java.lang.Object ref = ipV4Addr_;
+                if (!(ref instanceof java.lang.String)) {
+                    java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                            .toStringUtf8();
+                    ipV4Addr_ = s;
+                    return s;
+                } else {
+                    return (java.lang.String) ref;
+                }
+            }
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public com.google.protobuf.ByteString
+            getIpV4AddrBytes() {
+                java.lang.Object ref = ipV4Addr_;
+                if (ref instanceof String) {
+                    com.google.protobuf.ByteString b =
+                            com.google.protobuf.ByteString.copyFromUtf8(
+                                    (java.lang.String) ref);
+                    ipV4Addr_ = b;
+                    return b;
+                } else {
+                    return (com.google.protobuf.ByteString) ref;
+                }
+            }
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public Builder setIpV4Addr(
+                    java.lang.String value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000001;
+                ipV4Addr_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public Builder clearIpV4Addr() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                ipV4Addr_ = getDefaultInstance().getIpV4Addr();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required string ip_v4_addr = 1;</code>
+             */
+            public Builder setIpV4AddrBytes(
+                    com.google.protobuf.ByteString value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000001;
+                ipV4Addr_ = value;
+                onChanged();
+                return this;
+            }
+
+            // required uint32 port = 2;
+            private int port_;
+
+            /**
+             * <code>required uint32 port = 2;</code>
+             */
+            public boolean hasPort() {
+                return ((bitField0_ & 0x00000002) == 0x00000002);
+            }
+
+            /**
+             * <code>required uint32 port = 2;</code>
+             */
+            public int getPort() {
+                return port_;
+            }
+
+            /**
+             * <code>required uint32 port = 2;</code>
+             */
+            public Builder setPort(int value) {
+                bitField0_ |= 0x00000002;
+                port_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required uint32 port = 2;</code>
+             */
+            public Builder clearPort() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                port_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.Register)
+        }
+
+        static {
+            defaultInstance = new Register(true);
+            defaultInstance.initFields();
+        }
+
+        // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.Register)
     }
 
-    public static com.google.protobuf.Parser<RegisterRsp> PARSER =
-        new com.google.protobuf.AbstractParser<RegisterRsp>() {
-      public RegisterRsp parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RegisterRsp(input, extensionRegistry);
-      }
-    };
+    public interface RegisterRspOrBuilder
+            extends com.google.protobuf.MessageOrBuilder {
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<RegisterRsp> getParserForType() {
-      return PARSER;
-    }
+        // required uint32 code = 1;
 
-    private int bitField0_;
-    // required uint32 code = 1;
-    public static final int CODE_FIELD_NUMBER = 1;
-    private int code_;
-    /**
-     * <code>required uint32 code = 1;</code>
-     */
-    public boolean hasCode() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required uint32 code = 1;</code>
-     */
-    public int getCode() {
-      return code_;
+        /**
+         * <code>required uint32 code = 1;</code>
+         */
+        boolean hasCode();
+
+        /**
+         * <code>required uint32 code = 1;</code>
+         */
+        int getCode();
     }
 
-    private void initFields() {
-      code_ = 0;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-
-      if (!hasCode()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, code_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, code_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.RegisterRsp}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.class, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder.class);
-      }
-
-      // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+    public static final class RegisterRsp extends
+            com.google.protobuf.GeneratedMessage
+            implements RegisterRspOrBuilder {
+        // Use RegisterRsp.newBuilder() to construct.
+        private RegisterRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+            this.unknownFields = builder.getUnknownFields();
         }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
 
-      public Builder clear() {
-        super.clear();
-        code_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
-      }
-
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
-      }
-
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp build() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        private RegisterRsp(boolean noInit) {
+            this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
         }
-        return result;
-      }
 
-      public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp buildPartial() {
-        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp result = new com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
+        private static final RegisterRsp defaultInstance;
+
+        public static RegisterRsp getDefaultInstance() {
+            return defaultInstance;
         }
-        result.code_ = code_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
 
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp) {
-          return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
+        public RegisterRsp getDefaultInstanceForType() {
+            return defaultInstance;
         }
-      }
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp other) {
-        if (other == com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance()) return this;
-        if (other.hasCode()) {
-          setCode(other.getCode());
+        private final com.google.protobuf.UnknownFieldSet unknownFields;
+
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+            return this.unknownFields;
         }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
 
-      public final boolean isInitialized() {
-        if (!hasCode()) {
-          
-          return false;
+        private RegisterRsp(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            initFields();
+            int mutable_bitField0_ = 0;
+            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+                    com.google.protobuf.UnknownFieldSet.newBuilder();
+            try {
+                boolean done = false;
+                while (!done) {
+                    int tag = input.readTag();
+                    switch (tag) {
+                        case 0:
+                            done = true;
+                            break;
+                        default: {
+                            if (!parseUnknownField(input, unknownFields,
+                                    extensionRegistry, tag)) {
+                                done = true;
+                            }
+                            break;
+                        }
+                        case 8: {
+                            bitField0_ |= 0x00000001;
+                            code_ = input.readUInt32();
+                            break;
+                        }
+                    }
+                }
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(this);
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(
+                        e.getMessage()).setUnfinishedMessage(this);
+            } finally {
+                this.unknownFields = unknownFields.build();
+                makeExtensionsImmutable();
+            }
         }
-        return true;
-      }
 
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
         }
-        return this;
-      }
-      private int bitField0_;
 
-      // required uint32 code = 1;
-      private int code_ ;
-      /**
-       * <code>required uint32 code = 1;</code>
-       */
-      public boolean hasCode() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required uint32 code = 1;</code>
-       */
-      public int getCode() {
-        return code_;
-      }
-      /**
-       * <code>required uint32 code = 1;</code>
-       */
-      public Builder setCode(int value) {
-        bitField0_ |= 0x00000001;
-        code_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required uint32 code = 1;</code>
-       */
-      public Builder clearCode() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        code_ = 0;
-        onChanged();
-        return this;
-      }
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.class, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder.class);
+        }
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
+        public static com.google.protobuf.Parser<RegisterRsp> PARSER =
+                new com.google.protobuf.AbstractParser<RegisterRsp>() {
+                    public RegisterRsp parsePartialFrom(
+                            com.google.protobuf.CodedInputStream input,
+                            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                            throws com.google.protobuf.InvalidProtocolBufferException {
+                        return new RegisterRsp(input, extensionRegistry);
+                    }
+                };
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<RegisterRsp> getParserForType() {
+            return PARSER;
+        }
+
+        private int bitField0_;
+        // required uint32 code = 1;
+        public static final int CODE_FIELD_NUMBER = 1;
+        private int code_;
+
+        /**
+         * <code>required uint32 code = 1;</code>
+         */
+        public boolean hasCode() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+
+        /**
+         * <code>required uint32 code = 1;</code>
+         */
+        public int getCode() {
+            return code_;
+        }
+
+        private void initFields() {
+            code_ = 0;
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+
+            if (!hasCode()) {
+                memoizedIsInitialized = 0;
+                return false;
+            }
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            getSerializedSize();
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                output.writeUInt32(1, code_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        private int memoizedSerializedSize = -1;
+
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(1, code_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        private static final long serialVersionUID = 0L;
+
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+                throws java.io.ObjectStreamException {
+            return super.writeReplace();
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return Builder.create();
+        }
+
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        public Builder toBuilder() {
+            return newBuilder(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * Protobuf type {@code com.letsmidi.monsys.protocol.commserver.RegisterRsp}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder>
+                implements com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRspOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
+            }
+
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(
+                                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.class, com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.Builder.class);
+            }
+
+            // Construct using com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.newBuilder()
+            private Builder() {
+                maybeForceBuilderInitialization();
+            }
+
+            private Builder(
+                    com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+                maybeForceBuilderInitialization();
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+                }
+            }
+
+            private static Builder create() {
+                return new Builder();
+            }
+
+            public Builder clear() {
+                super.clear();
+                code_ = 0;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                return this;
+            }
+
+            public Builder clone() {
+                return create().mergeFrom(buildPartial());
+            }
+
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp getDefaultInstanceForType() {
+                return com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance();
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp build() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            public com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp buildPartial() {
+                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp result = new com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp(this);
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+                    to_bitField0_ |= 0x00000001;
+                }
+                result.code_ = code_;
+                result.bitField0_ = to_bitField0_;
+                onBuilt();
+                return result;
+            }
+
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp) {
+                    return mergeFrom((com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp other) {
+                if (other == com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp.getDefaultInstance())
+                    return this;
+                if (other.hasCode()) {
+                    setCode(other.getCode());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                return this;
+            }
+
+            public final boolean isInitialized() {
+                if (!hasCode()) {
+
+                    return false;
+                }
+                return true;
+            }
+
+            public Builder mergeFrom(
+                    com.google.protobuf.CodedInputStream input,
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp parsedMessage = null;
+                try {
+                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    parsedMessage = (com.letsmidi.monsys.protocol.commserver.CommServer.RegisterRsp) e.getUnfinishedMessage();
+                    throw e;
+                } finally {
+                    if (parsedMessage != null) {
+                        mergeFrom(parsedMessage);
+                    }
+                }
+                return this;
+            }
+
+            private int bitField0_;
+
+            // required uint32 code = 1;
+            private int code_;
+
+            /**
+             * <code>required uint32 code = 1;</code>
+             */
+            public boolean hasCode() {
+                return ((bitField0_ & 0x00000001) == 0x00000001);
+            }
+
+            /**
+             * <code>required uint32 code = 1;</code>
+             */
+            public int getCode() {
+                return code_;
+            }
+
+            /**
+             * <code>required uint32 code = 1;</code>
+             */
+            public Builder setCode(int value) {
+                bitField0_ |= 0x00000001;
+                code_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required uint32 code = 1;</code>
+             */
+            public Builder clearCode() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                code_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
+        }
+
+        static {
+            defaultInstance = new RegisterRsp(true);
+            defaultInstance.initFields();
+        }
+
+        // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
     }
+
+    private static com.google.protobuf.Descriptors.Descriptor
+            internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
+    private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable;
+    private static com.google.protobuf.Descriptors.Descriptor
+            internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
+    private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable;
+    private static com.google.protobuf.Descriptors.Descriptor
+            internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
+    private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable;
+
+    public static com.google.protobuf.Descriptors.FileDescriptor
+    getDescriptor() {
+        return descriptor;
+    }
+
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
 
     static {
-      defaultInstance = new RegisterRsp(true);
-      defaultInstance.initFields();
+        java.lang.String[] descriptorData = {
+                "\n\021comm_server.proto\022\'com.letsmidi.monsys" +
+                        ".protocol.commserver\"\203\002\n\rCommServerMsg\022\017" +
+                        "\n\007version\030\001 \002(\r\022>\n\004type\030\002 \002(\01620.com.lets" +
+                        "midi.monsys.protocol.commserver.MsgType\022" +
+                        "\020\n\010sequence\030\003 \002(\r\022C\n\010register\030\005 \001(\01321.co" +
+                        "m.letsmidi.monsys.protocol.commserver.Re" +
+                        "gister\022J\n\014register_rsp\030\006 \001(\01324.com.letsm" +
+                        "idi.monsys.protocol.commserver.RegisterR" +
+                        "sp\",\n\010Register\022\022\n\nip_v4_addr\030\001 \002(\t\022\014\n\004po" +
+                        "rt\030\002 \002(\r\"\033\n\013RegisterRsp\022\014\n\004code\030\001 \002(\r*8\n",
+                "\007MsgType\022\r\n\tHEARTBEAT\020\001\022\014\n\010REGISTER\020\003\022\020\n" +
+                        "\014REGISTER_RSP\020\004"
+        };
+        com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+                new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+                    public com.google.protobuf.ExtensionRegistry assignDescriptors(
+                            com.google.protobuf.Descriptors.FileDescriptor root) {
+                        descriptor = root;
+                        internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor =
+                                getDescriptor().getMessageTypes().get(0);
+                        internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable = new
+                                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                                internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor,
+                                new java.lang.String[]{"Version", "Type", "Sequence", "Register", "RegisterRsp",});
+                        internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor =
+                                getDescriptor().getMessageTypes().get(1);
+                        internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable = new
+                                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                                internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor,
+                                new java.lang.String[]{"IpV4Addr", "Port",});
+                        internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor =
+                                getDescriptor().getMessageTypes().get(2);
+                        internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable = new
+                                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                                internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor,
+                                new java.lang.String[]{"Code",});
+                        return null;
+                    }
+                };
+        com.google.protobuf.Descriptors.FileDescriptor
+                .internalBuildGeneratedFileFrom(descriptorData,
+                        new com.google.protobuf.Descriptors.FileDescriptor[]{
+                        }, assigner);
     }
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
-  }
-
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable;
-
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    java.lang.String[] descriptorData = {
-      "\n\021comm_server.proto\022\'com.letsmidi.monsys" +
-      ".protocol.commserver\"\203\002\n\rCommServerMsg\022\017" +
-      "\n\007version\030\001 \002(\r\022>\n\004type\030\002 \002(\01620.com.lets" +
-      "midi.monsys.protocol.commserver.MsgType\022" +
-      "\020\n\010sequence\030\003 \002(\r\022C\n\010register\030\005 \001(\01321.co" +
-      "m.letsmidi.monsys.protocol.commserver.Re" +
-      "gister\022J\n\014register_rsp\030\006 \001(\01324.com.letsm" +
-      "idi.monsys.protocol.commserver.RegisterR" +
-      "sp\",\n\010Register\022\022\n\nip_v4_addr\030\001 \002(\t\022\014\n\004po" +
-      "rt\030\002 \002(\r\"\033\n\013RegisterRsp\022\014\n\004code\030\001 \002(\r*8\n",
-      "\007MsgType\022\r\n\tHEARTBEAT\020\001\022\014\n\010REGISTER\020\003\022\020\n" +
-      "\014REGISTER_RSP\020\004"
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_commserver_CommServerMsg_descriptor,
-              new java.lang.String[] { "Version", "Type", "Sequence", "Register", "RegisterRsp", });
-          internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_com_letsmidi_monsys_protocol_commserver_Register_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_commserver_Register_descriptor,
-              new java.lang.String[] { "IpV4Addr", "Port", });
-          internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_commserver_RegisterRsp_descriptor,
-              new java.lang.String[] { "Code", });
-          return null;
-        }
-      };
-    com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
-  }
-
-  // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(outer_class_scope)
 }

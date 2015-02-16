@@ -34,7 +34,7 @@ public class ConfigLoader {
                 }
 
                 String k = line.substring(0, idx).trim();
-                String v = line.substring(idx+1, line.length()).trim();
+                String v = line.substring(idx + 1, line.length()).trim();
                 System.out.println(String.format("key=%s, value=%s", k, v));
 
                 if (map.containsKey(k)) {

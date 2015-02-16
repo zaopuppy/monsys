@@ -1,5 +1,9 @@
 package com.letsmidi.monsys.test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -14,10 +18,6 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class ClientTest {
     public static void main(String[] args) {
@@ -78,7 +78,7 @@ public class ClientTest {
             Channel ch = channels[0];
             ChannelFuture last_future = null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            for (;;) {
+            for (; ; ) {
                 if (!ch.isActive()) {
                     log("disconnected");
                     break;

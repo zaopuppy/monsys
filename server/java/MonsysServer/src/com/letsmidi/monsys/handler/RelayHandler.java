@@ -23,39 +23,39 @@ import io.netty.util.ReferenceCountUtil;
 
 public final class RelayHandler extends ChannelInboundHandlerAdapter {
 
-  private final Channel relayChannel;
+    private final Channel relayChannel;
 
-  public RelayHandler(Channel relayChannel) {
-    this.relayChannel = relayChannel;
-  }
-
-  @Override
-  public void channelActive(ChannelHandlerContext ctx) {
-    ctx.writeAndFlush(Unpooled.EMPTY_BUFFER);
-  }
-
-  @Override
-  public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    if (relayChannel.isActive()) {
-      relayChannel.writeAndFlush(msg);
-    } else {
-      ReferenceCountUtil.release(msg);
+    public RelayHandler(Channel relayChannel) {
+        this.relayChannel = relayChannel;
     }
-  }
 
-  @Override
-  public void channelInactive(ChannelHandlerContext ctx) {
-    if (relayChannel.isActive()) {
-      relayChannel.flush();
-      relayChannel.close();
-      // SocksServerUtils.closeOnFlush(relayChannel);
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) {
+        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER);
     }
-  }
 
-  @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-    cause.printStackTrace();
-    ctx.close();
-    // XXX: should we call relayChannel.close() or not?
-  }
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (relayChannel.isActive()) {
+            relayChannel.writeAndFlush(msg);
+        } else {
+            ReferenceCountUtil.release(msg);
+        }
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) {
+        if (relayChannel.isActive()) {
+            relayChannel.flush();
+            relayChannel.close();
+            // SocksServerUtils.closeOnFlush(relayChannel);
+        }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();
+        ctx.close();
+        // XXX: should we call relayChannel.close() or not?
+    }
 }

@@ -39,7 +39,7 @@ public class CommServerApp {
 
         initLogger();
 
-        Class[] mapping_classes = new Class[] {
+        Class[] mapping_classes = new Class[]{
                 AccountInfo.class,
         };
 
@@ -61,7 +61,7 @@ public class CommServerApp {
         logger.setLevel(Level.ALL);
         logger.addHandler(log_handler);
 
-        for (Handler h: logger.getHandlers()) {
+        for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
             h.setFormatter(new MyLogFormatter());
         }

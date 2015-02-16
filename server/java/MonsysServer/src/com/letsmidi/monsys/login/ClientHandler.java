@@ -41,15 +41,15 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
         mLogger.info("current state: " + mState.name());
         //switch (getState()) {
         //    case WAITING_FOR_LOGIN:
-                onWaitingForLogin(ctx, msg);
-                //break;
-            //case LOGGED_IN:
-            //{
-            //  onLoggedIn(ctx, msg);
-            //  break;
-            //}
-            //default:
-            //    break;
+        onWaitingForLogin(ctx, msg);
+        //break;
+        //case LOGGED_IN:
+        //{
+        //  onLoggedIn(ctx, msg);
+        //  break;
+        //}
+        //default:
+        //    break;
         //}
     }
 

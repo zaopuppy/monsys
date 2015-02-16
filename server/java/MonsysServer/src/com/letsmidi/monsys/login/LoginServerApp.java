@@ -31,15 +31,12 @@ import io.netty.util.HashedWheelTimer;
 
 /**
  * 开发的时候，阅读参考了某公司的开源服务端代码，有如下问题：
- *
+ * <p>
  * 1. 服务端和客户端共用一个监听，根据上报的类型区分服务端和客户端，很容易欺骗伪装为服务端，从而得到客户端的隐私（用户名，密码，聊天记录）
- *    -- 分开监听
- *
+ * -- 分开监听
+ * <p>
  * 2. 流程上是先申请服务端再进行登录，也就是说可以在没有用户名和密码的情况下就能枚举所有服务端
- *    -- 也许做两次验证(login & msg server各一次)可以解决这个问题?
- *
- *
- *
+ * -- 也许做两次验证(login & msg server各一次)可以解决这个问题?
  */
 public class LoginServerApp {
     private final Logger mLogger = Logger.getLogger(LoginConfig.LoggerName);
@@ -50,7 +47,7 @@ public class LoginServerApp {
 
         initLogger();
 
-        Class[] mapping_classes = new Class[] {
+        Class[] mapping_classes = new Class[]{
                 AccountInfo.class,
         };
 
@@ -72,7 +69,7 @@ public class LoginServerApp {
         logger.setLevel(Level.ALL);
         logger.addHandler(log_handler);
 
-        for (Handler h: logger.getHandlers()) {
+        for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
             h.setFormatter(new MyLogFormatter());
         }

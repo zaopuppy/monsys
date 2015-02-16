@@ -7,24 +7,24 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class RouteClientHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
 
-  @Override
-  public void channelActive(ChannelHandlerContext ctx) throws Exception {
-    super.channelActive(ctx);
-  }
-
-  @Override
-  protected void channelRead0(ChannelHandlerContext ctx, Route.RouteMsg msg) throws Exception {
-    MyLogger.d("received: [" + msg.getType().name() + "]");
-    if (msg.getType() == Route.MsgType.CONNECT) {
-      MyLogger.e("token: " + msg.getConnect().getToken());
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
     }
-  }
 
-  @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-    cause.printStackTrace();
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, Route.RouteMsg msg) throws Exception {
+        MyLogger.d("received: [" + msg.getType().name() + "]");
+        if (msg.getType() == Route.MsgType.CONNECT) {
+            MyLogger.e("token: " + msg.getConnect().getToken());
+        }
+    }
 
-    super.exceptionCaught(ctx, cause);
-  }
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+
+        super.exceptionCaught(ctx, cause);
+    }
 
 }

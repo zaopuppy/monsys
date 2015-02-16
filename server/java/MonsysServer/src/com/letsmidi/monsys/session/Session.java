@@ -1,42 +1,17 @@
 package com.letsmidi.monsys.session;
 
-public abstract class Session<T> implements ISession<T> {
+/**
+ * Created by zero on 8/11/14.
+ */
+public interface Session<T> {
 
-  private final T mKey;
-  private final SessionManager mManager;
+    T getKey();
 
-  private long mTimeout = 60*1000;
-  private long mLastTouchedTime;
+    void close();
 
-  public Session(SessionManager manager, T key) {
-    mManager = manager;
-    mKey = key;
-    // TODO: remove this! the less api invoking, the faster we gonna be!
-    mLastTouchedTime = System.currentTimeMillis();
-  }
+    void checkTimeout(long current);
 
-  @Override
-  public T getKey() {
-    return mKey;
-  }
+    //boolean isTimeout();
 
-  @Override
-  public void close() {
-    mManager.remove(this);
-  }
-
-  @Override
-  public boolean isTimeout() {
-    // TODO: DON'T get system time every time!
-    long cur_time = System.currentTimeMillis();
-    if (cur_time > mLastTouchedTime + mTimeout) {
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void timeout() {
-    close();
-  }
+    //void timeout();
 }

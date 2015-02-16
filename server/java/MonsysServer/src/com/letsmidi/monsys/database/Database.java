@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.database;
 
+import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,8 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.sql.DataSource;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -18,7 +17,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  * JNDI
  *
  * @author zero
- *
  */
 public class Database {
     public static final Database INSTANCE = new Database();
@@ -75,9 +73,24 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (result != null) { try { result.close(); } catch (SQLException e) {} }
-            if (stmt != null) { try { stmt.close(); } catch (SQLException e) {} }
-            if (conn != null) { try { conn.close(); } catch (SQLException e) {} }
+            if (result != null) {
+                try {
+                    result.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
         }
     }
 
@@ -86,8 +99,8 @@ public class Database {
         String line;
         try {
             for (line = in.readLine().trim();
-                    line != null && !line.equals("exit");
-                    line = in.readLine().trim()) {
+                 line != null && !line.equals("exit");
+                 line = in.readLine().trim()) {
                 Database.INSTANCE.execute("select * from account_info");
             }
         } catch (IOException e) {

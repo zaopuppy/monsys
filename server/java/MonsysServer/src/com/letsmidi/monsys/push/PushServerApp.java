@@ -1,0 +1,135 @@
+package com.letsmidi.monsys.push;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.letsmidi.monsys.Config;
+import com.letsmidi.monsys.database.AccountInfo;
+import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.protocol.push.Push.PushMsg;
+import com.letsmidi.monsys.util.HibernateUtil;
+import com.letsmidi.monsys.util.MonsysException;
+import com.letsmidi.monsys.util.NettyUtil;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.HashedWheelTimer;
+
+// TODO: android client logged in, then close the screen, wait several minutes, then open screen, we'll find nothing
+//       gonna happen if we invoke server interface
+//  case1: another connection comes while there's already one connection is established
+//  case2: for some reason, channel didn't closed even the peer channel has been closed
+//  solution: clean and disconnect old connection if new one is coming
+// TODO: heartbeat
+public class PushServerApp {
+    private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
+
+    public static void main(String[] args) throws IOException, MonsysException {
+
+        Config.load();
+
+        initLogger();
+
+        PushServerApp push_server = new PushServerApp();
+        push_server.start();
+    }
+
+    private static void initLogger() throws IOException {
+        Handler log_handler = new FileHandler(Config.getPushConfig().getLogFileName(), 1 << 20, 10000, true);
+
+        final Logger logger = Logger.getLogger(Config.getPushConfig().getLoggerName());
+        logger.setLevel(Level.ALL);
+        logger.addHandler(log_handler);
+
+        for (Handler h : logger.getHandlers()) {
+            System.out.println("handler: " + h.getClass().getCanonicalName());
+            h.setFormatter(new MyLogFormatter());
+        }
+    }
+
+    public void start() {
+        mLogger.info("-----------------------------------");
+        mLogger.info("push server start");
+
+        Class[] mapping_classes = new Class[]{
+                AccountInfo.class,
+        };
+
+        // initialize hibernate
+        if (!HibernateUtil.init(mapping_classes)) {
+            mLogger.severe("Failed to initialize hiberate, failed");
+            return;
+        }
+
+        // global timer
+        final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
+        timer.start();
+
+        InMemInfo.INSTANCE.init(timer);
+
+        NioEventLoopGroup shared_worker = new NioEventLoopGroup();
+
+        // push server
+        NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
+
+        ChannelFuture push_future = NettyUtil.startServer(
+                Config.getPushConfig().getPushPort(), push_boss, shared_worker,
+                new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
+                new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(
+                                new ProtobufVarint32LengthFieldPrepender(),
+                                new ProtobufVarint32FrameDecoder(),
+                                new ProtobufEncoder(),
+                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                                new FgwHandler(timer));
+                    }
+                }
+        );
+
+        // access server
+        NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
+        NioEventLoopGroup access_worker = new NioEventLoopGroup();
+
+        ChannelFuture access_future = NettyUtil.startServer(
+                Config.getPushConfig().getAccessPort(), access_boss, shared_worker,
+                new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
+                new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(
+                                new ProtobufVarint32LengthFieldPrepender(),
+                                new ProtobufVarint32FrameDecoder(),
+                                new ProtobufEncoder(),
+                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                                new ApiHandler(timer));
+                    }
+                }
+        );
+
+        try {
+            push_future.channel().closeFuture().sync();
+            access_future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            push_boss.shutdownGracefully();
+            access_boss.shutdownGracefully();
+            shared_worker.shutdownGracefully();
+        }
+
+    }
+}
+

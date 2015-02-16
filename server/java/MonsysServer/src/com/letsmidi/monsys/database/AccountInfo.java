@@ -9,18 +9,21 @@ import javax.persistence.Table;
  * Created by zero on 8/21/14.
  */
 @Entity
-@Table(name="account_info")
+@Table(name = "account_info")
 public class AccountInfo {
     public enum Status {
         NORMAL(0),
         INVALID(1);
 
         private final int mValue;
+
         Status(int value) {
             mValue = value;
         }
 
-        public int value() { return mValue; }
+        public int value() {
+            return mValue;
+        }
     }
 
     @Id

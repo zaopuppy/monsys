@@ -11,45 +11,44 @@ import io.netty.handler.logging.LoggingHandler;
 
 
 /**
- *
  * /account/register
  * /account/login
  * /account/get_fgw_list
- *
- *
+ * <p>
+ * <p>
  * Created by zero on 8/23/14.
  */
 public class HttpApiServer {
-  public static void main(String[] args) {
-    HttpApiServer server = new HttpApiServer();
-    server.start();
-  }
-
-  public void start() {
-    //
-    NioEventLoopGroup boss = new NioEventLoopGroup();
-    NioEventLoopGroup worker = new NioEventLoopGroup();
-
-    ChannelFuture future = NettyUtil.startServer(
-        8088, boss, worker,
-        new LoggingHandler(LogLevel.INFO),
-        new ChannelInitializer<SocketChannel>() {
-          @Override
-          protected void initChannel(SocketChannel ch) throws Exception {
-            ch.pipeline().addLast(
-                new HttpServerCodec(),
-                new HttpApiServerHandler()
-            );
-          }
-        });
-
-    try {
-      future.channel().closeFuture().sync();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } finally {
-      boss.shutdownGracefully();
-      worker.shutdownGracefully();
+    public static void main(String[] args) {
+        HttpApiServer server = new HttpApiServer();
+        server.start();
     }
-  }
+
+    public void start() {
+        //
+        NioEventLoopGroup boss = new NioEventLoopGroup();
+        NioEventLoopGroup worker = new NioEventLoopGroup();
+
+        ChannelFuture future = NettyUtil.startServer(
+                8088, boss, worker,
+                new LoggingHandler(LogLevel.INFO),
+                new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(
+                                new HttpServerCodec(),
+                                new HttpApiServerHandler()
+                        );
+                    }
+                });
+
+        try {
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            boss.shutdownGracefully();
+            worker.shutdownGracefully();
+        }
+    }
 }
