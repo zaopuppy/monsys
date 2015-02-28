@@ -58,11 +58,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
         switch (msg.getType()) {
             case LOGIN:
-                if (!msg.hasLogin()) {
-                    mLogger.severe("no login field");
-                    ctx.close();
-                    break;
-                }
                 handleLogin(ctx, msg);
                 break;
             case REQUEST_COMM_SERVER:
@@ -81,7 +76,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     }
 
     private void sendRequestCommServerRsp(ChannelHandlerContext ctx, Client.ClientMsg msg, InMemInfo.CommServerInfo info) {
-        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.REQUEST_COMM_SERVER_RSP);
+        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.REQUEST_COMM_SERVER_RSP, msg.getSequence());
 
         Client.RequestCommServerRsp.Builder rsp = Client.RequestCommServerRsp.newBuilder();
 
@@ -105,6 +100,12 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
     private void handleLogin(ChannelHandlerContext ctx, Client.ClientMsg msg) {
         mLogger.info("handleLogin");
+
+        if (!msg.hasLogin()) {
+            mLogger.severe("no login field");
+            ctx.close();
+            return;
+        }
 
         Client.Login req = msg.getLogin();
 
@@ -143,7 +144,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     }
 
     private void sendClientLoginRsp(ChannelHandlerContext ctx, Client.ClientMsg req) {
-        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.LOGIN_RSP);
+        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.LOGIN_RSP, req.getSequence());
         builder.setSequence(req.getSequence());
 
         Client.LoginRsp.Builder rsp = Client.LoginRsp.newBuilder();

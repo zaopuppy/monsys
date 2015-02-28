@@ -3,6 +3,7 @@ package com.letsmidi.monsys.commserver;
 import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
+import com.letsmidi.monsys.GlobalIdGenerator;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -49,7 +50,7 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<CommServer.C
     }
 
     private void registerToLoginServer(ChannelHandlerContext ctx) {
-        CommServer.CommServerMsg.Builder builder = MsgUtil.newCommServerMsgBuilder(CommServer.MsgType.REGISTER);
+        CommServer.CommServerMsg.Builder builder = MsgUtil.newCommServerMsgBuilder(CommServer.MsgType.REGISTER, GlobalIdGenerator.INSTANCE.next());
 
         CommServer.Register.Builder register = CommServer.Register.newBuilder();
         register.setIpV4Addr("127.0.0.1");

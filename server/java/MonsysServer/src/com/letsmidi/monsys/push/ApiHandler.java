@@ -24,23 +24,15 @@ import io.netty.util.HashedWheelTimer;
 /**
  * TODO: common response
  *
- * @author zero
+ * @author Yi Zhao
  */
 public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
-
-    //public static class ApiSession extends BaseSession<Integer> {
-    //    public int external_sequence = -1;
-    //
-    //    public ApiSession(SessionManager manager, Integer key) {
-    //        super(manager, key);
-    //    }
-    //}
 
     private static final int RECONNECT_WAIT_TIME = 5; // in seconds
 
     private String mFgwList = null;
 
-    private final HashedWheelTimer mTimer;
+    //private final HashedWheelTimer mTimer;
     //private final SessionManager<Integer, ApiSession> mSessionManager;
     //private final SessionManager<Integer, ApiSession> mInnerSessionManager;
     //private SequenceGenerator mSequenceGenerator = new SequenceGenerator(1, 0xFFFFFF);
@@ -49,7 +41,7 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
     private FgwManager.FgwInfo mCurrentFgw = null;
 
     public ApiHandler(HashedWheelTimer timer) {
-        mTimer = timer;
+        //mTimer = timer;
         //mSessionManager = new SessionManager<>(timer);
         //mInnerSessionManager = new SessionManager<>(timer);
     }
@@ -81,14 +73,79 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
                 handleDevListReq(ctx, msg);
                 break;
             case GET_DEV_INFO:
+                handleDevInfoReq(ctx, msg);
                 break;
             case SET_DEV_INFO:
+                handleSetDevInfoReq(ctx, msg);
                 break;
             default:
                 mLogger.severe("unknown type: " + msg.getType());
                 ctx.close();
                 break;
         }
+    }
+
+    // TODO: duplicated code
+    private void handleSetDevInfoReq(ChannelHandlerContext ctx, PushMsg msg) {
+        if (!msg.hasSetDevInfo()) {
+            return;
+        }
+
+        if (mCurrentFgw == null) {
+            return;
+        }
+
+        Channel ch = mCurrentFgw.channel;
+        if (ch == null || !ch.isActive()) {
+            return;
+        }
+
+        int external_sequence = msg.getSequence();
+        int internal_sequence = GlobalIdGenerator.INSTANCE.next();
+
+        PushSession session = new PushSession(InMemInfo.INSTANCE.getInternalSessionManager(), internal_sequence);
+        session.external_sequence = external_sequence;
+
+        // add to session
+        InMemInfo.INSTANCE.getInternalSessionManager().add(session);
+
+        // modify sequence
+        PushMsg.Builder builder = msg.toBuilder();
+        builder.setSequence(internal_sequence);
+
+        // send to fgw
+        ch.writeAndFlush(builder.build());
+    }
+
+    private void handleDevInfoReq(ChannelHandlerContext ctx, PushMsg msg) {
+        if (!msg.hasGetDevInfo()) {
+            return;
+        }
+
+        if (mCurrentFgw == null) {
+            return;
+        }
+
+        Channel ch = mCurrentFgw.channel;
+        if (ch == null || !ch.isActive()) {
+            return;
+        }
+
+        int external_sequence = msg.getSequence();
+        int internal_sequence = GlobalIdGenerator.INSTANCE.next();
+
+        PushSession session = new PushSession(InMemInfo.INSTANCE.getInternalSessionManager(), internal_sequence);
+        session.external_sequence = external_sequence;
+
+        // add to session
+        InMemInfo.INSTANCE.getInternalSessionManager().add(session);
+
+        // modify sequence
+        PushMsg.Builder builder = msg.toBuilder();
+        builder.setSequence(internal_sequence);
+
+        // send to fgw
+        ch.writeAndFlush(builder.build());
     }
 
     private void handleDevListReq(ChannelHandlerContext ctx, PushMsg msg) {
@@ -122,7 +179,7 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
         InMemInfo.INSTANCE.getInternalSessionManager().add(session);
 
         // modify sequence
-        PushMsg.Builder builder = PushMsg.newBuilder();
+        PushMsg.Builder builder = msg.toBuilder();
         builder.setSequence(internal_sequence);
 
         // send to FGW
@@ -136,6 +193,7 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
 
         PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.GET_FGW_LIST_RSP, msg.getSequence());
         Push.GetFgwListRsp.Builder get_fgw_list_rsp = Push.GetFgwListRsp.newBuilder();
+        // TODO
         get_fgw_list_rsp.setCode(-1);
         builder.setGetFgwListRsp(get_fgw_list_rsp);
 
@@ -161,6 +219,18 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
         mCurrentFgw = info;
 
         sendConnectRsp(ctx, msg, 0);
+    }
+
+    private void sendConnectRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
+        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CONNECT_RSP, msg.getSequence());
+        builder.setSequence(msg.getSequence());
+
+        ConnectRsp.Builder rsp = ConnectRsp.newBuilder();
+        rsp.setCode(code);
+
+        builder.setConnectRsp(rsp);
+
+        ctx.writeAndFlush(builder.build());
     }
 
     @Override
@@ -284,107 +354,107 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
     //  String validate_url = "";
     //}
 
-    private void processGetFgwList(ChannelHandlerContext ctx, PushMsg msg) {
-        mLogger.info("processGetFgwList");
-        if (!msg.hasGetFgwList()) {
-            return;
-        }
-
-        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.GET_FGW_LIST_RSP);
-        builder.setSequence(builder.getSequence());
-
-        GetFgwListRsp.Builder rsp = GetFgwListRsp.newBuilder();
-        rsp.setCode(0);
-        FGatewayInfo.Builder info = FGatewayInfo.newBuilder();
-        if (this.mFgwList != null) {
-            String[] fgws = this.mFgwList.split("\\|");
-            for (String fgw : fgws) {
-                info.setId(fgw);
-                info.setName(fgw);
-                info.setDesc("nothing about this gateway");
-                rsp.addFgwInfos(info.build());
-            }
-        }
-
-        builder.setGetFgwListRsp(rsp);
-
-        ctx.writeAndFlush(builder.build());
-    }
-
-    private class WaitForFgwTask implements Runnable {
-        private final String mDeviceId;
-        private final ChannelHandlerContext mContext;
-        private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
-        private int mRetryTimes;
-        private final PushMsg mMsg;
-
-        public WaitForFgwTask(ChannelHandlerContext ctx, PushMsg msg, String device_id, int retry_times) {
-            mContext = ctx;
-            mDeviceId = device_id;
-            mRetryTimes = retry_times;
-            mMsg = msg;
-        }
-
-        @Override
-        public void run() {
-            if (mRetryTimes <= 0) {
-                mLogger.warning("Timeout");
-                mContext.close();
-                return;
-            }
-            --mRetryTimes;
-
-            FgwManager.FgwInfo fgw_again = FgwManager.INSTANCE.find(mDeviceId);
-            if (fgw_again == null) {
-                mLogger.severe("fgw still not connected");
-                // mContext.close();
-                mContext.executor().schedule(this, RECONNECT_WAIT_TIME, TimeUnit.SECONDS);
-                return;
-            }
-
-            if (!fgw_again.connected.compareAndSet(false, true)) {
-                mLogger.severe("Still not fast enough, fail");
-                mContext.close();
-                return;
-            }
-
-            setupRelayChannels(mContext, mMsg, fgw_again);
-        }
-    }
-
-    private void processConnect(final ChannelHandlerContext ctx, PushMsg msg) {
-        mLogger.info("processConnect()");
-
-        if (msg.getType() != MsgType.CONNECT || !msg.hasConnect()) {
-            mLogger.severe("connect expected, but received: " + msg.getType());
-            ctx.close();
-            return;
-        }
-
-        Connect connect_req = msg.getConnect();
-
-        final String device_id = connect_req.getDeviceId();
-
-        FgwManager.FgwInfo fgw = FgwManager.INSTANCE.find(device_id);
-        if (fgw == null) {
-            mLogger.severe("gw not connected yet");
-            ctx.close();
-            return;
-        }
-
-        mLogger.info("gw was found");
-
-        if (!fgw.connected.compareAndSet(false, true)) {
-            // close and wait
-            mLogger.info("close existing client channel then wait");
-            fgw.channel.close();
-            // ctx.executor().schedule(new WaitForFgwTask(ctx, device_id, 2), RECONNECT_WAIT_TIME, TimeUnit.SECONDS);
-            new WaitForFgwTask(ctx, msg, device_id, 2).run();
-            return;
-        }
-
-        setupRelayChannels(ctx, msg, fgw);
-    }
+    //private void processGetFgwList(ChannelHandlerContext ctx, PushMsg msg) {
+    //    mLogger.info("processGetFgwList");
+    //    if (!msg.hasGetFgwList()) {
+    //        return;
+    //    }
+    //
+    //    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.GET_FGW_LIST_RSP);
+    //    builder.setSequence(builder.getSequence());
+    //
+    //    GetFgwListRsp.Builder rsp = GetFgwListRsp.newBuilder();
+    //    rsp.setCode(0);
+    //    FGatewayInfo.Builder info = FGatewayInfo.newBuilder();
+    //    if (this.mFgwList != null) {
+    //        String[] fgws = this.mFgwList.split("\\|");
+    //        for (String fgw : fgws) {
+    //            info.setId(fgw);
+    //            info.setName(fgw);
+    //            info.setDesc("nothing about this gateway");
+    //            rsp.addFgwInfos(info.build());
+    //        }
+    //    }
+    //
+    //    builder.setGetFgwListRsp(rsp);
+    //
+    //    ctx.writeAndFlush(builder.build());
+    //}
+    //
+    //private class WaitForFgwTask implements Runnable {
+    //    private final String mDeviceId;
+    //    private final ChannelHandlerContext mContext;
+    //    private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
+    //    private int mRetryTimes;
+    //    private final PushMsg mMsg;
+    //
+    //    public WaitForFgwTask(ChannelHandlerContext ctx, PushMsg msg, String device_id, int retry_times) {
+    //        mContext = ctx;
+    //        mDeviceId = device_id;
+    //        mRetryTimes = retry_times;
+    //        mMsg = msg;
+    //    }
+    //
+    //    @Override
+    //    public void run() {
+    //        if (mRetryTimes <= 0) {
+    //            mLogger.warning("Timeout");
+    //            mContext.close();
+    //            return;
+    //        }
+    //        --mRetryTimes;
+    //
+    //        FgwManager.FgwInfo fgw_again = FgwManager.INSTANCE.find(mDeviceId);
+    //        if (fgw_again == null) {
+    //            mLogger.severe("fgw still not connected");
+    //            // mContext.close();
+    //            mContext.executor().schedule(this, RECONNECT_WAIT_TIME, TimeUnit.SECONDS);
+    //            return;
+    //        }
+    //
+    //        if (!fgw_again.connected.compareAndSet(false, true)) {
+    //            mLogger.severe("Still not fast enough, fail");
+    //            mContext.close();
+    //            return;
+    //        }
+    //
+    //        setupRelayChannels(mContext, mMsg, fgw_again);
+    //    }
+    //}
+    //
+    //private void processConnect(final ChannelHandlerContext ctx, PushMsg msg) {
+    //    mLogger.info("processConnect()");
+    //
+    //    if (msg.getType() != MsgType.CONNECT || !msg.hasConnect()) {
+    //        mLogger.severe("connect expected, but received: " + msg.getType());
+    //        ctx.close();
+    //        return;
+    //    }
+    //
+    //    Connect connect_req = msg.getConnect();
+    //
+    //    final String device_id = connect_req.getDeviceId();
+    //
+    //    FgwManager.FgwInfo fgw = FgwManager.INSTANCE.find(device_id);
+    //    if (fgw == null) {
+    //        mLogger.severe("gw not connected yet");
+    //        ctx.close();
+    //        return;
+    //    }
+    //
+    //    mLogger.info("gw was found");
+    //
+    //    if (!fgw.connected.compareAndSet(false, true)) {
+    //        // close and wait
+    //        mLogger.info("close existing client channel then wait");
+    //        fgw.channel.close();
+    //        // ctx.executor().schedule(new WaitForFgwTask(ctx, device_id, 2), RECONNECT_WAIT_TIME, TimeUnit.SECONDS);
+    //        new WaitForFgwTask(ctx, msg, device_id, 2).run();
+    //        return;
+    //    }
+    //
+    //    setupRelayChannels(ctx, msg, fgw);
+    //}
 
     //private void setupRelayChannels(final ChannelHandlerContext ctx, PushMsg msg, FgwManager.FgwInfo fgw) {
     //    fgw.channel.pipeline().remove(FgwHandler.class);
@@ -445,39 +515,27 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
     //
     //}
 
-    private void sendClientLoginRsp(ChannelHandlerContext ctx, PushMsg msg, String fgw_list) {
-        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CLIENT_LOGIN_RSP, msg.getSequence());
-        builder.setSequence(msg.getSequence());
-
-        ClientLoginRsp.Builder rsp = ClientLoginRsp.newBuilder();
-        rsp.setCode(0);
-
-        builder.setClientLoginRsp(rsp);
-
-        ctx.writeAndFlush(builder.build());
-    }
-
-    private void sendConnectRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
-        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CONNECT_RSP, msg.getSequence());
-        builder.setSequence(msg.getSequence());
-
-        ConnectRsp.Builder rsp = ConnectRsp.newBuilder();
-        rsp.setCode(code);
-
-        builder.setConnectRsp(rsp);
-
-        ctx.writeAndFlush(builder.build());
-    }
-
-    private void sendUserRegisterRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
-        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.USER_REGISTER_RSP, msg.getSequence());
-        builder.setSequence(msg.getSequence());
-
-        UserRegisterRsp.Builder rsp = UserRegisterRsp.newBuilder();
-        rsp.setCode(code);
-
-        builder.setUserRegisterRsp(rsp);
-
-        ctx.writeAndFlush(builder.build());
-    }
+    //private void sendClientLoginRsp(ChannelHandlerContext ctx, PushMsg msg, String fgw_list) {
+    //    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.CLIENT_LOGIN_RSP, msg.getSequence());
+    //    builder.setSequence(msg.getSequence());
+    //
+    //    ClientLoginRsp.Builder rsp = ClientLoginRsp.newBuilder();
+    //    rsp.setCode(0);
+    //
+    //    builder.setClientLoginRsp(rsp);
+    //
+    //    ctx.writeAndFlush(builder.build());
+    //}
+    //
+    //private void sendUserRegisterRsp(ChannelHandlerContext ctx, PushMsg msg, int code) {
+    //    PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.USER_REGISTER_RSP, msg.getSequence());
+    //    builder.setSequence(msg.getSequence());
+    //
+    //    UserRegisterRsp.Builder rsp = UserRegisterRsp.newBuilder();
+    //    rsp.setCode(code);
+    //
+    //    builder.setUserRegisterRsp(rsp);
+    //
+    //    ctx.writeAndFlush(builder.build());
+    //}
 }
