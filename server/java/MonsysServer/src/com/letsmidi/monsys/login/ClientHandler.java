@@ -12,6 +12,11 @@ import io.netty.util.HashedWheelTimer;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
+/**
+ * 1.  校验用户名/密码
+ * 2.  分配Comm服务器，并从分配好的Comm服务器申请login-id
+ * 3.  返回login-id
+ */
 public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg> {
     private final Logger mLogger = Logger.getLogger(LoginConfig.LoggerName);
 
@@ -39,18 +44,16 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {
         mLogger.info("current state: " + mState.name());
-        //switch (getState()) {
-        //    case WAITING_FOR_LOGIN:
-        onWaitingForLogin(ctx, msg);
-        //break;
-        //case LOGGED_IN:
-        //{
-        //  onLoggedIn(ctx, msg);
-        //  break;
-        //}
-        //default:
-        //    break;
-        //}
+        switch (getState()) {
+            case WAITING_FOR_LOGIN:
+                onWaitingForLogin(ctx, msg);
+                break;
+            case LOGGED_IN:
+                onLoggedIn(ctx, msg);
+                break;
+            default:
+                break;
+        }
     }
 
     private void onWaitingForLogin(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {
