@@ -4,10 +4,13 @@ package com.letsmidi.monsys.login;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import io.netty.channel.Channel;
+
 public class InMemInfo {
     public static final InMemInfo INSTANCE = new InMemInfo();
 
     public static class CommServerInfo {
+        public Channel channel = null;
         public String ipV4Addr = null;
         public int port = 0;
     }

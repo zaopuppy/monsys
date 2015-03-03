@@ -45,6 +45,7 @@ public class CommServerHandler extends SimpleChannelInboundHandler<CommServer.Co
         // save communication server info
         InMemInfo.CommServerInfo info = new InMemInfo.CommServerInfo();
         InetSocketAddress addr = (InetSocketAddress) ctx.channel().localAddress();
+        info.channel = ctx.channel();
         info.ipV4Addr = addr.getHostName();
         info.port = addr.getPort();
         InMemInfo.INSTANCE.getCommServerList().add(info);

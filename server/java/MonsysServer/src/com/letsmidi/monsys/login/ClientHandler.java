@@ -2,8 +2,10 @@ package com.letsmidi.monsys.login;
 
 import java.util.logging.Logger;
 
+import com.letsmidi.monsys.GlobalIdGenerator;
 import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.protocol.client.Client;
+import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,15 +15,20 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
 /**
+ * 登录
  * 1.  校验用户名/密码
- * 2.  分配Comm服务器，并从分配好的Comm服务器申请login-id
- * 3.  返回login-id
+ * 2.  分配Comm服务器，并从分配好的Comm服务器申请token
+ * 3.  返回token
+ *
+ * Comm根据token对客户端进行鉴权
  */
 public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg> {
     private final Logger mLogger = Logger.getLogger(LoginConfig.LoggerName);
+    private InMemInfo.CommServerInfo mChoosedCommServer = null;
 
     private enum STATE {
         WAITING_FOR_LOGIN,
+        WAITING_FOR_COMM_SERVER,
         LOGGED_IN,
     }
 
@@ -48,12 +55,25 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
             case WAITING_FOR_LOGIN:
                 onWaitingForLogin(ctx, msg);
                 break;
+            //case WAITING_FOR_COMM_SERVER:
+            //    onWaitingForCommServer(ctx, msg);
+            //    break;
             case LOGGED_IN:
                 onLoggedIn(ctx, msg);
                 break;
             default:
                 break;
         }
+    }
+
+    private void onWaitingForCommServer(ChannelHandlerContext ctx, Client.ClientMsg msg) {
+        //if (msg.getType() != CommServer.MsgType.REQUEST_TOKEN_RSP) {
+        //
+        //}
+    }
+
+    private void onLoggedIn(ChannelHandlerContext ctx, Client.ClientMsg msg) {
+        mLogger.info("onLoggedIn: " + msg.getType());
     }
 
     private void onWaitingForLogin(ChannelHandlerContext ctx, Client.ClientMsg msg) throws Exception {
@@ -63,9 +83,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
             case LOGIN:
                 handleLogin(ctx, msg);
                 break;
-            case REQUEST_COMM_SERVER:
-                handleRequestCommServer(ctx, msg);
-                break;
+            //case REQUEST_COMM_SERVER:
+            //    handleRequestCommServer(ctx, msg);
+            //    break;
             default:
                 mLogger.severe("Unknown message type");
                 ctx.close();
@@ -115,6 +135,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         try {
+            // check account/password pair
             AccountInfo info = (AccountInfo) session.load(AccountInfo.class, req.getUserName());
             if (info == null) {
                 mLogger.severe("bad account");
@@ -134,9 +155,15 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
                 return;
             }
 
-            sendClientLoginRsp(ctx, msg);
+            // ask comm server for login-id
+            CommServer.CommServerMsg.Builder builder =
+                    MsgUtil.newCommServerMsgBuilder(CommServer.MsgType.REQUEST_TOKEN, GlobalIdGenerator.INSTANCE.next());
+            CommServer.RequestToken.Builder request_token = CommServer.RequestToken.newBuilder();
+            builder.setRequestToken(request_token);
+            mChoosedCommServer = InMemInfo.INSTANCE.chooseCommServer();
+            mChoosedCommServer.channel.writeAndFlush(builder.build());
 
-            setState(STATE.LOGGED_IN);
+            setState(STATE.WAITING_FOR_COMM_SERVER);
         } catch (ObjectNotFoundException e) {
             mLogger.info("not record found");
             ctx.close();
