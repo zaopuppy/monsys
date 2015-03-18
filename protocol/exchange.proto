@@ -1,0 +1,31 @@
+
+package com.letsmidi.monsys.protocol.exchange;
+
+
+enum MsgType {
+  CONNECT           = 1;
+  CONNECT_RSP       = 2;
+}
+
+message ExchangeMsg {
+  // head
+  required uint32 version = 1;
+  required MsgType type = 2;
+  required uint32 sequence = 3;
+  // required uint32 reserved = 4;
+
+  // connect
+  optional Connect connect = 5;
+  optional ConnectRsp connect_rsp = 6;
+}
+
+message Connect {
+  required string id = 1;
+  required int32 type = 2;
+}
+
+message ConnectRsp {
+  required int32 code = 1;
+}
+
+

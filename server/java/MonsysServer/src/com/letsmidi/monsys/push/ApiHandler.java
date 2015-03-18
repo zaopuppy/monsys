@@ -461,7 +461,7 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
     //    fgw.channel.pipeline().addLast(new FgwRelayHandler(ctx.channel()));
     //
     //    ctx.channel().pipeline().remove(ApiHandler.class);
-    //    ClientRelayHandler handler = new ClientRelayHandler(fgw.channel);
+    //    RelayHandler handler = new RelayHandler(fgw.channel);
     //    handler.setFgwList(this.mFgwList);
     //    ctx.channel().pipeline().addLast(handler);
     //

@@ -122,7 +122,7 @@ public class RouteClient {
         final String token = "ae@#dawz";
 
         if (line.startsWith("request")) {
-            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN);
+            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN, 0);
 
             Route.ReqToken.Builder req_token = Route.ReqToken.newBuilder();
             req_token.setToken(token);
@@ -136,7 +136,7 @@ public class RouteClient {
         } else if (line.equals("token")) {
             System.out.println("token: " + token);
         } else if (line.startsWith("connect")) {
-            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT);
+            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT, 0);
 
             Route.Connect.Builder connect = Route.Connect.newBuilder();
             connect.setToken(token);
@@ -150,7 +150,7 @@ public class RouteClient {
 
             return ch.writeAndFlush(builder.build());
         } else {
-            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT);
+            Route.RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT, 0);
 
             Route.Connect.Builder connect = Route.Connect.newBuilder();
             connect.setToken(line);

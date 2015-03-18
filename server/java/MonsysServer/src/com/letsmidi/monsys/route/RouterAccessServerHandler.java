@@ -144,7 +144,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
     }
 
     private void sendConnectRsp(Channel ch, int code) {
-        RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT_RSP);
+        RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.CONNECT_RSP, 0);
 
         Route.ConnectRsp.Builder connect_rsp = Route.ConnectRsp.newBuilder();
         connect_rsp.setCode(code);

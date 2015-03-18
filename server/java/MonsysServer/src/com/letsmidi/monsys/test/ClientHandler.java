@@ -34,7 +34,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     }
 
     private void login(ChannelHandlerContext ctx) {
-        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.LOGIN);
+        Client.ClientMsg.Builder builder = MsgUtil.newClientMsgBuilder(Client.MsgType.LOGIN, 0);
 
         Client.Login.Builder login_builder = Client.Login.newBuilder();
         login_builder.setClientType(Client.ClientType.CLIENT_TYPE_ANDROID);

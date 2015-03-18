@@ -64,7 +64,7 @@ public class FgwHandler extends SimpleChannelInboundHandler<PushMsg> {
 
         mLogger.info("Logged in successfully: " + login.getDeviceId());
 
-        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN_RSP);
+        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN_RSP, msg.getSequence());
         builder.setSequence(msg.getSequence());
 
         LoginRsp.Builder login_rsp = LoginRsp.newBuilder();

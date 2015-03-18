@@ -15,12 +15,12 @@
 //import io.netty.channel.SimpleChannelInboundHandler;
 //import io.netty.util.ReferenceCountUtil;
 //
-//public class ClientRelayHandler extends SimpleChannelInboundHandler<PushMsg> {
+//public class RelayHandler extends SimpleChannelInboundHandler<PushMsg> {
 //    private final Channel mRelayChannel;
 //    private String mFgwList;
 //    private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 //
-//    public ClientRelayHandler(Channel ch) {
+//    public RelayHandler(Channel ch) {
 //        mRelayChannel = ch;
 //    }
 //

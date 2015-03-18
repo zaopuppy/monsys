@@ -86,7 +86,7 @@ public class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN);
+            PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN, 0);
 
             Login.Builder login = Login.newBuilder();
             login.setDeviceId(msg);

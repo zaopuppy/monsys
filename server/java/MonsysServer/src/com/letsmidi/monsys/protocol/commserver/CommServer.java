@@ -2275,13 +2275,13 @@ public final class CommServer {
   public interface RegisterRspOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required uint32 code = 1;
+    // required int32 code = 1;
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     boolean hasCode();
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     int getCode();
   }
@@ -2338,7 +2338,7 @@ public final class CommServer {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              code_ = input.readUInt32();
+              code_ = input.readInt32();
               break;
             }
           }
@@ -2381,17 +2381,17 @@ public final class CommServer {
     }
 
     private int bitField0_;
-    // required uint32 code = 1;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     public boolean hasCode() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     public int getCode() {
       return code_;
@@ -2417,7 +2417,7 @@ public final class CommServer {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, code_);
+        output.writeInt32(1, code_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -2430,7 +2430,7 @@ public final class CommServer {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, code_);
+          .computeInt32Size(1, code_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2632,22 +2632,22 @@ public final class CommServer {
       }
       private int bitField0_;
 
-      // required uint32 code = 1;
+      // required int32 code = 1;
       private int code_ ;
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public boolean hasCode() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public int getCode() {
         return code_;
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public Builder setCode(int value) {
         bitField0_ |= 0x00000001;
@@ -2656,7 +2656,7 @@ public final class CommServer {
         return this;
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public Builder clearCode() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -2996,13 +2996,13 @@ public final class CommServer {
   public interface RequestTokenRspOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required uint32 code = 1;
+    // required int32 code = 1;
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     boolean hasCode();
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     int getCode();
 
@@ -3074,7 +3074,7 @@ public final class CommServer {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              code_ = input.readUInt32();
+              code_ = input.readInt32();
               break;
             }
             case 18: {
@@ -3122,17 +3122,17 @@ public final class CommServer {
     }
 
     private int bitField0_;
-    // required uint32 code = 1;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     public boolean hasCode() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required uint32 code = 1;</code>
+     * <code>required int32 code = 1;</code>
      */
     public int getCode() {
       return code_;
@@ -3206,7 +3206,7 @@ public final class CommServer {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt32(1, code_);
+        output.writeInt32(1, code_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getTokenBytes());
@@ -3222,7 +3222,7 @@ public final class CommServer {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, code_);
+          .computeInt32Size(1, code_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -3443,22 +3443,22 @@ public final class CommServer {
       }
       private int bitField0_;
 
-      // required uint32 code = 1;
+      // required int32 code = 1;
       private int code_ ;
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public boolean hasCode() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public int getCode() {
         return code_;
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public Builder setCode(int value) {
         bitField0_ |= 0x00000001;
@@ -3467,7 +3467,7 @@ public final class CommServer {
         return this;
       }
       /**
-       * <code>required uint32 code = 1;</code>
+       * <code>required int32 code = 1;</code>
        */
       public Builder clearCode() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3608,9 +3608,9 @@ public final class CommServer {
       "\022S\n\021request_token_rsp\030\010 \001(\01328.com.letsmi" +
       "di.monsys.protocol.commserver.RequestTok" +
       "enRsp\",\n\010Register\022\022\n\nip_v4_addr\030\001 \002(\t\022\014\n" +
-      "\004port\030\002 \002(\r\"\033\n\013RegisterRsp\022\014\n\004code\030\001 \002(\r" +
+      "\004port\030\002 \002(\r\"\033\n\013RegisterRsp\022\014\n\004code\030\001 \002(\005" +
       "\"\016\n\014RequestToken\".\n\017RequestTokenRsp\022\014\n\004c" +
-      "ode\030\001 \002(\r\022\r\n\005token\030\002 \002(\t*b\n\007MsgType\022\r\n\tH" +
+      "ode\030\001 \002(\005\022\r\n\005token\030\002 \002(\t*b\n\007MsgType\022\r\n\tH" +
       "EARTBEAT\020\001\022\014\n\010REGISTER\020\003\022\020\n\014REGISTER_RSP" +
       "\020\004\022\021\n\rREQUEST_TOKEN\020\005\022\025\n\021REQUEST_TOKEN_R" +
       "SP\020\006"

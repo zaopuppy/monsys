@@ -121,7 +121,7 @@ public class CenterServerHandler extends SimpleChannelInboundHandler<Center.Cent
     }
 
     private void sendGetFgwListRsp(ChannelHandlerContext ctx, Center.CenterMsg msg, String[] fgw_list) {
-        Center.CenterMsg.Builder builder = MsgUtil.newCenterMsgBuilder(Center.MsgType.GET_FGW_LIST_RSP);
+        Center.CenterMsg.Builder builder = MsgUtil.newCenterMsgBuilder(Center.MsgType.GET_FGW_LIST_RSP, msg.getSequence());
         builder.setSequence(builder.getSequence());
 
         Center.GetFgwListRsp.Builder rsp = Center.GetFgwListRsp.newBuilder();
@@ -190,7 +190,7 @@ public class CenterServerHandler extends SimpleChannelInboundHandler<Center.Cent
     }
 
     private void sendClientLoginRsp(ChannelHandlerContext ctx, Center.CenterMsg msg) {
-        Center.CenterMsg.Builder builder = MsgUtil.newCenterMsgBuilder(Center.MsgType.CLIENT_LOGIN_RSP);
+        Center.CenterMsg.Builder builder = MsgUtil.newCenterMsgBuilder(Center.MsgType.CLIENT_LOGIN_RSP, msg.getSequence());
         builder.setSequence(msg.getSequence());
 
         Center.ClientLoginRsp.Builder rsp = Center.ClientLoginRsp.newBuilder();

@@ -117,8 +117,8 @@ public class CommServerApp {
                                 new ProtobufVarint32LengthFieldPrepender(),
                                 new ProtobufVarint32FrameDecoder(),
                                 new ProtobufEncoder(),
-                                new ProtobufDecoder(Client.ClientMsg.getDefaultInstance()),
-                                new ClientHandler(timer));
+                                new ProtobufDecoder(Client.ClientMsg.getDefaultInstance())/*,
+                                new ClientHandler(timer)*/);
                     }
                 }
         );

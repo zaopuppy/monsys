@@ -35,7 +35,7 @@ public class CenterPushAdapter {
         int sequence_id = 0;
 
         // new message
-        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.BIND);
+        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.BIND, 0);
         builder.setSequence(sequence_id);
 
         mChannel.writeAndFlush(builder.build());

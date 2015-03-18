@@ -3,16 +3,23 @@ package com.letsmidi.monsys.util;
 import com.letsmidi.monsys.protocol.center.Center;
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
+import com.letsmidi.monsys.protocol.exchange.Exchange;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.route.Route;
 
-/**
- * Created by zero on 8/24/14.
- */
 public class MsgUtil {
     public static final int VERSION = 1;
 
     //private static final SequenceGenerator mSeqenceGenerator = new SequenceGenerator(1, 0xFFFFFFFE);
+
+    public static Exchange.ExchangeMsg.Builder newExchangeMsgBuilder(Exchange.MsgType type, int seq) {
+        Exchange.ExchangeMsg.Builder builder = Exchange.ExchangeMsg.newBuilder();
+        builder.setVersion(VERSION);
+        builder.setType(type);
+        builder.setSequence(seq);
+
+        return builder;
+    }
 
     public static CommServer.CommServerMsg.Builder newCommServerMsgBuilder(CommServer.MsgType type, int seq) {
         CommServer.CommServerMsg.Builder builder = CommServer.CommServerMsg.newBuilder();

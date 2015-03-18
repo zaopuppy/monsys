@@ -51,7 +51,8 @@ public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Rou
 
         Route.ReqToken req = msg.getReqToken();
 
-        BaseSession session = mSessionManager.find(req.getToken());
+        BaseSession session = null;
+        // BaseSession session = mSessionManager.find(req.getToken());
         if (session != null) {
             session.close(); // this should remove itself automatically from SessionManager.
         }
@@ -68,7 +69,7 @@ public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Rou
     }
 
     private void sendTokenResponse(ChannelHandlerContext ctx, int code, int port_for_client, int port_for_fgw) {
-        RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN_RSP);
+        RouteMsg.Builder builder = MsgUtil.newRouteMsgBuilder(Route.MsgType.REQ_TOKEN_RSP, 0);
 
         Route.ReqTokenRsp.Builder token_rsp = Route.ReqTokenRsp.newBuilder();
         token_rsp.setCode(code);
