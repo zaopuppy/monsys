@@ -7,10 +7,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.ReferenceCountUtil;
 
-public class RelayHandler extends SimpleChannelInboundHandler<ByteBuf> {
+// public class RelayHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class RelayHandler extends ChannelInboundHandlerAdapter {
     private final Channel mRelayChannel;
 
     public RelayHandler(Channel ch) {
@@ -43,7 +45,7 @@ public class RelayHandler extends SimpleChannelInboundHandler<ByteBuf> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (mRelayChannel.isActive()) {
             mRelayChannel.writeAndFlush(msg);
         } else {
