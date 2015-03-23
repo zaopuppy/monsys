@@ -59,19 +59,33 @@ public class ClientTest {
 
                 log("result: " + result);
 
-                TelnetClientConnection telnet_connection = new TelnetClientConnection(connection.group(), connection.channel());
-                for (String line = reader.readLine(); line != null && !line.equals("exit"); line = reader.readLine()) {
+                printPipeline(connection.channel());
+                TelnetClientConnection telnet_connection = new TelnetClientConnection(connection.group(), connection.popChannel());
+                for (String line = reader.readLine();
+                     telnet_connection.channel().isActive() && line != null && !line.equals("exit");
+                     line = reader.readLine()) {
                     // connection.channel().writeAndFlush(line);
                     telnet_connection.channel().writeAndFlush(line);
                 }
 
-                connection.channel().close().sync();
+                // connection.channel().close().sync();
+                telnet_connection.channel().close().sync();
             }
         } catch (ExecutionException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
 
         worker.shutdownGracefully();
+    }
+
+    private static void printPipeline(Channel channel) {
+        //if (channel == null) {
+        //    log("null pipeline");
+        //    return;
+        //}
+        //
+        //ChannelPipeline pipeline = channel.pipeline();
+        //pipeline.first()
     }
 
     private static void testManualConnect(String host, int port, NioEventLoopGroup worker)
