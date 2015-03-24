@@ -3,8 +3,10 @@ package com.letsmidi.monsys.protocol.exchange;
 
 
 enum MsgType {
-  CONNECT           = 1;
-  CONNECT_RSP       = 2;
+  REQUEST_EXCHANGE      = 1;
+  REQUEST_EXCHANGE_RSP  = 2;
+  CONNECT               = 3;
+  CONNECT_RSP           = 4;
 }
 
 message ExchangeMsg {
@@ -14,14 +16,29 @@ message ExchangeMsg {
   required uint32 sequence = 3;
   // required uint32 reserved = 4;
 
+  // request
+  optional RequestExchange request_exchange = 5;
+  optional RequestExchangeRsp request_exchange_rsp = 6;
+
   // connect
-  optional Connect connect = 5;
-  optional ConnectRsp connect_rsp = 6;
+  optional Connect connect = 7;
+  optional ConnectRsp connect_rsp = 8;
+
+}
+
+message RequestExchange {
+}
+
+message RequestExchangeRsp {
+  required int32 code = 1;
+  required string id = 2;
+  required string peer_id1 = 3;
+  required string peer_id2 = 4;
 }
 
 message Connect {
   required string id = 1;
-  required int32 type = 2;
+  required string peer_id = 2;
 }
 
 message ConnectRsp {

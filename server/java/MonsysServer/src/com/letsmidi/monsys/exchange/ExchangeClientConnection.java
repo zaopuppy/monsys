@@ -53,7 +53,7 @@ public class ExchangeClientConnection extends BaseClientConnection<Exchange.Exch
         System.out.println(msg);
     }
 
-    public ChannelFuture auth(String id, int type) {
+    public ChannelFuture auth(String id, String peerId) {
         if (!channel().isActive()) {
             log("channel is not active");
             return null;
@@ -67,7 +67,7 @@ public class ExchangeClientConnection extends BaseClientConnection<Exchange.Exch
 
         Exchange.Connect.Builder connect = Exchange.Connect.newBuilder();
         connect.setId(id);
-        connect.setType(type);
+        connect.setPeerId(peerId);
         builder.setConnect(connect);
 
         channel().writeAndFlush(builder.build(), channel().newPromise().addListener(

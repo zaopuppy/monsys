@@ -11,20 +11,30 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.util.HashedWheelTimer;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 
+/**
+ * TODO: 等待first request超时
+ * TODO: 每个client等待peer超时
+ * TODO: 每个记录有一个超时
+ */
 public class ClientHandler extends SimpleChannelInboundHandler<Exchange.ExchangeMsg> {
+
     private final Logger mLogger = Logger.getLogger(ExchangeConfig.LoggerName);
 
-    private static final HashMap<String, ChannelPair> PAIR_MAP = new HashMap<>();
+    private String mId = null;
+    private String mPeerId = null;
 
-    private static class ChannelPair {
-        public String id = null;
-        public Channel channel1 = null;
-        public Channel channel2 = null;
+    // private static final HashMap<String, ChannelPair> PAIR_MAP = new HashMap<>();
+
+    private enum State {
+        WAIT_FOR_CONNECT,
+        WAIT_FOR_PEER,
+        CONNECTED,
     }
+
+    private State mState = State.WAIT_FOR_CONNECT;
 
     public ClientHandler(HashedWheelTimer timer) {
     }
@@ -32,12 +42,44 @@ public class ClientHandler extends SimpleChannelInboundHandler<Exchange.Exchange
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Exchange.ExchangeMsg msg) throws Exception {
         mLogger.info("channelRead0");
-        switch (msg.getType()) {
-            case CONNECT:
-                handleConnect(ctx, msg);
+
+        switch (mState) {
+            case WAIT_FOR_CONNECT: {
+                switch (msg.getType()) {
+                    case CONNECT:
+                        handleConnect(ctx, msg);
+                        break;
+                    default:
+                        break;
+                }
                 break;
+            }
             default:
+                mLogger.info("bad state, ignore");
                 break;
+        }
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        mLogger.info("channelInactive");
+        if (mState == State.WAIT_FOR_PEER) {
+            assert(mId != null);
+            assert(mPeerId != null);
+            synchronized (InMemInfo.CLIENTS_MAP) {
+                ExchangeInfo exchangeInfo = InMemInfo.CLIENTS_MAP.getOrDefault(mId, null);
+                if (exchangeInfo == null) {
+                    return;
+                }
+
+                if (mPeerId.equals(exchangeInfo.getPeerId1())) {
+                    exchangeInfo.setPeerChannel1(null);
+                } else if (mPeerId.equals(exchangeInfo.getPeerId2())) {
+                    exchangeInfo.setPeerChannel2(null);
+                } else {
+                    // warning
+                }
+            }
         }
     }
 
@@ -50,62 +92,82 @@ public class ClientHandler extends SimpleChannelInboundHandler<Exchange.Exchange
         }
 
         Exchange.Connect connect = msg.getConnect();
-        String id = connect.getId();
-        int type = connect.getType();
+        mId = connect.getId();
+        mPeerId = connect.getPeerId();
 
-        mLogger.info("id=" + id + ", type=" + type);
+        mLogger.info("id=" + mId + ", peerId=" + mPeerId);
 
-        synchronized (PAIR_MAP) {
-            ChannelPair pair = PAIR_MAP.getOrDefault(id, null);
-            if (pair == null) {
-                pair = new ChannelPair();
-                pair.id = id;
-                PAIR_MAP.put(id, pair);
-            }
+        if (mId == null || mId.isEmpty() || mPeerId == null || mPeerId.isEmpty()) {
+            ctx.close();
+            return;
+        }
 
-            //
-            if (type == 1) {
-                if (pair.channel1 != null) {
-                    ctx.close();
-                    return;
-                }
+        synchronized (InMemInfo.CLIENTS_MAP) {
 
-                pair.channel1 = ctx.channel();
-            } else if (type == 2) {
-                if (pair.channel2 != null) {
-                    ctx.close();
-                    return;
-                }
-
-                pair.channel2 = ctx.channel();
-            } else {
+            // find or create a pair
+            ExchangeInfo exchangeInfo = InMemInfo.CLIENTS_MAP.getOrDefault(mId, null);
+            if (exchangeInfo == null) {
+                mLogger.warning("unregistered client id");
                 ctx.close();
                 return;
             }
 
-            if (pair.channel1 != null && pair.channel2 != null) {
+            //
+            if (mPeerId.equals(exchangeInfo.getPeerId1())) {
+                if (exchangeInfo.getPeerChannel1() != null) {
+                    ctx.close();
+                    return;
+                }
+
+                exchangeInfo.setPeerChannel1(ctx.channel());
+                ctx.channel().closeFuture().addListener(future -> exchangeInfo.setPeerChannel1(null));
+            } else if (mPeerId.equals(exchangeInfo.getPeerId2())) {
+                if (exchangeInfo.getPeerChannel2() != null) {
+                    ctx.close();
+                    return;
+                }
+
+                exchangeInfo.setPeerChannel2(ctx.channel());
+                ctx.channel().closeFuture().addListener(future -> exchangeInfo.setPeerChannel2(null));
+            } else {
+                mLogger.severe("bad peer id");
+                ctx.close();
+                return;
+            }
+
+            mState = State.WAIT_FOR_PEER;
+
+            Channel channel1 = exchangeInfo.getPeerChannel1();
+            Channel channel2 = exchangeInfo.getPeerChannel2();
+
+            if (channel1 != null && channel2 != null) {
+                // response
                 Exchange.ExchangeMsg.Builder builder = MsgUtil.newExchangeMsgBuilder(Exchange.MsgType.CONNECT_RSP, 0);
                 Exchange.ConnectRsp.Builder connect_rsp_builder = Exchange.ConnectRsp.newBuilder();
                 connect_rsp_builder.setCode(0);
                 builder.setConnectRsp(connect_rsp_builder);
 
-                pair.channel1.writeAndFlush(builder.build());
-                pair.channel2.writeAndFlush(builder.build());
+                // TODO: encode response first, then send it at the last.
+                // byte[] encodedRsp = builder.build().toByteArray()
+                channel1.writeAndFlush(builder.build());
+                channel2.writeAndFlush(builder.build());
 
                 //
-                pair.channel1.pipeline().remove(ProtobufVarint32LengthFieldPrepender.class);
-                pair.channel1.pipeline().remove(ProtobufVarint32FrameDecoder.class);
-                pair.channel1.pipeline().remove(ProtobufEncoder.class);
-                pair.channel1.pipeline().remove(ProtobufDecoder.class);
-                pair.channel1.pipeline().remove(ClientHandler.class);
-                pair.channel1.pipeline().addLast(new RelayHandler(pair.channel2));
+                channel1.pipeline().remove(ProtobufVarint32LengthFieldPrepender.class);
+                channel1.pipeline().remove(ProtobufVarint32FrameDecoder.class);
+                channel1.pipeline().remove(ProtobufEncoder.class);
+                channel1.pipeline().remove(ProtobufDecoder.class);
+                channel1.pipeline().remove(ClientHandler.class);
+                channel1.pipeline().addLast(new RelayHandler(channel2));
                 //
-                pair.channel2.pipeline().remove(ProtobufVarint32LengthFieldPrepender.class);
-                pair.channel2.pipeline().remove(ProtobufVarint32FrameDecoder.class);
-                pair.channel2.pipeline().remove(ProtobufEncoder.class);
-                pair.channel2.pipeline().remove(ProtobufDecoder.class);
-                pair.channel2.pipeline().remove(ClientHandler.class);
-                pair.channel2.pipeline().addLast(new RelayHandler(pair.channel1));
+                channel2.pipeline().remove(ProtobufVarint32LengthFieldPrepender.class);
+                channel2.pipeline().remove(ProtobufVarint32FrameDecoder.class);
+                channel2.pipeline().remove(ProtobufEncoder.class);
+                channel2.pipeline().remove(ProtobufDecoder.class);
+                channel2.pipeline().remove(ClientHandler.class);
+                channel2.pipeline().addLast(new RelayHandler(channel1));
+
+                mState = State.CONNECTED;
             }
         }
     }

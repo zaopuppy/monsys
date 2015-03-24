@@ -47,10 +47,10 @@ public class ClientTest {
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-                int type = Integer.valueOf(reader.readLine().trim());
+                String peerId = reader.readLine().trim();
 
                 log("begin to auth");
-                ChannelFuture result_future = connection.auth("1", type);
+                ChannelFuture result_future = connection.auth("1", peerId);
 
                 log("waiting...");
                 result_future.sync();
