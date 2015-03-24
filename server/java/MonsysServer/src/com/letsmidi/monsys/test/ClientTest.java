@@ -65,7 +65,7 @@ public class ClientTest {
                      telnet_connection.channel().isActive() && line != null && !line.equals("exit");
                      line = reader.readLine()) {
                     // connection.channel().writeAndFlush(line);
-                    telnet_connection.channel().writeAndFlush(line);
+                    telnet_connection.channel().writeAndFlush(line + "\n");
                 }
 
                 // connection.channel().close().sync();
