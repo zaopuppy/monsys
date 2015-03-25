@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.exchange;
+package com.letsmidi.monsys.util;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;

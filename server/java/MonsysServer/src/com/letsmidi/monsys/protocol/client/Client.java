@@ -3293,6 +3293,36 @@ public final class Client {
      * <code>required int32 port = 3;</code>
      */
     int getPort();
+
+    // required string exchangeId = 4;
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    boolean hasExchangeId();
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    java.lang.String getExchangeId();
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getExchangeIdBytes();
+
+    // required string peerId = 5;
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    boolean hasPeerId();
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    java.lang.String getPeerId();
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getPeerIdBytes();
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServerRsp}
@@ -3358,6 +3388,16 @@ public final class Client {
             case 24: {
               bitField0_ |= 0x00000004;
               port_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              exchangeId_ = input.readBytes();
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              peerId_ = input.readBytes();
               break;
             }
           }
@@ -3475,10 +3515,98 @@ public final class Client {
       return port_;
     }
 
+    // required string exchangeId = 4;
+    public static final int EXCHANGEID_FIELD_NUMBER = 4;
+    private java.lang.Object exchangeId_;
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public boolean hasExchangeId() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public java.lang.String getExchangeId() {
+      java.lang.Object ref = exchangeId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          exchangeId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getExchangeIdBytes() {
+      java.lang.Object ref = exchangeId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        exchangeId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required string peerId = 5;
+    public static final int PEERID_FIELD_NUMBER = 5;
+    private java.lang.Object peerId_;
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public boolean hasPeerId() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public java.lang.String getPeerId() {
+      java.lang.Object ref = peerId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          peerId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPeerIdBytes() {
+      java.lang.Object ref = peerId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        peerId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       code_ = 0;
       ipV4Addr_ = "";
       port_ = 0;
+      exchangeId_ = "";
+      peerId_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3497,6 +3625,14 @@ public final class Client {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasExchangeId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPeerId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3512,6 +3648,12 @@ public final class Client {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt32(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getExchangeIdBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getPeerIdBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3533,6 +3675,14 @@ public final class Client {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getExchangeIdBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getPeerIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3656,6 +3806,10 @@ public final class Client {
         bitField0_ = (bitField0_ & ~0x00000002);
         port_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        exchangeId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        peerId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -3696,6 +3850,14 @@ public final class Client {
           to_bitField0_ |= 0x00000004;
         }
         result.port_ = port_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.exchangeId_ = exchangeId_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.peerId_ = peerId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3723,6 +3885,16 @@ public final class Client {
         if (other.hasPort()) {
           setPort(other.getPort());
         }
+        if (other.hasExchangeId()) {
+          bitField0_ |= 0x00000008;
+          exchangeId_ = other.exchangeId_;
+          onChanged();
+        }
+        if (other.hasPeerId()) {
+          bitField0_ |= 0x00000010;
+          peerId_ = other.peerId_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -3737,6 +3909,14 @@ public final class Client {
           return false;
         }
         if (!hasPort()) {
+          
+          return false;
+        }
+        if (!hasExchangeId()) {
+          
+          return false;
+        }
+        if (!hasPeerId()) {
           
           return false;
         }
@@ -3902,6 +4082,154 @@ public final class Client {
         return this;
       }
 
+      // required string exchangeId = 4;
+      private java.lang.Object exchangeId_ = "";
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public boolean hasExchangeId() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public java.lang.String getExchangeId() {
+        java.lang.Object ref = exchangeId_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          exchangeId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getExchangeIdBytes() {
+        java.lang.Object ref = exchangeId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          exchangeId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder setExchangeId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        exchangeId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder clearExchangeId() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        exchangeId_ = getDefaultInstance().getExchangeId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder setExchangeIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        exchangeId_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required string peerId = 5;
+      private java.lang.Object peerId_ = "";
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public boolean hasPeerId() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public java.lang.String getPeerId() {
+        java.lang.Object ref = peerId_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          peerId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPeerIdBytes() {
+        java.lang.Object ref = peerId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          peerId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder setPeerId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        peerId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder clearPeerId() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        peerId_ = getDefaultInstance().getPeerId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder setPeerIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        peerId_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
     }
 
@@ -3963,12 +4291,13 @@ public final class Client {
       "ocol.client.ClientType:\023CLIENT_TYPE_ANDR" +
       "OID\022\021\n\tuser_name\030\002 \002(\t\022\020\n\010password\030\003 \002(\t" +
       "\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"\023\n\021RequestCom" +
-      "mServer\"F\n\024RequestCommServerRsp\022\014\n\004code\030" +
-      "\001 \002(\005\022\022\n\nip_v4_addr\030\002 \002(\t\022\014\n\004port\030\003 \002(\005*" +
-      "h\n\007MsgType\022\r\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\t" +
-      "LOGIN_RSP\020\004\022\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027",
-      "REQUEST_COMM_SERVER_RSP\020\006*%\n\nClientType\022" +
-      "\027\n\023CLIENT_TYPE_ANDROID\020\001"
+      "mServer\"j\n\024RequestCommServerRsp\022\014\n\004code\030" +
+      "\001 \002(\005\022\022\n\nip_v4_addr\030\002 \002(\t\022\014\n\004port\030\003 \002(\005\022" +
+      "\022\n\nexchangeId\030\004 \002(\t\022\016\n\006peerId\030\005 \002(\t*h\n\007M" +
+      "sgType\022\r\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\tLOGI",
+      "N_RSP\020\004\022\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027REQU" +
+      "EST_COMM_SERVER_RSP\020\006*%\n\nClientType\022\027\n\023C" +
+      "LIENT_TYPE_ANDROID\020\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4004,7 +4333,7 @@ public final class Client {
           internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor,
-              new java.lang.String[] { "Code", "IpV4Addr", "Port", });
+              new java.lang.String[] { "Code", "IpV4Addr", "Port", "ExchangeId", "PeerId", });
           return null;
         }
       };
