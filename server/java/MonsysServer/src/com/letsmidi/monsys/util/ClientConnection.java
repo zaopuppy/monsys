@@ -12,6 +12,7 @@ public interface ClientConnection<T> {
 
     Channel channel();
 
+    // TODO: T --> byte[]
     ChannelFuture write(T msg);
 
     Channel flush();

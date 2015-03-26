@@ -1,6 +1,6 @@
 package com.letsmidi.monsys.util;
 
-import com.letsmidi.monsys.log.MyLogger;
+import com.letsmidi.monsys.log.Logger;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -16,7 +16,7 @@ public class NettyUtil {
             int port, NioEventLoopGroup boss, NioEventLoopGroup worker,
             ChannelHandler handler, ChannelHandler child_handler) {
 
-        MyLogger.i("startServer()");
+        Logger.i("startServer()");
 
         ServerBootstrap b = new ServerBootstrap();
 

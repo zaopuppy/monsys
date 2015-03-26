@@ -5,11 +5,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
-import com.letsmidi.monsys.log.MyLogFormatter;
-import com.letsmidi.monsys.log.MyLogger;
+import com.letsmidi.monsys.log.LogFormatter;
+import com.letsmidi.monsys.log.Logger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.session.SessionManager;
 import com.letsmidi.monsys.util.MonsysException;
@@ -35,13 +34,13 @@ import io.netty.util.HashedWheelTimer;
  */
 public class SuperRouterServer {
 
-    private final Logger mLogger = Logger.getLogger(Config.getRouterConfig().getLoggerName());
+    private final java.util.logging.Logger mLogger = java.util.logging.Logger.getLogger(Config.getRouterConfig().getLoggerName());
 
     public SuperRouterServer() {
     }
 
     private void start() {
-        MyLogger.i("starting route & access server...");
+        Logger.i("starting route & access server...");
 
         // global timer
         HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
@@ -197,13 +196,13 @@ public class SuperRouterServer {
     private static void initLogger() throws IOException {
         Handler log_handler = new FileHandler(Config.getRouterConfig().getLogFileName(), 1 << 20, 10000, true);
 
-        final Logger logger = Logger.getLogger(Config.getRouterConfig().getLoggerName());
+        final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Config.getRouterConfig().getLoggerName());
         logger.setLevel(Level.ALL);
         logger.addHandler(log_handler);
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new MyLogFormatter());
+            h.setFormatter(new LogFormatter());
         }
 
         //InternalLoggerFactory.setDefaultFactory(new InternalLoggerFactory() {

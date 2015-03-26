@@ -8,13 +8,10 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.protocol.exchange.Exchange;
 import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.NettyUtil;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -72,7 +69,7 @@ public class ExchangeServerApp {
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new MyLogFormatter());
+            h.setFormatter(new LogFormatter());
         }
 
     }

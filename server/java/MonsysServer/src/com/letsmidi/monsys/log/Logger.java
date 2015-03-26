@@ -3,7 +3,7 @@ package com.letsmidi.monsys.log;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyLogger {
+public class Logger {
 
     private static final ThreadLocal<SimpleDateFormat> DATE_FORMATE = new ThreadLocal<SimpleDateFormat>() {
 
@@ -28,22 +28,22 @@ public class MyLogger {
         return DATE_FORMATE.get().format(new Date());
     }
 
-    public static void d(String msg) {
+    public static void d(String tag, String msg) {
         //sLogger.info(msg);
         System.out.println(getDateStr() + "|" + msg);
     }
 
-    public static void i(String msg) {
+    public static void i(String tag, String msg) {
         //sLogger.fine(msg);
         System.out.println(getDateStr() + "|" + msg);
     }
 
-    public static void w(String msg) {
+    public static void w(String tag, String msg) {
         //sLogger.warning(msg);
         System.out.println(getDateStr() + "|" + msg);
     }
 
-    public static void e(String msg) {
+    public static void e(String tag, String msg) {
         //sLogger.severe(msg);
         System.out.println(getDateStr() + "|" + msg);
     }

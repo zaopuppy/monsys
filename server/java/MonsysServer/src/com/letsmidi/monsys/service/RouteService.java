@@ -1,36 +1,19 @@
 package com.letsmidi.monsys.service;
 
 
-import com.letsmidi.monsys.util.BaseClientConnection;
-import io.netty.channel.Channel;
-import io.netty.channel.nio.NioEventLoopGroup;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public abstract class RouteService<T> extends BaseClientConnection<T> {
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
-    public static class RouteItem {
-        private int sequence;
-        private Object data;
-    }
+public interface RouteService<T> {
 
-    public RouteService(NioEventLoopGroup group) {
-        super(group);
-    }
+    boolean start();
 
-    @Override
-    public void setChannel(Channel channel) {
-        //
-    }
+    void send(T msg);
 
-    @Override
-    public Channel popChannel() {
-        return null;
-    }
-
-    public boolean start() {
-        return false;
-    }
-
-    public boolean send() {
-        return false;
-    }
+    boolean saveRoute(T msg);
 }

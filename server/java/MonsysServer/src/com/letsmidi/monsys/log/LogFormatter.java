@@ -7,7 +7,7 @@ import java.util.logging.LogRecord;
 /**
  * Created by zero on 8/12/14.
  */
-public class MyLogFormatter extends Formatter {
+public class LogFormatter extends Formatter {
 
     private final Date mDate = new Date();
 

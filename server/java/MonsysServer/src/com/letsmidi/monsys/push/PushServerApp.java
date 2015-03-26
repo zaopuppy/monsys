@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.database.AccountInfo;
-import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MonsysException;
@@ -54,7 +54,7 @@ public class PushServerApp {
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new MyLogFormatter());
+            h.setFormatter(new LogFormatter());
         }
     }
 

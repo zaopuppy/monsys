@@ -9,6 +9,7 @@ import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.protocol.exchange.Exchange;
+import com.letsmidi.monsys.service.ExchangeService;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.Channel;
@@ -104,21 +105,16 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
         //InMemInfo.CommServerInfo comm_server_info = InMemInfo.INSTANCE.chooseCommServer();
         //sendRequestCommServerRsp(ctx, msg, comm_server_info);
 
-        {
-            class RouteItem {
-                int sequence;
-                Channel channel;
+        ExchangeService.INSTANCE.requestForExchange(new ExchangeService.Callback() {
+
+            @Override
+            public void onWriteComplete() {
             }
 
-            Exchange.ExchangeMsg xMsg = null;
-            Map<Integer, RouteItem> routingMap = new HashMap<>();
-
-            RouteItem item = routingMap.getOrDefault(xMsg.getSequence(), null);
-            if (item.channel != null && item.channel.isOpen()) {
-                item.channel.pipeline().fireChannelRead(xMsg);
+            @Override
+            public void onResponse(Exchange.ExchangeMsg rsp) {
             }
-        }
-
+        });
     }
 
     private void sendRequestCommServerRsp(ChannelHandlerContext ctx, Client.ClientMsg msg, InMemInfo.CommServerInfo info) {

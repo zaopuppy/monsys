@@ -2,7 +2,7 @@ package com.letsmidi.monsys.route;
 
 import com.letsmidi.monsys.ErrCode;
 import com.letsmidi.monsys.handler.RelayHandler;
-import com.letsmidi.monsys.log.MyLogger;
+import com.letsmidi.monsys.log.Logger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.protocol.route.Route.RouteMsg;
 import com.letsmidi.monsys.route.session.RouteSession;
@@ -53,7 +53,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
                 processConnectRequest(ctx, msg);
                 break;
             default:
-                MyLogger.e("bad msg type: " + msg.getType());
+                Logger.e("bad msg type: " + msg.getType());
                 ctx.close();
                 break;
         }
@@ -76,7 +76,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
 
     private void processConnectRequest(ChannelHandlerContext ctx, RouteMsg msg) {
         if (msg.getType() != Route.MsgType.CONNECT || !msg.hasConnect()) {
-            MyLogger.e("bad request");
+            Logger.e("bad request");
             return;
         }
 
@@ -84,7 +84,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
 
         RouteSession session = (RouteSession) mSessionManager.find(connect.getToken());
         if (session == null) {
-            MyLogger.e("bad token");
+            Logger.e("bad token");
             return;
         }
 
@@ -95,7 +95,7 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
                     session.client_channel = ctx.channel();
                 } else {
                     // failed, client already connected
-                    MyLogger.e("CLIENT already here");
+                    Logger.e("CLIENT already here");
                     ctx.close();
                     return;
                 }
@@ -106,13 +106,13 @@ public class RouterAccessServerHandler extends SimpleChannelInboundHandler<Route
                     session.fgw_channel = ctx.channel();
                 } else {
                     // failed
-                    MyLogger.e("FGW already here");
+                    Logger.e("FGW already here");
                     ctx.close();
                     return;
                 }
                 break;
             default:
-                MyLogger.e("Bad client type");
+                Logger.e("Bad client type");
                 ctx.close();
                 return;
         }
