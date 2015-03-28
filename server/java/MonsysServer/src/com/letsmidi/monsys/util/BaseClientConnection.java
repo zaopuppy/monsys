@@ -6,11 +6,35 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
-    private final NioEventLoopGroup mGroup;
+    public static interface Callback<T> {
+        void onResponse(T msg);
+    }
 
+    public static class RouteItem<T> {
+        private final int sequence;
+        private final Callback<T> callback;
+
+        public RouteItem(int sequence, Callback<T> callback) {
+            this.sequence = sequence;
+            this.callback = callback;
+        }
+
+        public int getSequence() {
+            return sequence;
+        }
+
+        public Callback<T> getCallback() {
+            return callback;
+        }
+    }
+
+    private final Map<Integer, RouteItem<T>> mRouteMap = new HashMap<>();
+    private final NioEventLoopGroup mGroup;
     private Channel mChannel = null;
 
     public BaseClientConnection(NioEventLoopGroup group) {
@@ -22,8 +46,6 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
         Channel channel = new NioSocketChannel();
 
         setChannel(channel);
-        //ChannelPipeline pipeline = channel.pipeline();
-        //initializePipeline(pipeline);
 
         channel.config().setOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5 * 1000);
         channel.config().setOption(ChannelOption.SO_KEEPALIVE, true);
@@ -32,12 +54,10 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
         ChannelPromise promise = channel.newPromise();
         register_future.addListener(future -> channel.connect(new InetSocketAddress(host, port), promise));
-        //mChannel = channel;
 
         return promise;
     }
 
-    // protected abstract void initializePipeline(ChannelPipeline pipeline);
     protected void setChannel(Channel channel) {
         if (mChannel != null && mChannel.isOpen()) {
             mChannel.close();
@@ -46,6 +66,10 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
         mChannel = channel;
     }
 
+    /**
+     *
+     * @return cleaned up channel
+     */
     public abstract Channel popChannel();
 
     @Override
@@ -71,5 +95,32 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
     @Override
     public NioEventLoopGroup group() {
         return mGroup;
+    }
+
+    protected void write(T msg, Callback<T> callback) {
+        if (!saveRoute(msg, callback)) {
+            return;
+        }
+        // TODO
+        // channel.write(msg);
+    }
+
+    public Map<Integer, RouteItem<T>> getRouteMap() {
+        return mRouteMap;
+    }
+
+    protected abstract boolean saveRoute(T msg, Callback<T> callback);
+
+    protected abstract RouteItem<T> findRoute(T msg);
+
+    private void onResponse(T msg) {
+        RouteItem<T> item = findRoute(msg);
+        if (item == null) {
+            return;
+        }
+
+        if (item.getCallback() != null) {
+            item.getCallback().onResponse(msg);
+        }
     }
 }
