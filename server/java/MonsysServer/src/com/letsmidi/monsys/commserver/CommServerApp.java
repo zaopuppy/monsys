@@ -83,32 +83,27 @@ public class CommServerApp {
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
         group_list.add(shared_worker);
 
-        // connect to login server
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(shared_worker)
-                .channel(NioSocketChannel.class)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(
-                                new ProtobufVarint32LengthFieldPrepender(),
-                                new ProtobufVarint32FrameDecoder(),
-                                new ProtobufEncoder(),
-                                new ProtobufDecoder(CommServer.CommServerMsg.getDefaultInstance()),
-                                new LoginServerHandler());
-                    }
-                })
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 60 * 1000)
-                .option(ChannelOption.SO_KEEPALIVE, true);
+        future_list.add(connectLoginServer(shared_worker));
 
-        ChannelFuture login_future = bootstrap.connect(CommConfig.loginSererIp, CommConfig.LoginServerPort);
-        future_list.add(login_future);
+        future_list.add(listenForClients(shared_worker));
 
-        // listen port for client
-        // listen clients
-        NioEventLoopGroup client_boss = new NioEventLoopGroup(1);
-        ChannelFuture client_future = NettyUtil.startServer(
-                CommConfig.ClientListenPort, client_boss, shared_worker,
+        // wait
+        future_list.forEach(f -> {
+            try {
+                f.channel().closeFuture().sync();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // clean up
+        group_list.forEach(io.netty.channel.EventLoopGroup::shutdownGracefully);
+    }
+
+    private ChannelFuture listenForClients(NioEventLoopGroup worker) {
+        NioEventLoopGroup boss = new NioEventLoopGroup(1);
+        ChannelFuture future = NettyUtil.startServer(
+                CommConfig.ClientListenPort, boss, worker,
                 new LoggingHandler(CommConfig.LoggerName, LogLevel.INFO),
                 new ChannelInitializer<SocketChannel>() {
                     @Override
@@ -122,23 +117,13 @@ public class CommServerApp {
                     }
                 }
         );
-        group_list.add(client_boss);
-        future_list.add(client_future);
+        return future;
+    }
 
-
-        group_list.add(shared_worker);
-
-        // wait
-        future_list.forEach(f -> {
-            try {
-                f.channel().closeFuture().sync();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-
-        // clean up
-        group_list.forEach(io.netty.channel.EventLoopGroup::shutdownGracefully);
+    // TODO: should i use MQ instead of this?
+    private ChannelFuture connectLoginServer(NioEventLoopGroup worker) {
+        LoginServerConnection connection = new LoginServerConnection(worker);
+        return connection.connect("127.0.0.1", 1984);
     }
 }
 
