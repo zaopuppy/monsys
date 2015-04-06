@@ -5,8 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "libbase/zlog.h"
-#include "libbase/zcodecpp.h"
+#include "zlog.h"
 
 #include "zbdefines.h"
 #include "zzigbee_codec.h"

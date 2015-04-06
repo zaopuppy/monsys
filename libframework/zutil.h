@@ -5,8 +5,8 @@
 #include <string.h>
 #include <assert.h>
 
-#include "libbase/ztypes.h"
-#include "libbase/algorithm/zstring_search.h"
+#include "ztypes.h"
+#include "algorithm/zstring_search.h"
 
 /////////////////////////////////////////////////
 

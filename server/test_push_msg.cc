@@ -1,7 +1,6 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#include "libbase/zlog.h"
 
 #include "push_msg.h"
 #include "push_codec.h"

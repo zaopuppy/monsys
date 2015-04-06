@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include "libbase/zlog.h"
+#include "zlog_wrapper.h"
 
 void ZServerHandler::close()
 {

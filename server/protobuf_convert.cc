@@ -1,6 +1,5 @@
 #include "protobuf_convert.h"
 
-#include "libbase/zlog.h"
 
 PushMsg* new_pushmsg(MsgType type)
 {

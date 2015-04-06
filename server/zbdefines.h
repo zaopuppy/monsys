@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "libbase/ztypes.h"
+#include "libframework/zframework.h"
 
 const uint32_t MAX_ID_PER_ZB_DEV = 256;
 

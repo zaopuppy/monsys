@@ -1,7 +1,5 @@
 #include "fgw_manager.h"
 
-#include "libbase/zlog.h"
-
 #include "libframework/zframework.h"
 
 #include "module.h"

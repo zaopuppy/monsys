@@ -8,8 +8,9 @@ CXX := g++
 
 CFLAGS  := -g -fPIC -Wall \
 	-I../ -I../libs/include
-LDFLAGS := -L../libbase -lbase \
-					 -L../libs/lib -levent
+
+LDFLAGS := -L../libs/lib -levent -lzlog
+
 # ARFLAGS := -r
 TARGET  := libframework.a
 
@@ -20,7 +21,8 @@ CXXFILES := zclient.cc \
 	zserver.cc \
 	zserver_handler.cc \
 	zutil.cc \
-	zbyte_buffer.cc
+	zbyte_buffer.cc \
+	zlog_wrapper.cc
 
 OBJFILES := $(CFILES:%.c=%.o) $(CXXFILES:%.cc=%.o)
 DEPFILES := $(OBJFILES:%.o=%.d)

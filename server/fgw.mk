@@ -24,6 +24,9 @@ CXXFILES := \
 	fgw_client_handler.cc \
 	msg_factory.cc \
 	zb_stream.cc \
+	zb_codec.cc \
+	zbdevice_manager.cc \
+	zzigbee_message.cc \
 	push_msg.cc \
 	push.pb.cc \
 	protobuf_convert.cc \
@@ -48,7 +51,8 @@ DEPFILES := $(OBJFILES:%.o=%.d)
 
 CFLAGS := -g -fPIC -Wall \
 	-I../ \
-	-I../libs/include/
+	-I../libs/include \
+	-I../libframework
 
 ifeq ($(ut), 1)
 CFLAGS += -I${GTEST_DIR}/include \
@@ -61,10 +65,8 @@ endif
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
-	-L../libzigbee -lzb \
-	-L../libbase -lbase \
 	-L../libframework -lframework \
-	-L../libs/lib -levent_core -ljansson -lprotobuf
+	-L../libs/lib -levent_core -ljansson -lprotobuf -lzlog
 
 ifeq ($(ut), 1)
 $(TARGET) : $(OBJFILES) libgmock.so

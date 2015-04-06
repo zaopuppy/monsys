@@ -17,6 +17,9 @@
 #include "zbyte_buffer.h"
 #include "zevent_proxy.h"
 #include "ztimer.h"
+#include "zcodecpp.h"
+#include "ztypes.h"
+#include "zlog_wrapper.h"
 
 #endif // _Z_FRAMEWORK_H__
 

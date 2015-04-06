@@ -17,6 +17,11 @@ libevent:
 		./configure --prefix=$(PWD)/libs && \
 		make -j4 && make install
 
+zlog:
+	cd 3rd/zlog/ && \
+		make PREFIX=$(PWD)/libs && \
+		make PREFIX=$(PWD)/libs install
+
 # autoreconf -i
 jansson:
 	cd 3rd/jansson && \

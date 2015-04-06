@@ -4,7 +4,6 @@
 #include <string.h>
 #include <list>
 
-#include "libbase/ztypes.h"
 #include "libframework/zframework.h"
 
 // #include "syn_byte_matcher.h"

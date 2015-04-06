@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "libbase/zcodecpp.h"
 
 #define ZMSG_ENCODE_BEGIN() int rv, encode_len = 0
 #define ZMSG_ENCODE_END() return encode_len

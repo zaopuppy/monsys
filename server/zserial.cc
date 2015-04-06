@@ -10,7 +10,6 @@
 
 #include "libframework/zframework.h"
 
-#include "libbase/zlog.h"
 
 
 static const struct timeval RETRY_INTERVAL = { 5, 0 };

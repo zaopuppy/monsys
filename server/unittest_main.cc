@@ -5,9 +5,7 @@
 
 #include "libframework/zframework.h"
 
-#include "libbase/zlog.h"
-
-#include "libzigbee/zzigbee_message.h"
+#include "zzigbee_message.h"
 #include "zformatter.h"
 #include "unittest_main.h"
 

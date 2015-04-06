@@ -1,5 +1,5 @@
-#include "libbase/zlog.h"
-#include "libbase/zcodecpp.h"
+#include "zlog_wrapper.h"
+
 
 ///////////////////////////////////////
 

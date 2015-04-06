@@ -1,6 +1,5 @@
 #include "fgw_server.h"
 
-#include "libbase/zlog.h"
 
 // TODO: this kind of code should be moved to upper class
 int FGWServer::onInnerMsg(ZInnerMsg *msg)

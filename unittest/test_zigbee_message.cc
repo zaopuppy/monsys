@@ -1,7 +1,7 @@
 
 #include "gtest/gtest.h"
 
-#include "libzigbee/zzigbee_message.h"
+#include "zzigbee_message.h"
 
 
 TEST(ZigBeeMessageTest, TestCase01)

@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-#include "libbase/zlog.h"
+#include "zlog.h"
 
 void ZZBDevManager::reset()
 {

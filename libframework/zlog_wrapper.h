@@ -2,22 +2,26 @@
 #define _ZLOG_WRAPPER_H__
 
 
-#define Z_LOG_D(_format, ...)   z_log_debug("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
-#define Z_LOG_I(_format, ...)   z_log_info("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
-#define Z_LOG_W(_format, ...)   z_log_warn("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
-#define Z_LOG_E(_format, ...)   z_log_error("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
-#define Z_LOG_F(_format, ...)   z_log_fatal("E|" __FILE__ ":%d|" _format "\n", __LINE__, ##__VA_ARGS__)
+#include <zlog.h>
 
-void z_log_init();
+#include "ztypes.h"
 
-void z_log_debug(const char *format, ...);
-void z_log_info(const char *format, ...);
-void z_log_warn(const char *format, ...);
-void z_log_error(const char *format, ...);
-void z_log_fatal(const char *format, ...);
 
+#define Z_LOG_D(_format, ...)   zlog_debug(z_log_get_category(), "D|" __FILE__ ":%d|" _format, __LINE__, ##__VA_ARGS__)
+#define Z_LOG_I(_format, ...)   zlog_info(z_log_get_category(), "I|" __FILE__ ":%d|" _format, __LINE__, ##__VA_ARGS__)
+#define Z_LOG_W(_format, ...)   zlog_warn(z_log_get_category(), "W|" __FILE__ ":%d|" _format, __LINE__, ##__VA_ARGS__)
+#define Z_LOG_E(_format, ...)   zlog_error(z_log_get_category(), "E|" __FILE__ ":%d|" _format, __LINE__, ##__VA_ARGS__)
+#define Z_LOG_F(_format, ...)   zlog_fatal(z_log_get_category(), "F|" __FILE__ ":%d|" _format, __LINE__, ##__VA_ARGS__)
+
+
+int z_log_init(const char *log_file, const char *category_name);
+
+void z_log_fini();
+
+zlog_category_t* z_log_get_category();
+
+void trace_bin(const char* data, uint32_t len);
 
 
 #endif // _ZLOG_WRAPPER_H__
-
 

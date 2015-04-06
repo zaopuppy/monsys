@@ -5,8 +5,7 @@
 #include <errno.h>
 
 #include "libframework/zframework.h"
-#include "libzigbee/zzigbee_message.h"
-#include "libbase/zlog.h"
+#include "zzigbee_message.h"
 
 #include "module.h"
 

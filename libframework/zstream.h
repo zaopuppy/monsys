@@ -1,7 +1,7 @@
 #ifndef _Z_STREAM_H__
 #define _Z_STREAM_H__
 
-#include <libbase/ztypes.h>
+#include <ztypes.h>
 
 class ZStream
 {
