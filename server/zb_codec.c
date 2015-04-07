@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <arpa/inet.h>
+
 // string
 int
 z_encode_string(const char *val, char *buf, uint32_t buf_len)
