@@ -50,6 +50,6 @@ unittest:
 clean:
 	make -C libframework clean
 	make -C server clean
-	make -C unittest clean
+#	make -C unittest clean
 
 

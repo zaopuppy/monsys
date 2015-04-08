@@ -6,6 +6,7 @@
 
 #include "zserial.h"
 #include "fgw_client.h"
+#include "upload_worker.h"
 
 using namespace std;
 
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
     Z_LOG_E("Failed to initialize fgw client");
     return -1;
   }
+
+  UploadWorker worker;
+  worker.start();
 
   bool stop = false;
 

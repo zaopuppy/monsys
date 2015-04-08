@@ -7,20 +7,12 @@ include_directories(libs/include)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    libbase/algorithm/base64.cc
-    libbase/algorithm/prac.cc
-    libbase/algorithm/prac.h
-    libbase/algorithm/zstring_search.cc
-    libbase/algorithm/zstring_search.h
-    libbase/scoped_ptr.h
-    libbase/zcodec.c
-    libbase/zcodec.h
-    libbase/zcodecpp.h
-    libbase/zlog.c
-    libbase/zlog.h
-    libbase/zstring.c
-    libbase/zstring.h
-    libbase/ztypes.h
+    libframework/algorithm/zstring_search.cc
+    libframework/algorithm/zstring_search.h
+    libframework/zcodec.c
+    libframework/zcodec.h
+    libframework/zcodecpp.h
+    libframework/ztypes.h
     libframework/main.cc
     libframework/zbyte_buffer.cc
     libframework/zbyte_buffer.h
@@ -47,16 +39,17 @@ set(SOURCE_FILES
     libframework/ztimer.h
     libframework/zutil.cc
     libframework/zutil.h
-    libzigbee/zb_codec.c
-    libzigbee/zb_codec.h
-    libzigbee/zb_msg.h
-    libzigbee/zb_transfer_layer.h
-    libzigbee/zbdefines.h
-    libzigbee/zbdevice_manager.cc
-    libzigbee/zbdevice_manager.h
-    libzigbee/zzigbee_codec.h
-    libzigbee/zzigbee_message.cc
-    libzigbee/zzigbee_message.h
+    libframework/zlog_wrapper.cc
+    server/zb_codec.c
+    server/zb_codec.h
+    server/zb_msg.h
+    server/zb_transfer_layer.h
+    server/zbdefines.h
+    server/zbdevice_manager.cc
+    server/zbdevice_manager.h
+    server/zzigbee_codec.h
+    server/zzigbee_message.cc
+    server/zzigbee_message.h
     server/center.cc
     server/center.pb.cc
     server/center.pb.h
@@ -132,12 +125,6 @@ set(SOURCE_FILES
     server/zwebapi_session.h
     server/zzigbee_handler.cc
     server/zzigbee_handler.h
-    server/zzigbee_session.h
-    unittest/test_bytes_matcher.cc
-    unittest/test_string_search.cc
-    unittest/test_zcodecpp.cc
-    unittest/test_zigbee_message.cc
-    unittest/test_zutil.cc
-    unittest/unittest.cc)
+    server/zzigbee_session.h)
 
-add_executable(monsys ${SOURCE_FILES} libframework/zlog_wrapper.cc)
+add_executable(monsys ${SOURCE_FILES} libframework/thread.cpp libframework/thread.h server/upload_worker.cpp server/upload_worker.h)

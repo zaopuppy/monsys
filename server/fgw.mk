@@ -30,12 +30,13 @@ CXXFILES := \
 	push_msg.cc \
 	push.pb.cc \
 	protobuf_convert.cc \
-	protobuf_helper.cc
+	protobuf_helper.cc \
+	upload_worker.cc
 
 ifeq ($(ut), 1)
 CXXFILES += test_zbstream.cc \
-						test_push_msg.cc \
-						test_zigbee_message.cc
+	test_push_msg.cc \
+	test_zigbee_message.cc
 CXXFILES += unittest.cc
 else
 CXXFILES += fgw.cc
@@ -66,7 +67,8 @@ endif
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \
 	-L../libframework -lframework \
-	-L../libs/lib -levent_core -ljansson -lprotobuf -lzlog
+	-L../libs/lib -levent_core -ljansson -lprotobuf -lzlog \
+	-lpthread
 
 ifeq ($(ut), 1)
 $(TARGET) : $(OBJFILES) libgmock.so
