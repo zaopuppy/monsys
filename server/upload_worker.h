@@ -7,12 +7,16 @@
 
 
 #include <libframework/thread.h>
+#include <libframework/zinner_message.h>
 
 class UploadWorker: public Z::Thread {
 
 public:
   UploadWorker(): stop_(false) {}
 
+  int send(ZInnerMsg *msg);
+
+protected:
   void run();
 
 private:

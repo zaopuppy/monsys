@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <libframework/zerrno.h>
 
 void UploadWorker::run() {
   for (; !stop_;) {
@@ -13,3 +14,15 @@ void UploadWorker::run() {
     printf("hi~~~~~\n");
   }
 }
+
+int UploadWorker::send(ZInnerMsg *msg) {
+  if (msg == NULL) {
+    return FAIL;
+  }
+
+  switch (msg->msg_type_) {
+    default:
+      return FAIL;
+  }
+}
+

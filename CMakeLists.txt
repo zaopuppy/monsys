@@ -40,6 +40,8 @@ set(SOURCE_FILES
     libframework/zutil.cc
     libframework/zutil.h
     libframework/zlog_wrapper.cc
+    libframework/thread.cc
+    libframework/thread.h
     server/zb_codec.c
     server/zb_codec.h
     server/zb_msg.h
@@ -125,6 +127,8 @@ set(SOURCE_FILES
     server/zwebapi_session.h
     server/zzigbee_handler.cc
     server/zzigbee_handler.h
-    server/zzigbee_session.h)
+    server/zzigbee_session.h
+    server/upload_worker.cc
+    server/upload_worker.h)
 
-add_executable(monsys ${SOURCE_FILES} libframework/thread.cpp libframework/thread.h server/upload_worker.cpp server/upload_worker.h)
+add_executable(monsys ${SOURCE_FILES})
