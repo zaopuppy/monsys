@@ -93,7 +93,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Exchange.Exchange
 
         Exchange.Connect connect = msg.getConnect();
         mId = connect.getId();
-        mPeerId = connect.getPeerId();
+        //mPeerId = connect.getPeerId();
 
         mLogger.info("id=" + mId + ", peerId=" + mPeerId);
 

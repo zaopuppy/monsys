@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.push.session;
+package com.letsmidi.monsys.pushserver.session;
 
 import com.letsmidi.monsys.session.BaseSession;
 import com.letsmidi.monsys.session.SessionManager;

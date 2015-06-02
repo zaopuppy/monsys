@@ -1,6 +1,7 @@
-package com.letsmidi.monsys.exchange;
+package com.letsmidi.monsys.util;
 
 
+import com.letsmidi.monsys.util.ClientConnection;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;

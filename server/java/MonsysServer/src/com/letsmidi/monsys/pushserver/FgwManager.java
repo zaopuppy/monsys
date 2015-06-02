@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.push;
+package com.letsmidi.monsys.pushserver;
 
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;

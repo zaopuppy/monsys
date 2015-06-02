@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.push;
+package com.letsmidi.monsys.pushserver;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -80,9 +80,8 @@ public class PushServerApp {
 
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
 
-        // push server
+        // 监听push客户端
         NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
-
         ChannelFuture push_future = NettyUtil.startServer(
                 Config.getPushConfig().getPushPort(), push_boss, shared_worker,
                 new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
@@ -99,10 +98,8 @@ public class PushServerApp {
                 }
         );
 
-        // access server
+        // 监听内部接入客户端, 用于下发请求给客户端
         NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
-        NioEventLoopGroup access_worker = new NioEventLoopGroup();
-
         ChannelFuture access_future = NettyUtil.startServer(
                 Config.getPushConfig().getAccessPort(), access_boss, shared_worker,
                 new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),

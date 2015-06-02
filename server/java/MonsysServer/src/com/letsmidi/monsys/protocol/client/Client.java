@@ -190,10 +190,10 @@ public final class Client {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.client.ClientType)
   }
 
-  public interface ClientMsgOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ClientMsgOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.ClientMsg)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required uint32 version = 1;
     /**
      * <code>required uint32 version = 1;</code>
      *
@@ -211,7 +211,6 @@ public final class Client {
      */
     int getVersion();
 
-    // required .com.letsmidi.monsys.protocol.client.MsgType type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.client.MsgType type = 2;</code>
      */
@@ -221,7 +220,6 @@ public final class Client {
      */
     com.letsmidi.monsys.protocol.client.Client.MsgType getType();
 
-    // required uint32 sequence = 3;
     /**
      * <code>required uint32 sequence = 3;</code>
      *
@@ -239,7 +237,6 @@ public final class Client {
      */
     int getSequence();
 
-    // optional .com.letsmidi.monsys.protocol.client.Login login = 5;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.client.Login login = 5;</code>
      *
@@ -265,7 +262,6 @@ public final class Client {
      */
     com.letsmidi.monsys.protocol.client.Client.LoginOrBuilder getLoginOrBuilder();
 
-    // optional .com.letsmidi.monsys.protocol.client.LoginRsp login_rsp = 6;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.client.LoginRsp login_rsp = 6;</code>
      */
@@ -279,7 +275,6 @@ public final class Client {
      */
     com.letsmidi.monsys.protocol.client.Client.LoginRspOrBuilder getLoginRspOrBuilder();
 
-    // optional .com.letsmidi.monsys.protocol.client.RequestCommServer request_comm_server = 7;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.client.RequestCommServer request_comm_server = 7;</code>
      *
@@ -302,7 +297,6 @@ public final class Client {
      */
     com.letsmidi.monsys.protocol.client.Client.RequestCommServerOrBuilder getRequestCommServerOrBuilder();
 
-    // optional .com.letsmidi.monsys.protocol.client.RequestCommServerRsp request_comm_server_rsp = 8;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.client.RequestCommServerRsp request_comm_server_rsp = 8;</code>
      */
@@ -320,8 +314,9 @@ public final class Client {
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.ClientMsg}
    */
   public static final class ClientMsg extends
-      com.google.protobuf.GeneratedMessage
-      implements ClientMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.ClientMsg)
+      ClientMsgOrBuilder {
     // Use ClientMsg.newBuilder() to construct.
     private ClientMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -480,7 +475,6 @@ public final class Client {
     }
 
     private int bitField0_;
-    // required uint32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -504,7 +498,6 @@ public final class Client {
       return version_;
     }
 
-    // required .com.letsmidi.monsys.protocol.client.MsgType type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.client.Client.MsgType type_;
     /**
@@ -520,7 +513,6 @@ public final class Client {
       return type_;
     }
 
-    // required uint32 sequence = 3;
     public static final int SEQUENCE_FIELD_NUMBER = 3;
     private int sequence_;
     /**
@@ -544,7 +536,6 @@ public final class Client {
       return sequence_;
     }
 
-    // optional .com.letsmidi.monsys.protocol.client.Login login = 5;
     public static final int LOGIN_FIELD_NUMBER = 5;
     private com.letsmidi.monsys.protocol.client.Client.Login login_;
     /**
@@ -578,7 +569,6 @@ public final class Client {
       return login_;
     }
 
-    // optional .com.letsmidi.monsys.protocol.client.LoginRsp login_rsp = 6;
     public static final int LOGIN_RSP_FIELD_NUMBER = 6;
     private com.letsmidi.monsys.protocol.client.Client.LoginRsp loginRsp_;
     /**
@@ -600,7 +590,6 @@ public final class Client {
       return loginRsp_;
     }
 
-    // optional .com.letsmidi.monsys.protocol.client.RequestCommServer request_comm_server = 7;
     public static final int REQUEST_COMM_SERVER_FIELD_NUMBER = 7;
     private com.letsmidi.monsys.protocol.client.Client.RequestCommServer requestCommServer_;
     /**
@@ -631,7 +620,6 @@ public final class Client {
       return requestCommServer_;
     }
 
-    // optional .com.letsmidi.monsys.protocol.client.RequestCommServerRsp request_comm_server_rsp = 8;
     public static final int REQUEST_COMM_SERVER_RSP_FIELD_NUMBER = 8;
     private com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp requestCommServerRsp_;
     /**
@@ -665,7 +653,8 @@ public final class Client {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -844,8 +833,9 @@ public final class Client {
      * Protobuf type {@code com.letsmidi.monsys.protocol.client.ClientMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.client.Client.ClientMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.ClientMsg)
+        com.letsmidi.monsys.protocol.client.Client.ClientMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor;
@@ -1078,7 +1068,6 @@ public final class Client {
       }
       private int bitField0_;
 
-      // required uint32 version = 1;
       private int version_ ;
       /**
        * <code>required uint32 version = 1;</code>
@@ -1127,7 +1116,6 @@ public final class Client {
         return this;
       }
 
-      // required .com.letsmidi.monsys.protocol.client.MsgType type = 2;
       private com.letsmidi.monsys.protocol.client.Client.MsgType type_ = com.letsmidi.monsys.protocol.client.Client.MsgType.HEARTBEAT;
       /**
        * <code>required .com.letsmidi.monsys.protocol.client.MsgType type = 2;</code>
@@ -1163,7 +1151,6 @@ public final class Client {
         return this;
       }
 
-      // required uint32 sequence = 3;
       private int sequence_ ;
       /**
        * <code>required uint32 sequence = 3;</code>
@@ -1212,7 +1199,6 @@ public final class Client {
         return this;
       }
 
-      // optional .com.letsmidi.monsys.protocol.client.Login login = 5;
       private com.letsmidi.monsys.protocol.client.Client.Login login_ = com.letsmidi.monsys.protocol.client.Client.Login.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.client.Client.Login, com.letsmidi.monsys.protocol.client.Client.Login.Builder, com.letsmidi.monsys.protocol.client.Client.LoginOrBuilder> loginBuilder_;
@@ -1357,7 +1343,7 @@ public final class Client {
         if (loginBuilder_ == null) {
           loginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.client.Client.Login, com.letsmidi.monsys.protocol.client.Client.Login.Builder, com.letsmidi.monsys.protocol.client.Client.LoginOrBuilder>(
-                  login_,
+                  getLogin(),
                   getParentForChildren(),
                   isClean());
           login_ = null;
@@ -1365,7 +1351,6 @@ public final class Client {
         return loginBuilder_;
       }
 
-      // optional .com.letsmidi.monsys.protocol.client.LoginRsp login_rsp = 6;
       private com.letsmidi.monsys.protocol.client.Client.LoginRsp loginRsp_ = com.letsmidi.monsys.protocol.client.Client.LoginRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.client.Client.LoginRsp, com.letsmidi.monsys.protocol.client.Client.LoginRsp.Builder, com.letsmidi.monsys.protocol.client.Client.LoginRspOrBuilder> loginRspBuilder_;
@@ -1474,7 +1459,7 @@ public final class Client {
         if (loginRspBuilder_ == null) {
           loginRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.client.Client.LoginRsp, com.letsmidi.monsys.protocol.client.Client.LoginRsp.Builder, com.letsmidi.monsys.protocol.client.Client.LoginRspOrBuilder>(
-                  loginRsp_,
+                  getLoginRsp(),
                   getParentForChildren(),
                   isClean());
           loginRsp_ = null;
@@ -1482,7 +1467,6 @@ public final class Client {
         return loginRspBuilder_;
       }
 
-      // optional .com.letsmidi.monsys.protocol.client.RequestCommServer request_comm_server = 7;
       private com.letsmidi.monsys.protocol.client.Client.RequestCommServer requestCommServer_ = com.letsmidi.monsys.protocol.client.Client.RequestCommServer.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.client.Client.RequestCommServer, com.letsmidi.monsys.protocol.client.Client.RequestCommServer.Builder, com.letsmidi.monsys.protocol.client.Client.RequestCommServerOrBuilder> requestCommServerBuilder_;
@@ -1618,7 +1602,7 @@ public final class Client {
         if (requestCommServerBuilder_ == null) {
           requestCommServerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.client.Client.RequestCommServer, com.letsmidi.monsys.protocol.client.Client.RequestCommServer.Builder, com.letsmidi.monsys.protocol.client.Client.RequestCommServerOrBuilder>(
-                  requestCommServer_,
+                  getRequestCommServer(),
                   getParentForChildren(),
                   isClean());
           requestCommServer_ = null;
@@ -1626,7 +1610,6 @@ public final class Client {
         return requestCommServerBuilder_;
       }
 
-      // optional .com.letsmidi.monsys.protocol.client.RequestCommServerRsp request_comm_server_rsp = 8;
       private com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp requestCommServerRsp_ = com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp, com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp.Builder, com.letsmidi.monsys.protocol.client.Client.RequestCommServerRspOrBuilder> requestCommServerRspBuilder_;
@@ -1735,7 +1718,7 @@ public final class Client {
         if (requestCommServerRspBuilder_ == null) {
           requestCommServerRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp, com.letsmidi.monsys.protocol.client.Client.RequestCommServerRsp.Builder, com.letsmidi.monsys.protocol.client.Client.RequestCommServerRspOrBuilder>(
-                  requestCommServerRsp_,
+                  getRequestCommServerRsp(),
                   getParentForChildren(),
                   isClean());
           requestCommServerRsp_ = null;
@@ -1754,10 +1737,10 @@ public final class Client {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.ClientMsg)
   }
 
-  public interface LoginOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface LoginOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.Login)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .com.letsmidi.monsys.protocol.client.ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];
     /**
      * <code>required .com.letsmidi.monsys.protocol.client.ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];</code>
      */
@@ -1767,7 +1750,6 @@ public final class Client {
      */
     com.letsmidi.monsys.protocol.client.Client.ClientType getClientType();
 
-    // required string user_name = 2;
     /**
      * <code>required string user_name = 2;</code>
      */
@@ -1782,7 +1764,6 @@ public final class Client {
     com.google.protobuf.ByteString
         getUserNameBytes();
 
-    // required string password = 3;
     /**
      * <code>required string password = 3;</code>
      *
@@ -1813,8 +1794,9 @@ public final class Client {
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.Login}
    */
   public static final class Login extends
-      com.google.protobuf.GeneratedMessage
-      implements LoginOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.Login)
+      LoginOrBuilder {
     // Use Login.newBuilder() to construct.
     private Login(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1872,13 +1854,15 @@ public final class Client {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              userName_ = input.readBytes();
+              userName_ = bs;
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              password_ = input.readBytes();
+              password_ = bs;
               break;
             }
           }
@@ -1921,7 +1905,6 @@ public final class Client {
     }
 
     private int bitField0_;
-    // required .com.letsmidi.monsys.protocol.client.ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];
     public static final int CLIENT_TYPE_FIELD_NUMBER = 1;
     private com.letsmidi.monsys.protocol.client.Client.ClientType clientType_;
     /**
@@ -1937,7 +1920,6 @@ public final class Client {
       return clientType_;
     }
 
-    // required string user_name = 2;
     public static final int USER_NAME_FIELD_NUMBER = 2;
     private java.lang.Object userName_;
     /**
@@ -1980,7 +1962,6 @@ public final class Client {
       }
     }
 
-    // required string password = 3;
     public static final int PASSWORD_FIELD_NUMBER = 3;
     private java.lang.Object password_;
     /**
@@ -2043,7 +2024,8 @@ public final class Client {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasClientType()) {
         memoizedIsInitialized = 0;
@@ -2176,8 +2158,9 @@ public final class Client {
      * Protobuf type {@code com.letsmidi.monsys.protocol.client.Login}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.client.Client.LoginOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.Login)
+        com.letsmidi.monsys.protocol.client.Client.LoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor;
@@ -2324,7 +2307,6 @@ public final class Client {
       }
       private int bitField0_;
 
-      // required .com.letsmidi.monsys.protocol.client.ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];
       private com.letsmidi.monsys.protocol.client.Client.ClientType clientType_ = com.letsmidi.monsys.protocol.client.Client.ClientType.CLIENT_TYPE_ANDROID;
       /**
        * <code>required .com.letsmidi.monsys.protocol.client.ClientType client_type = 1 [default = CLIENT_TYPE_ANDROID];</code>
@@ -2360,7 +2342,6 @@ public final class Client {
         return this;
       }
 
-      // required string user_name = 2;
       private java.lang.Object userName_ = "";
       /**
        * <code>required string user_name = 2;</code>
@@ -2374,9 +2355,12 @@ public final class Client {
       public java.lang.String getUserName() {
         java.lang.Object ref = userName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          userName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            userName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2434,7 +2418,6 @@ public final class Client {
         return this;
       }
 
-      // required string password = 3;
       private java.lang.Object password_ = "";
       /**
        * <code>required string password = 3;</code>
@@ -2456,9 +2439,12 @@ public final class Client {
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          password_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            password_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2543,10 +2529,10 @@ public final class Client {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.Login)
   }
 
-  public interface LoginRspOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface LoginRspOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.LoginRsp)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -2560,8 +2546,9 @@ public final class Client {
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.LoginRsp}
    */
   public static final class LoginRsp extends
-      com.google.protobuf.GeneratedMessage
-      implements LoginRspOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.LoginRsp)
+      LoginRspOrBuilder {
     // Use LoginRsp.newBuilder() to construct.
     private LoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2652,7 +2639,6 @@ public final class Client {
     }
 
     private int bitField0_;
-    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -2674,7 +2660,8 @@ public final class Client {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -2785,8 +2772,9 @@ public final class Client {
      * Protobuf type {@code com.letsmidi.monsys.protocol.client.LoginRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.client.Client.LoginRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.LoginRsp)
+        com.letsmidi.monsys.protocol.client.Client.LoginRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor;
@@ -2903,7 +2891,6 @@ public final class Client {
       }
       private int bitField0_;
 
-      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -2947,15 +2934,17 @@ public final class Client {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.LoginRsp)
   }
 
-  public interface RequestCommServerOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface RequestCommServerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.RequestCommServer)
+      com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServer}
    */
   public static final class RequestCommServer extends
-      com.google.protobuf.GeneratedMessage
-      implements RequestCommServerOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.RequestCommServer)
+      RequestCommServerOrBuilder {
     // Use RequestCommServer.newBuilder() to construct.
     private RequestCommServer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3044,7 +3033,8 @@ public final class Client {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -3144,8 +3134,9 @@ public final class Client {
      * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServer}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.client.Client.RequestCommServerOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.RequestCommServer)
+        com.letsmidi.monsys.protocol.client.Client.RequestCommServerOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor;
@@ -3256,10 +3247,10 @@ public final class Client {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.RequestCommServer)
   }
 
-  public interface RequestCommServerRspOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface RequestCommServerRspOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -3269,7 +3260,6 @@ public final class Client {
      */
     int getCode();
 
-    // required string ip_v4_addr = 2;
     /**
      * <code>required string ip_v4_addr = 2;</code>
      */
@@ -3284,7 +3274,6 @@ public final class Client {
     com.google.protobuf.ByteString
         getIpV4AddrBytes();
 
-    // required int32 port = 3;
     /**
      * <code>required int32 port = 3;</code>
      */
@@ -3298,8 +3287,9 @@ public final class Client {
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServerRsp}
    */
   public static final class RequestCommServerRsp extends
-      com.google.protobuf.GeneratedMessage
-      implements RequestCommServerRspOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
+      RequestCommServerRspOrBuilder {
     // Use RequestCommServerRsp.newBuilder() to construct.
     private RequestCommServerRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3351,8 +3341,9 @@ public final class Client {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              ipV4Addr_ = input.readBytes();
+              ipV4Addr_ = bs;
               break;
             }
             case 24: {
@@ -3400,7 +3391,6 @@ public final class Client {
     }
 
     private int bitField0_;
-    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -3416,7 +3406,6 @@ public final class Client {
       return code_;
     }
 
-    // required string ip_v4_addr = 2;
     public static final int IP_V4_ADDR_FIELD_NUMBER = 2;
     private java.lang.Object ipV4Addr_;
     /**
@@ -3459,7 +3448,6 @@ public final class Client {
       }
     }
 
-    // required int32 port = 3;
     public static final int PORT_FIELD_NUMBER = 3;
     private int port_;
     /**
@@ -3483,7 +3471,8 @@ public final class Client {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -3616,8 +3605,9 @@ public final class Client {
      * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServerRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.letsmidi.monsys.protocol.client.Client.RequestCommServerRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
+        com.letsmidi.monsys.protocol.client.Client.RequestCommServerRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor;
@@ -3762,7 +3752,6 @@ public final class Client {
       }
       private int bitField0_;
 
-      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -3795,7 +3784,6 @@ public final class Client {
         return this;
       }
 
-      // required string ip_v4_addr = 2;
       private java.lang.Object ipV4Addr_ = "";
       /**
        * <code>required string ip_v4_addr = 2;</code>
@@ -3809,9 +3797,12 @@ public final class Client {
       public java.lang.String getIpV4Addr() {
         java.lang.Object ref = ipV4Addr_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          ipV4Addr_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            ipV4Addr_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3869,7 +3860,6 @@ public final class Client {
         return this;
       }
 
-      // required int32 port = 3;
       private int port_ ;
       /**
        * <code>required int32 port = 3;</code>
@@ -3913,27 +3903,27 @@ public final class Client {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_client_Login_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -3971,47 +3961,47 @@ public final class Client {
       "\027\n\023CLIENT_TYPE_ANDROID\020\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor,
-              new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "RequestCommServer", "RequestCommServerRsp", });
-          internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_com_letsmidi_monsys_protocol_client_Login_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor,
-              new java.lang.String[] { "ClientType", "UserName", "Password", });
-          internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor,
-              new java.lang.String[] { "Code", });
-          internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor,
-              new java.lang.String[] { });
-          internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor,
-              new java.lang.String[] { "Code", "IpV4Addr", "Port", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_ClientMsg_descriptor,
+        new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "RequestCommServer", "RequestCommServerRsp", });
+    internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_com_letsmidi_monsys_protocol_client_Login_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_Login_descriptor,
+        new java.lang.String[] { "ClientType", "UserName", "Password", });
+    internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_LoginRsp_descriptor,
+        new java.lang.String[] { "Code", });
+    internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_RequestCommServer_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor,
+        new java.lang.String[] { "Code", "IpV4Addr", "Port", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

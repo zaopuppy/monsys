@@ -1,0 +1,38 @@
+package com.letsmidi.monsys.protocol.demo1;
+
+enum MsgType {
+  LOGIN = 1;
+  LOGIN_RSP = 2;
+
+  MSG = 3;
+  MSG_RSP = 4;
+}
+
+message DemoMsg {
+  required MsgType type1 = 1;
+  required string id1 = 2;
+
+  optional LoginReq1 login_req1 = 10;
+  optional LoginRsp1 login_rsp1 = 11;
+  optional MsgReq1 msg_req1 = 12;
+  optional MsgRsp1 msg_rsp1 = 13;
+}
+
+message LoginReq1 {
+  required string id1 = 1;
+}
+
+message LoginRsp1 {
+  required int32 code1 = 1;
+}
+
+message MsgReq1 {
+  required string msg1 = 1;
+}
+
+message MsgRsp1 {
+  required string msg1 = 1;
+}
+
+
+

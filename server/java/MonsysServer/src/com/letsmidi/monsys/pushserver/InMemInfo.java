@@ -1,6 +1,6 @@
-package com.letsmidi.monsys.push;
+package com.letsmidi.monsys.pushserver;
 
-import com.letsmidi.monsys.push.session.PushSession;
+import com.letsmidi.monsys.pushserver.session.PushSession;
 import com.letsmidi.monsys.session.SessionManager;
 import io.netty.util.Timer;
 

@@ -1,4 +1,4 @@
-package com.letsmidi.monsys.push;
+package com.letsmidi.monsys.pushserver;
 
 import java.util.logging.Logger;
 

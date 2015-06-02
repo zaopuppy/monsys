@@ -13,40 +13,40 @@ public class ApiClientHandler extends SimpleChannelInboundHandler<Exchange.Excha
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Exchange.ExchangeMsg msg) throws Exception {
-        switch (msg.getType()) {
-            case REQUEST_EXCHANGE:
-                handleRequestExchange(ctx, msg);
-                break;
-            default:
-                ctx.close();
-                break;
-        }
+        //switch (msg.getType()) {
+        //    case REQUEST_EXCHANGE:
+        //        handleRequestExchange(ctx, msg);
+        //        break;
+        //    default:
+        //        ctx.close();
+        //        break;
+        //}
     }
 
     private void handleRequestExchange(ChannelHandlerContext ctx, Exchange.ExchangeMsg msg) {
-        if (!msg.hasRequestExchange()) {
-            ctx.close();
-            return;
-        }
-
-        String id = generateId();
-        String peerId1 = generateId();
-        String peerId2 = generateId();
-
-        ExchangeInfo exchangeInfo = new ExchangeInfo(id, peerId1, peerId2);
-        synchronized (InMemInfo.CLIENTS_MAP) {
-            InMemInfo.CLIENTS_MAP.put(id, exchangeInfo);
-        }
-
-        Exchange.ExchangeMsg.Builder builder = MsgUtil.newExchangeMsgBuilder(Exchange.MsgType.REQUEST_EXCHANGE_RSP, msg.getSequence());
-        Exchange.RequestExchangeRsp.Builder exchangeRsp = Exchange.RequestExchangeRsp.newBuilder();
-        exchangeRsp.setCode(0);
-        exchangeRsp.setId(id);
-        exchangeRsp.setPeerId1(peerId1);
-        exchangeRsp.setPeerId1(peerId2);
-        builder.setRequestExchangeRsp(exchangeRsp);
-
-        ctx.writeAndFlush(builder.build());
+        //if (!msg.hasRequestExchange()) {
+        //    ctx.close();
+        //    return;
+        //}
+        //
+        //String id = generateId();
+        //String peerId1 = generateId();
+        //String peerId2 = generateId();
+        //
+        //ExchangeInfo exchangeInfo = new ExchangeInfo(id, peerId1, peerId2);
+        //synchronized (InMemInfo.CLIENTS_MAP) {
+        //    InMemInfo.CLIENTS_MAP.put(id, exchangeInfo);
+        //}
+        //
+        //Exchange.ExchangeMsg.Builder builder = MsgUtil.newExchangeMsgBuilder(Exchange.MsgType.REQUEST_EXCHANGE_RSP, msg.getSequence());
+        //Exchange.RequestExchangeRsp.Builder exchangeRsp = Exchange.RequestExchangeRsp.newBuilder();
+        //exchangeRsp.setCode(0);
+        //exchangeRsp.setId(id);
+        //exchangeRsp.setPeerId1(peerId1);
+        //exchangeRsp.setPeerId1(peerId2);
+        //builder.setRequestExchangeRsp(exchangeRsp);
+        //
+        //ctx.writeAndFlush(builder.build());
     }
 
     private String generateId() {
