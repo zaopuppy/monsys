@@ -52,6 +52,16 @@ public class TelnetClientConnection extends BaseClientConnection<String> {
         return channel;
     }
 
+    @Override
+    protected boolean saveRoute(String msg, Callback<String> callback) {
+        return false;
+    }
+
+    @Override
+    protected RouteItem<String> findRoute(String msg) {
+        return null;
+    }
+
     private static void log(String msg) {
         System.out.println(msg);
     }

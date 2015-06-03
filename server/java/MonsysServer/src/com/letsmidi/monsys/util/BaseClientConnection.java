@@ -89,7 +89,7 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
     }
 
     @Override
-    public ChannelFuture writeAndFlash(T msg) {
+    public ChannelFuture writeAndFlush(T msg) {
         return mChannel.writeAndFlush(msg);
     }
 
@@ -103,7 +103,12 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
             return;
         }
         // TODO
-        // channel.write(msg);
+        channel().write(msg);
+    }
+
+    protected void writeAndFlush(T msg, Callback<T> callback) {
+        write(msg, callback);
+        flush();
     }
 
     public Map<Integer, RouteItem<T>> getRouteMap() {

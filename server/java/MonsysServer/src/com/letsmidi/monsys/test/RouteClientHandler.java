@@ -1,6 +1,7 @@
 package com.letsmidi.monsys.test;
 
 import com.letsmidi.monsys.log.Logger;
+import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -14,9 +15,9 @@ public class RouteClientHandler extends SimpleChannelInboundHandler<Route.RouteM
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Route.RouteMsg msg) throws Exception {
-        Logger.d("received: [" + msg.getType().name() + "]");
+        MyLogger.d("received: [" + msg.getType().name() + "]");
         if (msg.getType() == Route.MsgType.CONNECT) {
-            Logger.e("token: " + msg.getConnect().getToken());
+            MyLogger.e("token: " + msg.getConnect().getToken());
         }
     }
 

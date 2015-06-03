@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.database.AccountInfo;
-import com.letsmidi.monsys.log.LogFormatter;
-import com.letsmidi.monsys.log.Logger;
+import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.center.Center;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.route.Route;
@@ -47,7 +48,7 @@ public class CenterServer {
     private void start() {
         final int TIMEOUT = Config.getCenterConfig().getTimeout();
 
-        Logger.i("starting route & access server...");
+        MyLogger.i("starting route & access server...");
 
         // initialize hibernate
         Class[] mapping_classes = new Class[]{
@@ -239,13 +240,13 @@ public class CenterServer {
     private static void initLogger() throws IOException {
         Handler log_handler = new FileHandler(Config.getCenterConfig().getLogFileName(), 1 << 20, 10000, true);
 
-        final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Config.getCenterConfig().getLoggerName());
+        final Logger logger = Logger.getLogger(Config.getCenterConfig().getLoggerName());
         logger.setLevel(Level.ALL);
         logger.addHandler(log_handler);
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new LogFormatter());
+            h.setFormatter(new MyLogFormatter());
         }
 
         //InternalLoggerFactory.setDefaultFactory(new InternalLoggerFactory() {

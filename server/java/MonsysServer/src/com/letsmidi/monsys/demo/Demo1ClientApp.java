@@ -32,15 +32,21 @@ public class Demo1ClientApp {
         // wait util we connected
         f.sync();
 
-        conn.login();
-
         if (!f.isSuccess()) {
             log("failed to connect server");
             return;
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        f = conn.login();
+        f.sync();
+        if (!f.isSuccess()) {
+            log("failed to login");
+            return;
+        }
 
+        log("login success");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         for (String line = reader.readLine(); line != null; line = reader.readLine()) {
             conn.handle(line);
         }
@@ -52,9 +58,36 @@ public class Demo1ClientApp {
             super(group);
         }
 
+        ChannelFuture login() {
+            final ChannelPromise promise = channel().newPromise();
+
+            Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
+            builder.setType1(Demo1.MsgType.LOGIN);
+            builder.setId1("push-client-id01");
+            Demo1.LoginReq1.Builder loginReq1 = Demo1.LoginReq1.newBuilder();
+            loginReq1.setId1("push-client-id01");
+
+            builder.setLoginReq1(loginReq1);
+
+            writeAndFlush(builder.build(), msg -> {
+                if (msg == null || !msg.hasLoginRsp1()) {
+                    promise.setFailure(new Throwable());
+                    return;
+                }
+
+                Demo1.LoginRsp1 rsp1 = msg.getLoginRsp1();
+                if (rsp1.getCode1() == 0) {
+                    promise.setSuccess();
+                } else {
+                    promise.setFailure(new Throwable());
+                }
+            });
+
+            return promise;
+        }
+
         public void handle(String msg) {
             Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
-
 
         }
 
@@ -86,6 +119,17 @@ public class Demo1ClientApp {
             channel.pipeline().remove("handler");
 
             return channel;
+        }
+
+        @Override
+        protected boolean saveRoute(Demo1.DemoMsg msg, Callback<Demo1.DemoMsg> callback) {
+            getRouteMap().put(0, new RouteItem<>(0, callback));
+            return true;
+        }
+
+        @Override
+        protected RouteItem<Demo1.DemoMsg> findRoute(Demo1.DemoMsg msg) {
+            return getRouteMap().getOrDefault(0, null);
         }
 
         private final SimpleChannelInboundHandler<Demo1.DemoMsg> mHandler =

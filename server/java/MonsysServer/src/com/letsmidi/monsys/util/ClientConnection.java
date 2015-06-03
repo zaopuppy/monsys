@@ -17,7 +17,7 @@ public interface ClientConnection<T> {
 
     Channel flush();
 
-    ChannelFuture writeAndFlash(T msg);
+    ChannelFuture writeAndFlush(T msg);
 
     NioEventLoopGroup group();
 }

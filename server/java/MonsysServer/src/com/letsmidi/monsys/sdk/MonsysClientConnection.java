@@ -55,4 +55,14 @@ public class MonsysClientConnection extends BaseClientConnection {
     public Channel popChannel() {
         return null;
     }
+
+    @Override
+    protected boolean saveRoute(Object msg, Callback callback) {
+        return false;
+    }
+
+    @Override
+    protected RouteItem findRoute(Object msg) {
+        return null;
+    }
 }

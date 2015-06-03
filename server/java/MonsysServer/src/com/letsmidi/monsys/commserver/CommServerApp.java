@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.database.AccountInfo;
-import com.letsmidi.monsys.log.LogFormatter;
+import com.letsmidi.monsys.log.MyLogFormatter;
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.util.HibernateUtil;
@@ -63,7 +63,7 @@ public class CommServerApp {
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new LogFormatter());
+            h.setFormatter(new MyLogFormatter());
         }
 
     }

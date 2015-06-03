@@ -152,6 +152,15 @@ public class InnerRouterDemoApp {
                     ctx.channel().closeFuture().addListener(
                         (ChannelFuture future) -> mClientMap.remove(clientId));
 
+                    Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
+                    builder.setType1(Demo1.MsgType.LOGIN_RSP);
+                    builder.setId1("push-server");
+                    Demo1.LoginRsp1.Builder loginRsp1 = Demo1.LoginRsp1.newBuilder();
+                    loginRsp1.setCode1(0);
+                    builder.setLoginRsp1(loginRsp1);
+
+                    ctx.writeAndFlush(builder.build());
+
                     mState = State.LOGGED_IN;
 
                     log("logged in");

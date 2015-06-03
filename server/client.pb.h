@@ -43,17 +43,21 @@ class Login;
 class LoginRsp;
 class RequestCommServer;
 class RequestCommServerRsp;
+class GetFgwList;
+class GetFgwListRsp;
 
 enum MsgType {
   HEARTBEAT = 1,
   LOGIN = 3,
   LOGIN_RSP = 4,
   REQUEST_COMM_SERVER = 5,
-  REQUEST_COMM_SERVER_RSP = 6
+  REQUEST_COMM_SERVER_RSP = 6,
+  GET_FGW_LIST = 7,
+  GET_FGW_LIST_RSP = 8
 };
 bool MsgType_IsValid(int value);
 const MsgType MsgType_MIN = HEARTBEAT;
-const MsgType MsgType_MAX = REQUEST_COMM_SERVER_RSP;
+const MsgType MsgType_MAX = GET_FGW_LIST_RSP;
 const int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MsgType_descriptor();
@@ -621,6 +625,144 @@ class RequestCommServerRsp : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static RequestCommServerRsp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetFgwList : public ::google::protobuf::Message {
+ public:
+  GetFgwList();
+  virtual ~GetFgwList();
+
+  GetFgwList(const GetFgwList& from);
+
+  inline GetFgwList& operator=(const GetFgwList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFgwList& default_instance();
+
+  void Swap(GetFgwList* other);
+
+  // implements Message ----------------------------------------------
+
+  GetFgwList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetFgwList& from);
+  void MergeFrom(const GetFgwList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.GetFgwList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_client_2eproto();
+  friend void protobuf_AssignDesc_client_2eproto();
+  friend void protobuf_ShutdownFile_client_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetFgwList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetFgwListRsp : public ::google::protobuf::Message {
+ public:
+  GetFgwListRsp();
+  virtual ~GetFgwListRsp();
+
+  GetFgwListRsp(const GetFgwListRsp& from);
+
+  inline GetFgwListRsp& operator=(const GetFgwListRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFgwListRsp& default_instance();
+
+  void Swap(GetFgwListRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  GetFgwListRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetFgwListRsp& from);
+  void MergeFrom(const GetFgwListRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_client_2eproto();
+  friend void protobuf_AssignDesc_client_2eproto();
+  friend void protobuf_ShutdownFile_client_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetFgwListRsp* default_instance_;
 };
 // ===================================================================
 
@@ -1358,6 +1500,14 @@ inline void RequestCommServerRsp::set_allocated_peerid(::std::string* peerid) {
   }
   // @@protoc_insertion_point(field_set_allocated:com.letsmidi.monsys.protocol.client.RequestCommServerRsp.peerId)
 }
+
+// -------------------------------------------------------------------
+
+// GetFgwList
+
+// -------------------------------------------------------------------
+
+// GetFgwListRsp
 
 
 // @@protoc_insertion_point(namespace_scope)

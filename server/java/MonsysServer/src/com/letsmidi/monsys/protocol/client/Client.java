@@ -33,6 +33,14 @@ public final class Client {
      * <code>REQUEST_COMM_SERVER_RSP = 6;</code>
      */
     REQUEST_COMM_SERVER_RSP(4, 6),
+    /**
+     * <code>GET_FGW_LIST = 7;</code>
+     */
+    GET_FGW_LIST(5, 7),
+    /**
+     * <code>GET_FGW_LIST_RSP = 8;</code>
+     */
+    GET_FGW_LIST_RSP(6, 8),
     ;
 
     /**
@@ -55,6 +63,14 @@ public final class Client {
      * <code>REQUEST_COMM_SERVER_RSP = 6;</code>
      */
     public static final int REQUEST_COMM_SERVER_RSP_VALUE = 6;
+    /**
+     * <code>GET_FGW_LIST = 7;</code>
+     */
+    public static final int GET_FGW_LIST_VALUE = 7;
+    /**
+     * <code>GET_FGW_LIST_RSP = 8;</code>
+     */
+    public static final int GET_FGW_LIST_RSP_VALUE = 8;
 
 
     public final int getNumber() { return value; }
@@ -66,6 +82,8 @@ public final class Client {
         case 4: return LOGIN_RSP;
         case 5: return REQUEST_COMM_SERVER;
         case 6: return REQUEST_COMM_SERVER_RSP;
+        case 7: return GET_FGW_LIST;
+        case 8: return GET_FGW_LIST_RSP;
         default: return null;
       }
     }
@@ -3282,6 +3300,34 @@ public final class Client {
      * <code>required int32 port = 3;</code>
      */
     int getPort();
+
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    boolean hasExchangeId();
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    java.lang.String getExchangeId();
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getExchangeIdBytes();
+
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    boolean hasPeerId();
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    java.lang.String getPeerId();
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getPeerIdBytes();
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.client.RequestCommServerRsp}
@@ -3349,6 +3395,18 @@ public final class Client {
             case 24: {
               bitField0_ |= 0x00000004;
               port_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              exchangeId_ = bs;
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              peerId_ = bs;
               break;
             }
           }
@@ -3463,10 +3521,96 @@ public final class Client {
       return port_;
     }
 
+    public static final int EXCHANGEID_FIELD_NUMBER = 4;
+    private java.lang.Object exchangeId_;
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public boolean hasExchangeId() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public java.lang.String getExchangeId() {
+      java.lang.Object ref = exchangeId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          exchangeId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string exchangeId = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getExchangeIdBytes() {
+      java.lang.Object ref = exchangeId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        exchangeId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PEERID_FIELD_NUMBER = 5;
+    private java.lang.Object peerId_;
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public boolean hasPeerId() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public java.lang.String getPeerId() {
+      java.lang.Object ref = peerId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          peerId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string peerId = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPeerIdBytes() {
+      java.lang.Object ref = peerId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        peerId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       code_ = 0;
       ipV4Addr_ = "";
       port_ = 0;
+      exchangeId_ = "";
+      peerId_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3486,6 +3630,14 @@ public final class Client {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasExchangeId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPeerId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3501,6 +3653,12 @@ public final class Client {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt32(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getExchangeIdBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getPeerIdBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3522,6 +3680,14 @@ public final class Client {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getExchangeIdBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getPeerIdBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3646,6 +3812,10 @@ public final class Client {
         bitField0_ = (bitField0_ & ~0x00000002);
         port_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        exchangeId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        peerId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -3686,6 +3856,14 @@ public final class Client {
           to_bitField0_ |= 0x00000004;
         }
         result.port_ = port_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.exchangeId_ = exchangeId_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.peerId_ = peerId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3713,6 +3891,16 @@ public final class Client {
         if (other.hasPort()) {
           setPort(other.getPort());
         }
+        if (other.hasExchangeId()) {
+          bitField0_ |= 0x00000008;
+          exchangeId_ = other.exchangeId_;
+          onChanged();
+        }
+        if (other.hasPeerId()) {
+          bitField0_ |= 0x00000010;
+          peerId_ = other.peerId_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -3727,6 +3915,14 @@ public final class Client {
           return false;
         }
         if (!hasPort()) {
+          
+          return false;
+        }
+        if (!hasExchangeId()) {
+          
+          return false;
+        }
+        if (!hasPeerId()) {
           
           return false;
         }
@@ -3892,6 +4088,158 @@ public final class Client {
         return this;
       }
 
+      private java.lang.Object exchangeId_ = "";
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public boolean hasExchangeId() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public java.lang.String getExchangeId() {
+        java.lang.Object ref = exchangeId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            exchangeId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getExchangeIdBytes() {
+        java.lang.Object ref = exchangeId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          exchangeId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder setExchangeId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        exchangeId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder clearExchangeId() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        exchangeId_ = getDefaultInstance().getExchangeId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string exchangeId = 4;</code>
+       */
+      public Builder setExchangeIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        exchangeId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object peerId_ = "";
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public boolean hasPeerId() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public java.lang.String getPeerId() {
+        java.lang.Object ref = peerId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            peerId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPeerIdBytes() {
+        java.lang.Object ref = peerId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          peerId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder setPeerId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        peerId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder clearPeerId() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        peerId_ = getDefaultInstance().getPeerId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string peerId = 5;</code>
+       */
+      public Builder setPeerIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        peerId_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
     }
 
@@ -3901,6 +4249,632 @@ public final class Client {
     }
 
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.RequestCommServerRsp)
+  }
+
+  public interface GetFgwListOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.GetFgwList)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.letsmidi.monsys.protocol.client.GetFgwList}
+   */
+  public static final class GetFgwList extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.GetFgwList)
+      GetFgwListOrBuilder {
+    // Use GetFgwList.newBuilder() to construct.
+    private GetFgwList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetFgwList(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetFgwList defaultInstance;
+    public static GetFgwList getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetFgwList getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetFgwList(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.letsmidi.monsys.protocol.client.Client.GetFgwList.class, com.letsmidi.monsys.protocol.client.Client.GetFgwList.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetFgwList> PARSER =
+        new com.google.protobuf.AbstractParser<GetFgwList>() {
+      public GetFgwList parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetFgwList(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetFgwList> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwList parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.client.Client.GetFgwList prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.letsmidi.monsys.protocol.client.GetFgwList}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.GetFgwList)
+        com.letsmidi.monsys.protocol.client.Client.GetFgwListOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.letsmidi.monsys.protocol.client.Client.GetFgwList.class, com.letsmidi.monsys.protocol.client.Client.GetFgwList.Builder.class);
+      }
+
+      // Construct using com.letsmidi.monsys.protocol.client.Client.GetFgwList.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor;
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwList getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.client.Client.GetFgwList.getDefaultInstance();
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwList build() {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwList result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwList buildPartial() {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwList result = new com.letsmidi.monsys.protocol.client.Client.GetFgwList(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.letsmidi.monsys.protocol.client.Client.GetFgwList) {
+          return mergeFrom((com.letsmidi.monsys.protocol.client.Client.GetFgwList)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.client.Client.GetFgwList other) {
+        if (other == com.letsmidi.monsys.protocol.client.Client.GetFgwList.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwList parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.letsmidi.monsys.protocol.client.Client.GetFgwList) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.client.GetFgwList)
+    }
+
+    static {
+      defaultInstance = new GetFgwList(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.GetFgwList)
+  }
+
+  public interface GetFgwListRspOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.letsmidi.monsys.protocol.client.GetFgwListRsp}
+   */
+  public static final class GetFgwListRsp extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+      GetFgwListRspOrBuilder {
+    // Use GetFgwListRsp.newBuilder() to construct.
+    private GetFgwListRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetFgwListRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetFgwListRsp defaultInstance;
+    public static GetFgwListRsp getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetFgwListRsp getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetFgwListRsp(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.class, com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetFgwListRsp> PARSER =
+        new com.google.protobuf.AbstractParser<GetFgwListRsp>() {
+      public GetFgwListRsp parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetFgwListRsp(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetFgwListRsp> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.letsmidi.monsys.protocol.client.GetFgwListRsp}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+        com.letsmidi.monsys.protocol.client.Client.GetFgwListRspOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.class, com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.Builder.class);
+      }
+
+      // Construct using com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.letsmidi.monsys.protocol.client.Client.internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor;
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.getDefaultInstance();
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp build() {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp buildPartial() {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp result = new com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp) {
+          return mergeFrom((com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp other) {
+        if (other == com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.letsmidi.monsys.protocol.client.Client.GetFgwListRsp) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+    }
+
+    static {
+      defaultInstance = new GetFgwListRsp(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
@@ -3928,6 +4902,16 @@ public final class Client {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3953,12 +4937,15 @@ public final class Client {
       "ocol.client.ClientType:\023CLIENT_TYPE_ANDR" +
       "OID\022\021\n\tuser_name\030\002 \002(\t\022\020\n\010password\030\003 \002(\t" +
       "\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"\023\n\021RequestCom" +
-      "mServer\"F\n\024RequestCommServerRsp\022\014\n\004code\030" +
-      "\001 \002(\005\022\022\n\nip_v4_addr\030\002 \002(\t\022\014\n\004port\030\003 \002(\005*" +
-      "h\n\007MsgType\022\r\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\t" +
-      "LOGIN_RSP\020\004\022\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027",
-      "REQUEST_COMM_SERVER_RSP\020\006*%\n\nClientType\022" +
-      "\027\n\023CLIENT_TYPE_ANDROID\020\001"
+      "mServer\"j\n\024RequestCommServerRsp\022\014\n\004code\030" +
+      "\001 \002(\005\022\022\n\nip_v4_addr\030\002 \002(\t\022\014\n\004port\030\003 \002(\005\022" +
+      "\022\n\nexchangeId\030\004 \002(\t\022\016\n\006peerId\030\005 \002(\t\"\014\n\nG" +
+      "etFgwList\"\017\n\rGetFgwListRsp*\220\001\n\007MsgType\022\r",
+      "\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\tLOGIN_RSP\020\004\022" +
+      "\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027REQUEST_COMM" +
+      "_SERVER_RSP\020\006\022\020\n\014GET_FGW_LIST\020\007\022\024\n\020GET_F" +
+      "GW_LIST_RSP\020\010*%\n\nClientType\022\027\n\023CLIENT_TY" +
+      "PE_ANDROID\020\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4001,7 +4988,19 @@ public final class Client {
     internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_letsmidi_monsys_protocol_client_RequestCommServerRsp_descriptor,
-        new java.lang.String[] { "Code", "IpV4Addr", "Port", });
+        new java.lang.String[] { "Code", "IpV4Addr", "Port", "ExchangeId", "PeerId", });
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_GetFgwList_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_letsmidi_monsys_protocol_client_GetFgwListRsp_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

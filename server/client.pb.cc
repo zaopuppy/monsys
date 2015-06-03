@@ -39,6 +39,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* RequestCommServerRsp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RequestCommServerRsp_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GetFgwList_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GetFgwList_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GetFgwListRsp_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GetFgwListRsp_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MsgType_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* ClientType_descriptor_ = NULL;
 
@@ -137,6 +143,34 @@ void protobuf_AssignDesc_client_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(RequestCommServerRsp));
+  GetFgwList_descriptor_ = file->message_type(5);
+  static const int GetFgwList_offsets_[1] = {
+  };
+  GetFgwList_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GetFgwList_descriptor_,
+      GetFgwList::default_instance_,
+      GetFgwList_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetFgwList, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetFgwList, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GetFgwList));
+  GetFgwListRsp_descriptor_ = file->message_type(6);
+  static const int GetFgwListRsp_offsets_[1] = {
+  };
+  GetFgwListRsp_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GetFgwListRsp_descriptor_,
+      GetFgwListRsp::default_instance_,
+      GetFgwListRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetFgwListRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetFgwListRsp, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GetFgwListRsp));
   MsgType_descriptor_ = file->enum_type(0);
   ClientType_descriptor_ = file->enum_type(1);
 }
@@ -161,6 +195,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
     RequestCommServer_descriptor_, &RequestCommServer::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     RequestCommServerRsp_descriptor_, &RequestCommServerRsp::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GetFgwList_descriptor_, &GetFgwList::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GetFgwListRsp_descriptor_, &GetFgwListRsp::default_instance());
 }
 
 }  // namespace
@@ -176,6 +214,10 @@ void protobuf_ShutdownFile_client_2eproto() {
   delete RequestCommServer_reflection_;
   delete RequestCommServerRsp::default_instance_;
   delete RequestCommServerRsp_reflection_;
+  delete GetFgwList::default_instance_;
+  delete GetFgwList_reflection_;
+  delete GetFgwListRsp::default_instance_;
+  delete GetFgwListRsp_reflection_;
 }
 
 void protobuf_AddDesc_client_2eproto() {
@@ -203,11 +245,13 @@ void protobuf_AddDesc_client_2eproto() {
     "\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"\023\n\021RequestCom"
     "mServer\"j\n\024RequestCommServerRsp\022\014\n\004code\030"
     "\001 \002(\005\022\022\n\nip_v4_addr\030\002 \002(\t\022\014\n\004port\030\003 \002(\005\022"
-    "\022\n\nexchangeId\030\004 \002(\t\022\016\n\006peerId\030\005 \002(\t*h\n\007M"
-    "sgType\022\r\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\tLOGI"
-    "N_RSP\020\004\022\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027REQU"
-    "EST_COMM_SERVER_RSP\020\006*%\n\nClientType\022\027\n\023C"
-    "LIENT_TYPE_ANDROID\020\001", 900);
+    "\022\n\nexchangeId\030\004 \002(\t\022\016\n\006peerId\030\005 \002(\t\"\014\n\nG"
+    "etFgwList\"\017\n\rGetFgwListRsp*\220\001\n\007MsgType\022\r"
+    "\n\tHEARTBEAT\020\001\022\t\n\005LOGIN\020\003\022\r\n\tLOGIN_RSP\020\004\022"
+    "\027\n\023REQUEST_COMM_SERVER\020\005\022\033\n\027REQUEST_COMM"
+    "_SERVER_RSP\020\006\022\020\n\014GET_FGW_LIST\020\007\022\024\n\020GET_F"
+    "GW_LIST_RSP\020\010*%\n\nClientType\022\027\n\023CLIENT_TY"
+    "PE_ANDROID\020\001", 972);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "client.proto", &protobuf_RegisterTypes);
   ClientMsg::default_instance_ = new ClientMsg();
@@ -215,11 +259,15 @@ void protobuf_AddDesc_client_2eproto() {
   LoginRsp::default_instance_ = new LoginRsp();
   RequestCommServer::default_instance_ = new RequestCommServer();
   RequestCommServerRsp::default_instance_ = new RequestCommServerRsp();
+  GetFgwList::default_instance_ = new GetFgwList();
+  GetFgwListRsp::default_instance_ = new GetFgwListRsp();
   ClientMsg::default_instance_->InitAsDefaultInstance();
   Login::default_instance_->InitAsDefaultInstance();
   LoginRsp::default_instance_->InitAsDefaultInstance();
   RequestCommServer::default_instance_->InitAsDefaultInstance();
   RequestCommServerRsp::default_instance_->InitAsDefaultInstance();
+  GetFgwList::default_instance_->InitAsDefaultInstance();
+  GetFgwListRsp::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_client_2eproto);
 }
 
@@ -240,6 +288,8 @@ bool MsgType_IsValid(int value) {
     case 4:
     case 5:
     case 6:
+    case 7:
+    case 8:
       return true;
     default:
       return false;
@@ -1952,6 +2002,354 @@ void RequestCommServerRsp::Swap(RequestCommServerRsp* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = RequestCommServerRsp_descriptor_;
   metadata.reflection = RequestCommServerRsp_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+GetFgwList::GetFgwList()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.client.GetFgwList)
+}
+
+void GetFgwList::InitAsDefaultInstance() {
+}
+
+GetFgwList::GetFgwList(const GetFgwList& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.client.GetFgwList)
+}
+
+void GetFgwList::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GetFgwList::~GetFgwList() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.client.GetFgwList)
+  SharedDtor();
+}
+
+void GetFgwList::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void GetFgwList::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetFgwList::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GetFgwList_descriptor_;
+}
+
+const GetFgwList& GetFgwList::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_client_2eproto();
+  return *default_instance_;
+}
+
+GetFgwList* GetFgwList::default_instance_ = NULL;
+
+GetFgwList* GetFgwList::New() const {
+  return new GetFgwList;
+}
+
+void GetFgwList::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GetFgwList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.client.GetFgwList)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.client.GetFgwList)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.client.GetFgwList)
+  return false;
+#undef DO_
+}
+
+void GetFgwList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.client.GetFgwList)
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.client.GetFgwList)
+}
+
+::google::protobuf::uint8* GetFgwList::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.client.GetFgwList)
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.client.GetFgwList)
+  return target;
+}
+
+int GetFgwList::ByteSize() const {
+  int total_size = 0;
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetFgwList::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GetFgwList* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GetFgwList*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GetFgwList::MergeFrom(const GetFgwList& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GetFgwList::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFgwList::CopyFrom(const GetFgwList& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFgwList::IsInitialized() const {
+
+  return true;
+}
+
+void GetFgwList::Swap(GetFgwList* other) {
+  if (other != this) {
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GetFgwList::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GetFgwList_descriptor_;
+  metadata.reflection = GetFgwList_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+GetFgwListRsp::GetFgwListRsp()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+}
+
+void GetFgwListRsp::InitAsDefaultInstance() {
+}
+
+GetFgwListRsp::GetFgwListRsp(const GetFgwListRsp& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+}
+
+void GetFgwListRsp::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GetFgwListRsp::~GetFgwListRsp() {
+  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  SharedDtor();
+}
+
+void GetFgwListRsp::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void GetFgwListRsp::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetFgwListRsp::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GetFgwListRsp_descriptor_;
+}
+
+const GetFgwListRsp& GetFgwListRsp::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_client_2eproto();
+  return *default_instance_;
+}
+
+GetFgwListRsp* GetFgwListRsp::default_instance_ = NULL;
+
+GetFgwListRsp* GetFgwListRsp::New() const {
+  return new GetFgwListRsp;
+}
+
+void GetFgwListRsp::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GetFgwListRsp::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  return false;
+#undef DO_
+}
+
+void GetFgwListRsp::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+}
+
+::google::protobuf::uint8* GetFgwListRsp::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.client.GetFgwListRsp)
+  return target;
+}
+
+int GetFgwListRsp::ByteSize() const {
+  int total_size = 0;
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetFgwListRsp::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GetFgwListRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GetFgwListRsp*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GetFgwListRsp::MergeFrom(const GetFgwListRsp& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GetFgwListRsp::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetFgwListRsp::CopyFrom(const GetFgwListRsp& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetFgwListRsp::IsInitialized() const {
+
+  return true;
+}
+
+void GetFgwListRsp::Swap(GetFgwListRsp* other) {
+  if (other != this) {
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GetFgwListRsp::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GetFgwListRsp_descriptor_;
+  metadata.reflection = GetFgwListRsp_reflection_;
   return metadata;
 }
 

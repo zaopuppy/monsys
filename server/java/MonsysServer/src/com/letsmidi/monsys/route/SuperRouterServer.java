@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.log.Logger;
+import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.session.SessionManager;
 import com.letsmidi.monsys.util.MonsysException;
@@ -34,13 +35,13 @@ import io.netty.util.HashedWheelTimer;
  */
 public class SuperRouterServer {
 
-    private final java.util.logging.Logger mLogger = java.util.logging.Logger.getLogger(Config.getRouterConfig().getLoggerName());
+    // private final MyLogger mLogger = new MyLogger(Config.getRouterConfig().getLoggerName());
 
     public SuperRouterServer() {
     }
 
     private void start() {
-        Logger.i("starting route & access server...");
+        MyLogger.i("starting route & access server...");
 
         // global timer
         HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
@@ -88,7 +89,7 @@ public class SuperRouterServer {
                 });
 
         if (!notifyNameServer()) {
-            mLogger.severe("Failed to notify name server, shutting down");
+            MyLogger.e("Failed to notify name server, shutting down");
             route_future.channel().close();
             access_future.channel().close();
         }

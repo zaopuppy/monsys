@@ -110,4 +110,14 @@ public class ExchangeClientConnection extends BaseClientConnection<Exchange.Exch
 
         return channel;
     }
+
+    @Override
+    protected boolean saveRoute(Exchange.ExchangeMsg msg, Callback<Exchange.ExchangeMsg> callback) {
+        return false;
+    }
+
+    @Override
+    protected RouteItem<Exchange.ExchangeMsg> findRoute(Exchange.ExchangeMsg msg) {
+        return null;
+    }
 }

@@ -48,4 +48,14 @@ public class LoginServerConnection extends BaseClientConnection {
 
         return channel;
     }
+
+    @Override
+    protected boolean saveRoute(Object msg, Callback callback) {
+        return false;
+    }
+
+    @Override
+    protected RouteItem findRoute(Object msg) {
+        return null;
+    }
 }

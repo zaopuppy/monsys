@@ -52,13 +52,13 @@ public class Monsys {
             return;
         }
 
-        ChannelFuture future = client.connect();
-        future.get();
-        if (!future.isSuccess()) {
-            log("failed to connect server");
-            return;
-        }
-
-        Future<ArrayList<String>> fgw_list = client.queryFgwList(null);
+        //ChannelFuture future = client.connect();
+        //future.get();
+        //if (!future.isSuccess()) {
+        //    log("failed to connect server");
+        //    return;
+        //}
+        //
+        //Future<ArrayList<String>> fgw_list = client.queryFgwList(null);
     }
 }
