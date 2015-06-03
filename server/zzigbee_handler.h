@@ -6,11 +6,10 @@
 #include <assert.h>
 #include <unistd.h>
 
-#include "libbase/zlog.h"
 #include "libframework/zframework.h"
-#include "libzigbee/zzigbee_message.h"
-#include "libzigbee/zbdefines.h"
-#include "libzigbee/zbdevice_manager.h"
+#include "zzigbee_message.h"
+#include "zbdefines.h"
+#include "zbdevice_manager.h"
 
 #include "zinner_message_ex.h"
 #include "module.h"

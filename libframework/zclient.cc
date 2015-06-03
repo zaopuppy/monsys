@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include "libbase/zlog.h"
+#include "zlog_wrapper.h"
 #include "zerrno.h"
 #include "zdispatcher.h"
 

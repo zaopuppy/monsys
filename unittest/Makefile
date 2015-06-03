@@ -21,7 +21,8 @@ CFLAGS := -g \
 	-I../ \
 	-I../libs/include/ \
 	-I${GTEST_DIR}/include \
-	-I${GMOCK_DIR}/include
+	-I${GMOCK_DIR}/include \
+	-I/usr/local/include/boost/tr1
 
 # CFLAGS := -g -D_DEBUG_
 LDFLAGS := \

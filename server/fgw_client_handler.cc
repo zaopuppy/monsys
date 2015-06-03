@@ -285,7 +285,7 @@ void FGWClientHandler::onTimeout(int handler_id)
       fgwLogin();
     }
   } else {
-    Z_LOG_E("unknown handler id: ", handler_id);
+    Z_LOG_E("unknown handler id: %d", handler_id);
   }
 }
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.util.BeanLoader;
 import com.letsmidi.monsys.util.MonsysException;
 import org.hibernate.Session;
@@ -113,7 +113,7 @@ public class TestMain {
         Logger logger = Logger.getLogger("");
 
         FileHandler log_handler = new FileHandler("test.log");
-        log_handler.setFormatter(new MyLogFormatter());
+        log_handler.setFormatter(new LogFormatter());
 
         logger.addHandler(log_handler);
         logger.severe("very good");

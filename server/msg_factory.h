@@ -1,7 +1,7 @@
 #ifndef _MSG_FACTORY_H__
 #define _MSG_FACTORY_H__
 
-#include "libzigbee/zzigbee_message.h"
+#include "zzigbee_message.h"
 
 class MsgFactory
 {

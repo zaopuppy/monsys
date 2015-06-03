@@ -1,13 +1,18 @@
 package com.letsmidi.monsys.login;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.GlobalIdGenerator;
 import com.letsmidi.monsys.database.AccountInfo;
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
+import com.letsmidi.monsys.protocol.exchange.Exchange;
+import com.letsmidi.monsys.service.ExchangeService;
 import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MsgUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.HashedWheelTimer;
@@ -83,9 +88,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
             case LOGIN:
                 handleLogin(ctx, msg);
                 break;
-            //case REQUEST_COMM_SERVER:
-            //    handleRequestCommServer(ctx, msg);
-            //    break;
+            case REQUEST_COMM_SERVER:
+                handleRequestCommServer(ctx, msg);
+                break;
             default:
                 mLogger.severe("Unknown message type");
                 ctx.close();
@@ -94,8 +99,22 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
     }
 
     private void handleRequestCommServer(ChannelHandlerContext ctx, Client.ClientMsg msg) {
-        InMemInfo.CommServerInfo comm_server_info = InMemInfo.INSTANCE.chooseCommServer();
-        sendRequestCommServerRsp(ctx, msg, comm_server_info);
+        // 1. send request to exchange server
+        // 2. when received the response, wrapped the response to client
+
+        //InMemInfo.CommServerInfo comm_server_info = InMemInfo.INSTANCE.chooseCommServer();
+        //sendRequestCommServerRsp(ctx, msg, comm_server_info);
+
+        ExchangeService.INSTANCE.requestForExchange(new ExchangeService.Callback() {
+
+            @Override
+            public void onWriteComplete() {
+            }
+
+            @Override
+            public void onResponse(Exchange.ExchangeMsg rsp) {
+            }
+        });
     }
 
     private void sendRequestCommServerRsp(ChannelHandlerContext ctx, Client.ClientMsg msg, InMemInfo.CommServerInfo info) {

@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 
-#include "libbase/algorithm/zstring_search.h"
 
 TEST(StringSearchTest, SimpleStringSearch_TestCase01)
 {

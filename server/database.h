@@ -7,7 +7,6 @@
 #include <mysql.h>
 #include <errmsg.h>
 
-#include "libbase/zlog.h"
 
 enum {
   SQL_IDX_INVALID = -1,

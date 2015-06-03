@@ -8,6 +8,9 @@ enum MsgType {
 
   REQUEST_COMM_SERVER = 5;
   REQUEST_COMM_SERVER_RSP = 6;
+
+  GET_FGW_LIST      = 7;
+  GET_FGW_LIST_RSP  = 8;
 }
 
 enum ClientType {
@@ -51,8 +54,15 @@ message RequestCommServerRsp {
   required int32 code = 1;
   required string ip_v4_addr = 2;
   required int32 port = 3;
+  required string exchangeId = 4;
+  required string peerId = 5;
 }
 
+message GetFgwList {
+}
+
+message GetFgwListRsp {
+}
 
 
 

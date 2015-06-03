@@ -5,7 +5,7 @@
 
 #include "libframework/zframework.h"
 
-#include "libzigbee/zzigbee_message.h"
+#include "zzigbee_message.h"
 #include "zzigbee_handler.h"
 #include "zb_stream.h"
 

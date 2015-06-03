@@ -6,16 +6,21 @@ include config.mk
 # 3rd party library
 .PHONY: libevent jansson
 
-.PHONY: libbase libzigbee libframework
+.PHONY: libframework
 
 .PHONY: server
 
-all: libbase libzigbee libframework server
+all: libframework server
 
 libevent:
 	cd 3rd/libevent-2.0/ && \
 		./configure --prefix=$(PWD)/libs && \
 		make -j4 && make install
+
+zlog:
+	cd 3rd/zlog/ && \
+		make PREFIX=$(PWD)/libs && \
+		make PREFIX=$(PWD)/libs install
 
 # autoreconf -i
 jansson:
@@ -30,16 +35,10 @@ libyaml-cpp:
 		cd build && cmake -DCMAKE_INSTALL_PREFIX=$(PWD)/libs .. && \
 		make && make install
 
-libbase:
+libframework:
 	make -C $@
 
-libzigbee: libbase
-	make -C $@
-
-libframework: libbase
-	make -C $@
-
-server: libzigbee libbase libframework
+server: libframework
 	make -C $@
 
 # stub:
@@ -49,10 +48,8 @@ unittest:
 	make -C $@
 
 clean:
-	make -C libbase clean
-	make -C libzigbee clean
 	make -C libframework clean
 	make -C server clean
-	make -C unittest clean
+#	make -C unittest clean
 
 

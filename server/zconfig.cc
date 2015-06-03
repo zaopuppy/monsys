@@ -1,7 +1,5 @@
 #include "zconfig.h"
 
-#include "libbase/zlog.h"
-
 #include <fstream>
 
 using namespace std;

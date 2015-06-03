@@ -8,7 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.letsmidi.monsys.log.MyLogFormatter;
+import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.protocol.exchange.Exchange;
 import com.letsmidi.monsys.util.MonsysException;
 import com.letsmidi.monsys.util.NettyUtil;
@@ -69,12 +69,12 @@ public class ExchangeServerApp {
 
         for (Handler h : logger.getHandlers()) {
             System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new MyLogFormatter());
+            h.setFormatter(new LogFormatter());
         }
 
     }
 
-    public void start() {
+    public void start() throws IOException {
         mLogger.info("-----------------------------------");
         mLogger.info("login server start");
 
@@ -90,24 +90,28 @@ public class ExchangeServerApp {
         group_list.add(shared_worker);
 
         // listen api-clients
-        NioEventLoopGroup api_boss = new NioEventLoopGroup(1);
-        ChannelFuture api_future = NettyUtil.startServer(
-                ExchangeConfig.ApiListenPort, api_boss, shared_worker,
-                new LoggingHandler(ExchangeConfig.LoggerName, LogLevel.INFO),
-                new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(
-                                new ProtobufVarint32LengthFieldPrepender(),
-                                new ProtobufVarint32FrameDecoder(),
-                                new ProtobufEncoder(),
-                                new ProtobufDecoder(Exchange.ExchangeMsg.getDefaultInstance()),
-                                new ApiClientHandler());
-                    }
-                }
-        );
-        group_list.add(api_boss);
-        future_list.add(api_future);
+        {
+            MQApiThread thread = new MQApiThread();
+            thread.start();
+        }
+        //NioEventLoopGroup api_boss = new NioEventLoopGroup(1);
+        //ChannelFuture api_future = NettyUtil.startServer(
+        //        ExchangeConfig.ApiListenPort, api_boss, shared_worker,
+        //        new LoggingHandler(ExchangeConfig.LoggerName, LogLevel.INFO),
+        //        new ChannelInitializer<SocketChannel>() {
+        //            @Override
+        //            protected void initChannel(SocketChannel ch) throws Exception {
+        //                ch.pipeline().addLast(
+        //                        new ProtobufVarint32LengthFieldPrepender(),
+        //                        new ProtobufVarint32FrameDecoder(),
+        //                        new ProtobufEncoder(),
+        //                        new ProtobufDecoder(Exchange.ExchangeMsg.getDefaultInstance()),
+        //                        new ApiClientHandler());
+        //            }
+        //        }
+        //);
+        //group_list.add(api_boss);
+        //future_list.add(api_future);
 
         // listen clients
         NioEventLoopGroup client_boss = new NioEventLoopGroup(1);

@@ -10,7 +10,15 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 public class LoginServerHandler extends SimpleChannelInboundHandler<CommServer.CommServerMsg> {
+
     private final Logger mLogger = Logger.getLogger(CommConfig.LoggerName);
+
+    private enum State {
+        UNREGISTERED,
+        REGISTERED,
+    }
+
+    private State mState = State.UNREGISTERED;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -34,6 +42,28 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<CommServer.C
     protected void channelRead0(ChannelHandlerContext ctx, CommServer.CommServerMsg msg) throws Exception {
         mLogger.info("channelRead0: " + msg.getType());
 
+        switch (mState) {
+            case UNREGISTERED:
+                onUnregistered(ctx, msg);
+                break;
+            case REGISTERED:
+                onRegistered(ctx, msg);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void onRegistered(ChannelHandlerContext ctx, CommServer.CommServerMsg msg) {
+        switch (msg.getType()) {
+            case REQUEST_TOKEN:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void onUnregistered(ChannelHandlerContext ctx, CommServer.CommServerMsg msg) {
         switch (msg.getType()) {
             case REGISTER_RSP:
                 if (msg.hasRegisterRsp() && msg.getRegisterRsp().getCode() == 0) {

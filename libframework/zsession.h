@@ -3,7 +3,7 @@
 
 #include "zinner_message.h"
 #include "ztime.h"
-#include "libbase/zlog.h"
+#include "zlog_wrapper.h"
 
 #include <stdio.h>
 

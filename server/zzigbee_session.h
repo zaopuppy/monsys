@@ -2,7 +2,6 @@
 #define _Z_ZIGBEE_SESSION_H__
 
 #include "libframework/zframework.h"
-// #include "libzigbee/zzigbee_message.h"
 #include "zconfig.h"
 
 class ZZigBeeSession : public ZSession<uint32_t> {

@@ -1,7 +1,6 @@
 #include "zb_stream.h"
 
-#include "libbase/algorithm/zstring_search.h"
-#include "libzigbee/zzigbee_message.h"
+#include "zzigbee_message.h"
 #include "msg_factory.h"
 
 static const int MIN_HEAD_LEN = 1   // ver_(1)

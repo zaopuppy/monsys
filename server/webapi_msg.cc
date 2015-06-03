@@ -4,7 +4,6 @@
 
 #include <jansson.h>
 
-#include "libbase/zlog.h"
 #include "zinner_message_ex.h"
 
 json_t* inner2Json(ZInnerMsg *innerMsg)

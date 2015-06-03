@@ -12,5 +12,4 @@ center:
 
 clean:
 	make -f fgw.mk clean
-	make -f center.mk clean
 

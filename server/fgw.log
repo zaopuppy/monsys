@@ -1,0 +1,10 @@
+D|zserial.cc:137|Openning serial device: [/dev/tty.usbserial-ftDX0P76]
+
+I|zclient.cc:55|ZClient::init(): 0x7faf1083e400
+
+I|zclient.cc:269|Waiting for response: 0x7faf1083e400
+
+D|zclient.cc:36|ZClient::doTimeout(): 0x7faf1083e400
+
+I|zclient.cc:42|connecting timeout, abort, waiting for reconnect: 0x7faf1083e400
+
