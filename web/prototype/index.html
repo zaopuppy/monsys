@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Monsys</title>
+    <!-- for touch screen -->
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <link rel="stylesheet" href="css/ui.css" type="text/css"/>
+    <script type="text/javascript" src="js/main.js"></script>
+    <style type="text/css" >
+    </style>
+  </head>
+  <body>
+    <!-- login -->
+    <div id="signin-container">
+      <div class="front-signin">
+        <form action="/login" method="post">
+          <div class="signin-username">
+            <input type="text" id="signin-email" class="text-input email-input" size="30" name="username_or_email" autocomplete="on" placeholder="Email">
+          </div>
+          <span class="signin-password">
+            <input type="password" id="signin-password" class="text-input password-input" size="23" name="password" placeholder="Password">
+            <button type="submit" class="signin-submit-btn">
+              Sign in
+            </button>
+          </span>
+
+          <div class="remember-forgot">
+            <label class="remember">
+              <input type="checkbox" value="1" name="remember_me" checked="checked">
+              <span>Remember me</span>
+            </label>
+            <span class="separator">·</span>
+            <a href="/resend_password">Forgot password?</a>
+          </div>
+
+          <input type="hidden" name="return_to_ssl" value="true">
+          <input type="hidden" name="scribe_log">
+          <input type="hidden" name="redirect_after_login" value="/">
+          <!-- ??? -->
+          <input type="hidden" value="e5a1c9e7c5b3e0ad7cfea1a048a2eb5778b9cf21" name="authenticity_token">
+        </form>
+      </div>
+    </div>
+    <!-- register -->
+    <!-- user info -->
+    <div id="user-info-container">
+      <div class="user-info">
+        <h1>Welcome, Yi</h1>
+        <br>
+        <ul class="user-info-list">
+          <li><span>House</span></li>
+          <li><span>Office</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- parameter list -->
+  </body>
+</html>

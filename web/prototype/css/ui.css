@@ -1,0 +1,32 @@
+
+ul {
+  list-style: none;
+}
+
+#signin-container, #user-info-container{
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.front-signin {
+  /*width: 500px;*/
+  background-color: #0FA00F;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  /*border: 1px solid blue;*/
+}
+
+.text-input {
+  font-size: 1.5em;
+}
+
+.signin-submit-btn {
+  font-size: 1.5em;
+}
+
+.user-info-list {
+  font-size: 1.5em;
+}
