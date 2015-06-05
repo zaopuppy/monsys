@@ -126,7 +126,7 @@ public class InnerRouterDemoApp {
         protected void channelRead0(ChannelHandlerContext ctx, Demo1.DemoMsg msg) throws Exception {
 
             switch (msg.getType1()) {
-                case LOGIN:
+                case LOGIN: {
                     log("login request");
 
                     if (mState == State.LOGGED_IN) {
@@ -146,7 +146,6 @@ public class InnerRouterDemoApp {
                     }
 
 
-
                     mClientMap.put(clientId, new Entry(clientId, ctx.channel()));
 
                     ctx.channel().closeFuture().addListener(
@@ -154,7 +153,6 @@ public class InnerRouterDemoApp {
 
                     Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
                     builder.setType1(Demo1.MsgType.LOGIN_RSP);
-                    builder.setId1("push-server");
                     Demo1.LoginRsp1.Builder loginRsp1 = Demo1.LoginRsp1.newBuilder();
                     loginRsp1.setCode1(0);
                     builder.setLoginRsp1(loginRsp1);
@@ -166,9 +164,34 @@ public class InnerRouterDemoApp {
                     log("logged in");
 
                     break;
-                case MSG:
-                    // dispatch to administrator
+                }
+                case MSG: {
+                    Demo1.MsgReq1 msgReq1 = msg.getMsgReq1();
+                    String peerId = msgReq1.getPeerId1();
+                    Entry entry = mAdminMap.getOrDefault(peerId, null);
+                    if (entry == null) {
+                        log("not admin is found");
+                        return;
+                    }
+
+                    log("peer admin got");
+
+                    Channel peerChannel = entry.getChannel();
+
+                    {
+                        Demo2.DemoMsg.Builder builder = Demo2.DemoMsg.newBuilder();
+                        builder.setType2(Demo2.MsgType.MSG);
+                        Demo2.MsgReq2.Builder msgReq2 = Demo2.MsgReq2.newBuilder();
+                        msgReq2.setMsg2(msgReq1.getMsg1());
+                        msgReq2.setPeerId2(msgReq1.getPeerId1());
+                        builder.setMsgReq2(msgReq2);
+
+                        peerChannel.writeAndFlush(builder.build());
+
+                        log("msg routed");
+                    }
                     break;
+                }
                 case MSG_RSP:
                     break;
                 default:
@@ -180,16 +203,77 @@ public class InnerRouterDemoApp {
 
     private static class Demo2Handler extends SimpleChannelInboundHandler<Demo2.DemoMsg> {
 
+        private State mState = State.WAIT_FOR_LOGIN;
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, Demo2.DemoMsg msg) throws Exception {
 
             switch (msg.getType2()) {
-                case LOGIN:
+                case LOGIN: {
+                    log("login request");
+
+                    if (mState == State.LOGGED_IN) {
+                        // ignore
+                        log("already logged in");
+                        return;
+                    }
+
+                    Demo2.LoginReq2 loginReq2 = msg.getLoginReq2();
+
+                    String clientId = loginReq2.getId2();
+
+                    if (mAdminMap.containsKey(clientId)) {
+                        log("duplicated client id");
+                        ctx.close();
+                        return;
+                    }
+
+                    mAdminMap.put(clientId, new Entry(clientId, ctx.channel()));
+
+                    ctx.channel().closeFuture().addListener(
+                        (ChannelFuture future) -> mAdminMap.remove(clientId));
+
+                    Demo2.DemoMsg.Builder builder = Demo2.DemoMsg.newBuilder();
+                    builder.setType2(Demo2.MsgType.LOGIN_RSP);
+                    Demo2.LoginRsp2.Builder loginRsp2 = Demo2.LoginRsp2.newBuilder();
+                    loginRsp2.setCode2(0);
+                    builder.setLoginRsp2(loginRsp2);
+
+                    ctx.writeAndFlush(builder.build());
+
+                    mState = State.LOGGED_IN;
+
+                    log("logged in");
                     break;
-                case LOGIN_RSP:
+                }
+                case MSG: {
+                    Demo2.MsgReq2 msgReq2 = msg.getMsgReq2();
+                    String peerId = msgReq2.getPeerId2();
+                    Entry entry = mClientMap.getOrDefault(peerId, null);
+                    if (entry == null) {
+                        log("not push client is found");
+                        return;
+                    }
+
+                    log("peer client got");
+
+                    Channel peerChannel = entry.getChannel();
+
+                    {
+                        Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
+                        builder.setType1(Demo1.MsgType.MSG);
+                        Demo1.MsgReq1.Builder msgReq1 = Demo1.MsgReq1.newBuilder();
+                        msgReq1.setMsg1(msgReq2.getMsg2());
+                        msgReq1.setPeerId1(msgReq2.getPeerId2());
+                        builder.setMsgReq1(msgReq1);
+
+                        peerChannel.writeAndFlush(builder.build());
+
+                        log("msg routed");
+                    }
+
                     break;
-                case MSG:
-                    break;
+                }
                 case MSG_RSP:
                     break;
                 default:

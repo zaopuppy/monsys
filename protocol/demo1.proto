@@ -10,7 +10,6 @@ enum MsgType {
 
 message DemoMsg {
   required MsgType type1 = 1;
-  required string id1 = 2;
 
   optional LoginReq1 login_req1 = 10;
   optional LoginRsp1 login_rsp1 = 11;
@@ -28,6 +27,7 @@ message LoginRsp1 {
 
 message MsgReq1 {
   required string msg1 = 1;
+  required string peerId1 = 2;
 }
 
 message MsgRsp1 {

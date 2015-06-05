@@ -119,7 +119,7 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
     protected abstract RouteItem<T> findRoute(T msg);
 
-    private void onResponse(T msg) {
+    protected void onResponse(T msg) {
         RouteItem<T> item = findRoute(msg);
         if (item == null) {
             return;
