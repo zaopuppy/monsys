@@ -12,7 +12,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.HashedWheelTimer;
 
-public class FgwHandler extends SimpleChannelInboundHandler<PushMsg> {
+public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
 
     private enum STATE {
@@ -24,14 +24,14 @@ public class FgwHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     //private final SessionManager<Integer> mSessionManager;
 
-    public FgwHandler(HashedWheelTimer timer) {
+    public PushServerHandler(HashedWheelTimer timer) {
         //mSessionManager = new SessionManager<>(timer);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
-        mLogger.info("current state: " + mState.name());
-        switch (mState) {
+        mLogger.info("current state: " + getState().name());
+        switch (getState()) {
             case WAITING_FOR_LOGIN: {
                 onWaitingForLogin(ctx, msg);
                 break;
@@ -60,7 +60,7 @@ public class FgwHandler extends SimpleChannelInboundHandler<PushMsg> {
             return;
         }
 
-        mState = STATE.LOGGED_IN;
+        setState(STATE.LOGGED_IN);
 
         mLogger.info("Logged in successfully: " + login.getDeviceId());
 
@@ -91,6 +91,14 @@ public class FgwHandler extends SimpleChannelInboundHandler<PushMsg> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         mLogger.severe("Channel closed");
         super.channelInactive(ctx);
+    }
+
+    public STATE getState() {
+        return mState;
+    }
+
+    public void setState(STATE mState) {
+        this.mState = mState;
     }
 
 }

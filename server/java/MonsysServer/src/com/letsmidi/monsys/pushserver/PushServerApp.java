@@ -80,53 +80,79 @@ public class PushServerApp {
 
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
 
-        // 监听push客户端
-        NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
-        ChannelFuture push_future = NettyUtil.startServer(
-                Config.getPushConfig().getPushPort(), push_boss, shared_worker,
-                new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
-                new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(
-                                new ProtobufVarint32LengthFieldPrepender(),
-                                new ProtobufVarint32FrameDecoder(),
-                                new ProtobufEncoder(),
-                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
-                                new FgwHandler(timer));
-                    }
-                }
-        );
-
-        // 监听内部接入客户端, 用于下发请求给客户端
-        NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
-        ChannelFuture access_future = NettyUtil.startServer(
-                Config.getPushConfig().getAccessPort(), access_boss, shared_worker,
-                new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
-                new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(
-                                new ProtobufVarint32LengthFieldPrepender(),
-                                new ProtobufVarint32FrameDecoder(),
-                                new ProtobufEncoder(),
-                                new ProtobufDecoder(PushMsg.getDefaultInstance()),
-                                new ApiHandler(timer));
-                    }
-                }
-        );
+        ChannelFuture[] futures = new ChannelFuture[]{
+            listenPushClients(shared_worker, 1983, timer),
+            listenApiClients(shared_worker, 1984, timer)
+        };
 
         try {
-            push_future.channel().closeFuture().sync();
-            access_future.channel().closeFuture().sync();
+            for (ChannelFuture f: futures) {
+                f.channel().closeFuture().sync();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            push_boss.shutdownGracefully();
-            access_boss.shutdownGracefully();
-            shared_worker.shutdownGracefully();
+            //push_boss.shutdownGracefully();
+            //access_boss.shutdownGracefully();
+            //shared_worker.shutdownGracefully();
         }
 
+    }
+
+    /**
+     * 监听内部接入客户端, 用于下发请求给客户端
+     *
+     * @param worker
+     * @param port
+     * @param timer
+     * @return
+     */
+    private ChannelFuture listenApiClients(NioEventLoopGroup worker, int port, HashedWheelTimer timer) {
+        NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
+        ChannelFuture future = NettyUtil.startServer(
+            Config.getPushConfig().getAccessPort(), access_boss, worker,
+            new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
+            new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(
+                        new ProtobufVarint32LengthFieldPrepender(),
+                        new ProtobufVarint32FrameDecoder(),
+                        new ProtobufEncoder(),
+                        new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                        new ApiServerHandler(timer));
+                }
+            }
+        );
+        return future;
+    }
+
+    /**
+     * 监听push客户端
+     *
+     * @param worker
+     * @param port
+     * @param timer
+     * @return
+     */
+    private ChannelFuture listenPushClients(NioEventLoopGroup worker, int port, HashedWheelTimer timer) {
+        NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
+        ChannelFuture future = NettyUtil.startServer(
+            Config.getPushConfig().getPushPort(), push_boss, worker,
+            new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
+            new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(
+                        new ProtobufVarint32LengthFieldPrepender(),
+                        new ProtobufVarint32FrameDecoder(),
+                        new ProtobufEncoder(),
+                        new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                        new PushServerHandler(timer));
+                }
+            }
+        );
+        return future;
     }
 }
 

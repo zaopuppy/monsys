@@ -51,12 +51,12 @@ public class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
                 ctx.write("gw was found\n");
 
                 // gw
-                fgw.channel.pipeline().remove(FgwHandler.class);
+                fgw.channel.pipeline().remove(PushServerHandler.class);
                 // client.channel.pipeline().addLast(new NewServerHandler(ctx.channel()));
                 fgw.channel.pipeline().addLast(new RelayHandler(ctx.channel()));
 
                 // client
-                ctx.channel().pipeline().remove(ApiHandler.class);
+                ctx.channel().pipeline().remove(ApiServerHandler.class);
                 // ctx.channel().pipeline().addLast(new NewClientHandler(client.channel));
                 fgw.channel.pipeline().addLast(new RelayHandler(fgw.channel));
             }

@@ -21,7 +21,7 @@ import io.netty.util.HashedWheelTimer;
  *
  * @author Yi Zhao
  */
-public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
+public class ApiServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     private static final int RECONNECT_WAIT_TIME = 5; // in seconds
 
@@ -35,7 +35,7 @@ public class ApiHandler extends SimpleChannelInboundHandler<PushMsg> {
     private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
     private FgwManager.FgwInfo mCurrentFgw = null;
 
-    public ApiHandler(HashedWheelTimer timer) {
+    public ApiServerHandler(HashedWheelTimer timer) {
         //mTimer = timer;
         //mSessionManager = new SessionManager<>(timer);
         //mInnerSessionManager = new SessionManager<>(timer);
