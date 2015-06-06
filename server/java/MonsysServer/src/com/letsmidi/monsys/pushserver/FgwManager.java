@@ -27,19 +27,6 @@ public class FgwManager {
         }
     }
 
-    private class ClientInfoRemover implements ChannelFutureListener {
-        private final String mDeviceId;
-
-        public ClientInfoRemover(String devId) {
-            mDeviceId = devId;
-        }
-
-        @Override
-        public void operationComplete(ChannelFuture future) throws Exception {
-            mClientMap.remove(mDeviceId);
-        }
-    }
-
     private final ConcurrentMap<String, FgwInfo> mClientMap = PlatformDependent.newConcurrentHashMap(1000);
 
     private FgwManager() {
@@ -55,7 +42,8 @@ public class FgwManager {
         }
 
         // XXX: not good, new listener everything...
-        info.channel.closeFuture().addListener(new ClientInfoRemover(info.deviceId));
+        // info.channel.closeFuture().addListener(new ClientInfoRemover(info.deviceId));
+        info.channel.closeFuture().addListener(future -> mClientMap.remove(info.deviceId));
 
         return true;
     }

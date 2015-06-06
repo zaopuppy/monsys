@@ -68,7 +68,7 @@ public class PushServerApp {
 
         // initialize hibernate
         if (!HibernateUtil.init(mapping_classes)) {
-            mLogger.severe("Failed to initialize hiberate, failed");
+            mLogger.severe("Failed to initialize hibernate, failed");
             return;
         }
 
@@ -81,8 +81,8 @@ public class PushServerApp {
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
 
         ChannelFuture[] futures = new ChannelFuture[]{
-            listenPushClients(shared_worker, 1983, timer),
-            listenApiClients(shared_worker, 1984, timer)
+            listenPushClients(shared_worker, Config.getPushConfig().getPushPort(), timer),
+            listenApiClients(shared_worker, Config.getPushConfig().getAccessPort(), timer)
         };
 
         try {
@@ -100,34 +100,6 @@ public class PushServerApp {
     }
 
     /**
-     * 监听内部接入客户端, 用于下发请求给客户端
-     *
-     * @param worker
-     * @param port
-     * @param timer
-     * @return
-     */
-    private ChannelFuture listenApiClients(NioEventLoopGroup worker, int port, HashedWheelTimer timer) {
-        NioEventLoopGroup access_boss = new NioEventLoopGroup(1);
-        ChannelFuture future = NettyUtil.startServer(
-            Config.getPushConfig().getAccessPort(), access_boss, worker,
-            new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
-            new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(
-                        new ProtobufVarint32LengthFieldPrepender(),
-                        new ProtobufVarint32FrameDecoder(),
-                        new ProtobufEncoder(),
-                        new ProtobufDecoder(PushMsg.getDefaultInstance()),
-                        new ApiServerHandler(timer));
-                }
-            }
-        );
-        return future;
-    }
-
-    /**
      * 监听push客户端
      *
      * @param worker
@@ -136,9 +108,8 @@ public class PushServerApp {
      * @return
      */
     private ChannelFuture listenPushClients(NioEventLoopGroup worker, int port, HashedWheelTimer timer) {
-        NioEventLoopGroup push_boss = new NioEventLoopGroup(1);
-        ChannelFuture future = NettyUtil.startServer(
-            Config.getPushConfig().getPushPort(), push_boss, worker,
+        NioEventLoopGroup boss = new NioEventLoopGroup(1);
+        ChannelFuture future = NettyUtil.startServer(port, boss, worker,
             new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
             new ChannelInitializer<SocketChannel>() {
                 @Override
@@ -149,6 +120,33 @@ public class PushServerApp {
                         new ProtobufEncoder(),
                         new ProtobufDecoder(PushMsg.getDefaultInstance()),
                         new PushServerHandler(timer));
+                }
+            }
+        );
+        return future;
+    }
+
+    /**
+     * 监听内部接入客户端, 用于下发请求给客户端
+     *
+     * @param worker
+     * @param port
+     * @param timer
+     * @return
+     */
+    private ChannelFuture listenApiClients(NioEventLoopGroup worker, int port, HashedWheelTimer timer) {
+        NioEventLoopGroup boss = new NioEventLoopGroup(1);
+        ChannelFuture future = NettyUtil.startServer(port, boss, worker,
+            new LoggingHandler(Config.getPushConfig().getLoggerName(), LogLevel.INFO),
+            new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(
+                        new ProtobufVarint32LengthFieldPrepender(),
+                        new ProtobufVarint32FrameDecoder(),
+                        new ProtobufEncoder(),
+                        new ProtobufDecoder(PushMsg.getDefaultInstance()),
+                        new ApiServerHandler(timer));
                 }
             }
         );

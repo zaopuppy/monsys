@@ -77,6 +77,7 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     private void onLoggedIn(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
         mLogger.info("onLoggedIn: " + msg.getType());
+        // TODO
     }
 
     @Override
