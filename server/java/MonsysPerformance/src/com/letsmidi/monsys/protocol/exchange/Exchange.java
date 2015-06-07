@@ -108,10 +108,10 @@ public final class Exchange {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.exchange.MsgType)
   }
 
-  public interface ExchangeMsgOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ExchangeMsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint32 version = 1;
     /**
      * <code>required uint32 version = 1;</code>
      *
@@ -129,6 +129,7 @@ public final class Exchange {
      */
     int getVersion();
 
+    // required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;</code>
      */
@@ -138,6 +139,7 @@ public final class Exchange {
      */
     com.letsmidi.monsys.protocol.exchange.Exchange.MsgType getType();
 
+    // required uint32 sequence = 3;
     /**
      * <code>required uint32 sequence = 3;</code>
      *
@@ -155,6 +157,7 @@ public final class Exchange {
      */
     int getSequence();
 
+    // optional .com.letsmidi.monsys.protocol.exchange.RequestExchange request_exchange = 5;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.exchange.RequestExchange request_exchange = 5;</code>
      *
@@ -180,6 +183,7 @@ public final class Exchange {
      */
     com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeOrBuilder getRequestExchangeOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp request_exchange_rsp = 6;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp request_exchange_rsp = 6;</code>
      */
@@ -193,6 +197,7 @@ public final class Exchange {
      */
     com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRspOrBuilder getRequestExchangeRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.exchange.Connect connect = 7;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.exchange.Connect connect = 7;</code>
      *
@@ -218,6 +223,7 @@ public final class Exchange {
      */
     com.letsmidi.monsys.protocol.exchange.Exchange.ConnectOrBuilder getConnectOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.exchange.ConnectRsp connect_rsp = 8;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.exchange.ConnectRsp connect_rsp = 8;</code>
      */
@@ -235,9 +241,8 @@ public final class Exchange {
    * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.ExchangeMsg}
    */
   public static final class ExchangeMsg extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
-      ExchangeMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ExchangeMsgOrBuilder {
     // Use ExchangeMsg.newBuilder() to construct.
     private ExchangeMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -396,6 +401,7 @@ public final class Exchange {
     }
 
     private int bitField0_;
+    // required uint32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -419,6 +425,7 @@ public final class Exchange {
       return version_;
     }
 
+    // required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.exchange.Exchange.MsgType type_;
     /**
@@ -434,6 +441,7 @@ public final class Exchange {
       return type_;
     }
 
+    // required uint32 sequence = 3;
     public static final int SEQUENCE_FIELD_NUMBER = 3;
     private int sequence_;
     /**
@@ -457,6 +465,7 @@ public final class Exchange {
       return sequence_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.exchange.RequestExchange request_exchange = 5;
     public static final int REQUEST_EXCHANGE_FIELD_NUMBER = 5;
     private com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange requestExchange_;
     /**
@@ -490,6 +499,7 @@ public final class Exchange {
       return requestExchange_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp request_exchange_rsp = 6;
     public static final int REQUEST_EXCHANGE_RSP_FIELD_NUMBER = 6;
     private com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp requestExchangeRsp_;
     /**
@@ -511,6 +521,7 @@ public final class Exchange {
       return requestExchangeRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.exchange.Connect connect = 7;
     public static final int CONNECT_FIELD_NUMBER = 7;
     private com.letsmidi.monsys.protocol.exchange.Exchange.Connect connect_;
     /**
@@ -544,6 +555,7 @@ public final class Exchange {
       return connect_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.exchange.ConnectRsp connect_rsp = 8;
     public static final int CONNECT_RSP_FIELD_NUMBER = 8;
     private com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp connectRsp_;
     /**
@@ -577,8 +589,7 @@ public final class Exchange {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -757,9 +768,8 @@ public final class Exchange {
      * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.ExchangeMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
-        com.letsmidi.monsys.protocol.exchange.Exchange.ExchangeMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.exchange.Exchange.ExchangeMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.exchange.Exchange.internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor;
@@ -992,6 +1002,7 @@ public final class Exchange {
       }
       private int bitField0_;
 
+      // required uint32 version = 1;
       private int version_ ;
       /**
        * <code>required uint32 version = 1;</code>
@@ -1040,6 +1051,7 @@ public final class Exchange {
         return this;
       }
 
+      // required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;
       private com.letsmidi.monsys.protocol.exchange.Exchange.MsgType type_ = com.letsmidi.monsys.protocol.exchange.Exchange.MsgType.REQUEST_EXCHANGE;
       /**
        * <code>required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;</code>
@@ -1075,6 +1087,7 @@ public final class Exchange {
         return this;
       }
 
+      // required uint32 sequence = 3;
       private int sequence_ ;
       /**
        * <code>required uint32 sequence = 3;</code>
@@ -1123,6 +1136,7 @@ public final class Exchange {
         return this;
       }
 
+      // optional .com.letsmidi.monsys.protocol.exchange.RequestExchange request_exchange = 5;
       private com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange requestExchange_ = com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeOrBuilder> requestExchangeBuilder_;
@@ -1267,7 +1281,7 @@ public final class Exchange {
         if (requestExchangeBuilder_ == null) {
           requestExchangeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchange.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeOrBuilder>(
-                  getRequestExchange(),
+                  requestExchange_,
                   getParentForChildren(),
                   isClean());
           requestExchange_ = null;
@@ -1275,6 +1289,7 @@ public final class Exchange {
         return requestExchangeBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp request_exchange_rsp = 6;
       private com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp requestExchangeRsp_ = com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRspOrBuilder> requestExchangeRspBuilder_;
@@ -1383,7 +1398,7 @@ public final class Exchange {
         if (requestExchangeRspBuilder_ == null) {
           requestExchangeRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRsp.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRspOrBuilder>(
-                  getRequestExchangeRsp(),
+                  requestExchangeRsp_,
                   getParentForChildren(),
                   isClean());
           requestExchangeRsp_ = null;
@@ -1391,6 +1406,7 @@ public final class Exchange {
         return requestExchangeRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.exchange.Connect connect = 7;
       private com.letsmidi.monsys.protocol.exchange.Exchange.Connect connect_ = com.letsmidi.monsys.protocol.exchange.Exchange.Connect.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.exchange.Exchange.Connect, com.letsmidi.monsys.protocol.exchange.Exchange.Connect.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectOrBuilder> connectBuilder_;
@@ -1535,7 +1551,7 @@ public final class Exchange {
         if (connectBuilder_ == null) {
           connectBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.exchange.Exchange.Connect, com.letsmidi.monsys.protocol.exchange.Exchange.Connect.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectOrBuilder>(
-                  getConnect(),
+                  connect_,
                   getParentForChildren(),
                   isClean());
           connect_ = null;
@@ -1543,6 +1559,7 @@ public final class Exchange {
         return connectBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.exchange.ConnectRsp connect_rsp = 8;
       private com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp connectRsp_ = com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRspOrBuilder> connectRspBuilder_;
@@ -1651,7 +1668,7 @@ public final class Exchange {
         if (connectRspBuilder_ == null) {
           connectRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRsp.Builder, com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRspOrBuilder>(
-                  getConnectRsp(),
+                  connectRsp_,
                   getParentForChildren(),
                   isClean());
           connectRsp_ = null;
@@ -1670,17 +1687,15 @@ public final class Exchange {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   }
 
-  public interface RequestExchangeOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.exchange.RequestExchange)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RequestExchangeOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.RequestExchange}
    */
   public static final class RequestExchange extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.exchange.RequestExchange)
-      RequestExchangeOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RequestExchangeOrBuilder {
     // Use RequestExchange.newBuilder() to construct.
     private RequestExchange(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1769,8 +1784,7 @@ public final class Exchange {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1870,9 +1884,8 @@ public final class Exchange {
      * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.RequestExchange}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.exchange.RequestExchange)
-        com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.exchange.Exchange.internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor;
@@ -1983,10 +1996,10 @@ public final class Exchange {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   }
 
-  public interface RequestExchangeRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RequestExchangeRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -1996,6 +2009,7 @@ public final class Exchange {
      */
     int getCode();
 
+    // required string id = 2;
     /**
      * <code>required string id = 2;</code>
      */
@@ -2010,6 +2024,7 @@ public final class Exchange {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required string peer_id1 = 3;
     /**
      * <code>required string peer_id1 = 3;</code>
      */
@@ -2024,6 +2039,7 @@ public final class Exchange {
     com.google.protobuf.ByteString
         getPeerId1Bytes();
 
+    // required string peer_id2 = 4;
     /**
      * <code>required string peer_id2 = 4;</code>
      */
@@ -2042,9 +2058,8 @@ public final class Exchange {
    * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp}
    */
   public static final class RequestExchangeRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
-      RequestExchangeRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RequestExchangeRspOrBuilder {
     // Use RequestExchangeRsp.newBuilder() to construct.
     private RequestExchangeRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2096,21 +2111,18 @@ public final class Exchange {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              peerId1_ = bs;
+              peerId1_ = input.readBytes();
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              peerId2_ = bs;
+              peerId2_ = input.readBytes();
               break;
             }
           }
@@ -2153,6 +2165,7 @@ public final class Exchange {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -2168,6 +2181,7 @@ public final class Exchange {
       return code_;
     }
 
+    // required string id = 2;
     public static final int ID_FIELD_NUMBER = 2;
     private java.lang.Object id_;
     /**
@@ -2210,6 +2224,7 @@ public final class Exchange {
       }
     }
 
+    // required string peer_id1 = 3;
     public static final int PEER_ID1_FIELD_NUMBER = 3;
     private java.lang.Object peerId1_;
     /**
@@ -2252,6 +2267,7 @@ public final class Exchange {
       }
     }
 
+    // required string peer_id2 = 4;
     public static final int PEER_ID2_FIELD_NUMBER = 4;
     private java.lang.Object peerId2_;
     /**
@@ -2303,8 +2319,7 @@ public final class Exchange {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -2448,9 +2463,8 @@ public final class Exchange {
      * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
-        com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.exchange.Exchange.RequestExchangeRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.exchange.Exchange.internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor;
@@ -2612,6 +2626,7 @@ public final class Exchange {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -2644,6 +2659,7 @@ public final class Exchange {
         return this;
       }
 
+      // required string id = 2;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 2;</code>
@@ -2657,12 +2673,9 @@ public final class Exchange {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2720,6 +2733,7 @@ public final class Exchange {
         return this;
       }
 
+      // required string peer_id1 = 3;
       private java.lang.Object peerId1_ = "";
       /**
        * <code>required string peer_id1 = 3;</code>
@@ -2733,12 +2747,9 @@ public final class Exchange {
       public java.lang.String getPeerId1() {
         java.lang.Object ref = peerId1_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            peerId1_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          peerId1_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2796,6 +2807,7 @@ public final class Exchange {
         return this;
       }
 
+      // required string peer_id2 = 4;
       private java.lang.Object peerId2_ = "";
       /**
        * <code>required string peer_id2 = 4;</code>
@@ -2809,12 +2821,9 @@ public final class Exchange {
       public java.lang.String getPeerId2() {
         java.lang.Object ref = peerId2_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            peerId2_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          peerId2_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2883,10 +2892,10 @@ public final class Exchange {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   }
 
-  public interface ConnectOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.exchange.Connect)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -2901,6 +2910,7 @@ public final class Exchange {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required string peer_id = 2;
     /**
      * <code>required string peer_id = 2;</code>
      */
@@ -2919,9 +2929,8 @@ public final class Exchange {
    * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.Connect}
    */
   public static final class Connect extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.exchange.Connect)
-      ConnectOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectOrBuilder {
     // Use Connect.newBuilder() to construct.
     private Connect(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2968,15 +2977,13 @@ public final class Exchange {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              peerId_ = bs;
+              peerId_ = input.readBytes();
               break;
             }
           }
@@ -3019,6 +3026,7 @@ public final class Exchange {
     }
 
     private int bitField0_;
+    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -3061,6 +3069,7 @@ public final class Exchange {
       }
     }
 
+    // required string peer_id = 2;
     public static final int PEER_ID_FIELD_NUMBER = 2;
     private java.lang.Object peerId_;
     /**
@@ -3110,8 +3119,7 @@ public final class Exchange {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -3233,9 +3241,8 @@ public final class Exchange {
      * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.Connect}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.exchange.Connect)
-        com.letsmidi.monsys.protocol.exchange.Exchange.ConnectOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.exchange.Exchange.ConnectOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.exchange.Exchange.internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor;
@@ -3369,6 +3376,7 @@ public final class Exchange {
       }
       private int bitField0_;
 
+      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -3382,12 +3390,9 @@ public final class Exchange {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3445,6 +3450,7 @@ public final class Exchange {
         return this;
       }
 
+      // required string peer_id = 2;
       private java.lang.Object peerId_ = "";
       /**
        * <code>required string peer_id = 2;</code>
@@ -3458,12 +3464,9 @@ public final class Exchange {
       public java.lang.String getPeerId() {
         java.lang.Object ref = peerId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            peerId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          peerId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3532,10 +3535,10 @@ public final class Exchange {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.exchange.Connect)
   }
 
-  public interface ConnectRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -3549,9 +3552,8 @@ public final class Exchange {
    * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.ConnectRsp}
    */
   public static final class ConnectRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
-      ConnectRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectRspOrBuilder {
     // Use ConnectRsp.newBuilder() to construct.
     private ConnectRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3642,6 +3644,7 @@ public final class Exchange {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -3663,8 +3666,7 @@ public final class Exchange {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -3775,9 +3777,8 @@ public final class Exchange {
      * Protobuf type {@code com.letsmidi.monsys.protocol.exchange.ConnectRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
-        com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.exchange.Exchange.ConnectRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.exchange.Exchange.internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor;
@@ -3894,6 +3895,7 @@ public final class Exchange {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -3937,27 +3939,27 @@ public final class Exchange {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_exchange_Connect_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -3992,47 +3994,47 @@ public final class Exchange {
       "\017\n\013CONNECT_RSP\020\004"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor,
+              new java.lang.String[] { "Version", "Type", "Sequence", "RequestExchange", "RequestExchangeRsp", "Connect", "ConnectRsp", });
+          internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor,
+              new java.lang.String[] { });
+          internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor,
+              new java.lang.String[] { "Code", "Id", "PeerId1", "PeerId2", });
+          internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_com_letsmidi_monsys_protocol_exchange_Connect_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor,
+              new java.lang.String[] { "Id", "PeerId", });
+          internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_exchange_ExchangeMsg_descriptor,
-        new java.lang.String[] { "Version", "Type", "Sequence", "RequestExchange", "RequestExchangeRsp", "Connect", "ConnectRsp", });
-    internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchange_descriptor,
-        new java.lang.String[] { });
-    internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_exchange_RequestExchangeRsp_descriptor,
-        new java.lang.String[] { "Code", "Id", "PeerId1", "PeerId2", });
-    internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_letsmidi_monsys_protocol_exchange_Connect_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_exchange_Connect_descriptor,
-        new java.lang.String[] { "Id", "PeerId", });
-    internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_exchange_ConnectRsp_descriptor,
-        new java.lang.String[] { "Code", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

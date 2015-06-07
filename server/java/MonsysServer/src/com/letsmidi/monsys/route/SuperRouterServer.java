@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.log.Logger;
-import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.session.SessionManager;
 import com.letsmidi.monsys.util.MonsysException;
@@ -34,14 +33,13 @@ import io.netty.util.HashedWheelTimer;
  * SuperRoute is just a Route, do nothing but routing.
  */
 public class SuperRouterServer {
-
-    // private final MyLogger mLogger = new MyLogger(Config.getRouterConfig().getLoggerName());
+    private static final String TAG = "SuperRouterServer";
 
     public SuperRouterServer() {
     }
 
     private void start() {
-        MyLogger.i("starting route & access server...");
+        Logger.i(TAG, "starting route & access server...");
 
         // global timer
         HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);
@@ -89,7 +87,7 @@ public class SuperRouterServer {
                 });
 
         if (!notifyNameServer()) {
-            MyLogger.e("Failed to notify name server, shutting down");
+            Logger.e(TAG, "Failed to notify name server, shutting down");
             route_future.channel().close();
             access_future.channel().close();
         }

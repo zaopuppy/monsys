@@ -10,6 +10,10 @@ public final class Demo1 {
   }
   /**
    * Protobuf enum {@code com.letsmidi.monsys.protocol.demo1.MsgType}
+   *
+   * <pre>
+   * push-client
+   * </pre>
    */
   public enum MsgType
       implements com.google.protobuf.ProtocolMessageEnum {
@@ -108,10 +112,10 @@ public final class Demo1 {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.demo1.MsgType)
   }
 
-  public interface DemoMsgOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.demo1.DemoMsg)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DemoMsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .com.letsmidi.monsys.protocol.demo1.MsgType type1 = 1;
     /**
      * <code>required .com.letsmidi.monsys.protocol.demo1.MsgType type1 = 1;</code>
      */
@@ -121,6 +125,17 @@ public final class Demo1 {
      */
     com.letsmidi.monsys.protocol.demo1.Demo1.MsgType getType1();
 
+    // required int32 seq1 = 2;
+    /**
+     * <code>required int32 seq1 = 2;</code>
+     */
+    boolean hasSeq1();
+    /**
+     * <code>required int32 seq1 = 2;</code>
+     */
+    int getSeq1();
+
+    // optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
      */
@@ -134,6 +149,7 @@ public final class Demo1 {
      */
     com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1OrBuilder getLoginReq1OrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
      */
@@ -147,6 +163,7 @@ public final class Demo1 {
      */
     com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1OrBuilder getLoginRsp1OrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
      */
@@ -160,6 +177,7 @@ public final class Demo1 {
      */
     com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1OrBuilder getMsgReq1OrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
      */
@@ -177,9 +195,8 @@ public final class Demo1 {
    * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.DemoMsg}
    */
   public static final class DemoMsg extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.demo1.DemoMsg)
-      DemoMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DemoMsgOrBuilder {
     // Use DemoMsg.newBuilder() to construct.
     private DemoMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -236,9 +253,14 @@ public final class Demo1 {
               }
               break;
             }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              seq1_ = input.readInt32();
+              break;
+            }
             case 82: {
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
                 subBuilder = loginReq1_.toBuilder();
               }
               loginReq1_ = input.readMessage(com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.PARSER, extensionRegistry);
@@ -246,12 +268,12 @@ public final class Demo1 {
                 subBuilder.mergeFrom(loginReq1_);
                 loginReq1_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000004;
               break;
             }
             case 90: {
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = loginRsp1_.toBuilder();
               }
               loginRsp1_ = input.readMessage(com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.PARSER, extensionRegistry);
@@ -259,12 +281,12 @@ public final class Demo1 {
                 subBuilder.mergeFrom(loginRsp1_);
                 loginRsp1_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               break;
             }
             case 98: {
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 subBuilder = msgReq1_.toBuilder();
               }
               msgReq1_ = input.readMessage(com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.PARSER, extensionRegistry);
@@ -272,12 +294,12 @@ public final class Demo1 {
                 subBuilder.mergeFrom(msgReq1_);
                 msgReq1_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               break;
             }
             case 106: {
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+              if (((bitField0_ & 0x00000020) == 0x00000020)) {
                 subBuilder = msgRsp1_.toBuilder();
               }
               msgRsp1_ = input.readMessage(com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.PARSER, extensionRegistry);
@@ -285,7 +307,7 @@ public final class Demo1 {
                 subBuilder.mergeFrom(msgRsp1_);
                 msgRsp1_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               break;
             }
           }
@@ -328,6 +350,7 @@ public final class Demo1 {
     }
 
     private int bitField0_;
+    // required .com.letsmidi.monsys.protocol.demo1.MsgType type1 = 1;
     public static final int TYPE1_FIELD_NUMBER = 1;
     private com.letsmidi.monsys.protocol.demo1.Demo1.MsgType type1_;
     /**
@@ -343,13 +366,30 @@ public final class Demo1 {
       return type1_;
     }
 
+    // required int32 seq1 = 2;
+    public static final int SEQ1_FIELD_NUMBER = 2;
+    private int seq1_;
+    /**
+     * <code>required int32 seq1 = 2;</code>
+     */
+    public boolean hasSeq1() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 seq1 = 2;</code>
+     */
+    public int getSeq1() {
+      return seq1_;
+    }
+
+    // optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;
     public static final int LOGIN_REQ1_FIELD_NUMBER = 10;
     private com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1 loginReq1_;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
      */
     public boolean hasLoginReq1() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
@@ -364,13 +404,14 @@ public final class Demo1 {
       return loginReq1_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;
     public static final int LOGIN_RSP1_FIELD_NUMBER = 11;
     private com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1 loginRsp1_;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
      */
     public boolean hasLoginRsp1() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
@@ -385,13 +426,14 @@ public final class Demo1 {
       return loginRsp1_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;
     public static final int MSG_REQ1_FIELD_NUMBER = 12;
     private com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1 msgReq1_;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
      */
     public boolean hasMsgReq1() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
@@ -406,13 +448,14 @@ public final class Demo1 {
       return msgReq1_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;
     public static final int MSG_RSP1_FIELD_NUMBER = 13;
     private com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1 msgRsp1_;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
      */
     public boolean hasMsgRsp1() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
@@ -429,6 +472,7 @@ public final class Demo1 {
 
     private void initFields() {
       type1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgType.LOGIN;
+      seq1_ = 0;
       loginReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.getDefaultInstance();
       loginRsp1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.getDefaultInstance();
       msgReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.getDefaultInstance();
@@ -437,10 +481,13 @@ public final class Demo1 {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasType1()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSeq1()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -479,15 +526,18 @@ public final class Demo1 {
         output.writeEnum(1, type1_.getNumber());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeMessage(10, loginReq1_);
+        output.writeInt32(2, seq1_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(11, loginRsp1_);
+        output.writeMessage(10, loginReq1_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeMessage(12, msgReq1_);
+        output.writeMessage(11, loginRsp1_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeMessage(12, msgReq1_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeMessage(13, msgRsp1_);
       }
       getUnknownFields().writeTo(output);
@@ -505,17 +555,21 @@ public final class Demo1 {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, loginReq1_);
+          .computeInt32Size(2, seq1_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, loginRsp1_);
+          .computeMessageSize(10, loginReq1_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, msgReq1_);
+          .computeMessageSize(11, loginRsp1_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(12, msgReq1_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(13, msgRsp1_);
       }
@@ -601,9 +655,8 @@ public final class Demo1 {
      * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.DemoMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.demo1.DemoMsg)
-        com.letsmidi.monsys.protocol.demo1.Demo1.DemoMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.demo1.Demo1.DemoMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.demo1.Demo1.internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor;
@@ -642,30 +695,32 @@ public final class Demo1 {
         super.clear();
         type1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgType.LOGIN;
         bitField0_ = (bitField0_ & ~0x00000001);
+        seq1_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
         if (loginReq1Builder_ == null) {
           loginReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.getDefaultInstance();
         } else {
           loginReq1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (loginRsp1Builder_ == null) {
           loginRsp1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.getDefaultInstance();
         } else {
           loginRsp1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (msgReq1Builder_ == null) {
           msgReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.getDefaultInstance();
         } else {
           msgReq1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         if (msgRsp1Builder_ == null) {
           msgRsp1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.getDefaultInstance();
         } else {
           msgRsp1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -701,29 +756,33 @@ public final class Demo1 {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
+        result.seq1_ = seq1_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
         if (loginReq1Builder_ == null) {
           result.loginReq1_ = loginReq1_;
         } else {
           result.loginReq1_ = loginReq1Builder_.build();
         }
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
         }
         if (loginRsp1Builder_ == null) {
           result.loginRsp1_ = loginRsp1_;
         } else {
           result.loginRsp1_ = loginRsp1Builder_.build();
         }
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
         }
         if (msgReq1Builder_ == null) {
           result.msgReq1_ = msgReq1_;
         } else {
           result.msgReq1_ = msgReq1Builder_.build();
         }
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
         }
         if (msgRsp1Builder_ == null) {
           result.msgRsp1_ = msgRsp1_;
@@ -749,6 +808,9 @@ public final class Demo1 {
         if (other.hasType1()) {
           setType1(other.getType1());
         }
+        if (other.hasSeq1()) {
+          setSeq1(other.getSeq1());
+        }
         if (other.hasLoginReq1()) {
           mergeLoginReq1(other.getLoginReq1());
         }
@@ -767,6 +829,10 @@ public final class Demo1 {
 
       public final boolean isInitialized() {
         if (!hasType1()) {
+          
+          return false;
+        }
+        if (!hasSeq1()) {
           
           return false;
         }
@@ -816,6 +882,7 @@ public final class Demo1 {
       }
       private int bitField0_;
 
+      // required .com.letsmidi.monsys.protocol.demo1.MsgType type1 = 1;
       private com.letsmidi.monsys.protocol.demo1.Demo1.MsgType type1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgType.LOGIN;
       /**
        * <code>required .com.letsmidi.monsys.protocol.demo1.MsgType type1 = 1;</code>
@@ -851,6 +918,40 @@ public final class Demo1 {
         return this;
       }
 
+      // required int32 seq1 = 2;
+      private int seq1_ ;
+      /**
+       * <code>required int32 seq1 = 2;</code>
+       */
+      public boolean hasSeq1() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 seq1 = 2;</code>
+       */
+      public int getSeq1() {
+        return seq1_;
+      }
+      /**
+       * <code>required int32 seq1 = 2;</code>
+       */
+      public Builder setSeq1(int value) {
+        bitField0_ |= 0x00000002;
+        seq1_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 seq1 = 2;</code>
+       */
+      public Builder clearSeq1() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        seq1_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;
       private com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1 loginReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1, com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1OrBuilder> loginReq1Builder_;
@@ -858,7 +959,7 @@ public final class Demo1 {
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
        */
       public boolean hasLoginReq1() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
@@ -883,7 +984,7 @@ public final class Demo1 {
         } else {
           loginReq1Builder_.setMessage(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
@@ -897,7 +998,7 @@ public final class Demo1 {
         } else {
           loginReq1Builder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
@@ -905,7 +1006,7 @@ public final class Demo1 {
        */
       public Builder mergeLoginReq1(com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1 value) {
         if (loginReq1Builder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
               loginReq1_ != com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.getDefaultInstance()) {
             loginReq1_ =
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.newBuilder(loginReq1_).mergeFrom(value).buildPartial();
@@ -916,7 +1017,7 @@ public final class Demo1 {
         } else {
           loginReq1Builder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
@@ -929,14 +1030,14 @@ public final class Demo1 {
         } else {
           loginReq1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginReq1 login_req1 = 10;</code>
        */
       public com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.Builder getLoginReq1Builder() {
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         onChanged();
         return getLoginReq1FieldBuilder().getBuilder();
       }
@@ -959,7 +1060,7 @@ public final class Demo1 {
         if (loginReq1Builder_ == null) {
           loginReq1Builder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1, com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1OrBuilder>(
-                  getLoginReq1(),
+                  loginReq1_,
                   getParentForChildren(),
                   isClean());
           loginReq1_ = null;
@@ -967,6 +1068,7 @@ public final class Demo1 {
         return loginReq1Builder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;
       private com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1 loginRsp1_ = com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1, com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1OrBuilder> loginRsp1Builder_;
@@ -974,7 +1076,7 @@ public final class Demo1 {
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
        */
       public boolean hasLoginRsp1() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
@@ -999,7 +1101,7 @@ public final class Demo1 {
         } else {
           loginRsp1Builder_.setMessage(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1013,7 +1115,7 @@ public final class Demo1 {
         } else {
           loginRsp1Builder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1021,7 +1123,7 @@ public final class Demo1 {
        */
       public Builder mergeLoginRsp1(com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1 value) {
         if (loginRsp1Builder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               loginRsp1_ != com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.getDefaultInstance()) {
             loginRsp1_ =
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.newBuilder(loginRsp1_).mergeFrom(value).buildPartial();
@@ -1032,7 +1134,7 @@ public final class Demo1 {
         } else {
           loginRsp1Builder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
@@ -1045,14 +1147,14 @@ public final class Demo1 {
         } else {
           loginRsp1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.LoginRsp1 login_rsp1 = 11;</code>
        */
       public com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.Builder getLoginRsp1Builder() {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getLoginRsp1FieldBuilder().getBuilder();
       }
@@ -1075,7 +1177,7 @@ public final class Demo1 {
         if (loginRsp1Builder_ == null) {
           loginRsp1Builder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1, com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1OrBuilder>(
-                  getLoginRsp1(),
+                  loginRsp1_,
                   getParentForChildren(),
                   isClean());
           loginRsp1_ = null;
@@ -1083,6 +1185,7 @@ public final class Demo1 {
         return loginRsp1Builder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;
       private com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1 msgReq1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1, com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1OrBuilder> msgReq1Builder_;
@@ -1090,7 +1193,7 @@ public final class Demo1 {
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
        */
       public boolean hasMsgReq1() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
@@ -1115,7 +1218,7 @@ public final class Demo1 {
         } else {
           msgReq1Builder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1129,7 +1232,7 @@ public final class Demo1 {
         } else {
           msgReq1Builder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1137,7 +1240,7 @@ public final class Demo1 {
        */
       public Builder mergeMsgReq1(com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1 value) {
         if (msgReq1Builder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
               msgReq1_ != com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.getDefaultInstance()) {
             msgReq1_ =
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.newBuilder(msgReq1_).mergeFrom(value).buildPartial();
@@ -1148,7 +1251,7 @@ public final class Demo1 {
         } else {
           msgReq1Builder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
@@ -1161,14 +1264,14 @@ public final class Demo1 {
         } else {
           msgReq1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgReq1 msg_req1 = 12;</code>
        */
       public com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.Builder getMsgReq1Builder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
         return getMsgReq1FieldBuilder().getBuilder();
       }
@@ -1191,7 +1294,7 @@ public final class Demo1 {
         if (msgReq1Builder_ == null) {
           msgReq1Builder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1, com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1OrBuilder>(
-                  getMsgReq1(),
+                  msgReq1_,
                   getParentForChildren(),
                   isClean());
           msgReq1_ = null;
@@ -1199,6 +1302,7 @@ public final class Demo1 {
         return msgReq1Builder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;
       private com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1 msgRsp1_ = com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1, com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1OrBuilder> msgRsp1Builder_;
@@ -1206,7 +1310,7 @@ public final class Demo1 {
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
        */
       public boolean hasMsgRsp1() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
@@ -1231,7 +1335,7 @@ public final class Demo1 {
         } else {
           msgRsp1Builder_.setMessage(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1245,7 +1349,7 @@ public final class Demo1 {
         } else {
           msgRsp1Builder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1253,7 +1357,7 @@ public final class Demo1 {
        */
       public Builder mergeMsgRsp1(com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1 value) {
         if (msgRsp1Builder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
               msgRsp1_ != com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.getDefaultInstance()) {
             msgRsp1_ =
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.newBuilder(msgRsp1_).mergeFrom(value).buildPartial();
@@ -1264,7 +1368,7 @@ public final class Demo1 {
         } else {
           msgRsp1Builder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         return this;
       }
       /**
@@ -1277,14 +1381,14 @@ public final class Demo1 {
         } else {
           msgRsp1Builder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       /**
        * <code>optional .com.letsmidi.monsys.protocol.demo1.MsgRsp1 msg_rsp1 = 13;</code>
        */
       public com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.Builder getMsgRsp1Builder() {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         onChanged();
         return getMsgRsp1FieldBuilder().getBuilder();
       }
@@ -1307,7 +1411,7 @@ public final class Demo1 {
         if (msgRsp1Builder_ == null) {
           msgRsp1Builder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1, com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.Builder, com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1OrBuilder>(
-                  getMsgRsp1(),
+                  msgRsp1_,
                   getParentForChildren(),
                   isClean());
           msgRsp1_ = null;
@@ -1326,10 +1430,10 @@ public final class Demo1 {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.demo1.DemoMsg)
   }
 
-  public interface LoginReq1OrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.demo1.LoginReq1)
-      com.google.protobuf.MessageOrBuilder {
+  public interface LoginReq1OrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id1 = 1;
     /**
      * <code>required string id1 = 1;</code>
      */
@@ -1348,9 +1452,8 @@ public final class Demo1 {
    * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.LoginReq1}
    */
   public static final class LoginReq1 extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.demo1.LoginReq1)
-      LoginReq1OrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements LoginReq1OrBuilder {
     // Use LoginReq1.newBuilder() to construct.
     private LoginReq1(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1397,9 +1500,8 @@ public final class Demo1 {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id1_ = bs;
+              id1_ = input.readBytes();
               break;
             }
           }
@@ -1442,6 +1544,7 @@ public final class Demo1 {
     }
 
     private int bitField0_;
+    // required string id1 = 1;
     public static final int ID1_FIELD_NUMBER = 1;
     private java.lang.Object id1_;
     /**
@@ -1490,8 +1593,7 @@ public final class Demo1 {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId1()) {
         memoizedIsInitialized = 0;
@@ -1602,9 +1704,8 @@ public final class Demo1 {
      * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.LoginReq1}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.demo1.LoginReq1)
-        com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1OrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.demo1.Demo1.LoginReq1OrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.demo1.Demo1.internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor;
@@ -1723,6 +1824,7 @@ public final class Demo1 {
       }
       private int bitField0_;
 
+      // required string id1 = 1;
       private java.lang.Object id1_ = "";
       /**
        * <code>required string id1 = 1;</code>
@@ -1736,12 +1838,9 @@ public final class Demo1 {
       public java.lang.String getId1() {
         java.lang.Object ref = id1_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id1_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id1_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1810,10 +1909,10 @@ public final class Demo1 {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.demo1.LoginReq1)
   }
 
-  public interface LoginRsp1OrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.demo1.LoginRsp1)
-      com.google.protobuf.MessageOrBuilder {
+  public interface LoginRsp1OrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code1 = 1;
     /**
      * <code>required int32 code1 = 1;</code>
      */
@@ -1827,9 +1926,8 @@ public final class Demo1 {
    * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.LoginRsp1}
    */
   public static final class LoginRsp1 extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.demo1.LoginRsp1)
-      LoginRsp1OrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements LoginRsp1OrBuilder {
     // Use LoginRsp1.newBuilder() to construct.
     private LoginRsp1(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1920,6 +2018,7 @@ public final class Demo1 {
     }
 
     private int bitField0_;
+    // required int32 code1 = 1;
     public static final int CODE1_FIELD_NUMBER = 1;
     private int code1_;
     /**
@@ -1941,8 +2040,7 @@ public final class Demo1 {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode1()) {
         memoizedIsInitialized = 0;
@@ -2053,9 +2151,8 @@ public final class Demo1 {
      * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.LoginRsp1}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.demo1.LoginRsp1)
-        com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1OrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.demo1.Demo1.LoginRsp1OrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.demo1.Demo1.internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor;
@@ -2172,6 +2269,7 @@ public final class Demo1 {
       }
       private int bitField0_;
 
+      // required int32 code1 = 1;
       private int code1_ ;
       /**
        * <code>required int32 code1 = 1;</code>
@@ -2215,10 +2313,10 @@ public final class Demo1 {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.demo1.LoginRsp1)
   }
 
-  public interface MsgReq1OrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.demo1.MsgReq1)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MsgReq1OrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string msg1 = 1;
     /**
      * <code>required string msg1 = 1;</code>
      */
@@ -2232,28 +2330,13 @@ public final class Demo1 {
      */
     com.google.protobuf.ByteString
         getMsg1Bytes();
-
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    boolean hasPeerId1();
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    java.lang.String getPeerId1();
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getPeerId1Bytes();
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.MsgReq1}
    */
   public static final class MsgReq1 extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.demo1.MsgReq1)
-      MsgReq1OrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MsgReq1OrBuilder {
     // Use MsgReq1.newBuilder() to construct.
     private MsgReq1(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2300,15 +2383,8 @@ public final class Demo1 {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              msg1_ = bs;
-              break;
-            }
-            case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              peerId1_ = bs;
+              msg1_ = input.readBytes();
               break;
             }
           }
@@ -2351,6 +2427,7 @@ public final class Demo1 {
     }
 
     private int bitField0_;
+    // required string msg1 = 1;
     public static final int MSG1_FIELD_NUMBER = 1;
     private java.lang.Object msg1_;
     /**
@@ -2393,63 +2470,15 @@ public final class Demo1 {
       }
     }
 
-    public static final int PEERID1_FIELD_NUMBER = 2;
-    private java.lang.Object peerId1_;
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    public boolean hasPeerId1() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    public java.lang.String getPeerId1() {
-      java.lang.Object ref = peerId1_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          peerId1_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string peerId1 = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getPeerId1Bytes() {
-      java.lang.Object ref = peerId1_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        peerId1_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private void initFields() {
       msg1_ = "";
-      peerId1_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasMsg1()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasPeerId1()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -2463,9 +2492,6 @@ public final class Demo1 {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getMsg1Bytes());
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getPeerId1Bytes());
-      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2478,10 +2504,6 @@ public final class Demo1 {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getMsg1Bytes());
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getPeerId1Bytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2565,9 +2587,8 @@ public final class Demo1 {
      * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.MsgReq1}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.demo1.MsgReq1)
-        com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1OrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.demo1.Demo1.MsgReq1OrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.demo1.Demo1.internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor;
@@ -2602,8 +2623,6 @@ public final class Demo1 {
         super.clear();
         msg1_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        peerId1_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -2636,10 +2655,6 @@ public final class Demo1 {
           to_bitField0_ |= 0x00000001;
         }
         result.msg1_ = msg1_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.peerId1_ = peerId1_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2661,21 +2676,12 @@ public final class Demo1 {
           msg1_ = other.msg1_;
           onChanged();
         }
-        if (other.hasPeerId1()) {
-          bitField0_ |= 0x00000002;
-          peerId1_ = other.peerId1_;
-          onChanged();
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasMsg1()) {
-          
-          return false;
-        }
-        if (!hasPeerId1()) {
           
           return false;
         }
@@ -2701,6 +2707,7 @@ public final class Demo1 {
       }
       private int bitField0_;
 
+      // required string msg1 = 1;
       private java.lang.Object msg1_ = "";
       /**
        * <code>required string msg1 = 1;</code>
@@ -2714,12 +2721,9 @@ public final class Demo1 {
       public java.lang.String getMsg1() {
         java.lang.Object ref = msg1_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            msg1_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          msg1_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2777,82 +2781,6 @@ public final class Demo1 {
         return this;
       }
 
-      private java.lang.Object peerId1_ = "";
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public boolean hasPeerId1() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public java.lang.String getPeerId1() {
-        java.lang.Object ref = peerId1_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            peerId1_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getPeerId1Bytes() {
-        java.lang.Object ref = peerId1_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          peerId1_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public Builder setPeerId1(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        peerId1_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public Builder clearPeerId1() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        peerId1_ = getDefaultInstance().getPeerId1();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string peerId1 = 2;</code>
-       */
-      public Builder setPeerId1Bytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        peerId1_ = value;
-        onChanged();
-        return this;
-      }
-
       // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.demo1.MsgReq1)
     }
 
@@ -2864,31 +2792,25 @@ public final class Demo1 {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.demo1.MsgReq1)
   }
 
-  public interface MsgRsp1OrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.demo1.MsgRsp1)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MsgRsp1OrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code1 = 1;
     /**
-     * <code>required string msg1 = 1;</code>
+     * <code>required int32 code1 = 1;</code>
      */
-    boolean hasMsg1();
+    boolean hasCode1();
     /**
-     * <code>required string msg1 = 1;</code>
+     * <code>required int32 code1 = 1;</code>
      */
-    java.lang.String getMsg1();
-    /**
-     * <code>required string msg1 = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getMsg1Bytes();
+    int getCode1();
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.MsgRsp1}
    */
   public static final class MsgRsp1 extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.demo1.MsgRsp1)
-      MsgRsp1OrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MsgRsp1OrBuilder {
     // Use MsgRsp1.newBuilder() to construct.
     private MsgRsp1(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2934,10 +2856,9 @@ public final class Demo1 {
               }
               break;
             }
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 8: {
               bitField0_ |= 0x00000001;
-              msg1_ = bs;
+              code1_ = input.readInt32();
               break;
             }
           }
@@ -2980,58 +2901,31 @@ public final class Demo1 {
     }
 
     private int bitField0_;
-    public static final int MSG1_FIELD_NUMBER = 1;
-    private java.lang.Object msg1_;
+    // required int32 code1 = 1;
+    public static final int CODE1_FIELD_NUMBER = 1;
+    private int code1_;
     /**
-     * <code>required string msg1 = 1;</code>
+     * <code>required int32 code1 = 1;</code>
      */
-    public boolean hasMsg1() {
+    public boolean hasCode1() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string msg1 = 1;</code>
+     * <code>required int32 code1 = 1;</code>
      */
-    public java.lang.String getMsg1() {
-      java.lang.Object ref = msg1_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          msg1_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string msg1 = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMsg1Bytes() {
-      java.lang.Object ref = msg1_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        msg1_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public int getCode1() {
+      return code1_;
     }
 
     private void initFields() {
-      msg1_ = "";
+      code1_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
-      if (!hasMsg1()) {
+      if (!hasCode1()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3043,7 +2937,7 @@ public final class Demo1 {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getMsg1Bytes());
+        output.writeInt32(1, code1_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -3056,7 +2950,7 @@ public final class Demo1 {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getMsg1Bytes());
+          .computeInt32Size(1, code1_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3140,9 +3034,8 @@ public final class Demo1 {
      * Protobuf type {@code com.letsmidi.monsys.protocol.demo1.MsgRsp1}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.demo1.MsgRsp1)
-        com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1OrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1OrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.demo1.Demo1.internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor;
@@ -3175,7 +3068,7 @@ public final class Demo1 {
 
       public Builder clear() {
         super.clear();
-        msg1_ = "";
+        code1_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
@@ -3208,7 +3101,7 @@ public final class Demo1 {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.msg1_ = msg1_;
+        result.code1_ = code1_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3225,17 +3118,15 @@ public final class Demo1 {
 
       public Builder mergeFrom(com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1 other) {
         if (other == com.letsmidi.monsys.protocol.demo1.Demo1.MsgRsp1.getDefaultInstance()) return this;
-        if (other.hasMsg1()) {
-          bitField0_ |= 0x00000001;
-          msg1_ = other.msg1_;
-          onChanged();
+        if (other.hasCode1()) {
+          setCode1(other.getCode1());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!hasMsg1()) {
+        if (!hasCode1()) {
           
           return false;
         }
@@ -3261,78 +3152,35 @@ public final class Demo1 {
       }
       private int bitField0_;
 
-      private java.lang.Object msg1_ = "";
+      // required int32 code1 = 1;
+      private int code1_ ;
       /**
-       * <code>required string msg1 = 1;</code>
+       * <code>required int32 code1 = 1;</code>
        */
-      public boolean hasMsg1() {
+      public boolean hasCode1() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string msg1 = 1;</code>
+       * <code>required int32 code1 = 1;</code>
        */
-      public java.lang.String getMsg1() {
-        java.lang.Object ref = msg1_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            msg1_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public int getCode1() {
+        return code1_;
       }
       /**
-       * <code>required string msg1 = 1;</code>
+       * <code>required int32 code1 = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getMsg1Bytes() {
-        java.lang.Object ref = msg1_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          msg1_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string msg1 = 1;</code>
-       */
-      public Builder setMsg1(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        msg1_ = value;
+      public Builder setCode1(int value) {
+        bitField0_ |= 0x00000001;
+        code1_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string msg1 = 1;</code>
+       * <code>required int32 code1 = 1;</code>
        */
-      public Builder clearMsg1() {
+      public Builder clearCode1() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        msg1_ = getDefaultInstance().getMsg1();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string msg1 = 1;</code>
-       */
-      public Builder setMsg1Bytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        msg1_ = value;
+        code1_ = 0;
         onChanged();
         return this;
       }
@@ -3348,27 +3196,27 @@ public final class Demo1 {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.demo1.MsgRsp1)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -3383,63 +3231,62 @@ public final class Demo1 {
   static {
     java.lang.String[] descriptorData = {
       "\n\013demo1.proto\022\"com.letsmidi.monsys.proto" +
-      "col.demo1\"\311\002\n\007DemoMsg\022:\n\005type1\030\001 \002(\0162+.c" +
+      "col.demo1\"\327\002\n\007DemoMsg\022:\n\005type1\030\001 \002(\0162+.c" +
       "om.letsmidi.monsys.protocol.demo1.MsgTyp" +
-      "e\022A\n\nlogin_req1\030\n \001(\0132-.com.letsmidi.mon" +
-      "sys.protocol.demo1.LoginReq1\022A\n\nlogin_rs" +
-      "p1\030\013 \001(\0132-.com.letsmidi.monsys.protocol." +
-      "demo1.LoginRsp1\022=\n\010msg_req1\030\014 \001(\0132+.com." +
-      "letsmidi.monsys.protocol.demo1.MsgReq1\022=" +
-      "\n\010msg_rsp1\030\r \001(\0132+.com.letsmidi.monsys.p" +
-      "rotocol.demo1.MsgRsp1\"\030\n\tLoginReq1\022\013\n\003id",
-      "1\030\001 \002(\t\"\032\n\tLoginRsp1\022\r\n\005code1\030\001 \002(\005\"(\n\007M" +
-      "sgReq1\022\014\n\004msg1\030\001 \002(\t\022\017\n\007peerId1\030\002 \002(\t\"\027\n" +
-      "\007MsgRsp1\022\014\n\004msg1\030\001 \002(\t*9\n\007MsgType\022\t\n\005LOG" +
-      "IN\020\001\022\r\n\tLOGIN_RSP\020\002\022\007\n\003MSG\020\003\022\013\n\007MSG_RSP\020" +
-      "\004"
+      "e\022\014\n\004seq1\030\002 \002(\005\022A\n\nlogin_req1\030\n \001(\0132-.co" +
+      "m.letsmidi.monsys.protocol.demo1.LoginRe" +
+      "q1\022A\n\nlogin_rsp1\030\013 \001(\0132-.com.letsmidi.mo" +
+      "nsys.protocol.demo1.LoginRsp1\022=\n\010msg_req" +
+      "1\030\014 \001(\0132+.com.letsmidi.monsys.protocol.d" +
+      "emo1.MsgReq1\022=\n\010msg_rsp1\030\r \001(\0132+.com.let" +
+      "smidi.monsys.protocol.demo1.MsgRsp1\"\030\n\tL",
+      "oginReq1\022\013\n\003id1\030\001 \002(\t\"\032\n\tLoginRsp1\022\r\n\005co" +
+      "de1\030\001 \002(\005\"\027\n\007MsgReq1\022\014\n\004msg1\030\001 \002(\t\"\030\n\007Ms" +
+      "gRsp1\022\r\n\005code1\030\001 \002(\005*9\n\007MsgType\022\t\n\005LOGIN" +
+      "\020\001\022\r\n\tLOGIN_RSP\020\002\022\007\n\003MSG\020\003\022\013\n\007MSG_RSP\020\004"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor,
+              new java.lang.String[] { "Type1", "Seq1", "LoginReq1", "LoginRsp1", "MsgReq1", "MsgRsp1", });
+          internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor,
+              new java.lang.String[] { "Id1", });
+          internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor,
+              new java.lang.String[] { "Code1", });
+          internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor,
+              new java.lang.String[] { "Msg1", });
+          internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor,
+              new java.lang.String[] { "Code1", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_demo1_DemoMsg_descriptor,
-        new java.lang.String[] { "Type1", "LoginReq1", "LoginRsp1", "MsgReq1", "MsgRsp1", });
-    internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_demo1_LoginReq1_descriptor,
-        new java.lang.String[] { "Id1", });
-    internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_demo1_LoginRsp1_descriptor,
-        new java.lang.String[] { "Code1", });
-    internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_demo1_MsgReq1_descriptor,
-        new java.lang.String[] { "Msg1", "PeerId1", });
-    internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_demo1_MsgRsp1_descriptor,
-        new java.lang.String[] { "Msg1", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

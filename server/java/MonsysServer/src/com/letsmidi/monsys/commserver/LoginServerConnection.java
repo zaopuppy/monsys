@@ -55,7 +55,7 @@ public class LoginServerConnection extends BaseClientConnection {
     }
 
     @Override
-    protected RouteItem findRoute(Object msg) {
+    protected RouteItem removeRoute(Object msg) {
         return null;
     }
 }

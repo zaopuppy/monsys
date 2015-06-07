@@ -225,10 +225,10 @@ public final class Center {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.center.MsgType)
   }
 
-  public interface IdValuePairOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.IdValuePair)
-      com.google.protobuf.MessageOrBuilder {
+  public interface IdValuePairOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 id = 1;
     /**
      * <code>required int32 id = 1;</code>
      */
@@ -238,6 +238,7 @@ public final class Center {
      */
     int getId();
 
+    // required int32 value = 2;
     /**
      * <code>required int32 value = 2;</code>
      */
@@ -251,9 +252,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.IdValuePair}
    */
   public static final class IdValuePair extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.IdValuePair)
-      IdValuePairOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements IdValuePairOrBuilder {
     // Use IdValuePair.newBuilder() to construct.
     private IdValuePair(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -349,6 +349,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
@@ -364,6 +365,7 @@ public final class Center {
       return id_;
     }
 
+    // required int32 value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private int value_;
     /**
@@ -386,8 +388,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -509,9 +510,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.IdValuePair}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.IdValuePair)
-        com.letsmidi.monsys.protocol.center.Center.IdValuePairOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.IdValuePairOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor;
@@ -641,6 +641,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 id = 1;
       private int id_ ;
       /**
        * <code>required int32 id = 1;</code>
@@ -673,6 +674,7 @@ public final class Center {
         return this;
       }
 
+      // required int32 value = 2;
       private int value_ ;
       /**
        * <code>required int32 value = 2;</code>
@@ -716,10 +718,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.IdValuePair)
   }
 
-  public interface FGatewayInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.FGatewayInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FGatewayInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -734,6 +736,7 @@ public final class Center {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required string name = 2;
     /**
      * <code>required string name = 2;</code>
      */
@@ -748,6 +751,7 @@ public final class Center {
     com.google.protobuf.ByteString
         getNameBytes();
 
+    // required string desc = 3;
     /**
      * <code>required string desc = 3;</code>
      */
@@ -766,9 +770,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.FGatewayInfo}
    */
   public static final class FGatewayInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.FGatewayInfo)
-      FGatewayInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements FGatewayInfoOrBuilder {
     // Use FGatewayInfo.newBuilder() to construct.
     private FGatewayInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -815,21 +818,18 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              desc_ = bs;
+              desc_ = input.readBytes();
               break;
             }
           }
@@ -872,6 +872,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -914,6 +915,7 @@ public final class Center {
       }
     }
 
+    // required string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
     private java.lang.Object name_;
     /**
@@ -956,6 +958,7 @@ public final class Center {
       }
     }
 
+    // required string desc = 3;
     public static final int DESC_FIELD_NUMBER = 3;
     private java.lang.Object desc_;
     /**
@@ -1006,8 +1009,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -1140,9 +1142,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.FGatewayInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.FGatewayInfo)
-        com.letsmidi.monsys.protocol.center.Center.FGatewayInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.FGatewayInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor;
@@ -1291,6 +1292,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -1304,12 +1306,9 @@ public final class Center {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1367,6 +1366,7 @@ public final class Center {
         return this;
       }
 
+      // required string name = 2;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 2;</code>
@@ -1380,12 +1380,9 @@ public final class Center {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1443,6 +1440,7 @@ public final class Center {
         return this;
       }
 
+      // required string desc = 3;
       private java.lang.Object desc_ = "";
       /**
        * <code>required string desc = 3;</code>
@@ -1456,12 +1454,9 @@ public final class Center {
       public java.lang.String getDesc() {
         java.lang.Object ref = desc_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            desc_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          desc_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1530,10 +1525,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.FGatewayInfo)
   }
 
-  public interface DeviceInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.DeviceInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DeviceInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -1543,6 +1538,7 @@ public final class Center {
      */
     int getAddr();
 
+    // required int32 type = 2;
     /**
      * <code>required int32 type = 2;</code>
      */
@@ -1552,6 +1548,7 @@ public final class Center {
      */
     int getType();
 
+    // required string name = 3;
     /**
      * <code>required string name = 3;</code>
      */
@@ -1570,9 +1567,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.DeviceInfo}
    */
   public static final class DeviceInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.DeviceInfo)
-      DeviceInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DeviceInfoOrBuilder {
     // Use DeviceInfo.newBuilder() to construct.
     private DeviceInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1629,9 +1625,8 @@ public final class Center {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
           }
@@ -1674,6 +1669,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -1689,6 +1685,7 @@ public final class Center {
       return addr_;
     }
 
+    // required int32 type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private int type_;
     /**
@@ -1704,6 +1701,7 @@ public final class Center {
       return type_;
     }
 
+    // required string name = 3;
     public static final int NAME_FIELD_NUMBER = 3;
     private java.lang.Object name_;
     /**
@@ -1754,8 +1752,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -1888,9 +1885,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.DeviceInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.DeviceInfo)
-        com.letsmidi.monsys.protocol.center.Center.DeviceInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.DeviceInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor;
@@ -2035,6 +2031,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -2067,6 +2064,7 @@ public final class Center {
         return this;
       }
 
+      // required int32 type = 2;
       private int type_ ;
       /**
        * <code>required int32 type = 2;</code>
@@ -2099,6 +2097,7 @@ public final class Center {
         return this;
       }
 
+      // required string name = 3;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 3;</code>
@@ -2112,12 +2111,9 @@ public final class Center {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2186,10 +2182,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.DeviceInfo)
   }
 
-  public interface CenterMsgOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.CenterMsg)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CenterMsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 version = 1;
     /**
      * <code>required int32 version = 1;</code>
      */
@@ -2199,6 +2195,7 @@ public final class Center {
      */
     int getVersion();
 
+    // required .com.letsmidi.monsys.protocol.center.MsgType type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.center.MsgType type = 2;</code>
      */
@@ -2208,6 +2205,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.MsgType getType();
 
+    // required int32 sequence = 3;
     /**
      * <code>required int32 sequence = 3;</code>
      */
@@ -2217,6 +2215,7 @@ public final class Center {
      */
     int getSequence();
 
+    // optional .com.letsmidi.monsys.protocol.center.Login login = 10;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.Login login = 10;</code>
      */
@@ -2230,6 +2229,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.LoginOrBuilder getLoginOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.LoginRsp login_rsp = 11;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.LoginRsp login_rsp = 11;</code>
      */
@@ -2243,6 +2243,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.LoginRspOrBuilder getLoginRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.Bind bind = 12;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.Bind bind = 12;</code>
      */
@@ -2256,6 +2257,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.BindOrBuilder getBindOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.BindRsp bind_rsp = 13;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.BindRsp bind_rsp = 13;</code>
      */
@@ -2269,6 +2271,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.BindRspOrBuilder getBindRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.Connect connect = 14;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.Connect connect = 14;</code>
      */
@@ -2282,6 +2285,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.ConnectOrBuilder getConnectOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.ConnectRsp connect_rsp = 15;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.ConnectRsp connect_rsp = 15;</code>
      */
@@ -2295,6 +2299,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.ConnectRspOrBuilder getConnectRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetFgwList get_fgw_list = 16;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetFgwList get_fgw_list = 16;</code>
      */
@@ -2308,6 +2313,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetFgwListOrBuilder getGetFgwListOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetFgwListRsp get_fgw_list_rsp = 17;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetFgwListRsp get_fgw_list_rsp = 17;</code>
      */
@@ -2321,6 +2327,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetFgwListRspOrBuilder getGetFgwListRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevList get_dev_list = 18;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetDevList get_dev_list = 18;</code>
      */
@@ -2334,6 +2341,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetDevListOrBuilder getGetDevListOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevListRsp get_dev_list_rsp = 19;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetDevListRsp get_dev_list_rsp = 19;</code>
      */
@@ -2347,6 +2355,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetDevListRspOrBuilder getGetDevListRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevInfo get_dev_info = 20;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetDevInfo get_dev_info = 20;</code>
      */
@@ -2360,6 +2369,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetDevInfoOrBuilder getGetDevInfoOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevInfoRsp get_dev_info_rsp = 21;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.GetDevInfoRsp get_dev_info_rsp = 21;</code>
      */
@@ -2373,6 +2383,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.GetDevInfoRspOrBuilder getGetDevInfoRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.SetDevInfo set_dev_info = 22;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.SetDevInfo set_dev_info = 22;</code>
      */
@@ -2386,6 +2397,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.SetDevInfoOrBuilder getSetDevInfoOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.SetDevInfoRsp set_dev_info_rsp = 23;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.SetDevInfoRsp set_dev_info_rsp = 23;</code>
      */
@@ -2399,6 +2411,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.SetDevInfoRspOrBuilder getSetDevInfoRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.ClientLogin client_login = 24;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.ClientLogin client_login = 24;</code>
      */
@@ -2412,6 +2425,7 @@ public final class Center {
      */
     com.letsmidi.monsys.protocol.center.Center.ClientLoginOrBuilder getClientLoginOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.center.ClientLoginRsp client_login_rsp = 25;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.center.ClientLoginRsp client_login_rsp = 25;</code>
      */
@@ -2429,9 +2443,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.CenterMsg}
    */
   public static final class CenterMsg extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.CenterMsg)
-      CenterMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements CenterMsgOrBuilder {
     // Use CenterMsg.newBuilder() to construct.
     private CenterMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2746,6 +2759,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -2761,6 +2775,7 @@ public final class Center {
       return version_;
     }
 
+    // required .com.letsmidi.monsys.protocol.center.MsgType type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.center.Center.MsgType type_;
     /**
@@ -2776,6 +2791,7 @@ public final class Center {
       return type_;
     }
 
+    // required int32 sequence = 3;
     public static final int SEQUENCE_FIELD_NUMBER = 3;
     private int sequence_;
     /**
@@ -2791,6 +2807,7 @@ public final class Center {
       return sequence_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.Login login = 10;
     public static final int LOGIN_FIELD_NUMBER = 10;
     private com.letsmidi.monsys.protocol.center.Center.Login login_;
     /**
@@ -2812,6 +2829,7 @@ public final class Center {
       return login_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.LoginRsp login_rsp = 11;
     public static final int LOGIN_RSP_FIELD_NUMBER = 11;
     private com.letsmidi.monsys.protocol.center.Center.LoginRsp loginRsp_;
     /**
@@ -2833,6 +2851,7 @@ public final class Center {
       return loginRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.Bind bind = 12;
     public static final int BIND_FIELD_NUMBER = 12;
     private com.letsmidi.monsys.protocol.center.Center.Bind bind_;
     /**
@@ -2854,6 +2873,7 @@ public final class Center {
       return bind_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.BindRsp bind_rsp = 13;
     public static final int BIND_RSP_FIELD_NUMBER = 13;
     private com.letsmidi.monsys.protocol.center.Center.BindRsp bindRsp_;
     /**
@@ -2875,6 +2895,7 @@ public final class Center {
       return bindRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.Connect connect = 14;
     public static final int CONNECT_FIELD_NUMBER = 14;
     private com.letsmidi.monsys.protocol.center.Center.Connect connect_;
     /**
@@ -2896,6 +2917,7 @@ public final class Center {
       return connect_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.ConnectRsp connect_rsp = 15;
     public static final int CONNECT_RSP_FIELD_NUMBER = 15;
     private com.letsmidi.monsys.protocol.center.Center.ConnectRsp connectRsp_;
     /**
@@ -2917,6 +2939,7 @@ public final class Center {
       return connectRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetFgwList get_fgw_list = 16;
     public static final int GET_FGW_LIST_FIELD_NUMBER = 16;
     private com.letsmidi.monsys.protocol.center.Center.GetFgwList getFgwList_;
     /**
@@ -2938,6 +2961,7 @@ public final class Center {
       return getFgwList_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetFgwListRsp get_fgw_list_rsp = 17;
     public static final int GET_FGW_LIST_RSP_FIELD_NUMBER = 17;
     private com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp getFgwListRsp_;
     /**
@@ -2959,6 +2983,7 @@ public final class Center {
       return getFgwListRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevList get_dev_list = 18;
     public static final int GET_DEV_LIST_FIELD_NUMBER = 18;
     private com.letsmidi.monsys.protocol.center.Center.GetDevList getDevList_;
     /**
@@ -2980,6 +3005,7 @@ public final class Center {
       return getDevList_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevListRsp get_dev_list_rsp = 19;
     public static final int GET_DEV_LIST_RSP_FIELD_NUMBER = 19;
     private com.letsmidi.monsys.protocol.center.Center.GetDevListRsp getDevListRsp_;
     /**
@@ -3001,6 +3027,7 @@ public final class Center {
       return getDevListRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevInfo get_dev_info = 20;
     public static final int GET_DEV_INFO_FIELD_NUMBER = 20;
     private com.letsmidi.monsys.protocol.center.Center.GetDevInfo getDevInfo_;
     /**
@@ -3022,6 +3049,7 @@ public final class Center {
       return getDevInfo_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.GetDevInfoRsp get_dev_info_rsp = 21;
     public static final int GET_DEV_INFO_RSP_FIELD_NUMBER = 21;
     private com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp getDevInfoRsp_;
     /**
@@ -3043,6 +3071,7 @@ public final class Center {
       return getDevInfoRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.SetDevInfo set_dev_info = 22;
     public static final int SET_DEV_INFO_FIELD_NUMBER = 22;
     private com.letsmidi.monsys.protocol.center.Center.SetDevInfo setDevInfo_;
     /**
@@ -3064,6 +3093,7 @@ public final class Center {
       return setDevInfo_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.SetDevInfoRsp set_dev_info_rsp = 23;
     public static final int SET_DEV_INFO_RSP_FIELD_NUMBER = 23;
     private com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp setDevInfoRsp_;
     /**
@@ -3085,6 +3115,7 @@ public final class Center {
       return setDevInfoRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.ClientLogin client_login = 24;
     public static final int CLIENT_LOGIN_FIELD_NUMBER = 24;
     private com.letsmidi.monsys.protocol.center.Center.ClientLogin clientLogin_;
     /**
@@ -3106,6 +3137,7 @@ public final class Center {
       return clientLogin_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.center.ClientLoginRsp client_login_rsp = 25;
     public static final int CLIENT_LOGIN_RSP_FIELD_NUMBER = 25;
     private com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp clientLoginRsp_;
     /**
@@ -3151,8 +3183,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -3487,9 +3518,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.CenterMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.CenterMsg)
-        com.letsmidi.monsys.protocol.center.Center.CenterMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.CenterMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor;
@@ -4010,6 +4040,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 version = 1;
       private int version_ ;
       /**
        * <code>required int32 version = 1;</code>
@@ -4042,6 +4073,7 @@ public final class Center {
         return this;
       }
 
+      // required .com.letsmidi.monsys.protocol.center.MsgType type = 2;
       private com.letsmidi.monsys.protocol.center.Center.MsgType type_ = com.letsmidi.monsys.protocol.center.Center.MsgType.LOGIN;
       /**
        * <code>required .com.letsmidi.monsys.protocol.center.MsgType type = 2;</code>
@@ -4077,6 +4109,7 @@ public final class Center {
         return this;
       }
 
+      // required int32 sequence = 3;
       private int sequence_ ;
       /**
        * <code>required int32 sequence = 3;</code>
@@ -4109,6 +4142,7 @@ public final class Center {
         return this;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.Login login = 10;
       private com.letsmidi.monsys.protocol.center.Center.Login login_ = com.letsmidi.monsys.protocol.center.Center.Login.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.Login, com.letsmidi.monsys.protocol.center.Center.Login.Builder, com.letsmidi.monsys.protocol.center.Center.LoginOrBuilder> loginBuilder_;
@@ -4217,7 +4251,7 @@ public final class Center {
         if (loginBuilder_ == null) {
           loginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.Login, com.letsmidi.monsys.protocol.center.Center.Login.Builder, com.letsmidi.monsys.protocol.center.Center.LoginOrBuilder>(
-                  getLogin(),
+                  login_,
                   getParentForChildren(),
                   isClean());
           login_ = null;
@@ -4225,6 +4259,7 @@ public final class Center {
         return loginBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.LoginRsp login_rsp = 11;
       private com.letsmidi.monsys.protocol.center.Center.LoginRsp loginRsp_ = com.letsmidi.monsys.protocol.center.Center.LoginRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.LoginRsp, com.letsmidi.monsys.protocol.center.Center.LoginRsp.Builder, com.letsmidi.monsys.protocol.center.Center.LoginRspOrBuilder> loginRspBuilder_;
@@ -4333,7 +4368,7 @@ public final class Center {
         if (loginRspBuilder_ == null) {
           loginRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.LoginRsp, com.letsmidi.monsys.protocol.center.Center.LoginRsp.Builder, com.letsmidi.monsys.protocol.center.Center.LoginRspOrBuilder>(
-                  getLoginRsp(),
+                  loginRsp_,
                   getParentForChildren(),
                   isClean());
           loginRsp_ = null;
@@ -4341,6 +4376,7 @@ public final class Center {
         return loginRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.Bind bind = 12;
       private com.letsmidi.monsys.protocol.center.Center.Bind bind_ = com.letsmidi.monsys.protocol.center.Center.Bind.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.Bind, com.letsmidi.monsys.protocol.center.Center.Bind.Builder, com.letsmidi.monsys.protocol.center.Center.BindOrBuilder> bindBuilder_;
@@ -4449,7 +4485,7 @@ public final class Center {
         if (bindBuilder_ == null) {
           bindBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.Bind, com.letsmidi.monsys.protocol.center.Center.Bind.Builder, com.letsmidi.monsys.protocol.center.Center.BindOrBuilder>(
-                  getBind(),
+                  bind_,
                   getParentForChildren(),
                   isClean());
           bind_ = null;
@@ -4457,6 +4493,7 @@ public final class Center {
         return bindBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.BindRsp bind_rsp = 13;
       private com.letsmidi.monsys.protocol.center.Center.BindRsp bindRsp_ = com.letsmidi.monsys.protocol.center.Center.BindRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.BindRsp, com.letsmidi.monsys.protocol.center.Center.BindRsp.Builder, com.letsmidi.monsys.protocol.center.Center.BindRspOrBuilder> bindRspBuilder_;
@@ -4565,7 +4602,7 @@ public final class Center {
         if (bindRspBuilder_ == null) {
           bindRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.BindRsp, com.letsmidi.monsys.protocol.center.Center.BindRsp.Builder, com.letsmidi.monsys.protocol.center.Center.BindRspOrBuilder>(
-                  getBindRsp(),
+                  bindRsp_,
                   getParentForChildren(),
                   isClean());
           bindRsp_ = null;
@@ -4573,6 +4610,7 @@ public final class Center {
         return bindRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.Connect connect = 14;
       private com.letsmidi.monsys.protocol.center.Center.Connect connect_ = com.letsmidi.monsys.protocol.center.Center.Connect.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.Connect, com.letsmidi.monsys.protocol.center.Center.Connect.Builder, com.letsmidi.monsys.protocol.center.Center.ConnectOrBuilder> connectBuilder_;
@@ -4681,7 +4719,7 @@ public final class Center {
         if (connectBuilder_ == null) {
           connectBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.Connect, com.letsmidi.monsys.protocol.center.Center.Connect.Builder, com.letsmidi.monsys.protocol.center.Center.ConnectOrBuilder>(
-                  getConnect(),
+                  connect_,
                   getParentForChildren(),
                   isClean());
           connect_ = null;
@@ -4689,6 +4727,7 @@ public final class Center {
         return connectBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.ConnectRsp connect_rsp = 15;
       private com.letsmidi.monsys.protocol.center.Center.ConnectRsp connectRsp_ = com.letsmidi.monsys.protocol.center.Center.ConnectRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.ConnectRsp, com.letsmidi.monsys.protocol.center.Center.ConnectRsp.Builder, com.letsmidi.monsys.protocol.center.Center.ConnectRspOrBuilder> connectRspBuilder_;
@@ -4797,7 +4836,7 @@ public final class Center {
         if (connectRspBuilder_ == null) {
           connectRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.ConnectRsp, com.letsmidi.monsys.protocol.center.Center.ConnectRsp.Builder, com.letsmidi.monsys.protocol.center.Center.ConnectRspOrBuilder>(
-                  getConnectRsp(),
+                  connectRsp_,
                   getParentForChildren(),
                   isClean());
           connectRsp_ = null;
@@ -4805,6 +4844,7 @@ public final class Center {
         return connectRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetFgwList get_fgw_list = 16;
       private com.letsmidi.monsys.protocol.center.Center.GetFgwList getFgwList_ = com.letsmidi.monsys.protocol.center.Center.GetFgwList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetFgwList, com.letsmidi.monsys.protocol.center.Center.GetFgwList.Builder, com.letsmidi.monsys.protocol.center.Center.GetFgwListOrBuilder> getFgwListBuilder_;
@@ -4913,7 +4953,7 @@ public final class Center {
         if (getFgwListBuilder_ == null) {
           getFgwListBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetFgwList, com.letsmidi.monsys.protocol.center.Center.GetFgwList.Builder, com.letsmidi.monsys.protocol.center.Center.GetFgwListOrBuilder>(
-                  getGetFgwList(),
+                  getFgwList_,
                   getParentForChildren(),
                   isClean());
           getFgwList_ = null;
@@ -4921,6 +4961,7 @@ public final class Center {
         return getFgwListBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetFgwListRsp get_fgw_list_rsp = 17;
       private com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp getFgwListRsp_ = com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp, com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetFgwListRspOrBuilder> getFgwListRspBuilder_;
@@ -5029,7 +5070,7 @@ public final class Center {
         if (getFgwListRspBuilder_ == null) {
           getFgwListRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp, com.letsmidi.monsys.protocol.center.Center.GetFgwListRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetFgwListRspOrBuilder>(
-                  getGetFgwListRsp(),
+                  getFgwListRsp_,
                   getParentForChildren(),
                   isClean());
           getFgwListRsp_ = null;
@@ -5037,6 +5078,7 @@ public final class Center {
         return getFgwListRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetDevList get_dev_list = 18;
       private com.letsmidi.monsys.protocol.center.Center.GetDevList getDevList_ = com.letsmidi.monsys.protocol.center.Center.GetDevList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetDevList, com.letsmidi.monsys.protocol.center.Center.GetDevList.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevListOrBuilder> getDevListBuilder_;
@@ -5145,7 +5187,7 @@ public final class Center {
         if (getDevListBuilder_ == null) {
           getDevListBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetDevList, com.letsmidi.monsys.protocol.center.Center.GetDevList.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevListOrBuilder>(
-                  getGetDevList(),
+                  getDevList_,
                   getParentForChildren(),
                   isClean());
           getDevList_ = null;
@@ -5153,6 +5195,7 @@ public final class Center {
         return getDevListBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetDevListRsp get_dev_list_rsp = 19;
       private com.letsmidi.monsys.protocol.center.Center.GetDevListRsp getDevListRsp_ = com.letsmidi.monsys.protocol.center.Center.GetDevListRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetDevListRsp, com.letsmidi.monsys.protocol.center.Center.GetDevListRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevListRspOrBuilder> getDevListRspBuilder_;
@@ -5261,7 +5304,7 @@ public final class Center {
         if (getDevListRspBuilder_ == null) {
           getDevListRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetDevListRsp, com.letsmidi.monsys.protocol.center.Center.GetDevListRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevListRspOrBuilder>(
-                  getGetDevListRsp(),
+                  getDevListRsp_,
                   getParentForChildren(),
                   isClean());
           getDevListRsp_ = null;
@@ -5269,6 +5312,7 @@ public final class Center {
         return getDevListRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetDevInfo get_dev_info = 20;
       private com.letsmidi.monsys.protocol.center.Center.GetDevInfo getDevInfo_ = com.letsmidi.monsys.protocol.center.Center.GetDevInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetDevInfo, com.letsmidi.monsys.protocol.center.Center.GetDevInfo.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevInfoOrBuilder> getDevInfoBuilder_;
@@ -5377,7 +5421,7 @@ public final class Center {
         if (getDevInfoBuilder_ == null) {
           getDevInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetDevInfo, com.letsmidi.monsys.protocol.center.Center.GetDevInfo.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevInfoOrBuilder>(
-                  getGetDevInfo(),
+                  getDevInfo_,
                   getParentForChildren(),
                   isClean());
           getDevInfo_ = null;
@@ -5385,6 +5429,7 @@ public final class Center {
         return getDevInfoBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.GetDevInfoRsp get_dev_info_rsp = 21;
       private com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp getDevInfoRsp_ = com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp, com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevInfoRspOrBuilder> getDevInfoRspBuilder_;
@@ -5493,7 +5538,7 @@ public final class Center {
         if (getDevInfoRspBuilder_ == null) {
           getDevInfoRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp, com.letsmidi.monsys.protocol.center.Center.GetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.center.Center.GetDevInfoRspOrBuilder>(
-                  getGetDevInfoRsp(),
+                  getDevInfoRsp_,
                   getParentForChildren(),
                   isClean());
           getDevInfoRsp_ = null;
@@ -5501,6 +5546,7 @@ public final class Center {
         return getDevInfoRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.SetDevInfo set_dev_info = 22;
       private com.letsmidi.monsys.protocol.center.Center.SetDevInfo setDevInfo_ = com.letsmidi.monsys.protocol.center.Center.SetDevInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.SetDevInfo, com.letsmidi.monsys.protocol.center.Center.SetDevInfo.Builder, com.letsmidi.monsys.protocol.center.Center.SetDevInfoOrBuilder> setDevInfoBuilder_;
@@ -5609,7 +5655,7 @@ public final class Center {
         if (setDevInfoBuilder_ == null) {
           setDevInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.SetDevInfo, com.letsmidi.monsys.protocol.center.Center.SetDevInfo.Builder, com.letsmidi.monsys.protocol.center.Center.SetDevInfoOrBuilder>(
-                  getSetDevInfo(),
+                  setDevInfo_,
                   getParentForChildren(),
                   isClean());
           setDevInfo_ = null;
@@ -5617,6 +5663,7 @@ public final class Center {
         return setDevInfoBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.SetDevInfoRsp set_dev_info_rsp = 23;
       private com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp setDevInfoRsp_ = com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp, com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.center.Center.SetDevInfoRspOrBuilder> setDevInfoRspBuilder_;
@@ -5725,7 +5772,7 @@ public final class Center {
         if (setDevInfoRspBuilder_ == null) {
           setDevInfoRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp, com.letsmidi.monsys.protocol.center.Center.SetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.center.Center.SetDevInfoRspOrBuilder>(
-                  getSetDevInfoRsp(),
+                  setDevInfoRsp_,
                   getParentForChildren(),
                   isClean());
           setDevInfoRsp_ = null;
@@ -5733,6 +5780,7 @@ public final class Center {
         return setDevInfoRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.ClientLogin client_login = 24;
       private com.letsmidi.monsys.protocol.center.Center.ClientLogin clientLogin_ = com.letsmidi.monsys.protocol.center.Center.ClientLogin.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.ClientLogin, com.letsmidi.monsys.protocol.center.Center.ClientLogin.Builder, com.letsmidi.monsys.protocol.center.Center.ClientLoginOrBuilder> clientLoginBuilder_;
@@ -5841,7 +5889,7 @@ public final class Center {
         if (clientLoginBuilder_ == null) {
           clientLoginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.ClientLogin, com.letsmidi.monsys.protocol.center.Center.ClientLogin.Builder, com.letsmidi.monsys.protocol.center.Center.ClientLoginOrBuilder>(
-                  getClientLogin(),
+                  clientLogin_,
                   getParentForChildren(),
                   isClean());
           clientLogin_ = null;
@@ -5849,6 +5897,7 @@ public final class Center {
         return clientLoginBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.center.ClientLoginRsp client_login_rsp = 25;
       private com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp clientLoginRsp_ = com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp, com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp.Builder, com.letsmidi.monsys.protocol.center.Center.ClientLoginRspOrBuilder> clientLoginRspBuilder_;
@@ -5957,7 +6006,7 @@ public final class Center {
         if (clientLoginRspBuilder_ == null) {
           clientLoginRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp, com.letsmidi.monsys.protocol.center.Center.ClientLoginRsp.Builder, com.letsmidi.monsys.protocol.center.Center.ClientLoginRspOrBuilder>(
-                  getClientLoginRsp(),
+                  clientLoginRsp_,
                   getParentForChildren(),
                   isClean());
           clientLoginRsp_ = null;
@@ -5976,10 +6025,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.CenterMsg)
   }
 
-  public interface LoginOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.Login)
-      com.google.protobuf.MessageOrBuilder {
+  public interface LoginOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -5998,9 +6047,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.Login}
    */
   public static final class Login extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.Login)
-      LoginOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements LoginOrBuilder {
     // Use Login.newBuilder() to construct.
     private Login(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -6047,9 +6095,8 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -6092,6 +6139,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -6140,8 +6188,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -6252,9 +6299,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.Login}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.Login)
-        com.letsmidi.monsys.protocol.center.Center.LoginOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.LoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor;
@@ -6373,6 +6419,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -6386,12 +6433,9 @@ public final class Center {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -6460,10 +6504,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.Login)
   }
 
-  public interface LoginRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.LoginRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface LoginRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -6477,9 +6521,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.LoginRsp}
    */
   public static final class LoginRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.LoginRsp)
-      LoginRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements LoginRspOrBuilder {
     // Use LoginRsp.newBuilder() to construct.
     private LoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -6570,6 +6613,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -6591,8 +6635,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -6703,9 +6746,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.LoginRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.LoginRsp)
-        com.letsmidi.monsys.protocol.center.Center.LoginRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.LoginRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor;
@@ -6822,6 +6864,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -6865,10 +6908,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.LoginRsp)
   }
 
-  public interface ClientLoginOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.ClientLogin)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ClientLoginOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string account = 1;
     /**
      * <code>required string account = 1;</code>
      */
@@ -6883,6 +6926,7 @@ public final class Center {
     com.google.protobuf.ByteString
         getAccountBytes();
 
+    // required string password = 2;
     /**
      * <code>required string password = 2;</code>
      */
@@ -6901,9 +6945,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.ClientLogin}
    */
   public static final class ClientLogin extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.ClientLogin)
-      ClientLoginOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ClientLoginOrBuilder {
     // Use ClientLogin.newBuilder() to construct.
     private ClientLogin(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -6950,15 +6993,13 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              account_ = bs;
+              account_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              password_ = bs;
+              password_ = input.readBytes();
               break;
             }
           }
@@ -7001,6 +7042,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string account = 1;
     public static final int ACCOUNT_FIELD_NUMBER = 1;
     private java.lang.Object account_;
     /**
@@ -7043,6 +7085,7 @@ public final class Center {
       }
     }
 
+    // required string password = 2;
     public static final int PASSWORD_FIELD_NUMBER = 2;
     private java.lang.Object password_;
     /**
@@ -7092,8 +7135,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAccount()) {
         memoizedIsInitialized = 0;
@@ -7215,9 +7257,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.ClientLogin}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.ClientLogin)
-        com.letsmidi.monsys.protocol.center.Center.ClientLoginOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.ClientLoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor;
@@ -7351,6 +7392,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string account = 1;
       private java.lang.Object account_ = "";
       /**
        * <code>required string account = 1;</code>
@@ -7364,12 +7406,9 @@ public final class Center {
       public java.lang.String getAccount() {
         java.lang.Object ref = account_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            account_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          account_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -7427,6 +7466,7 @@ public final class Center {
         return this;
       }
 
+      // required string password = 2;
       private java.lang.Object password_ = "";
       /**
        * <code>required string password = 2;</code>
@@ -7440,12 +7480,9 @@ public final class Center {
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            password_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          password_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -7514,10 +7551,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.ClientLogin)
   }
 
-  public interface ClientLoginRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.ClientLoginRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ClientLoginRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -7527,6 +7564,7 @@ public final class Center {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;</code>
      */
@@ -7555,9 +7593,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.ClientLoginRsp}
    */
   public static final class ClientLoginRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.ClientLoginRsp)
-      ClientLoginRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ClientLoginRspOrBuilder {
     // Use ClientLoginRsp.newBuilder() to construct.
     private ClientLoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -7659,6 +7696,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -7674,6 +7712,7 @@ public final class Center {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
     public static final int FGW_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> fgwInfos_;
     /**
@@ -7716,8 +7755,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -7841,9 +7879,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.ClientLoginRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.ClientLoginRsp)
-        com.letsmidi.monsys.protocol.center.Center.ClientLoginRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.ClientLoginRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor;
@@ -8008,6 +8045,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -8040,6 +8078,7 @@ public final class Center {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> fgwInfos_ =
         java.util.Collections.emptyList();
       private void ensureFgwInfosIsMutable() {
@@ -8181,8 +8220,7 @@ public final class Center {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> values) {
         if (fgwInfosBuilder_ == null) {
           ensureFgwInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, fgwInfos_);
+          super.addAll(values, fgwInfos_);
           onChanged();
         } else {
           fgwInfosBuilder_.addAllMessages(values);
@@ -8291,10 +8329,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.ClientLoginRsp)
   }
 
-  public interface BindOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.Bind)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BindOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -8313,9 +8351,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.Bind}
    */
   public static final class Bind extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.Bind)
-      BindOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BindOrBuilder {
     // Use Bind.newBuilder() to construct.
     private Bind(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8362,9 +8399,8 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -8407,6 +8443,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -8455,8 +8492,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -8567,9 +8603,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.Bind}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.Bind)
-        com.letsmidi.monsys.protocol.center.Center.BindOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.BindOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor;
@@ -8688,6 +8723,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -8701,12 +8737,9 @@ public final class Center {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8775,10 +8808,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.Bind)
   }
 
-  public interface BindRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.BindRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BindRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -8792,9 +8825,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.BindRsp}
    */
   public static final class BindRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.BindRsp)
-      BindRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BindRspOrBuilder {
     // Use BindRsp.newBuilder() to construct.
     private BindRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8885,6 +8917,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -8906,8 +8939,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -9018,9 +9050,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.BindRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.BindRsp)
-        com.letsmidi.monsys.protocol.center.Center.BindRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.BindRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor;
@@ -9137,6 +9168,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -9180,10 +9212,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.BindRsp)
   }
 
-  public interface ConnectOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.Connect)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -9202,9 +9234,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.Connect}
    */
   public static final class Connect extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.Connect)
-      ConnectOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectOrBuilder {
     // Use Connect.newBuilder() to construct.
     private Connect(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9251,9 +9282,8 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -9296,6 +9326,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -9344,8 +9375,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -9456,9 +9486,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.Connect}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.Connect)
-        com.letsmidi.monsys.protocol.center.Center.ConnectOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.ConnectOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor;
@@ -9577,6 +9606,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -9590,12 +9620,9 @@ public final class Center {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9664,10 +9691,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.Connect)
   }
 
-  public interface ConnectRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.ConnectRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -9681,9 +9708,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.ConnectRsp}
    */
   public static final class ConnectRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.ConnectRsp)
-      ConnectRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectRspOrBuilder {
     // Use ConnectRsp.newBuilder() to construct.
     private ConnectRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9774,6 +9800,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -9795,8 +9822,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -9907,9 +9933,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.ConnectRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.ConnectRsp)
-        com.letsmidi.monsys.protocol.center.Center.ConnectRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.ConnectRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor;
@@ -10026,6 +10051,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -10069,17 +10095,15 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.ConnectRsp)
   }
 
-  public interface GetFgwListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetFgwList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetFgwListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetFgwList}
    */
   public static final class GetFgwList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetFgwList)
-      GetFgwListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetFgwListOrBuilder {
     // Use GetFgwList.newBuilder() to construct.
     private GetFgwList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10168,8 +10192,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -10269,9 +10292,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetFgwList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetFgwList)
-        com.letsmidi.monsys.protocol.center.Center.GetFgwListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetFgwListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor;
@@ -10382,10 +10404,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetFgwList)
   }
 
-  public interface GetFgwListRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetFgwListRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetFgwListRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -10395,6 +10417,7 @@ public final class Center {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;</code>
      */
@@ -10423,9 +10446,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetFgwListRsp}
    */
   public static final class GetFgwListRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetFgwListRsp)
-      GetFgwListRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetFgwListRspOrBuilder {
     // Use GetFgwListRsp.newBuilder() to construct.
     private GetFgwListRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10527,6 +10549,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -10542,6 +10565,7 @@ public final class Center {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
     public static final int FGW_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> fgwInfos_;
     /**
@@ -10584,8 +10608,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -10709,9 +10732,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetFgwListRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetFgwListRsp)
-        com.letsmidi.monsys.protocol.center.Center.GetFgwListRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetFgwListRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor;
@@ -10876,6 +10898,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -10908,6 +10931,7 @@ public final class Center {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.center.FGatewayInfo fgw_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> fgwInfos_ =
         java.util.Collections.emptyList();
       private void ensureFgwInfosIsMutable() {
@@ -11049,8 +11073,7 @@ public final class Center {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.center.Center.FGatewayInfo> values) {
         if (fgwInfosBuilder_ == null) {
           ensureFgwInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, fgwInfos_);
+          super.addAll(values, fgwInfos_);
           onChanged();
         } else {
           fgwInfosBuilder_.addAllMessages(values);
@@ -11159,10 +11182,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetFgwListRsp)
   }
 
-  public interface GetDevListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetDevList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -11181,9 +11204,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevList}
    */
   public static final class GetDevList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetDevList)
-      GetDevListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevListOrBuilder {
     // Use GetDevList.newBuilder() to construct.
     private GetDevList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11230,9 +11252,8 @@ public final class Center {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -11275,6 +11296,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -11323,8 +11345,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -11435,9 +11456,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetDevList)
-        com.letsmidi.monsys.protocol.center.Center.GetDevListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetDevListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor;
@@ -11556,6 +11576,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -11569,12 +11590,9 @@ public final class Center {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11643,10 +11661,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetDevList)
   }
 
-  public interface GetDevListRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetDevListRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevListRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -11656,6 +11674,7 @@ public final class Center {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.center.DeviceInfo dev_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.center.DeviceInfo dev_infos = 2;</code>
      */
@@ -11684,9 +11703,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevListRsp}
    */
   public static final class GetDevListRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetDevListRsp)
-      GetDevListRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevListRspOrBuilder {
     // Use GetDevListRsp.newBuilder() to construct.
     private GetDevListRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11788,6 +11806,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -11803,6 +11822,7 @@ public final class Center {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.center.DeviceInfo dev_infos = 2;
     public static final int DEV_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.center.Center.DeviceInfo> devInfos_;
     /**
@@ -11845,8 +11865,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -11970,9 +11989,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevListRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetDevListRsp)
-        com.letsmidi.monsys.protocol.center.Center.GetDevListRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetDevListRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor;
@@ -12137,6 +12155,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -12169,6 +12188,7 @@ public final class Center {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.center.DeviceInfo dev_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.center.Center.DeviceInfo> devInfos_ =
         java.util.Collections.emptyList();
       private void ensureDevInfosIsMutable() {
@@ -12310,8 +12330,7 @@ public final class Center {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.center.Center.DeviceInfo> values) {
         if (devInfosBuilder_ == null) {
           ensureDevInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, devInfos_);
+          super.addAll(values, devInfos_);
           onChanged();
         } else {
           devInfosBuilder_.addAllMessages(values);
@@ -12420,10 +12439,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetDevListRsp)
   }
 
-  public interface GetDevInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetDevInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -12433,6 +12452,7 @@ public final class Center {
      */
     int getAddr();
 
+    // repeated int32 item_ids = 2 [packed = true];
     /**
      * <code>repeated int32 item_ids = 2 [packed = true];</code>
      */
@@ -12450,9 +12470,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevInfo}
    */
   public static final class GetDevInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetDevInfo)
-      GetDevInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevInfoOrBuilder {
     // Use GetDevInfo.newBuilder() to construct.
     private GetDevInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -12567,6 +12586,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -12582,6 +12602,7 @@ public final class Center {
       return addr_;
     }
 
+    // repeated int32 item_ids = 2 [packed = true];
     public static final int ITEM_IDS_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> itemIds_;
     /**
@@ -12612,8 +12633,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -12745,9 +12765,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetDevInfo)
-        com.letsmidi.monsys.protocol.center.Center.GetDevInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetDevInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor;
@@ -12881,6 +12900,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -12913,6 +12933,7 @@ public final class Center {
         return this;
       }
 
+      // repeated int32 item_ids = 2 [packed = true];
       private java.util.List<java.lang.Integer> itemIds_ = java.util.Collections.emptyList();
       private void ensureItemIdsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -12964,8 +12985,7 @@ public final class Center {
       public Builder addAllItemIds(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureItemIdsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, itemIds_);
+        super.addAll(values, itemIds_);
         onChanged();
         return this;
       }
@@ -12990,10 +13010,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetDevInfo)
   }
 
-  public interface GetDevInfoRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.GetDevInfoRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevInfoRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -13003,6 +13023,7 @@ public final class Center {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;</code>
      */
@@ -13031,9 +13052,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevInfoRsp}
    */
   public static final class GetDevInfoRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.GetDevInfoRsp)
-      GetDevInfoRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevInfoRspOrBuilder {
     // Use GetDevInfoRsp.newBuilder() to construct.
     private GetDevInfoRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13135,6 +13155,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -13150,6 +13171,7 @@ public final class Center {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
     public static final int ID_VALUE_PAIRS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.center.Center.IdValuePair> idValuePairs_;
     /**
@@ -13192,8 +13214,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -13317,9 +13338,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.GetDevInfoRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.GetDevInfoRsp)
-        com.letsmidi.monsys.protocol.center.Center.GetDevInfoRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.GetDevInfoRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor;
@@ -13484,6 +13504,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -13516,6 +13537,7 @@ public final class Center {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
       private java.util.List<com.letsmidi.monsys.protocol.center.Center.IdValuePair> idValuePairs_ =
         java.util.Collections.emptyList();
       private void ensureIdValuePairsIsMutable() {
@@ -13657,8 +13679,7 @@ public final class Center {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.center.Center.IdValuePair> values) {
         if (idValuePairsBuilder_ == null) {
           ensureIdValuePairsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, idValuePairs_);
+          super.addAll(values, idValuePairs_);
           onChanged();
         } else {
           idValuePairsBuilder_.addAllMessages(values);
@@ -13767,10 +13788,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.GetDevInfoRsp)
   }
 
-  public interface SetDevInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.SetDevInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SetDevInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -13780,6 +13801,7 @@ public final class Center {
      */
     int getAddr();
 
+    // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;</code>
      */
@@ -13808,9 +13830,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.SetDevInfo}
    */
   public static final class SetDevInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.SetDevInfo)
-      SetDevInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements SetDevInfoOrBuilder {
     // Use SetDevInfo.newBuilder() to construct.
     private SetDevInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13912,6 +13933,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -13927,6 +13949,7 @@ public final class Center {
       return addr_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
     public static final int ID_VALUE_PAIRS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.center.Center.IdValuePair> idValuePairs_;
     /**
@@ -13969,8 +13992,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -14094,9 +14116,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.SetDevInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.SetDevInfo)
-        com.letsmidi.monsys.protocol.center.Center.SetDevInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.SetDevInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor;
@@ -14261,6 +14282,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -14293,6 +14315,7 @@ public final class Center {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.center.IdValuePair id_value_pairs = 2;
       private java.util.List<com.letsmidi.monsys.protocol.center.Center.IdValuePair> idValuePairs_ =
         java.util.Collections.emptyList();
       private void ensureIdValuePairsIsMutable() {
@@ -14434,8 +14457,7 @@ public final class Center {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.center.Center.IdValuePair> values) {
         if (idValuePairsBuilder_ == null) {
           ensureIdValuePairsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, idValuePairs_);
+          super.addAll(values, idValuePairs_);
           onChanged();
         } else {
           idValuePairsBuilder_.addAllMessages(values);
@@ -14544,10 +14566,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.SetDevInfo)
   }
 
-  public interface SetDevInfoRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.SetDevInfoRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SetDevInfoRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -14561,9 +14583,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.SetDevInfoRsp}
    */
   public static final class SetDevInfoRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.SetDevInfoRsp)
-      SetDevInfoRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements SetDevInfoRspOrBuilder {
     // Use SetDevInfoRsp.newBuilder() to construct.
     private SetDevInfoRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14654,6 +14675,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -14675,8 +14697,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -14787,9 +14808,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.SetDevInfoRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.SetDevInfoRsp)
-        com.letsmidi.monsys.protocol.center.Center.SetDevInfoRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.SetDevInfoRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor;
@@ -14906,6 +14926,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -14949,10 +14970,10 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.SetDevInfoRsp)
   }
 
-  public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.center.Response)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -14966,9 +14987,8 @@ public final class Center {
    * Protobuf type {@code com.letsmidi.monsys.protocol.center.Response}
    */
   public static final class Response extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.center.Response)
-      ResponseOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ResponseOrBuilder {
     // Use Response.newBuilder() to construct.
     private Response(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15059,6 +15079,7 @@ public final class Center {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -15080,8 +15101,7 @@ public final class Center {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -15192,9 +15212,8 @@ public final class Center {
      * Protobuf type {@code com.letsmidi.monsys.protocol.center.Response}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.center.Response)
-        com.letsmidi.monsys.protocol.center.Center.ResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.center.Center.ResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.center.Center.internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor;
@@ -15311,6 +15330,7 @@ public final class Center {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -15354,107 +15374,107 @@ public final class Center {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.center.Response)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_Login_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_Bind_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_BindRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_Connect_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetDevList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -15536,143 +15556,143 @@ public final class Center {
       "GIN_RSP\020l\022\014\n\010RESPONSE\020c"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor,
+              new java.lang.String[] { "Id", "Value", });
+          internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor,
+              new java.lang.String[] { "Id", "Name", "Desc", });
+          internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor,
+              new java.lang.String[] { "Addr", "Type", "Name", });
+          internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor,
+              new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", });
+          internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_com_letsmidi_monsys_protocol_center_Login_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor,
+              new java.lang.String[] { "Account", "Password", });
+          internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor,
+              new java.lang.String[] { "Code", "FgwInfos", });
+          internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_com_letsmidi_monsys_protocol_center_Bind_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor =
+            getDescriptor().getMessageTypes().get(9);
+          internal_static_com_letsmidi_monsys_protocol_center_BindRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor =
+            getDescriptor().getMessageTypes().get(10);
+          internal_static_com_letsmidi_monsys_protocol_center_Connect_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor =
+            getDescriptor().getMessageTypes().get(11);
+          internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor,
+              new java.lang.String[] { });
+          internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor =
+            getDescriptor().getMessageTypes().get(13);
+          internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor,
+              new java.lang.String[] { "Code", "FgwInfos", });
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor =
+            getDescriptor().getMessageTypes().get(14);
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor =
+            getDescriptor().getMessageTypes().get(15);
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor,
+              new java.lang.String[] { "Code", "DevInfos", });
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor =
+            getDescriptor().getMessageTypes().get(16);
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor,
+              new java.lang.String[] { "Addr", "ItemIds", });
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor =
+            getDescriptor().getMessageTypes().get(17);
+          internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor,
+              new java.lang.String[] { "Code", "IdValuePairs", });
+          internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor =
+            getDescriptor().getMessageTypes().get(18);
+          internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor,
+              new java.lang.String[] { "Addr", "IdValuePairs", });
+          internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor =
+            getDescriptor().getMessageTypes().get(19);
+          internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor =
+            getDescriptor().getMessageTypes().get(20);
+          internal_static_com_letsmidi_monsys_protocol_center_Response_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor,
+              new java.lang.String[] { "Code", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_IdValuePair_descriptor,
-        new java.lang.String[] { "Id", "Value", });
-    internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_FGatewayInfo_descriptor,
-        new java.lang.String[] { "Id", "Name", "Desc", });
-    internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_DeviceInfo_descriptor,
-        new java.lang.String[] { "Addr", "Type", "Name", });
-    internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_CenterMsg_descriptor,
-        new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", });
-    internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_com_letsmidi_monsys_protocol_center_Login_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_Login_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_LoginRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_ClientLogin_descriptor,
-        new java.lang.String[] { "Account", "Password", });
-    internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_ClientLoginRsp_descriptor,
-        new java.lang.String[] { "Code", "FgwInfos", });
-    internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_com_letsmidi_monsys_protocol_center_Bind_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_Bind_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_com_letsmidi_monsys_protocol_center_BindRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_BindRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_com_letsmidi_monsys_protocol_center_Connect_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_Connect_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_ConnectRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor =
-      getDescriptor().getMessageTypes().get(12);
-    internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetFgwList_descriptor,
-        new java.lang.String[] { });
-    internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor =
-      getDescriptor().getMessageTypes().get(13);
-    internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetFgwListRsp_descriptor,
-        new java.lang.String[] { "Code", "FgwInfos", });
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor =
-      getDescriptor().getMessageTypes().get(14);
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetDevList_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetDevListRsp_descriptor,
-        new java.lang.String[] { "Code", "DevInfos", });
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor =
-      getDescriptor().getMessageTypes().get(16);
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetDevInfo_descriptor,
-        new java.lang.String[] { "Addr", "ItemIds", });
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor =
-      getDescriptor().getMessageTypes().get(17);
-    internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_GetDevInfoRsp_descriptor,
-        new java.lang.String[] { "Code", "IdValuePairs", });
-    internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor =
-      getDescriptor().getMessageTypes().get(18);
-    internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_SetDevInfo_descriptor,
-        new java.lang.String[] { "Addr", "IdValuePairs", });
-    internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor =
-      getDescriptor().getMessageTypes().get(19);
-    internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_SetDevInfoRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor =
-      getDescriptor().getMessageTypes().get(20);
-    internal_static_com_letsmidi_monsys_protocol_center_Response_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_center_Response_descriptor,
-        new java.lang.String[] { "Code", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

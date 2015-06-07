@@ -252,7 +252,6 @@ const int CommServerMsg::kRequestTokenRspFieldNumber;
 CommServerMsg::CommServerMsg()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
 }
 
 void CommServerMsg::InitAsDefaultInstance() {
@@ -266,7 +265,6 @@ CommServerMsg::CommServerMsg(const CommServerMsg& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
 }
 
 void CommServerMsg::SharedCtor() {
@@ -282,7 +280,6 @@ void CommServerMsg::SharedCtor() {
 }
 
 CommServerMsg::~CommServerMsg() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
   SharedDtor();
 }
 
@@ -317,7 +314,7 @@ CommServerMsg* CommServerMsg::New() const {
 }
 
 void CommServerMsg::Clear() {
-  if (_has_bits_[0 / 32] & 127) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     version_ = 0u;
     type_ = 1;
     sequence_ = 0u;
@@ -340,23 +337,20 @@ void CommServerMsg::Clear() {
 
 bool CommServerMsg::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 version = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &version_)));
           set_has_version();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_type;
         break;
@@ -364,7 +358,8 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // required .com.letsmidi.monsys.protocol.commserver.MsgType type = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_type:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -376,7 +371,7 @@ bool CommServerMsg::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(2, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(24)) goto parse_sequence;
         break;
@@ -384,14 +379,15 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // required uint32 sequence = 3;
       case 3: {
-        if (tag == 24) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_sequence:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &sequence_)));
           set_has_sequence();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(42)) goto parse_register;
         break;
@@ -399,12 +395,13 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.commserver.Register register = 5;
       case 5: {
-        if (tag == 42) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_register:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_register_()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(50)) goto parse_register_rsp;
         break;
@@ -412,12 +409,13 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.commserver.RegisterRsp register_rsp = 6;
       case 6: {
-        if (tag == 50) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_register_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_register_rsp()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(58)) goto parse_request_token;
         break;
@@ -425,12 +423,13 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.commserver.RequestToken request_token = 7;
       case 7: {
-        if (tag == 58) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_request_token:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_request_token()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(66)) goto parse_request_token_rsp;
         break;
@@ -438,23 +437,23 @@ bool CommServerMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.commserver.RequestTokenRsp request_token_rsp = 8;
       case 8: {
-        if (tag == 66) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_request_token_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_request_token_rsp()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -462,18 +461,12 @@ bool CommServerMsg::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
-  return false;
 #undef DO_
 }
 
 void CommServerMsg::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
   // required uint32 version = 1;
   if (has_version()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->version(), output);
@@ -518,12 +511,10 @@ void CommServerMsg::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
 }
 
 ::google::protobuf::uint8* CommServerMsg::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
   // required uint32 version = 1;
   if (has_version()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->version(), target);
@@ -572,7 +563,6 @@ void CommServerMsg::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.commserver.CommServerMsg)
   return target;
 }
 
@@ -741,7 +731,6 @@ const int Register::kPortFieldNumber;
 Register::Register()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.commserver.Register)
 }
 
 void Register::InitAsDefaultInstance() {
@@ -751,24 +740,21 @@ Register::Register(const Register& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.commserver.Register)
 }
 
 void Register::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ip_v4_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_v4_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   port_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 Register::~Register() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.commserver.Register)
   SharedDtor();
 }
 
 void Register::SharedDtor() {
-  if (ip_v4_addr_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (ip_v4_addr_ != &::google::protobuf::internal::kEmptyString) {
     delete ip_v4_addr_;
   }
   if (this != default_instance_) {
@@ -797,9 +783,9 @@ Register* Register::New() const {
 }
 
 void Register::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_ip_v4_addr()) {
-      if (ip_v4_addr_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (ip_v4_addr_ != &::google::protobuf::internal::kEmptyString) {
         ip_v4_addr_->clear();
       }
     }
@@ -811,25 +797,21 @@ void Register::Clear() {
 
 bool Register::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.commserver.Register)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string ip_v4_addr = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_ip_v4_addr()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->ip_v4_addr().data(), this->ip_v4_addr().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "ip_v4_addr");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_port;
         break;
@@ -837,25 +819,25 @@ bool Register::MergePartialFromCodedStream(
 
       // required uint32 port = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_port:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &port_)));
           set_has_port();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -863,25 +845,18 @@ bool Register::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.commserver.Register)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.commserver.Register)
-  return false;
 #undef DO_
 }
 
 void Register::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.commserver.Register)
   // required string ip_v4_addr = 1;
   if (has_ip_v4_addr()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->ip_v4_addr().data(), this->ip_v4_addr().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "ip_v4_addr");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->ip_v4_addr(), output);
   }
 
@@ -894,18 +869,15 @@ void Register::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.commserver.Register)
 }
 
 ::google::protobuf::uint8* Register::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.commserver.Register)
   // required string ip_v4_addr = 1;
   if (has_ip_v4_addr()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->ip_v4_addr().data(), this->ip_v4_addr().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "ip_v4_addr");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->ip_v4_addr(), target);
@@ -920,7 +892,6 @@ void Register::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.commserver.Register)
   return target;
 }
 
@@ -1025,7 +996,6 @@ const int RegisterRsp::kCodeFieldNumber;
 RegisterRsp::RegisterRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
 }
 
 void RegisterRsp::InitAsDefaultInstance() {
@@ -1035,7 +1005,6 @@ RegisterRsp::RegisterRsp(const RegisterRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
 }
 
 void RegisterRsp::SharedCtor() {
@@ -1045,7 +1014,6 @@ void RegisterRsp::SharedCtor() {
 }
 
 RegisterRsp::~RegisterRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
   SharedDtor();
 }
 
@@ -1076,41 +1044,39 @@ RegisterRsp* RegisterRsp::New() const {
 }
 
 void RegisterRsp::Clear() {
-  code_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    code_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool RegisterRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 code = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1118,18 +1084,12 @@ bool RegisterRsp::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
-  return false;
 #undef DO_
 }
 
 void RegisterRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -1139,12 +1099,10 @@ void RegisterRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
 }
 
 ::google::protobuf::uint8* RegisterRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -1154,7 +1112,6 @@ void RegisterRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.commserver.RegisterRsp)
   return target;
 }
 
@@ -1247,7 +1204,6 @@ void RegisterRsp::Swap(RegisterRsp* other) {
 RequestToken::RequestToken()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.commserver.RequestToken)
 }
 
 void RequestToken::InitAsDefaultInstance() {
@@ -1257,7 +1213,6 @@ RequestToken::RequestToken(const RequestToken& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.commserver.RequestToken)
 }
 
 void RequestToken::SharedCtor() {
@@ -1266,7 +1221,6 @@ void RequestToken::SharedCtor() {
 }
 
 RequestToken::~RequestToken() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.commserver.RequestToken)
   SharedDtor();
 }
 
@@ -1303,49 +1257,34 @@ void RequestToken::Clear() {
 
 bool RequestToken::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.commserver.RequestToken)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+  while ((tag = input->ReadTag()) != 0) {
+    if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
         ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+      return true;
     }
     DO_(::google::protobuf::internal::WireFormat::SkipField(
           input, tag, mutable_unknown_fields()));
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.commserver.RequestToken)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.commserver.RequestToken)
-  return false;
 #undef DO_
 }
 
 void RequestToken::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.commserver.RequestToken)
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.commserver.RequestToken)
 }
 
 ::google::protobuf::uint8* RequestToken::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.commserver.RequestToken)
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.commserver.RequestToken)
   return target;
 }
 
@@ -1423,7 +1362,6 @@ const int RequestTokenRsp::kTokenFieldNumber;
 RequestTokenRsp::RequestTokenRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
 }
 
 void RequestTokenRsp::InitAsDefaultInstance() {
@@ -1433,24 +1371,21 @@ RequestTokenRsp::RequestTokenRsp(const RequestTokenRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
 }
 
 void RequestTokenRsp::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   code_ = 0;
-  token_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  token_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 RequestTokenRsp::~RequestTokenRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
   SharedDtor();
 }
 
 void RequestTokenRsp::SharedDtor() {
-  if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (token_ != &::google::protobuf::internal::kEmptyString) {
     delete token_;
   }
   if (this != default_instance_) {
@@ -1479,10 +1414,10 @@ RequestTokenRsp* RequestTokenRsp::New() const {
 }
 
 void RequestTokenRsp::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     code_ = 0;
     if (has_token()) {
-      if (token_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (token_ != &::google::protobuf::internal::kEmptyString) {
         token_->clear();
       }
     }
@@ -1493,23 +1428,20 @@ void RequestTokenRsp::Clear() {
 
 bool RequestTokenRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 code = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_token;
         break;
@@ -1517,27 +1449,26 @@ bool RequestTokenRsp::MergePartialFromCodedStream(
 
       // required string token = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_token:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_token()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->token().data(), this->token().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "token");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1545,18 +1476,12 @@ bool RequestTokenRsp::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
-  return false;
 #undef DO_
 }
 
 void RequestTokenRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -1564,11 +1489,10 @@ void RequestTokenRsp::SerializeWithCachedSizes(
 
   // required string token = 2;
   if (has_token()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->token().data(), this->token().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "token");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->token(), output);
   }
 
@@ -1576,12 +1500,10 @@ void RequestTokenRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
 }
 
 ::google::protobuf::uint8* RequestTokenRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -1589,10 +1511,9 @@ void RequestTokenRsp::SerializeWithCachedSizes(
 
   // required string token = 2;
   if (has_token()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->token().data(), this->token().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "token");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->token(), target);
@@ -1602,7 +1523,6 @@ void RequestTokenRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.commserver.RequestTokenRsp)
   return target;
 }
 

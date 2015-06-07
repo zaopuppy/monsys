@@ -2,7 +2,6 @@ package com.letsmidi.monsys.route;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.log.Logger;
-import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.protocol.route.Route.RouteMsg;
 import com.letsmidi.monsys.route.session.RouteSession;
@@ -21,6 +20,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @author zero
  */
 public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Route.RouteMsg> {
+    private static final String TAG = "RouterAllocateServerHandler";
 
     private final SessionManager mSessionManager;
 
@@ -38,7 +38,7 @@ public class RouterAllocateServerHandler extends SimpleChannelInboundHandler<Rou
                 processTokenRequest(ctx, msg);
                 break;
             default:
-                MyLogger.e("bad request");
+                Logger.e(TAG, "bad request");
                 ctx.close();
                 break;
         }

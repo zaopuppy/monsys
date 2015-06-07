@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.database.AccountInfo;
-import com.letsmidi.monsys.log.MyLogFormatter;
 import com.letsmidi.monsys.protocol.client.Client;
 import com.letsmidi.monsys.protocol.commserver.CommServer;
 import com.letsmidi.monsys.util.HibernateUtil;
@@ -34,6 +33,7 @@ import io.netty.util.HashedWheelTimer;
 
 public class CommServerApp {
     private final Logger mLogger = Logger.getLogger(CommConfig.LoggerName);
+    private static final String TAG = "CommServerApp";
 
     public static void main(String[] args) throws IOException, MonsysException {
 
@@ -55,16 +55,16 @@ public class CommServerApp {
     }
 
     private static void initLogger() throws IOException {
-        Handler log_handler = new FileHandler(CommConfig.LoggerFileName, 1 << 20, 10000, true);
-
-        final Logger logger = Logger.getLogger(CommConfig.LoggerName);
-        logger.setLevel(Level.ALL);
-        logger.addHandler(log_handler);
-
-        for (Handler h : logger.getHandlers()) {
-            System.out.println("handler: " + h.getClass().getCanonicalName());
-            h.setFormatter(new MyLogFormatter());
-        }
+        //Handler log_handler = new FileHandler(CommConfig.LoggerFileName, 1 << 20, 10000, true);
+        //
+        //final Logger logger = Logger.getLogger(CommConfig.LoggerName);
+        //logger.setLevel(Level.ALL);
+        //logger.addHandler(log_handler);
+        //
+        //for (Handler h : logger.getHandlers()) {
+        //    System.out.println("handler: " + h.getClass().getCanonicalName());
+        //    h.setFormatter(new MyLogFormatter());
+        //}
 
     }
 

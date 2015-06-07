@@ -272,10 +272,10 @@ public final class Route {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.route.ClientType)
   }
 
-  public interface RouteMsgOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.route.RouteMsg)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RouteMsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 version = 1;
     /**
      * <code>required int32 version = 1;</code>
      */
@@ -285,6 +285,7 @@ public final class Route {
      */
     int getVersion();
 
+    // required .com.letsmidi.monsys.protocol.route.MsgType type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.route.MsgType type = 2;</code>
      */
@@ -294,6 +295,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.MsgType getType();
 
+    // required int32 sequence = 3;
     /**
      * <code>required int32 sequence = 3;</code>
      */
@@ -303,6 +305,7 @@ public final class Route {
      */
     int getSequence();
 
+    // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;</code>
      */
@@ -316,6 +319,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.ReqTokenOrBuilder getReqTokenOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;</code>
      */
@@ -329,6 +333,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.ReqTokenRspOrBuilder getReqTokenRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;</code>
      */
@@ -342,6 +347,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.ConnectOrBuilder getConnectOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;</code>
      */
@@ -359,9 +365,8 @@ public final class Route {
    * Protobuf type {@code com.letsmidi.monsys.protocol.route.RouteMsg}
    */
   public static final class RouteMsg extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.route.RouteMsg)
-      RouteMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RouteMsgOrBuilder {
     // Use RouteMsg.newBuilder() to construct.
     private RouteMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -520,6 +525,7 @@ public final class Route {
     }
 
     private int bitField0_;
+    // required int32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -535,6 +541,7 @@ public final class Route {
       return version_;
     }
 
+    // required .com.letsmidi.monsys.protocol.route.MsgType type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.route.Route.MsgType type_;
     /**
@@ -550,6 +557,7 @@ public final class Route {
       return type_;
     }
 
+    // required int32 sequence = 3;
     public static final int SEQUENCE_FIELD_NUMBER = 3;
     private int sequence_;
     /**
@@ -565,6 +573,7 @@ public final class Route {
       return sequence_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
     public static final int REQ_TOKEN_FIELD_NUMBER = 10;
     private com.letsmidi.monsys.protocol.route.Route.ReqToken reqToken_;
     /**
@@ -586,6 +595,7 @@ public final class Route {
       return reqToken_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;
     public static final int REQ_TOKEN_RSP_FIELD_NUMBER = 11;
     private com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp reqTokenRsp_;
     /**
@@ -607,6 +617,7 @@ public final class Route {
       return reqTokenRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;
     public static final int CONNECT_FIELD_NUMBER = 12;
     private com.letsmidi.monsys.protocol.route.Route.Connect connect_;
     /**
@@ -628,6 +639,7 @@ public final class Route {
       return connect_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;
     public static final int CONNECT_RSP_FIELD_NUMBER = 13;
     private com.letsmidi.monsys.protocol.route.Route.ConnectRsp connectRsp_;
     /**
@@ -661,8 +673,7 @@ public final class Route {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -847,9 +858,8 @@ public final class Route {
      * Protobuf type {@code com.letsmidi.monsys.protocol.route.RouteMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.route.RouteMsg)
-        com.letsmidi.monsys.protocol.route.Route.RouteMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.route.Route.RouteMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.route.Route.internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor;
@@ -1088,6 +1098,7 @@ public final class Route {
       }
       private int bitField0_;
 
+      // required int32 version = 1;
       private int version_ ;
       /**
        * <code>required int32 version = 1;</code>
@@ -1120,6 +1131,7 @@ public final class Route {
         return this;
       }
 
+      // required .com.letsmidi.monsys.protocol.route.MsgType type = 2;
       private com.letsmidi.monsys.protocol.route.Route.MsgType type_ = com.letsmidi.monsys.protocol.route.Route.MsgType.REQ_TOKEN;
       /**
        * <code>required .com.letsmidi.monsys.protocol.route.MsgType type = 2;</code>
@@ -1155,6 +1167,7 @@ public final class Route {
         return this;
       }
 
+      // required int32 sequence = 3;
       private int sequence_ ;
       /**
        * <code>required int32 sequence = 3;</code>
@@ -1187,6 +1200,7 @@ public final class Route {
         return this;
       }
 
+      // optional .com.letsmidi.monsys.protocol.route.ReqToken req_token = 10;
       private com.letsmidi.monsys.protocol.route.Route.ReqToken reqToken_ = com.letsmidi.monsys.protocol.route.Route.ReqToken.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.route.Route.ReqToken, com.letsmidi.monsys.protocol.route.Route.ReqToken.Builder, com.letsmidi.monsys.protocol.route.Route.ReqTokenOrBuilder> reqTokenBuilder_;
@@ -1295,7 +1309,7 @@ public final class Route {
         if (reqTokenBuilder_ == null) {
           reqTokenBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.route.Route.ReqToken, com.letsmidi.monsys.protocol.route.Route.ReqToken.Builder, com.letsmidi.monsys.protocol.route.Route.ReqTokenOrBuilder>(
-                  getReqToken(),
+                  reqToken_,
                   getParentForChildren(),
                   isClean());
           reqToken_ = null;
@@ -1303,6 +1317,7 @@ public final class Route {
         return reqTokenBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.route.ReqTokenRsp req_token_rsp = 11;
       private com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp reqTokenRsp_ = com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp, com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.Builder, com.letsmidi.monsys.protocol.route.Route.ReqTokenRspOrBuilder> reqTokenRspBuilder_;
@@ -1411,7 +1426,7 @@ public final class Route {
         if (reqTokenRspBuilder_ == null) {
           reqTokenRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp, com.letsmidi.monsys.protocol.route.Route.ReqTokenRsp.Builder, com.letsmidi.monsys.protocol.route.Route.ReqTokenRspOrBuilder>(
-                  getReqTokenRsp(),
+                  reqTokenRsp_,
                   getParentForChildren(),
                   isClean());
           reqTokenRsp_ = null;
@@ -1419,6 +1434,7 @@ public final class Route {
         return reqTokenRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.route.Connect connect = 12;
       private com.letsmidi.monsys.protocol.route.Route.Connect connect_ = com.letsmidi.monsys.protocol.route.Route.Connect.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.route.Route.Connect, com.letsmidi.monsys.protocol.route.Route.Connect.Builder, com.letsmidi.monsys.protocol.route.Route.ConnectOrBuilder> connectBuilder_;
@@ -1527,7 +1543,7 @@ public final class Route {
         if (connectBuilder_ == null) {
           connectBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.route.Route.Connect, com.letsmidi.monsys.protocol.route.Route.Connect.Builder, com.letsmidi.monsys.protocol.route.Route.ConnectOrBuilder>(
-                  getConnect(),
+                  connect_,
                   getParentForChildren(),
                   isClean());
           connect_ = null;
@@ -1535,6 +1551,7 @@ public final class Route {
         return connectBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.route.ConnectRsp connect_rsp = 13;
       private com.letsmidi.monsys.protocol.route.Route.ConnectRsp connectRsp_ = com.letsmidi.monsys.protocol.route.Route.ConnectRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.route.Route.ConnectRsp, com.letsmidi.monsys.protocol.route.Route.ConnectRsp.Builder, com.letsmidi.monsys.protocol.route.Route.ConnectRspOrBuilder> connectRspBuilder_;
@@ -1643,7 +1660,7 @@ public final class Route {
         if (connectRspBuilder_ == null) {
           connectRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.route.Route.ConnectRsp, com.letsmidi.monsys.protocol.route.Route.ConnectRsp.Builder, com.letsmidi.monsys.protocol.route.Route.ConnectRspOrBuilder>(
-                  getConnectRsp(),
+                  connectRsp_,
                   getParentForChildren(),
                   isClean());
           connectRsp_ = null;
@@ -1662,10 +1679,10 @@ public final class Route {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.route.RouteMsg)
   }
 
-  public interface ReqTokenOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.route.ReqToken)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ReqTokenOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string token = 1;
     /**
      * <code>required string token = 1;</code>
      */
@@ -1680,6 +1697,7 @@ public final class Route {
     com.google.protobuf.ByteString
         getTokenBytes();
 
+    // required .com.letsmidi.monsys.protocol.route.AddrType addr_type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.route.AddrType addr_type = 2;</code>
      *
@@ -1697,6 +1715,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.AddrType getAddrType();
 
+    // optional int32 client_ip_v4 = 3;
     /**
      * <code>optional int32 client_ip_v4 = 3;</code>
      */
@@ -1706,6 +1725,7 @@ public final class Route {
      */
     int getClientIpV4();
 
+    // optional int32 fgw_ip_v4 = 4;
     /**
      * <code>optional int32 fgw_ip_v4 = 4;</code>
      */
@@ -1719,9 +1739,8 @@ public final class Route {
    * Protobuf type {@code com.letsmidi.monsys.protocol.route.ReqToken}
    */
   public static final class ReqToken extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.route.ReqToken)
-      ReqTokenOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ReqTokenOrBuilder {
     // Use ReqToken.newBuilder() to construct.
     private ReqToken(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1768,9 +1787,8 @@ public final class Route {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              token_ = bs;
+              token_ = input.readBytes();
               break;
             }
             case 16: {
@@ -1834,6 +1852,7 @@ public final class Route {
     }
 
     private int bitField0_;
+    // required string token = 1;
     public static final int TOKEN_FIELD_NUMBER = 1;
     private java.lang.Object token_;
     /**
@@ -1876,6 +1895,7 @@ public final class Route {
       }
     }
 
+    // required .com.letsmidi.monsys.protocol.route.AddrType addr_type = 2;
     public static final int ADDR_TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.route.Route.AddrType addrType_;
     /**
@@ -1899,6 +1919,7 @@ public final class Route {
       return addrType_;
     }
 
+    // optional int32 client_ip_v4 = 3;
     public static final int CLIENT_IP_V4_FIELD_NUMBER = 3;
     private int clientIpV4_;
     /**
@@ -1914,6 +1935,7 @@ public final class Route {
       return clientIpV4_;
     }
 
+    // optional int32 fgw_ip_v4 = 4;
     public static final int FGW_IP_V4_FIELD_NUMBER = 4;
     private int fgwIpV4_;
     /**
@@ -1938,8 +1960,7 @@ public final class Route {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasToken()) {
         memoizedIsInitialized = 0;
@@ -2075,9 +2096,8 @@ public final class Route {
      * Protobuf type {@code com.letsmidi.monsys.protocol.route.ReqToken}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.route.ReqToken)
-        com.letsmidi.monsys.protocol.route.Route.ReqTokenOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.route.Route.ReqTokenOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.route.Route.internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor;
@@ -2227,6 +2247,7 @@ public final class Route {
       }
       private int bitField0_;
 
+      // required string token = 1;
       private java.lang.Object token_ = "";
       /**
        * <code>required string token = 1;</code>
@@ -2240,12 +2261,9 @@ public final class Route {
       public java.lang.String getToken() {
         java.lang.Object ref = token_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            token_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          token_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2303,6 +2321,7 @@ public final class Route {
         return this;
       }
 
+      // required .com.letsmidi.monsys.protocol.route.AddrType addr_type = 2;
       private com.letsmidi.monsys.protocol.route.Route.AddrType addrType_ = com.letsmidi.monsys.protocol.route.Route.AddrType.IP_V4;
       /**
        * <code>required .com.letsmidi.monsys.protocol.route.AddrType addr_type = 2;</code>
@@ -2354,6 +2373,7 @@ public final class Route {
         return this;
       }
 
+      // optional int32 client_ip_v4 = 3;
       private int clientIpV4_ ;
       /**
        * <code>optional int32 client_ip_v4 = 3;</code>
@@ -2386,6 +2406,7 @@ public final class Route {
         return this;
       }
 
+      // optional int32 fgw_ip_v4 = 4;
       private int fgwIpV4_ ;
       /**
        * <code>optional int32 fgw_ip_v4 = 4;</code>
@@ -2429,10 +2450,10 @@ public final class Route {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.route.ReqToken)
   }
 
-  public interface ReqTokenRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.route.ReqTokenRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ReqTokenRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -2442,6 +2463,7 @@ public final class Route {
      */
     int getCode();
 
+    // required int32 port_for_client = 2;
     /**
      * <code>required int32 port_for_client = 2;</code>
      *
@@ -2459,6 +2481,7 @@ public final class Route {
      */
     int getPortForClient();
 
+    // required int32 port_for_fgw = 3;
     /**
      * <code>required int32 port_for_fgw = 3;</code>
      */
@@ -2472,9 +2495,8 @@ public final class Route {
    * Protobuf type {@code com.letsmidi.monsys.protocol.route.ReqTokenRsp}
    */
   public static final class ReqTokenRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.route.ReqTokenRsp)
-      ReqTokenRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ReqTokenRspOrBuilder {
     // Use ReqTokenRsp.newBuilder() to construct.
     private ReqTokenRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2575,6 +2597,7 @@ public final class Route {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -2590,6 +2613,7 @@ public final class Route {
       return code_;
     }
 
+    // required int32 port_for_client = 2;
     public static final int PORT_FOR_CLIENT_FIELD_NUMBER = 2;
     private int portForClient_;
     /**
@@ -2613,6 +2637,7 @@ public final class Route {
       return portForClient_;
     }
 
+    // required int32 port_for_fgw = 3;
     public static final int PORT_FOR_FGW_FIELD_NUMBER = 3;
     private int portForFgw_;
     /**
@@ -2636,8 +2661,7 @@ public final class Route {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -2770,9 +2794,8 @@ public final class Route {
      * Protobuf type {@code com.letsmidi.monsys.protocol.route.ReqTokenRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.route.ReqTokenRsp)
-        com.letsmidi.monsys.protocol.route.Route.ReqTokenRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.route.Route.ReqTokenRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.route.Route.internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor;
@@ -2915,6 +2938,7 @@ public final class Route {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -2947,6 +2971,7 @@ public final class Route {
         return this;
       }
 
+      // required int32 port_for_client = 2;
       private int portForClient_ ;
       /**
        * <code>required int32 port_for_client = 2;</code>
@@ -2995,6 +3020,7 @@ public final class Route {
         return this;
       }
 
+      // required int32 port_for_fgw = 3;
       private int portForFgw_ ;
       /**
        * <code>required int32 port_for_fgw = 3;</code>
@@ -3038,10 +3064,10 @@ public final class Route {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.route.ReqTokenRsp)
   }
 
-  public interface ConnectOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.route.Connect)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .com.letsmidi.monsys.protocol.route.ClientType client_type = 1;
     /**
      * <code>required .com.letsmidi.monsys.protocol.route.ClientType client_type = 1;</code>
      */
@@ -3051,6 +3077,7 @@ public final class Route {
      */
     com.letsmidi.monsys.protocol.route.Route.ClientType getClientType();
 
+    // required string token = 2;
     /**
      * <code>required string token = 2;</code>
      */
@@ -3069,9 +3096,8 @@ public final class Route {
    * Protobuf type {@code com.letsmidi.monsys.protocol.route.Connect}
    */
   public static final class Connect extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.route.Connect)
-      ConnectOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectOrBuilder {
     // Use Connect.newBuilder() to construct.
     private Connect(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3129,9 +3155,8 @@ public final class Route {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              token_ = bs;
+              token_ = input.readBytes();
               break;
             }
           }
@@ -3174,6 +3199,7 @@ public final class Route {
     }
 
     private int bitField0_;
+    // required .com.letsmidi.monsys.protocol.route.ClientType client_type = 1;
     public static final int CLIENT_TYPE_FIELD_NUMBER = 1;
     private com.letsmidi.monsys.protocol.route.Route.ClientType clientType_;
     /**
@@ -3189,6 +3215,7 @@ public final class Route {
       return clientType_;
     }
 
+    // required string token = 2;
     public static final int TOKEN_FIELD_NUMBER = 2;
     private java.lang.Object token_;
     /**
@@ -3238,8 +3265,7 @@ public final class Route {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasClientType()) {
         memoizedIsInitialized = 0;
@@ -3361,9 +3387,8 @@ public final class Route {
      * Protobuf type {@code com.letsmidi.monsys.protocol.route.Connect}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.route.Connect)
-        com.letsmidi.monsys.protocol.route.Route.ConnectOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.route.Route.ConnectOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.route.Route.internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor;
@@ -3495,6 +3520,7 @@ public final class Route {
       }
       private int bitField0_;
 
+      // required .com.letsmidi.monsys.protocol.route.ClientType client_type = 1;
       private com.letsmidi.monsys.protocol.route.Route.ClientType clientType_ = com.letsmidi.monsys.protocol.route.Route.ClientType.CLIENT;
       /**
        * <code>required .com.letsmidi.monsys.protocol.route.ClientType client_type = 1;</code>
@@ -3530,6 +3556,7 @@ public final class Route {
         return this;
       }
 
+      // required string token = 2;
       private java.lang.Object token_ = "";
       /**
        * <code>required string token = 2;</code>
@@ -3543,12 +3570,9 @@ public final class Route {
       public java.lang.String getToken() {
         java.lang.Object ref = token_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            token_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          token_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3617,10 +3641,10 @@ public final class Route {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.route.Connect)
   }
 
-  public interface ConnectRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.route.ConnectRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -3634,9 +3658,8 @@ public final class Route {
    * Protobuf type {@code com.letsmidi.monsys.protocol.route.ConnectRsp}
    */
   public static final class ConnectRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.route.ConnectRsp)
-      ConnectRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectRspOrBuilder {
     // Use ConnectRsp.newBuilder() to construct.
     private ConnectRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3727,6 +3750,7 @@ public final class Route {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -3748,8 +3772,7 @@ public final class Route {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -3860,9 +3883,8 @@ public final class Route {
      * Protobuf type {@code com.letsmidi.monsys.protocol.route.ConnectRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.route.ConnectRsp)
-        com.letsmidi.monsys.protocol.route.Route.ConnectRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.route.Route.ConnectRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.route.Route.internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor;
@@ -3979,6 +4001,7 @@ public final class Route {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -4022,27 +4045,27 @@ public final class Route {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.route.ConnectRsp)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_route_ReqToken_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_route_Connect_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4081,47 +4104,47 @@ public final class Route {
       "\022\n\n\006CLIENT\020\001\022\007\n\003FGW\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor,
+              new java.lang.String[] { "Version", "Type", "Sequence", "ReqToken", "ReqTokenRsp", "Connect", "ConnectRsp", });
+          internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_com_letsmidi_monsys_protocol_route_ReqToken_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor,
+              new java.lang.String[] { "Token", "AddrType", "ClientIpV4", "FgwIpV4", });
+          internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor,
+              new java.lang.String[] { "Code", "PortForClient", "PortForFgw", });
+          internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_com_letsmidi_monsys_protocol_route_Connect_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor,
+              new java.lang.String[] { "ClientType", "Token", });
+          internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_route_RouteMsg_descriptor,
-        new java.lang.String[] { "Version", "Type", "Sequence", "ReqToken", "ReqTokenRsp", "Connect", "ConnectRsp", });
-    internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_letsmidi_monsys_protocol_route_ReqToken_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_route_ReqToken_descriptor,
-        new java.lang.String[] { "Token", "AddrType", "ClientIpV4", "FgwIpV4", });
-    internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_route_ReqTokenRsp_descriptor,
-        new java.lang.String[] { "Code", "PortForClient", "PortForFgw", });
-    internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_letsmidi_monsys_protocol_route_Connect_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_route_Connect_descriptor,
-        new java.lang.String[] { "ClientType", "Token", });
-    internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_route_ConnectRsp_descriptor,
-        new java.lang.String[] { "Code", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

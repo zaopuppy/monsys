@@ -117,10 +117,12 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
     protected abstract boolean saveRoute(T msg, Callback<T> callback);
 
-    protected abstract RouteItem<T> findRoute(T msg);
+    //protected abstract RouteItem<T> findRoute(T msg);
+
+    protected abstract RouteItem<T> removeRoute(T msg);
 
     protected void onResponse(T msg) {
-        RouteItem<T> item = findRoute(msg);
+        RouteItem<T> item = removeRoute(msg);
         if (item == null) {
             return;
         }

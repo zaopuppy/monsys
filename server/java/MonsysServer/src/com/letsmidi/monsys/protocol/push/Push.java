@@ -14,13 +14,13 @@ public final class Push {
   public enum MsgType
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>LOGIN = 1;</code>
+     * <code>PUSH_CLIENT_LOGIN = 1;</code>
      */
-    LOGIN(0, 1),
+    PUSH_CLIENT_LOGIN(0, 1),
     /**
-     * <code>LOGIN_RSP = 101;</code>
+     * <code>PUSH_CLIENT_LOGIN_RSP = 101;</code>
      */
-    LOGIN_RSP(1, 101),
+    PUSH_CLIENT_LOGIN_RSP(1, 101),
     /**
      * <code>BIND = 2;</code>
      */
@@ -70,13 +70,13 @@ public final class Push {
      */
     SET_DEV_INFO_RSP(13, 107),
     /**
-     * <code>CLIENT_LOGIN = 8;</code>
+     * <code>ADMIN_CLIENT_LOGIN = 8;</code>
      */
-    CLIENT_LOGIN(14, 8),
+    ADMIN_CLIENT_LOGIN(14, 8),
     /**
-     * <code>CLIENT_LOGIN_RSP = 108;</code>
+     * <code>ADMIN_CLIENT_LOGIN_RSP = 108;</code>
      */
-    CLIENT_LOGIN_RSP(15, 108),
+    ADMIN_CLIENT_LOGIN_RSP(15, 108),
     /**
      * <code>USER_REGISTER = 9;</code>
      */
@@ -96,13 +96,13 @@ public final class Push {
     ;
 
     /**
-     * <code>LOGIN = 1;</code>
+     * <code>PUSH_CLIENT_LOGIN = 1;</code>
      */
-    public static final int LOGIN_VALUE = 1;
+    public static final int PUSH_CLIENT_LOGIN_VALUE = 1;
     /**
-     * <code>LOGIN_RSP = 101;</code>
+     * <code>PUSH_CLIENT_LOGIN_RSP = 101;</code>
      */
-    public static final int LOGIN_RSP_VALUE = 101;
+    public static final int PUSH_CLIENT_LOGIN_RSP_VALUE = 101;
     /**
      * <code>BIND = 2;</code>
      */
@@ -152,13 +152,13 @@ public final class Push {
      */
     public static final int SET_DEV_INFO_RSP_VALUE = 107;
     /**
-     * <code>CLIENT_LOGIN = 8;</code>
+     * <code>ADMIN_CLIENT_LOGIN = 8;</code>
      */
-    public static final int CLIENT_LOGIN_VALUE = 8;
+    public static final int ADMIN_CLIENT_LOGIN_VALUE = 8;
     /**
-     * <code>CLIENT_LOGIN_RSP = 108;</code>
+     * <code>ADMIN_CLIENT_LOGIN_RSP = 108;</code>
      */
-    public static final int CLIENT_LOGIN_RSP_VALUE = 108;
+    public static final int ADMIN_CLIENT_LOGIN_RSP_VALUE = 108;
     /**
      * <code>USER_REGISTER = 9;</code>
      */
@@ -181,8 +181,8 @@ public final class Push {
 
     public static MsgType valueOf(int value) {
       switch (value) {
-        case 1: return LOGIN;
-        case 101: return LOGIN_RSP;
+        case 1: return PUSH_CLIENT_LOGIN;
+        case 101: return PUSH_CLIENT_LOGIN_RSP;
         case 2: return BIND;
         case 102: return BIND_RSP;
         case 3: return CONNECT;
@@ -195,8 +195,8 @@ public final class Push {
         case 106: return GET_DEV_INFO_RSP;
         case 7: return SET_DEV_INFO;
         case 107: return SET_DEV_INFO_RSP;
-        case 8: return CLIENT_LOGIN;
-        case 108: return CLIENT_LOGIN_RSP;
+        case 8: return ADMIN_CLIENT_LOGIN;
+        case 108: return ADMIN_CLIENT_LOGIN_RSP;
         case 9: return USER_REGISTER;
         case 109: return USER_REGISTER_RSP;
         case 10: return HEARTBEAT;
@@ -252,10 +252,10 @@ public final class Push {
     // @@protoc_insertion_point(enum_scope:com.letsmidi.monsys.protocol.push.MsgType)
   }
 
-  public interface IdValuePairOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.IdValuePair)
-      com.google.protobuf.MessageOrBuilder {
+  public interface IdValuePairOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 id = 1;
     /**
      * <code>required int32 id = 1;</code>
      */
@@ -265,6 +265,7 @@ public final class Push {
      */
     int getId();
 
+    // required int32 value = 2;
     /**
      * <code>required int32 value = 2;</code>
      */
@@ -278,9 +279,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.IdValuePair}
    */
   public static final class IdValuePair extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.IdValuePair)
-      IdValuePairOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements IdValuePairOrBuilder {
     // Use IdValuePair.newBuilder() to construct.
     private IdValuePair(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -376,6 +376,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int id_;
     /**
@@ -391,6 +392,7 @@ public final class Push {
       return id_;
     }
 
+    // required int32 value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private int value_;
     /**
@@ -413,8 +415,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -536,9 +537,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.IdValuePair}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.IdValuePair)
-        com.letsmidi.monsys.protocol.push.Push.IdValuePairOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.IdValuePairOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor;
@@ -668,6 +668,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 id = 1;
       private int id_ ;
       /**
        * <code>required int32 id = 1;</code>
@@ -700,6 +701,7 @@ public final class Push {
         return this;
       }
 
+      // required int32 value = 2;
       private int value_ ;
       /**
        * <code>required int32 value = 2;</code>
@@ -743,10 +745,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.IdValuePair)
   }
 
-  public interface FGatewayInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.FGatewayInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FGatewayInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -761,6 +763,7 @@ public final class Push {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required string name = 2;
     /**
      * <code>required string name = 2;</code>
      */
@@ -775,6 +778,7 @@ public final class Push {
     com.google.protobuf.ByteString
         getNameBytes();
 
+    // required string desc = 3;
     /**
      * <code>required string desc = 3;</code>
      */
@@ -793,9 +797,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.FGatewayInfo}
    */
   public static final class FGatewayInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.FGatewayInfo)
-      FGatewayInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements FGatewayInfoOrBuilder {
     // Use FGatewayInfo.newBuilder() to construct.
     private FGatewayInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -842,21 +845,18 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              desc_ = bs;
+              desc_ = input.readBytes();
               break;
             }
           }
@@ -899,6 +899,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -941,6 +942,7 @@ public final class Push {
       }
     }
 
+    // required string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
     private java.lang.Object name_;
     /**
@@ -983,6 +985,7 @@ public final class Push {
       }
     }
 
+    // required string desc = 3;
     public static final int DESC_FIELD_NUMBER = 3;
     private java.lang.Object desc_;
     /**
@@ -1033,8 +1036,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -1167,9 +1169,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.FGatewayInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.FGatewayInfo)
-        com.letsmidi.monsys.protocol.push.Push.FGatewayInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.FGatewayInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor;
@@ -1318,6 +1319,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -1331,12 +1333,9 @@ public final class Push {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1394,6 +1393,7 @@ public final class Push {
         return this;
       }
 
+      // required string name = 2;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 2;</code>
@@ -1407,12 +1407,9 @@ public final class Push {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1470,6 +1467,7 @@ public final class Push {
         return this;
       }
 
+      // required string desc = 3;
       private java.lang.Object desc_ = "";
       /**
        * <code>required string desc = 3;</code>
@@ -1483,12 +1481,9 @@ public final class Push {
       public java.lang.String getDesc() {
         java.lang.Object ref = desc_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            desc_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          desc_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1557,10 +1552,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.FGatewayInfo)
   }
 
-  public interface DeviceInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.DeviceInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DeviceInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -1570,6 +1565,7 @@ public final class Push {
      */
     int getAddr();
 
+    // required int32 type = 2;
     /**
      * <code>required int32 type = 2;</code>
      */
@@ -1579,6 +1575,7 @@ public final class Push {
      */
     int getType();
 
+    // required string name = 3;
     /**
      * <code>required string name = 3;</code>
      */
@@ -1597,9 +1594,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.DeviceInfo}
    */
   public static final class DeviceInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.DeviceInfo)
-      DeviceInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DeviceInfoOrBuilder {
     // Use DeviceInfo.newBuilder() to construct.
     private DeviceInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1656,9 +1652,8 @@ public final class Push {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
           }
@@ -1701,6 +1696,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -1716,6 +1712,7 @@ public final class Push {
       return addr_;
     }
 
+    // required int32 type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private int type_;
     /**
@@ -1731,6 +1728,7 @@ public final class Push {
       return type_;
     }
 
+    // required string name = 3;
     public static final int NAME_FIELD_NUMBER = 3;
     private java.lang.Object name_;
     /**
@@ -1781,8 +1779,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -1915,9 +1912,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.DeviceInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.DeviceInfo)
-        com.letsmidi.monsys.protocol.push.Push.DeviceInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.DeviceInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor;
@@ -2062,6 +2058,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -2094,6 +2091,7 @@ public final class Push {
         return this;
       }
 
+      // required int32 type = 2;
       private int type_ ;
       /**
        * <code>required int32 type = 2;</code>
@@ -2126,6 +2124,7 @@ public final class Push {
         return this;
       }
 
+      // required string name = 3;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 3;</code>
@@ -2139,12 +2138,9 @@ public final class Push {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2213,10 +2209,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.DeviceInfo)
   }
 
-  public interface PushMsgOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.PushMsg)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PushMsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 version = 1;
     /**
      * <code>required int32 version = 1;</code>
      */
@@ -2226,6 +2222,7 @@ public final class Push {
      */
     int getVersion();
 
+    // required .com.letsmidi.monsys.protocol.push.MsgType type = 2;
     /**
      * <code>required .com.letsmidi.monsys.protocol.push.MsgType type = 2;</code>
      */
@@ -2235,6 +2232,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.MsgType getType();
 
+    // required int32 sequence = 3;
     /**
      * <code>required int32 sequence = 3;</code>
      */
@@ -2244,32 +2242,35 @@ public final class Push {
      */
     int getSequence();
 
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
     boolean hasLogin();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.Login getLogin();
+    com.letsmidi.monsys.protocol.push.Push.PushClientLogin getLogin();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder getLoginOrBuilder();
+    com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder getLoginOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
     boolean hasLoginRsp();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.LoginRsp getLoginRsp();
+    com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp getLoginRsp();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder getLoginRspOrBuilder();
+    com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder getLoginRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;</code>
      */
@@ -2283,6 +2284,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.BindOrBuilder getBindOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;</code>
      */
@@ -2296,6 +2298,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.BindRspOrBuilder getBindRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;</code>
      */
@@ -2309,6 +2312,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.ConnectOrBuilder getConnectOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;</code>
      */
@@ -2322,6 +2326,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.ConnectRspOrBuilder getConnectRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;</code>
      */
@@ -2335,6 +2340,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetFgwListOrBuilder getGetFgwListOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;</code>
      */
@@ -2348,6 +2354,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetFgwListRspOrBuilder getGetFgwListRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;</code>
      */
@@ -2361,6 +2368,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetDevListOrBuilder getGetDevListOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;</code>
      */
@@ -2374,6 +2382,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetDevListRspOrBuilder getGetDevListRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;</code>
      */
@@ -2387,6 +2396,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetDevInfoOrBuilder getGetDevInfoOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;</code>
      */
@@ -2400,6 +2410,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.GetDevInfoRspOrBuilder getGetDevInfoRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;</code>
      */
@@ -2413,6 +2424,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.SetDevInfoOrBuilder getSetDevInfoOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;</code>
      */
@@ -2426,32 +2438,35 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.SetDevInfoRspOrBuilder getSetDevInfoRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
     boolean hasClientLogin();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.ClientLogin getClientLogin();
+    com.letsmidi.monsys.protocol.push.Push.AdminClientLogin getClientLogin();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder getClientLoginOrBuilder();
+    com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder getClientLoginOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
     boolean hasClientLoginRsp();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp getClientLoginRsp();
+    com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp getClientLoginRsp();
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
-    com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder getClientLoginRspOrBuilder();
+    com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder getClientLoginRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;</code>
      */
@@ -2465,6 +2480,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder getUserRegisterOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;</code>
      */
@@ -2478,6 +2494,7 @@ public final class Push {
      */
     com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder getUserRegisterRspOrBuilder();
 
+    // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
     /**
      * <code>optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;</code>
      */
@@ -2495,9 +2512,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushMsg}
    */
   public static final class PushMsg extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.PushMsg)
-      PushMsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PushMsgOrBuilder {
     // Use PushMsg.newBuilder() to construct.
     private PushMsg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2565,11 +2581,11 @@ public final class Push {
               break;
             }
             case 82: {
-              com.letsmidi.monsys.protocol.push.Push.Login.Builder subBuilder = null;
+              com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder subBuilder = null;
               if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = login_.toBuilder();
               }
-              login_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.Login.PARSER, extensionRegistry);
+              login_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.PushClientLogin.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(login_);
                 login_ = subBuilder.buildPartial();
@@ -2578,11 +2594,11 @@ public final class Push {
               break;
             }
             case 90: {
-              com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder subBuilder = null;
+              com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder subBuilder = null;
               if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 subBuilder = loginRsp_.toBuilder();
               }
-              loginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.LoginRsp.PARSER, extensionRegistry);
+              loginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(loginRsp_);
                 loginRsp_ = subBuilder.buildPartial();
@@ -2747,11 +2763,11 @@ public final class Push {
               break;
             }
             case 194: {
-              com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder subBuilder = null;
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder subBuilder = null;
               if (((bitField0_ & 0x00020000) == 0x00020000)) {
                 subBuilder = clientLogin_.toBuilder();
               }
-              clientLogin_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.ClientLogin.PARSER, extensionRegistry);
+              clientLogin_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(clientLogin_);
                 clientLogin_ = subBuilder.buildPartial();
@@ -2760,11 +2776,11 @@ public final class Push {
               break;
             }
             case 202: {
-              com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder subBuilder = null;
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder subBuilder = null;
               if (((bitField0_ & 0x00040000) == 0x00040000)) {
                 subBuilder = clientLoginRsp_.toBuilder();
               }
-              clientLoginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.PARSER, extensionRegistry);
+              clientLoginRsp_ = input.readMessage(com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(clientLoginRsp_);
                 clientLoginRsp_ = subBuilder.buildPartial();
@@ -2851,6 +2867,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private int version_;
     /**
@@ -2866,6 +2883,7 @@ public final class Push {
       return version_;
     }
 
+    // required .com.letsmidi.monsys.protocol.push.MsgType type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private com.letsmidi.monsys.protocol.push.Push.MsgType type_;
     /**
@@ -2881,6 +2899,7 @@ public final class Push {
       return type_;
     }
 
+    // required int32 sequence = 3;
     public static final int SEQUENCE_FIELD_NUMBER = 3;
     private int sequence_;
     /**
@@ -2896,48 +2915,51 @@ public final class Push {
       return sequence_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;
     public static final int LOGIN_FIELD_NUMBER = 10;
-    private com.letsmidi.monsys.protocol.push.Push.Login login_;
+    private com.letsmidi.monsys.protocol.push.Push.PushClientLogin login_;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
     public boolean hasLogin() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.Login getLogin() {
+    public com.letsmidi.monsys.protocol.push.Push.PushClientLogin getLogin() {
       return login_;
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder getLoginOrBuilder() {
+    public com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder getLoginOrBuilder() {
       return login_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;
     public static final int LOGIN_RSP_FIELD_NUMBER = 11;
-    private com.letsmidi.monsys.protocol.push.Push.LoginRsp loginRsp_;
+    private com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp loginRsp_;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
     public boolean hasLoginRsp() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.LoginRsp getLoginRsp() {
+    public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp getLoginRsp() {
       return loginRsp_;
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder getLoginRspOrBuilder() {
+    public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder getLoginRspOrBuilder() {
       return loginRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
     public static final int BIND_FIELD_NUMBER = 12;
     private com.letsmidi.monsys.protocol.push.Push.Bind bind_;
     /**
@@ -2959,6 +2981,7 @@ public final class Push {
       return bind_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
     public static final int BIND_RSP_FIELD_NUMBER = 13;
     private com.letsmidi.monsys.protocol.push.Push.BindRsp bindRsp_;
     /**
@@ -2980,6 +3003,7 @@ public final class Push {
       return bindRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
     public static final int CONNECT_FIELD_NUMBER = 14;
     private com.letsmidi.monsys.protocol.push.Push.Connect connect_;
     /**
@@ -3001,6 +3025,7 @@ public final class Push {
       return connect_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
     public static final int CONNECT_RSP_FIELD_NUMBER = 15;
     private com.letsmidi.monsys.protocol.push.Push.ConnectRsp connectRsp_;
     /**
@@ -3022,6 +3047,7 @@ public final class Push {
       return connectRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
     public static final int GET_FGW_LIST_FIELD_NUMBER = 16;
     private com.letsmidi.monsys.protocol.push.Push.GetFgwList getFgwList_;
     /**
@@ -3043,6 +3069,7 @@ public final class Push {
       return getFgwList_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
     public static final int GET_FGW_LIST_RSP_FIELD_NUMBER = 17;
     private com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp getFgwListRsp_;
     /**
@@ -3064,6 +3091,7 @@ public final class Push {
       return getFgwListRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
     public static final int GET_DEV_LIST_FIELD_NUMBER = 18;
     private com.letsmidi.monsys.protocol.push.Push.GetDevList getDevList_;
     /**
@@ -3085,6 +3113,7 @@ public final class Push {
       return getDevList_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
     public static final int GET_DEV_LIST_RSP_FIELD_NUMBER = 19;
     private com.letsmidi.monsys.protocol.push.Push.GetDevListRsp getDevListRsp_;
     /**
@@ -3106,6 +3135,7 @@ public final class Push {
       return getDevListRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
     public static final int GET_DEV_INFO_FIELD_NUMBER = 20;
     private com.letsmidi.monsys.protocol.push.Push.GetDevInfo getDevInfo_;
     /**
@@ -3127,6 +3157,7 @@ public final class Push {
       return getDevInfo_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
     public static final int GET_DEV_INFO_RSP_FIELD_NUMBER = 21;
     private com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp getDevInfoRsp_;
     /**
@@ -3148,6 +3179,7 @@ public final class Push {
       return getDevInfoRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
     public static final int SET_DEV_INFO_FIELD_NUMBER = 22;
     private com.letsmidi.monsys.protocol.push.Push.SetDevInfo setDevInfo_;
     /**
@@ -3169,6 +3201,7 @@ public final class Push {
       return setDevInfo_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
     public static final int SET_DEV_INFO_RSP_FIELD_NUMBER = 23;
     private com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp setDevInfoRsp_;
     /**
@@ -3190,48 +3223,51 @@ public final class Push {
       return setDevInfoRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;
     public static final int CLIENT_LOGIN_FIELD_NUMBER = 24;
-    private com.letsmidi.monsys.protocol.push.Push.ClientLogin clientLogin_;
+    private com.letsmidi.monsys.protocol.push.Push.AdminClientLogin clientLogin_;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
     public boolean hasClientLogin() {
       return ((bitField0_ & 0x00020000) == 0x00020000);
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.ClientLogin getClientLogin() {
+    public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin getClientLogin() {
       return clientLogin_;
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder getClientLoginOrBuilder() {
+    public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder getClientLoginOrBuilder() {
       return clientLogin_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;
     public static final int CLIENT_LOGIN_RSP_FIELD_NUMBER = 25;
-    private com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp clientLoginRsp_;
+    private com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp clientLoginRsp_;
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
     public boolean hasClientLoginRsp() {
       return ((bitField0_ & 0x00040000) == 0x00040000);
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp getClientLoginRsp() {
+    public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp getClientLoginRsp() {
       return clientLoginRsp_;
     }
     /**
-     * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+     * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
      */
-    public com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder getClientLoginRspOrBuilder() {
+    public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder getClientLoginRspOrBuilder() {
       return clientLoginRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
     public static final int USER_REGISTER_FIELD_NUMBER = 26;
     private com.letsmidi.monsys.protocol.push.Push.UserRegister userRegister_;
     /**
@@ -3253,6 +3289,7 @@ public final class Push {
       return userRegister_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
     public static final int USER_REGISTER_RSP_FIELD_NUMBER = 27;
     private com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp userRegisterRsp_;
     /**
@@ -3274,6 +3311,7 @@ public final class Push {
       return userRegisterRsp_;
     }
 
+    // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
     public static final int HEARTBEAT_FIELD_NUMBER = 28;
     private com.letsmidi.monsys.protocol.push.Push.Heartbeat heartbeat_;
     /**
@@ -3297,10 +3335,10 @@ public final class Push {
 
     private void initFields() {
       version_ = 0;
-      type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
+      type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.PUSH_CLIENT_LOGIN;
       sequence_ = 0;
-      login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
-      loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
+      login_ = com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance();
+      loginRsp_ = com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance();
       bind_ = com.letsmidi.monsys.protocol.push.Push.Bind.getDefaultInstance();
       bindRsp_ = com.letsmidi.monsys.protocol.push.Push.BindRsp.getDefaultInstance();
       connect_ = com.letsmidi.monsys.protocol.push.Push.Connect.getDefaultInstance();
@@ -3313,8 +3351,8 @@ public final class Push {
       getDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.getDefaultInstance();
       setDevInfo_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfo.getDefaultInstance();
       setDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.getDefaultInstance();
-      clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
-      clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+      clientLogin_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance();
+      clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance();
       userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
       userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
       heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
@@ -3322,8 +3360,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -3691,9 +3728,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushMsg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.PushMsg)
-        com.letsmidi.monsys.protocol.push.Push.PushMsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.PushMsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor;
@@ -3747,18 +3783,18 @@ public final class Push {
         super.clear();
         version_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
+        type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.PUSH_CLIENT_LOGIN;
         bitField0_ = (bitField0_ & ~0x00000002);
         sequence_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
         if (loginBuilder_ == null) {
-          login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
+          login_ = com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance();
         } else {
           loginBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000008);
         if (loginRspBuilder_ == null) {
-          loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
+          loginRsp_ = com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance();
         } else {
           loginRspBuilder_.clear();
         }
@@ -3836,13 +3872,13 @@ public final class Push {
         }
         bitField0_ = (bitField0_ & ~0x00010000);
         if (clientLoginBuilder_ == null) {
-          clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
+          clientLogin_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance();
         } else {
           clientLoginBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00020000);
         if (clientLoginRspBuilder_ == null) {
-          clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+          clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance();
         } else {
           clientLoginRspBuilder_.clear();
         }
@@ -4280,6 +4316,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 version = 1;
       private int version_ ;
       /**
        * <code>required int32 version = 1;</code>
@@ -4312,7 +4349,8 @@ public final class Push {
         return this;
       }
 
-      private com.letsmidi.monsys.protocol.push.Push.MsgType type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
+      // required .com.letsmidi.monsys.protocol.push.MsgType type = 2;
+      private com.letsmidi.monsys.protocol.push.Push.MsgType type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.PUSH_CLIENT_LOGIN;
       /**
        * <code>required .com.letsmidi.monsys.protocol.push.MsgType type = 2;</code>
        */
@@ -4342,11 +4380,12 @@ public final class Push {
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.LOGIN;
+        type_ = com.letsmidi.monsys.protocol.push.Push.MsgType.PUSH_CLIENT_LOGIN;
         onChanged();
         return this;
       }
 
+      // required int32 sequence = 3;
       private int sequence_ ;
       /**
        * <code>required int32 sequence = 3;</code>
@@ -4379,19 +4418,20 @@ public final class Push {
         return this;
       }
 
-      private com.letsmidi.monsys.protocol.push.Push.Login login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
+      // optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;
+      private com.letsmidi.monsys.protocol.push.Push.PushClientLogin login_ = com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.Login, com.letsmidi.monsys.protocol.push.Push.Login.Builder, com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder> loginBuilder_;
+          com.letsmidi.monsys.protocol.push.Push.PushClientLogin, com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder> loginBuilder_;
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
       public boolean hasLogin() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.Login getLogin() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLogin getLogin() {
         if (loginBuilder_ == null) {
           return login_;
         } else {
@@ -4399,9 +4439,9 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
-      public Builder setLogin(com.letsmidi.monsys.protocol.push.Push.Login value) {
+      public Builder setLogin(com.letsmidi.monsys.protocol.push.Push.PushClientLogin value) {
         if (loginBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4415,10 +4455,10 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
       public Builder setLogin(
-          com.letsmidi.monsys.protocol.push.Push.Login.Builder builderForValue) {
+          com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder builderForValue) {
         if (loginBuilder_ == null) {
           login_ = builderForValue.build();
           onChanged();
@@ -4429,14 +4469,14 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
-      public Builder mergeLogin(com.letsmidi.monsys.protocol.push.Push.Login value) {
+      public Builder mergeLogin(com.letsmidi.monsys.protocol.push.Push.PushClientLogin value) {
         if (loginBuilder_ == null) {
           if (((bitField0_ & 0x00000008) == 0x00000008) &&
-              login_ != com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance()) {
+              login_ != com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance()) {
             login_ =
-              com.letsmidi.monsys.protocol.push.Push.Login.newBuilder(login_).mergeFrom(value).buildPartial();
+              com.letsmidi.monsys.protocol.push.Push.PushClientLogin.newBuilder(login_).mergeFrom(value).buildPartial();
           } else {
             login_ = value;
           }
@@ -4448,11 +4488,11 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
       public Builder clearLogin() {
         if (loginBuilder_ == null) {
-          login_ = com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
+          login_ = com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance();
           onChanged();
         } else {
           loginBuilder_.clear();
@@ -4461,17 +4501,17 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.Login.Builder getLoginBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder getLoginBuilder() {
         bitField0_ |= 0x00000008;
         onChanged();
         return getLoginFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder getLoginOrBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder getLoginOrBuilder() {
         if (loginBuilder_ != null) {
           return loginBuilder_.getMessageOrBuilder();
         } else {
@@ -4479,15 +4519,15 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.Login login = 10;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLogin login = 10;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.Login, com.letsmidi.monsys.protocol.push.Push.Login.Builder, com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder> 
+          com.letsmidi.monsys.protocol.push.Push.PushClientLogin, com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder> 
           getLoginFieldBuilder() {
         if (loginBuilder_ == null) {
           loginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.push.Push.Login, com.letsmidi.monsys.protocol.push.Push.Login.Builder, com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder>(
-                  getLogin(),
+              com.letsmidi.monsys.protocol.push.Push.PushClientLogin, com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder>(
+                  login_,
                   getParentForChildren(),
                   isClean());
           login_ = null;
@@ -4495,19 +4535,20 @@ public final class Push {
         return loginBuilder_;
       }
 
-      private com.letsmidi.monsys.protocol.push.Push.LoginRsp loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
+      // optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;
+      private com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp loginRsp_ = com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.LoginRsp, com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder> loginRspBuilder_;
+          com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder> loginRspBuilder_;
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
       public boolean hasLoginRsp() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.LoginRsp getLoginRsp() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp getLoginRsp() {
         if (loginRspBuilder_ == null) {
           return loginRsp_;
         } else {
@@ -4515,9 +4556,9 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
-      public Builder setLoginRsp(com.letsmidi.monsys.protocol.push.Push.LoginRsp value) {
+      public Builder setLoginRsp(com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp value) {
         if (loginRspBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4531,10 +4572,10 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
       public Builder setLoginRsp(
-          com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder builderForValue) {
+          com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder builderForValue) {
         if (loginRspBuilder_ == null) {
           loginRsp_ = builderForValue.build();
           onChanged();
@@ -4545,14 +4586,14 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
-      public Builder mergeLoginRsp(com.letsmidi.monsys.protocol.push.Push.LoginRsp value) {
+      public Builder mergeLoginRsp(com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp value) {
         if (loginRspBuilder_ == null) {
           if (((bitField0_ & 0x00000010) == 0x00000010) &&
-              loginRsp_ != com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance()) {
+              loginRsp_ != com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance()) {
             loginRsp_ =
-              com.letsmidi.monsys.protocol.push.Push.LoginRsp.newBuilder(loginRsp_).mergeFrom(value).buildPartial();
+              com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.newBuilder(loginRsp_).mergeFrom(value).buildPartial();
           } else {
             loginRsp_ = value;
           }
@@ -4564,11 +4605,11 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
       public Builder clearLoginRsp() {
         if (loginRspBuilder_ == null) {
-          loginRsp_ = com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
+          loginRsp_ = com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance();
           onChanged();
         } else {
           loginRspBuilder_.clear();
@@ -4577,17 +4618,17 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder getLoginRspBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder getLoginRspBuilder() {
         bitField0_ |= 0x00000010;
         onChanged();
         return getLoginRspFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder getLoginRspOrBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder getLoginRspOrBuilder() {
         if (loginRspBuilder_ != null) {
           return loginRspBuilder_.getMessageOrBuilder();
         } else {
@@ -4595,15 +4636,15 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.LoginRsp login_rsp = 11;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.PushClientLoginRsp login_rsp = 11;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.LoginRsp, com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder> 
+          com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder> 
           getLoginRspFieldBuilder() {
         if (loginRspBuilder_ == null) {
           loginRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.push.Push.LoginRsp, com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder>(
-                  getLoginRsp(),
+              com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder>(
+                  loginRsp_,
                   getParentForChildren(),
                   isClean());
           loginRsp_ = null;
@@ -4611,6 +4652,7 @@ public final class Push {
         return loginRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.Bind bind = 12;
       private com.letsmidi.monsys.protocol.push.Push.Bind bind_ = com.letsmidi.monsys.protocol.push.Push.Bind.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.Bind, com.letsmidi.monsys.protocol.push.Push.Bind.Builder, com.letsmidi.monsys.protocol.push.Push.BindOrBuilder> bindBuilder_;
@@ -4719,7 +4761,7 @@ public final class Push {
         if (bindBuilder_ == null) {
           bindBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.Bind, com.letsmidi.monsys.protocol.push.Push.Bind.Builder, com.letsmidi.monsys.protocol.push.Push.BindOrBuilder>(
-                  getBind(),
+                  bind_,
                   getParentForChildren(),
                   isClean());
           bind_ = null;
@@ -4727,6 +4769,7 @@ public final class Push {
         return bindBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.BindRsp bind_rsp = 13;
       private com.letsmidi.monsys.protocol.push.Push.BindRsp bindRsp_ = com.letsmidi.monsys.protocol.push.Push.BindRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.BindRsp, com.letsmidi.monsys.protocol.push.Push.BindRsp.Builder, com.letsmidi.monsys.protocol.push.Push.BindRspOrBuilder> bindRspBuilder_;
@@ -4835,7 +4878,7 @@ public final class Push {
         if (bindRspBuilder_ == null) {
           bindRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.BindRsp, com.letsmidi.monsys.protocol.push.Push.BindRsp.Builder, com.letsmidi.monsys.protocol.push.Push.BindRspOrBuilder>(
-                  getBindRsp(),
+                  bindRsp_,
                   getParentForChildren(),
                   isClean());
           bindRsp_ = null;
@@ -4843,6 +4886,7 @@ public final class Push {
         return bindRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.Connect connect = 14;
       private com.letsmidi.monsys.protocol.push.Push.Connect connect_ = com.letsmidi.monsys.protocol.push.Push.Connect.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.Connect, com.letsmidi.monsys.protocol.push.Push.Connect.Builder, com.letsmidi.monsys.protocol.push.Push.ConnectOrBuilder> connectBuilder_;
@@ -4951,7 +4995,7 @@ public final class Push {
         if (connectBuilder_ == null) {
           connectBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.Connect, com.letsmidi.monsys.protocol.push.Push.Connect.Builder, com.letsmidi.monsys.protocol.push.Push.ConnectOrBuilder>(
-                  getConnect(),
+                  connect_,
                   getParentForChildren(),
                   isClean());
           connect_ = null;
@@ -4959,6 +5003,7 @@ public final class Push {
         return connectBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.ConnectRsp connect_rsp = 15;
       private com.letsmidi.monsys.protocol.push.Push.ConnectRsp connectRsp_ = com.letsmidi.monsys.protocol.push.Push.ConnectRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.ConnectRsp, com.letsmidi.monsys.protocol.push.Push.ConnectRsp.Builder, com.letsmidi.monsys.protocol.push.Push.ConnectRspOrBuilder> connectRspBuilder_;
@@ -5067,7 +5112,7 @@ public final class Push {
         if (connectRspBuilder_ == null) {
           connectRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.ConnectRsp, com.letsmidi.monsys.protocol.push.Push.ConnectRsp.Builder, com.letsmidi.monsys.protocol.push.Push.ConnectRspOrBuilder>(
-                  getConnectRsp(),
+                  connectRsp_,
                   getParentForChildren(),
                   isClean());
           connectRsp_ = null;
@@ -5075,6 +5120,7 @@ public final class Push {
         return connectRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetFgwList get_fgw_list = 16;
       private com.letsmidi.monsys.protocol.push.Push.GetFgwList getFgwList_ = com.letsmidi.monsys.protocol.push.Push.GetFgwList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetFgwList, com.letsmidi.monsys.protocol.push.Push.GetFgwList.Builder, com.letsmidi.monsys.protocol.push.Push.GetFgwListOrBuilder> getFgwListBuilder_;
@@ -5183,7 +5229,7 @@ public final class Push {
         if (getFgwListBuilder_ == null) {
           getFgwListBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetFgwList, com.letsmidi.monsys.protocol.push.Push.GetFgwList.Builder, com.letsmidi.monsys.protocol.push.Push.GetFgwListOrBuilder>(
-                  getGetFgwList(),
+                  getFgwList_,
                   getParentForChildren(),
                   isClean());
           getFgwList_ = null;
@@ -5191,6 +5237,7 @@ public final class Push {
         return getFgwListBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetFgwListRsp get_fgw_list_rsp = 17;
       private com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp getFgwListRsp_ = com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp, com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetFgwListRspOrBuilder> getFgwListRspBuilder_;
@@ -5299,7 +5346,7 @@ public final class Push {
         if (getFgwListRspBuilder_ == null) {
           getFgwListRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp, com.letsmidi.monsys.protocol.push.Push.GetFgwListRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetFgwListRspOrBuilder>(
-                  getGetFgwListRsp(),
+                  getFgwListRsp_,
                   getParentForChildren(),
                   isClean());
           getFgwListRsp_ = null;
@@ -5307,6 +5354,7 @@ public final class Push {
         return getFgwListRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetDevList get_dev_list = 18;
       private com.letsmidi.monsys.protocol.push.Push.GetDevList getDevList_ = com.letsmidi.monsys.protocol.push.Push.GetDevList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetDevList, com.letsmidi.monsys.protocol.push.Push.GetDevList.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevListOrBuilder> getDevListBuilder_;
@@ -5415,7 +5463,7 @@ public final class Push {
         if (getDevListBuilder_ == null) {
           getDevListBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetDevList, com.letsmidi.monsys.protocol.push.Push.GetDevList.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevListOrBuilder>(
-                  getGetDevList(),
+                  getDevList_,
                   getParentForChildren(),
                   isClean());
           getDevList_ = null;
@@ -5423,6 +5471,7 @@ public final class Push {
         return getDevListBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetDevListRsp get_dev_list_rsp = 19;
       private com.letsmidi.monsys.protocol.push.Push.GetDevListRsp getDevListRsp_ = com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetDevListRsp, com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevListRspOrBuilder> getDevListRspBuilder_;
@@ -5531,7 +5580,7 @@ public final class Push {
         if (getDevListRspBuilder_ == null) {
           getDevListRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetDevListRsp, com.letsmidi.monsys.protocol.push.Push.GetDevListRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevListRspOrBuilder>(
-                  getGetDevListRsp(),
+                  getDevListRsp_,
                   getParentForChildren(),
                   isClean());
           getDevListRsp_ = null;
@@ -5539,6 +5588,7 @@ public final class Push {
         return getDevListRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetDevInfo get_dev_info = 20;
       private com.letsmidi.monsys.protocol.push.Push.GetDevInfo getDevInfo_ = com.letsmidi.monsys.protocol.push.Push.GetDevInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetDevInfo, com.letsmidi.monsys.protocol.push.Push.GetDevInfo.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevInfoOrBuilder> getDevInfoBuilder_;
@@ -5647,7 +5697,7 @@ public final class Push {
         if (getDevInfoBuilder_ == null) {
           getDevInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetDevInfo, com.letsmidi.monsys.protocol.push.Push.GetDevInfo.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevInfoOrBuilder>(
-                  getGetDevInfo(),
+                  getDevInfo_,
                   getParentForChildren(),
                   isClean());
           getDevInfo_ = null;
@@ -5655,6 +5705,7 @@ public final class Push {
         return getDevInfoBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.GetDevInfoRsp get_dev_info_rsp = 21;
       private com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp getDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp, com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevInfoRspOrBuilder> getDevInfoRspBuilder_;
@@ -5763,7 +5814,7 @@ public final class Push {
         if (getDevInfoRspBuilder_ == null) {
           getDevInfoRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp, com.letsmidi.monsys.protocol.push.Push.GetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.push.Push.GetDevInfoRspOrBuilder>(
-                  getGetDevInfoRsp(),
+                  getDevInfoRsp_,
                   getParentForChildren(),
                   isClean());
           getDevInfoRsp_ = null;
@@ -5771,6 +5822,7 @@ public final class Push {
         return getDevInfoRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.SetDevInfo set_dev_info = 22;
       private com.letsmidi.monsys.protocol.push.Push.SetDevInfo setDevInfo_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.SetDevInfo, com.letsmidi.monsys.protocol.push.Push.SetDevInfo.Builder, com.letsmidi.monsys.protocol.push.Push.SetDevInfoOrBuilder> setDevInfoBuilder_;
@@ -5879,7 +5931,7 @@ public final class Push {
         if (setDevInfoBuilder_ == null) {
           setDevInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.SetDevInfo, com.letsmidi.monsys.protocol.push.Push.SetDevInfo.Builder, com.letsmidi.monsys.protocol.push.Push.SetDevInfoOrBuilder>(
-                  getSetDevInfo(),
+                  setDevInfo_,
                   getParentForChildren(),
                   isClean());
           setDevInfo_ = null;
@@ -5887,6 +5939,7 @@ public final class Push {
         return setDevInfoBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.SetDevInfoRsp set_dev_info_rsp = 23;
       private com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp setDevInfoRsp_ = com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp, com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.push.Push.SetDevInfoRspOrBuilder> setDevInfoRspBuilder_;
@@ -5995,7 +6048,7 @@ public final class Push {
         if (setDevInfoRspBuilder_ == null) {
           setDevInfoRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp, com.letsmidi.monsys.protocol.push.Push.SetDevInfoRsp.Builder, com.letsmidi.monsys.protocol.push.Push.SetDevInfoRspOrBuilder>(
-                  getSetDevInfoRsp(),
+                  setDevInfoRsp_,
                   getParentForChildren(),
                   isClean());
           setDevInfoRsp_ = null;
@@ -6003,19 +6056,20 @@ public final class Push {
         return setDevInfoRspBuilder_;
       }
 
-      private com.letsmidi.monsys.protocol.push.Push.ClientLogin clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
+      // optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;
+      private com.letsmidi.monsys.protocol.push.Push.AdminClientLogin clientLogin_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.ClientLogin, com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder> clientLoginBuilder_;
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLogin, com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder> clientLoginBuilder_;
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
       public boolean hasClientLogin() {
         return ((bitField0_ & 0x00020000) == 0x00020000);
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLogin getClientLogin() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin getClientLogin() {
         if (clientLoginBuilder_ == null) {
           return clientLogin_;
         } else {
@@ -6023,9 +6077,9 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
-      public Builder setClientLogin(com.letsmidi.monsys.protocol.push.Push.ClientLogin value) {
+      public Builder setClientLogin(com.letsmidi.monsys.protocol.push.Push.AdminClientLogin value) {
         if (clientLoginBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6039,10 +6093,10 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
       public Builder setClientLogin(
-          com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder builderForValue) {
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder builderForValue) {
         if (clientLoginBuilder_ == null) {
           clientLogin_ = builderForValue.build();
           onChanged();
@@ -6053,14 +6107,14 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
-      public Builder mergeClientLogin(com.letsmidi.monsys.protocol.push.Push.ClientLogin value) {
+      public Builder mergeClientLogin(com.letsmidi.monsys.protocol.push.Push.AdminClientLogin value) {
         if (clientLoginBuilder_ == null) {
           if (((bitField0_ & 0x00020000) == 0x00020000) &&
-              clientLogin_ != com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance()) {
+              clientLogin_ != com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance()) {
             clientLogin_ =
-              com.letsmidi.monsys.protocol.push.Push.ClientLogin.newBuilder(clientLogin_).mergeFrom(value).buildPartial();
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.newBuilder(clientLogin_).mergeFrom(value).buildPartial();
           } else {
             clientLogin_ = value;
           }
@@ -6072,11 +6126,11 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
       public Builder clearClientLogin() {
         if (clientLoginBuilder_ == null) {
-          clientLogin_ = com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
+          clientLogin_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance();
           onChanged();
         } else {
           clientLoginBuilder_.clear();
@@ -6085,17 +6139,17 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder getClientLoginBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder getClientLoginBuilder() {
         bitField0_ |= 0x00020000;
         onChanged();
         return getClientLoginFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder getClientLoginOrBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder getClientLoginOrBuilder() {
         if (clientLoginBuilder_ != null) {
           return clientLoginBuilder_.getMessageOrBuilder();
         } else {
@@ -6103,15 +6157,15 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLogin client_login = 24;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLogin client_login = 24;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.ClientLogin, com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder> 
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLogin, com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder> 
           getClientLoginFieldBuilder() {
         if (clientLoginBuilder_ == null) {
           clientLoginBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.push.Push.ClientLogin, com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder>(
-                  getClientLogin(),
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLogin, com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder>(
+                  clientLogin_,
                   getParentForChildren(),
                   isClean());
           clientLogin_ = null;
@@ -6119,19 +6173,20 @@ public final class Push {
         return clientLoginBuilder_;
       }
 
-      private com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+      // optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;
+      private com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder> clientLoginRspBuilder_;
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder> clientLoginRspBuilder_;
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
       public boolean hasClientLoginRsp() {
         return ((bitField0_ & 0x00040000) == 0x00040000);
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp getClientLoginRsp() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp getClientLoginRsp() {
         if (clientLoginRspBuilder_ == null) {
           return clientLoginRsp_;
         } else {
@@ -6139,9 +6194,9 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
-      public Builder setClientLoginRsp(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp value) {
+      public Builder setClientLoginRsp(com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp value) {
         if (clientLoginRspBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6155,10 +6210,10 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
       public Builder setClientLoginRsp(
-          com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder builderForValue) {
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder builderForValue) {
         if (clientLoginRspBuilder_ == null) {
           clientLoginRsp_ = builderForValue.build();
           onChanged();
@@ -6169,14 +6224,14 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
-      public Builder mergeClientLoginRsp(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp value) {
+      public Builder mergeClientLoginRsp(com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp value) {
         if (clientLoginRspBuilder_ == null) {
           if (((bitField0_ & 0x00040000) == 0x00040000) &&
-              clientLoginRsp_ != com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance()) {
+              clientLoginRsp_ != com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance()) {
             clientLoginRsp_ =
-              com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.newBuilder(clientLoginRsp_).mergeFrom(value).buildPartial();
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.newBuilder(clientLoginRsp_).mergeFrom(value).buildPartial();
           } else {
             clientLoginRsp_ = value;
           }
@@ -6188,11 +6243,11 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
       public Builder clearClientLoginRsp() {
         if (clientLoginRspBuilder_ == null) {
-          clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+          clientLoginRsp_ = com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance();
           onChanged();
         } else {
           clientLoginRspBuilder_.clear();
@@ -6201,17 +6256,17 @@ public final class Push {
         return this;
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder getClientLoginRspBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder getClientLoginRspBuilder() {
         bitField0_ |= 0x00040000;
         onChanged();
         return getClientLoginRspFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder getClientLoginRspOrBuilder() {
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder getClientLoginRspOrBuilder() {
         if (clientLoginRspBuilder_ != null) {
           return clientLoginRspBuilder_.getMessageOrBuilder();
         } else {
@@ -6219,15 +6274,15 @@ public final class Push {
         }
       }
       /**
-       * <code>optional .com.letsmidi.monsys.protocol.push.ClientLoginRsp client_login_rsp = 25;</code>
+       * <code>optional .com.letsmidi.monsys.protocol.push.AdminClientLoginRsp client_login_rsp = 25;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder> 
+          com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder> 
           getClientLoginRspFieldBuilder() {
         if (clientLoginRspBuilder_ == null) {
           clientLoginRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder>(
-                  getClientLoginRsp(),
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder>(
+                  clientLoginRsp_,
                   getParentForChildren(),
                   isClean());
           clientLoginRsp_ = null;
@@ -6235,6 +6290,7 @@ public final class Push {
         return clientLoginRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.UserRegister user_register = 26;
       private com.letsmidi.monsys.protocol.push.Push.UserRegister userRegister_ = com.letsmidi.monsys.protocol.push.Push.UserRegister.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.UserRegister, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder> userRegisterBuilder_;
@@ -6343,7 +6399,7 @@ public final class Push {
         if (userRegisterBuilder_ == null) {
           userRegisterBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.UserRegister, com.letsmidi.monsys.protocol.push.Push.UserRegister.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder>(
-                  getUserRegister(),
+                  userRegister_,
                   getParentForChildren(),
                   isClean());
           userRegister_ = null;
@@ -6351,6 +6407,7 @@ public final class Push {
         return userRegisterBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.UserRegisterRsp user_register_rsp = 27;
       private com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp userRegisterRsp_ = com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder> userRegisterRspBuilder_;
@@ -6459,7 +6516,7 @@ public final class Push {
         if (userRegisterRspBuilder_ == null) {
           userRegisterRspBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp, com.letsmidi.monsys.protocol.push.Push.UserRegisterRsp.Builder, com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder>(
-                  getUserRegisterRsp(),
+                  userRegisterRsp_,
                   getParentForChildren(),
                   isClean());
           userRegisterRsp_ = null;
@@ -6467,6 +6524,7 @@ public final class Push {
         return userRegisterRspBuilder_;
       }
 
+      // optional .com.letsmidi.monsys.protocol.push.Heartbeat heartbeat = 28;
       private com.letsmidi.monsys.protocol.push.Push.Heartbeat heartbeat_ = com.letsmidi.monsys.protocol.push.Push.Heartbeat.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.letsmidi.monsys.protocol.push.Push.Heartbeat, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder, com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder> heartbeatBuilder_;
@@ -6575,7 +6633,7 @@ public final class Push {
         if (heartbeatBuilder_ == null) {
           heartbeatBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.letsmidi.monsys.protocol.push.Push.Heartbeat, com.letsmidi.monsys.protocol.push.Push.Heartbeat.Builder, com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder>(
-                  getHeartbeat(),
+                  heartbeat_,
                   getParentForChildren(),
                   isClean());
           heartbeat_ = null;
@@ -6594,10 +6652,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushMsg)
   }
 
-  public interface LoginOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.Login)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PushClientLoginOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -6613,25 +6671,24 @@ public final class Push {
         getDeviceIdBytes();
   }
   /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.push.Login}
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushClientLogin}
    */
-  public static final class Login extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.Login)
-      LoginOrBuilder {
-    // Use Login.newBuilder() to construct.
-    private Login(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  public static final class PushClientLogin extends
+      com.google.protobuf.GeneratedMessage
+      implements PushClientLoginOrBuilder {
+    // Use PushClientLogin.newBuilder() to construct.
+    private PushClientLogin(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private Login(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private PushClientLogin(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final Login defaultInstance;
-    public static Login getDefaultInstance() {
+    private static final PushClientLogin defaultInstance;
+    public static PushClientLogin getDefaultInstance() {
       return defaultInstance;
     }
 
-    public Login getDefaultInstanceForType() {
+    public PushClientLogin getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -6641,7 +6698,7 @@ public final class Push {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private Login(
+    private PushClientLogin(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6665,9 +6722,8 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -6684,32 +6740,33 @@ public final class Push {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor;
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Login_fieldAccessorTable
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.push.Push.Login.class, com.letsmidi.monsys.protocol.push.Push.Login.Builder.class);
+              com.letsmidi.monsys.protocol.push.Push.PushClientLogin.class, com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<Login> PARSER =
-        new com.google.protobuf.AbstractParser<Login>() {
-      public Login parsePartialFrom(
+    public static com.google.protobuf.Parser<PushClientLogin> PARSER =
+        new com.google.protobuf.AbstractParser<PushClientLogin>() {
+      public PushClientLogin parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Login(input, extensionRegistry);
+        return new PushClientLogin(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Login> getParserForType() {
+    public com.google.protobuf.Parser<PushClientLogin> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -6758,8 +6815,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -6800,53 +6856,53 @@ public final class Push {
       return super.writeReplace();
     }
 
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(byte[] data)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseDelimitedFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseDelimitedFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.Login parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLogin parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6855,7 +6911,7 @@ public final class Push {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.Login prototype) {
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.PushClientLogin prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -6867,25 +6923,24 @@ public final class Push {
       return builder;
     }
     /**
-     * Protobuf type {@code com.letsmidi.monsys.protocol.push.Login}
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushClientLogin}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.Login)
-        com.letsmidi.monsys.protocol.push.Push.LoginOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.PushClientLoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Login_fieldAccessorTable
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.push.Push.Login.class, com.letsmidi.monsys.protocol.push.Push.Login.Builder.class);
+                com.letsmidi.monsys.protocol.push.Push.PushClientLogin.class, com.letsmidi.monsys.protocol.push.Push.PushClientLogin.Builder.class);
       }
 
-      // Construct using com.letsmidi.monsys.protocol.push.Push.Login.newBuilder()
+      // Construct using com.letsmidi.monsys.protocol.push.Push.PushClientLogin.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6916,23 +6971,23 @@ public final class Push {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.Login getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance();
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLogin getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance();
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.Login build() {
-        com.letsmidi.monsys.protocol.push.Push.Login result = buildPartial();
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLogin build() {
+        com.letsmidi.monsys.protocol.push.Push.PushClientLogin result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.Login buildPartial() {
-        com.letsmidi.monsys.protocol.push.Push.Login result = new com.letsmidi.monsys.protocol.push.Push.Login(this);
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLogin buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.PushClientLogin result = new com.letsmidi.monsys.protocol.push.Push.PushClientLogin(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -6945,16 +7000,16 @@ public final class Push {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.push.Push.Login) {
-          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.Login)other);
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.PushClientLogin) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.PushClientLogin)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.Login other) {
-        if (other == com.letsmidi.monsys.protocol.push.Push.Login.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.PushClientLogin other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.PushClientLogin.getDefaultInstance()) return this;
         if (other.hasDeviceId()) {
           bitField0_ |= 0x00000001;
           deviceId_ = other.deviceId_;
@@ -6976,11 +7031,11 @@ public final class Push {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.letsmidi.monsys.protocol.push.Push.Login parsedMessage = null;
+        com.letsmidi.monsys.protocol.push.Push.PushClientLogin parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.Login) e.getUnfinishedMessage();
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.PushClientLogin) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -6991,6 +7046,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -7004,12 +7060,9 @@ public final class Push {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -7067,21 +7120,21 @@ public final class Push {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.Login)
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.PushClientLogin)
     }
 
     static {
-      defaultInstance = new Login(true);
+      defaultInstance = new PushClientLogin(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Login)
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushClientLogin)
   }
 
-  public interface LoginRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.LoginRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PushClientLoginRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -7092,25 +7145,24 @@ public final class Push {
     int getCode();
   }
   /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.push.LoginRsp}
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushClientLoginRsp}
    */
-  public static final class LoginRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.LoginRsp)
-      LoginRspOrBuilder {
-    // Use LoginRsp.newBuilder() to construct.
-    private LoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  public static final class PushClientLoginRsp extends
+      com.google.protobuf.GeneratedMessage
+      implements PushClientLoginRspOrBuilder {
+    // Use PushClientLoginRsp.newBuilder() to construct.
+    private PushClientLoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private LoginRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private PushClientLoginRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final LoginRsp defaultInstance;
-    public static LoginRsp getDefaultInstance() {
+    private static final PushClientLoginRsp defaultInstance;
+    public static PushClientLoginRsp getDefaultInstance() {
       return defaultInstance;
     }
 
-    public LoginRsp getDefaultInstanceForType() {
+    public PushClientLoginRsp getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -7120,7 +7172,7 @@ public final class Push {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private LoginRsp(
+    private PushClientLoginRsp(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7162,32 +7214,33 @@ public final class Push {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor;
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_fieldAccessorTable
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.push.Push.LoginRsp.class, com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder.class);
+              com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<LoginRsp> PARSER =
-        new com.google.protobuf.AbstractParser<LoginRsp>() {
-      public LoginRsp parsePartialFrom(
+    public static com.google.protobuf.Parser<PushClientLoginRsp> PARSER =
+        new com.google.protobuf.AbstractParser<PushClientLoginRsp>() {
+      public PushClientLoginRsp parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new LoginRsp(input, extensionRegistry);
+        return new PushClientLoginRsp(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<LoginRsp> getParserForType() {
+    public com.google.protobuf.Parser<PushClientLoginRsp> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -7209,8 +7262,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -7251,53 +7303,53 @@ public final class Push {
       return super.writeReplace();
     }
 
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(byte[] data)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseDelimitedFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseDelimitedFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.LoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7306,7 +7358,7 @@ public final class Push {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.LoginRsp prototype) {
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -7318,25 +7370,24 @@ public final class Push {
       return builder;
     }
     /**
-     * Protobuf type {@code com.letsmidi.monsys.protocol.push.LoginRsp}
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.PushClientLoginRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.LoginRsp)
-        com.letsmidi.monsys.protocol.push.Push.LoginRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.PushClientLoginRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_fieldAccessorTable
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.push.Push.LoginRsp.class, com.letsmidi.monsys.protocol.push.Push.LoginRsp.Builder.class);
+                com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.Builder.class);
       }
 
-      // Construct using com.letsmidi.monsys.protocol.push.Push.LoginRsp.newBuilder()
+      // Construct using com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7367,23 +7418,23 @@ public final class Push {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.LoginRsp getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance();
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance();
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.LoginRsp build() {
-        com.letsmidi.monsys.protocol.push.Push.LoginRsp result = buildPartial();
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp build() {
+        com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.LoginRsp buildPartial() {
-        com.letsmidi.monsys.protocol.push.Push.LoginRsp result = new com.letsmidi.monsys.protocol.push.Push.LoginRsp(this);
+      public com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp result = new com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7396,16 +7447,16 @@ public final class Push {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.push.Push.LoginRsp) {
-          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.LoginRsp)other);
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.LoginRsp other) {
-        if (other == com.letsmidi.monsys.protocol.push.Push.LoginRsp.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp.getDefaultInstance()) return this;
         if (other.hasCode()) {
           setCode(other.getCode());
         }
@@ -7425,11 +7476,11 @@ public final class Push {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.letsmidi.monsys.protocol.push.Push.LoginRsp parsedMessage = null;
+        com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.LoginRsp) e.getUnfinishedMessage();
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.PushClientLoginRsp) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -7440,6 +7491,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -7472,21 +7524,21 @@ public final class Push {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.LoginRsp)
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
     }
 
     static {
-      defaultInstance = new LoginRsp(true);
+      defaultInstance = new PushClientLoginRsp(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.LoginRsp)
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.PushClientLoginRsp)
   }
 
-  public interface ClientLoginOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.ClientLogin)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AdminClientLoginOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string account = 1;
     /**
      * <code>required string account = 1;</code>
      */
@@ -7501,6 +7553,7 @@ public final class Push {
     com.google.protobuf.ByteString
         getAccountBytes();
 
+    // required string password = 2;
     /**
      * <code>required string password = 2;</code>
      */
@@ -7516,25 +7569,24 @@ public final class Push {
         getPasswordBytes();
   }
   /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.push.ClientLogin}
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.AdminClientLogin}
    */
-  public static final class ClientLogin extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.ClientLogin)
-      ClientLoginOrBuilder {
-    // Use ClientLogin.newBuilder() to construct.
-    private ClientLogin(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  public static final class AdminClientLogin extends
+      com.google.protobuf.GeneratedMessage
+      implements AdminClientLoginOrBuilder {
+    // Use AdminClientLogin.newBuilder() to construct.
+    private AdminClientLogin(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private ClientLogin(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private AdminClientLogin(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final ClientLogin defaultInstance;
-    public static ClientLogin getDefaultInstance() {
+    private static final AdminClientLogin defaultInstance;
+    public static AdminClientLogin getDefaultInstance() {
       return defaultInstance;
     }
 
-    public ClientLogin getDefaultInstanceForType() {
+    public AdminClientLogin getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -7544,7 +7596,7 @@ public final class Push {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private ClientLogin(
+    private AdminClientLogin(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7568,15 +7620,13 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              account_ = bs;
+              account_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              password_ = bs;
+              password_ = input.readBytes();
               break;
             }
           }
@@ -7593,32 +7643,33 @@ public final class Push {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor;
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_fieldAccessorTable
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.push.Push.ClientLogin.class, com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder.class);
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.class, com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ClientLogin> PARSER =
-        new com.google.protobuf.AbstractParser<ClientLogin>() {
-      public ClientLogin parsePartialFrom(
+    public static com.google.protobuf.Parser<AdminClientLogin> PARSER =
+        new com.google.protobuf.AbstractParser<AdminClientLogin>() {
+      public AdminClientLogin parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ClientLogin(input, extensionRegistry);
+        return new AdminClientLogin(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ClientLogin> getParserForType() {
+    public com.google.protobuf.Parser<AdminClientLogin> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
+    // required string account = 1;
     public static final int ACCOUNT_FIELD_NUMBER = 1;
     private java.lang.Object account_;
     /**
@@ -7661,6 +7712,7 @@ public final class Push {
       }
     }
 
+    // required string password = 2;
     public static final int PASSWORD_FIELD_NUMBER = 2;
     private java.lang.Object password_;
     /**
@@ -7710,8 +7762,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAccount()) {
         memoizedIsInitialized = 0;
@@ -7763,53 +7814,53 @@ public final class Push {
       return super.writeReplace();
     }
 
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(byte[] data)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseDelimitedFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseDelimitedFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLogin parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7818,7 +7869,7 @@ public final class Push {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.ClientLogin prototype) {
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.AdminClientLogin prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -7830,25 +7881,24 @@ public final class Push {
       return builder;
     }
     /**
-     * Protobuf type {@code com.letsmidi.monsys.protocol.push.ClientLogin}
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.AdminClientLogin}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.ClientLogin)
-        com.letsmidi.monsys.protocol.push.Push.ClientLoginOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.AdminClientLoginOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_fieldAccessorTable
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.push.Push.ClientLogin.class, com.letsmidi.monsys.protocol.push.Push.ClientLogin.Builder.class);
+                com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.class, com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.Builder.class);
       }
 
-      // Construct using com.letsmidi.monsys.protocol.push.Push.ClientLogin.newBuilder()
+      // Construct using com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7881,23 +7931,23 @@ public final class Push {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLogin getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance();
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance();
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLogin build() {
-        com.letsmidi.monsys.protocol.push.Push.ClientLogin result = buildPartial();
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin build() {
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLogin result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLogin buildPartial() {
-        com.letsmidi.monsys.protocol.push.Push.ClientLogin result = new com.letsmidi.monsys.protocol.push.Push.ClientLogin(this);
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLogin buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLogin result = new com.letsmidi.monsys.protocol.push.Push.AdminClientLogin(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7914,16 +7964,16 @@ public final class Push {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.push.Push.ClientLogin) {
-          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.ClientLogin)other);
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.AdminClientLogin) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.AdminClientLogin)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.ClientLogin other) {
-        if (other == com.letsmidi.monsys.protocol.push.Push.ClientLogin.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.AdminClientLogin other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.AdminClientLogin.getDefaultInstance()) return this;
         if (other.hasAccount()) {
           bitField0_ |= 0x00000001;
           account_ = other.account_;
@@ -7954,11 +8004,11 @@ public final class Push {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.letsmidi.monsys.protocol.push.Push.ClientLogin parsedMessage = null;
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLogin parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.ClientLogin) e.getUnfinishedMessage();
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.AdminClientLogin) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -7969,6 +8019,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string account = 1;
       private java.lang.Object account_ = "";
       /**
        * <code>required string account = 1;</code>
@@ -7982,12 +8033,9 @@ public final class Push {
       public java.lang.String getAccount() {
         java.lang.Object ref = account_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            account_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          account_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8045,6 +8093,7 @@ public final class Push {
         return this;
       }
 
+      // required string password = 2;
       private java.lang.Object password_ = "";
       /**
        * <code>required string password = 2;</code>
@@ -8058,12 +8107,9 @@ public final class Push {
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            password_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          password_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8121,21 +8167,21 @@ public final class Push {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.ClientLogin)
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.AdminClientLogin)
     }
 
     static {
-      defaultInstance = new ClientLogin(true);
+      defaultInstance = new AdminClientLogin(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLogin)
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.AdminClientLogin)
   }
 
-  public interface ClientLoginRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AdminClientLoginRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -8145,6 +8191,7 @@ public final class Push {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;</code>
      */
@@ -8170,25 +8217,24 @@ public final class Push {
         int index);
   }
   /**
-   * Protobuf type {@code com.letsmidi.monsys.protocol.push.ClientLoginRsp}
+   * Protobuf type {@code com.letsmidi.monsys.protocol.push.AdminClientLoginRsp}
    */
-  public static final class ClientLoginRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
-      ClientLoginRspOrBuilder {
-    // Use ClientLoginRsp.newBuilder() to construct.
-    private ClientLoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  public static final class AdminClientLoginRsp extends
+      com.google.protobuf.GeneratedMessage
+      implements AdminClientLoginRspOrBuilder {
+    // Use AdminClientLoginRsp.newBuilder() to construct.
+    private AdminClientLoginRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private ClientLoginRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private AdminClientLoginRsp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final ClientLoginRsp defaultInstance;
-    public static ClientLoginRsp getDefaultInstance() {
+    private static final AdminClientLoginRsp defaultInstance;
+    public static AdminClientLoginRsp getDefaultInstance() {
       return defaultInstance;
     }
 
-    public ClientLoginRsp getDefaultInstanceForType() {
+    public AdminClientLoginRsp getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -8198,7 +8244,7 @@ public final class Push {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private ClientLoginRsp(
+    private AdminClientLoginRsp(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8251,32 +8297,33 @@ public final class Push {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor;
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_fieldAccessorTable
+      return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder.class);
+              com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ClientLoginRsp> PARSER =
-        new com.google.protobuf.AbstractParser<ClientLoginRsp>() {
-      public ClientLoginRsp parsePartialFrom(
+    public static com.google.protobuf.Parser<AdminClientLoginRsp> PARSER =
+        new com.google.protobuf.AbstractParser<AdminClientLoginRsp>() {
+      public AdminClientLoginRsp parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ClientLoginRsp(input, extensionRegistry);
+        return new AdminClientLoginRsp(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ClientLoginRsp> getParserForType() {
+    public com.google.protobuf.Parser<AdminClientLoginRsp> getParserForType() {
       return PARSER;
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -8292,6 +8339,7 @@ public final class Push {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
     public static final int FGW_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> fgwInfos_;
     /**
@@ -8334,8 +8382,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -8389,53 +8436,53 @@ public final class Push {
       return super.writeReplace();
     }
 
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(byte[] data)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseDelimitedFrom(java.io.InputStream input)
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseDelimitedFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parseFrom(
+    public static com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -8444,7 +8491,7 @@ public final class Push {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp prototype) {
+    public static Builder newBuilder(com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -8456,25 +8503,24 @@ public final class Push {
       return builder;
     }
     /**
-     * Protobuf type {@code com.letsmidi.monsys.protocol.push.ClientLoginRsp}
+     * Protobuf type {@code com.letsmidi.monsys.protocol.push.AdminClientLoginRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
-        com.letsmidi.monsys.protocol.push.Push.ClientLoginRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_fieldAccessorTable
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.Builder.class);
+                com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.class, com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.Builder.class);
       }
 
-      // Construct using com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.newBuilder()
+      // Construct using com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8512,23 +8558,23 @@ public final class Push {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor;
+        return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp getDefaultInstanceForType() {
-        return com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance();
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp getDefaultInstanceForType() {
+        return com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance();
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp build() {
-        com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp result = buildPartial();
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp build() {
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp buildPartial() {
-        com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp result = new com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp(this);
+      public com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp buildPartial() {
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp result = new com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -8550,16 +8596,16 @@ public final class Push {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp) {
-          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp)other);
+        if (other instanceof com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp) {
+          return mergeFrom((com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp other) {
-        if (other == com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp other) {
+        if (other == com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp.getDefaultInstance()) return this;
         if (other.hasCode()) {
           setCode(other.getCode());
         }
@@ -8611,11 +8657,11 @@ public final class Push {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp parsedMessage = null;
+        com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.ClientLoginRsp) e.getUnfinishedMessage();
+          parsedMessage = (com.letsmidi.monsys.protocol.push.Push.AdminClientLoginRsp) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -8626,6 +8672,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -8658,6 +8705,7 @@ public final class Push {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> fgwInfos_ =
         java.util.Collections.emptyList();
       private void ensureFgwInfosIsMutable() {
@@ -8799,8 +8847,7 @@ public final class Push {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> values) {
         if (fgwInfosBuilder_ == null) {
           ensureFgwInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, fgwInfos_);
+          super.addAll(values, fgwInfos_);
           onChanged();
         } else {
           fgwInfosBuilder_.addAllMessages(values);
@@ -8898,21 +8945,21 @@ public final class Push {
         return fgwInfosBuilder_;
       }
 
-      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+      // @@protoc_insertion_point(builder_scope:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
     }
 
     static {
-      defaultInstance = new ClientLoginRsp(true);
+      defaultInstance = new AdminClientLoginRsp(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ClientLoginRsp)
+    // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.AdminClientLoginRsp)
   }
 
-  public interface BindOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.Bind)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BindOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -8931,9 +8978,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.Bind}
    */
   public static final class Bind extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.Bind)
-      BindOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BindOrBuilder {
     // Use Bind.newBuilder() to construct.
     private Bind(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8980,9 +9026,8 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -9025,6 +9070,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -9073,8 +9119,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -9185,9 +9230,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.Bind}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.Bind)
-        com.letsmidi.monsys.protocol.push.Push.BindOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.BindOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor;
@@ -9306,6 +9350,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -9319,12 +9364,9 @@ public final class Push {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9393,10 +9435,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Bind)
   }
 
-  public interface BindRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.BindRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BindRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -9410,9 +9452,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.BindRsp}
    */
   public static final class BindRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.BindRsp)
-      BindRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BindRspOrBuilder {
     // Use BindRsp.newBuilder() to construct.
     private BindRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9503,6 +9544,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -9524,8 +9566,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -9636,9 +9677,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.BindRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.BindRsp)
-        com.letsmidi.monsys.protocol.push.Push.BindRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.BindRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor;
@@ -9755,6 +9795,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -9798,10 +9839,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.BindRsp)
   }
 
-  public interface ConnectOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.Connect)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -9820,9 +9861,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.Connect}
    */
   public static final class Connect extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.Connect)
-      ConnectOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectOrBuilder {
     // Use Connect.newBuilder() to construct.
     private Connect(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9869,9 +9909,8 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -9914,6 +9953,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -9962,8 +10002,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -10074,9 +10113,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.Connect}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.Connect)
-        com.letsmidi.monsys.protocol.push.Push.ConnectOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.ConnectOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor;
@@ -10195,6 +10233,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -10208,12 +10247,9 @@ public final class Push {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -10282,10 +10318,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Connect)
   }
 
-  public interface ConnectRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.ConnectRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConnectRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -10299,9 +10335,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.ConnectRsp}
    */
   public static final class ConnectRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.ConnectRsp)
-      ConnectRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ConnectRspOrBuilder {
     // Use ConnectRsp.newBuilder() to construct.
     private ConnectRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10392,6 +10427,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -10413,8 +10449,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -10525,9 +10560,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.ConnectRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.ConnectRsp)
-        com.letsmidi.monsys.protocol.push.Push.ConnectRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.ConnectRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor;
@@ -10644,6 +10678,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -10687,17 +10722,15 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.ConnectRsp)
   }
 
-  public interface GetFgwListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetFgwList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetFgwListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetFgwList}
    */
   public static final class GetFgwList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetFgwList)
-      GetFgwListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetFgwListOrBuilder {
     // Use GetFgwList.newBuilder() to construct.
     private GetFgwList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10786,8 +10819,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -10887,9 +10919,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetFgwList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetFgwList)
-        com.letsmidi.monsys.protocol.push.Push.GetFgwListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetFgwListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor;
@@ -11000,10 +11031,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetFgwList)
   }
 
-  public interface GetFgwListRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetFgwListRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetFgwListRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -11013,6 +11044,7 @@ public final class Push {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;</code>
      */
@@ -11041,9 +11073,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetFgwListRsp}
    */
   public static final class GetFgwListRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetFgwListRsp)
-      GetFgwListRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetFgwListRspOrBuilder {
     // Use GetFgwListRsp.newBuilder() to construct.
     private GetFgwListRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11145,6 +11176,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -11160,6 +11192,7 @@ public final class Push {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
     public static final int FGW_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> fgwInfos_;
     /**
@@ -11202,8 +11235,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -11327,9 +11359,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetFgwListRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetFgwListRsp)
-        com.letsmidi.monsys.protocol.push.Push.GetFgwListRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetFgwListRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor;
@@ -11494,6 +11525,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -11526,6 +11558,7 @@ public final class Push {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.push.FGatewayInfo fgw_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> fgwInfos_ =
         java.util.Collections.emptyList();
       private void ensureFgwInfosIsMutable() {
@@ -11667,8 +11700,7 @@ public final class Push {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.push.Push.FGatewayInfo> values) {
         if (fgwInfosBuilder_ == null) {
           ensureFgwInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, fgwInfos_);
+          super.addAll(values, fgwInfos_);
           onChanged();
         } else {
           fgwInfosBuilder_.addAllMessages(values);
@@ -11777,10 +11809,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetFgwListRsp)
   }
 
-  public interface GetDevListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetDevList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string device_id = 1;
     /**
      * <code>required string device_id = 1;</code>
      */
@@ -11799,9 +11831,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevList}
    */
   public static final class GetDevList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetDevList)
-      GetDevListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevListOrBuilder {
     // Use GetDevList.newBuilder() to construct.
     private GetDevList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11848,9 +11879,8 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              deviceId_ = bs;
+              deviceId_ = input.readBytes();
               break;
             }
           }
@@ -11893,6 +11923,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required string device_id = 1;
     public static final int DEVICE_ID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
     /**
@@ -11941,8 +11972,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
@@ -12053,9 +12083,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetDevList)
-        com.letsmidi.monsys.protocol.push.Push.GetDevListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetDevListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor;
@@ -12174,6 +12203,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string device_id = 1;
       private java.lang.Object deviceId_ = "";
       /**
        * <code>required string device_id = 1;</code>
@@ -12187,12 +12217,9 @@ public final class Push {
       public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            deviceId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          deviceId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12261,10 +12288,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevList)
   }
 
-  public interface GetDevListRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetDevListRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevListRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -12274,6 +12301,7 @@ public final class Push {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;</code>
      */
@@ -12302,9 +12330,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevListRsp}
    */
   public static final class GetDevListRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetDevListRsp)
-      GetDevListRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevListRspOrBuilder {
     // Use GetDevListRsp.newBuilder() to construct.
     private GetDevListRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -12406,6 +12433,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -12421,6 +12449,7 @@ public final class Push {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;
     public static final int DEV_INFOS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.push.Push.DeviceInfo> devInfos_;
     /**
@@ -12463,8 +12492,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -12588,9 +12616,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevListRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetDevListRsp)
-        com.letsmidi.monsys.protocol.push.Push.GetDevListRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetDevListRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor;
@@ -12755,6 +12782,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -12787,6 +12815,7 @@ public final class Push {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.push.DeviceInfo dev_infos = 2;
       private java.util.List<com.letsmidi.monsys.protocol.push.Push.DeviceInfo> devInfos_ =
         java.util.Collections.emptyList();
       private void ensureDevInfosIsMutable() {
@@ -12928,8 +12957,7 @@ public final class Push {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.push.Push.DeviceInfo> values) {
         if (devInfosBuilder_ == null) {
           ensureDevInfosIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, devInfos_);
+          super.addAll(values, devInfos_);
           onChanged();
         } else {
           devInfosBuilder_.addAllMessages(values);
@@ -13038,10 +13066,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevListRsp)
   }
 
-  public interface GetDevInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetDevInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -13051,6 +13079,7 @@ public final class Push {
      */
     int getAddr();
 
+    // repeated int32 item_ids = 2 [packed = true];
     /**
      * <code>repeated int32 item_ids = 2 [packed = true];</code>
      */
@@ -13068,9 +13097,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevInfo}
    */
   public static final class GetDevInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetDevInfo)
-      GetDevInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevInfoOrBuilder {
     // Use GetDevInfo.newBuilder() to construct.
     private GetDevInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13185,6 +13213,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -13200,6 +13229,7 @@ public final class Push {
       return addr_;
     }
 
+    // repeated int32 item_ids = 2 [packed = true];
     public static final int ITEM_IDS_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> itemIds_;
     /**
@@ -13230,8 +13260,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -13363,9 +13392,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetDevInfo)
-        com.letsmidi.monsys.protocol.push.Push.GetDevInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetDevInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor;
@@ -13499,6 +13527,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -13531,6 +13560,7 @@ public final class Push {
         return this;
       }
 
+      // repeated int32 item_ids = 2 [packed = true];
       private java.util.List<java.lang.Integer> itemIds_ = java.util.Collections.emptyList();
       private void ensureItemIdsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -13582,8 +13612,7 @@ public final class Push {
       public Builder addAllItemIds(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureItemIdsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, itemIds_);
+        super.addAll(values, itemIds_);
         onChanged();
         return this;
       }
@@ -13608,10 +13637,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevInfo)
   }
 
-  public interface GetDevInfoRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.GetDevInfoRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDevInfoRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -13621,6 +13650,7 @@ public final class Push {
      */
     int getCode();
 
+    // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;</code>
      */
@@ -13649,9 +13679,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevInfoRsp}
    */
   public static final class GetDevInfoRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.GetDevInfoRsp)
-      GetDevInfoRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements GetDevInfoRspOrBuilder {
     // Use GetDevInfoRsp.newBuilder() to construct.
     private GetDevInfoRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13753,6 +13782,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -13768,6 +13798,7 @@ public final class Push {
       return code_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
     public static final int ID_VALUE_PAIRS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.push.Push.IdValuePair> idValuePairs_;
     /**
@@ -13810,8 +13841,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -13935,9 +13965,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.GetDevInfoRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.GetDevInfoRsp)
-        com.letsmidi.monsys.protocol.push.Push.GetDevInfoRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.GetDevInfoRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor;
@@ -14102,6 +14131,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -14134,6 +14164,7 @@ public final class Push {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
       private java.util.List<com.letsmidi.monsys.protocol.push.Push.IdValuePair> idValuePairs_ =
         java.util.Collections.emptyList();
       private void ensureIdValuePairsIsMutable() {
@@ -14275,8 +14306,7 @@ public final class Push {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.push.Push.IdValuePair> values) {
         if (idValuePairsBuilder_ == null) {
           ensureIdValuePairsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, idValuePairs_);
+          super.addAll(values, idValuePairs_);
           onChanged();
         } else {
           idValuePairsBuilder_.addAllMessages(values);
@@ -14385,10 +14415,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.GetDevInfoRsp)
   }
 
-  public interface SetDevInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.SetDevInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SetDevInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 addr = 1;
     /**
      * <code>required int32 addr = 1;</code>
      */
@@ -14398,6 +14428,7 @@ public final class Push {
      */
     int getAddr();
 
+    // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
     /**
      * <code>repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;</code>
      */
@@ -14426,9 +14457,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.SetDevInfo}
    */
   public static final class SetDevInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.SetDevInfo)
-      SetDevInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements SetDevInfoOrBuilder {
     // Use SetDevInfo.newBuilder() to construct.
     private SetDevInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14530,6 +14560,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 addr = 1;
     public static final int ADDR_FIELD_NUMBER = 1;
     private int addr_;
     /**
@@ -14545,6 +14576,7 @@ public final class Push {
       return addr_;
     }
 
+    // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
     public static final int ID_VALUE_PAIRS_FIELD_NUMBER = 2;
     private java.util.List<com.letsmidi.monsys.protocol.push.Push.IdValuePair> idValuePairs_;
     /**
@@ -14587,8 +14619,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAddr()) {
         memoizedIsInitialized = 0;
@@ -14712,9 +14743,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.SetDevInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.SetDevInfo)
-        com.letsmidi.monsys.protocol.push.Push.SetDevInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.SetDevInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor;
@@ -14879,6 +14909,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 addr = 1;
       private int addr_ ;
       /**
        * <code>required int32 addr = 1;</code>
@@ -14911,6 +14942,7 @@ public final class Push {
         return this;
       }
 
+      // repeated .com.letsmidi.monsys.protocol.push.IdValuePair id_value_pairs = 2;
       private java.util.List<com.letsmidi.monsys.protocol.push.Push.IdValuePair> idValuePairs_ =
         java.util.Collections.emptyList();
       private void ensureIdValuePairsIsMutable() {
@@ -15052,8 +15084,7 @@ public final class Push {
           java.lang.Iterable<? extends com.letsmidi.monsys.protocol.push.Push.IdValuePair> values) {
         if (idValuePairsBuilder_ == null) {
           ensureIdValuePairsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, idValuePairs_);
+          super.addAll(values, idValuePairs_);
           onChanged();
         } else {
           idValuePairsBuilder_.addAllMessages(values);
@@ -15162,10 +15193,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfo)
   }
 
-  public interface SetDevInfoRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SetDevInfoRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -15179,9 +15210,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.SetDevInfoRsp}
    */
   public static final class SetDevInfoRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
-      SetDevInfoRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements SetDevInfoRspOrBuilder {
     // Use SetDevInfoRsp.newBuilder() to construct.
     private SetDevInfoRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15272,6 +15302,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -15293,8 +15324,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -15405,9 +15435,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.SetDevInfoRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
-        com.letsmidi.monsys.protocol.push.Push.SetDevInfoRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.SetDevInfoRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor;
@@ -15524,6 +15553,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -15567,10 +15597,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.SetDevInfoRsp)
   }
 
-  public interface UserRegisterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.UserRegister)
-      com.google.protobuf.MessageOrBuilder {
+  public interface UserRegisterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string nickname = 1;
     /**
      * <code>required string nickname = 1;</code>
      */
@@ -15585,6 +15615,7 @@ public final class Push {
     com.google.protobuf.ByteString
         getNicknameBytes();
 
+    // required string account = 2;
     /**
      * <code>required string account = 2;</code>
      */
@@ -15599,6 +15630,7 @@ public final class Push {
     com.google.protobuf.ByteString
         getAccountBytes();
 
+    // required string password = 3;
     /**
      * <code>required string password = 3;</code>
      */
@@ -15617,9 +15649,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegister}
    */
   public static final class UserRegister extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.UserRegister)
-      UserRegisterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements UserRegisterOrBuilder {
     // Use UserRegister.newBuilder() to construct.
     private UserRegister(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15666,21 +15697,18 @@ public final class Push {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              nickname_ = bs;
+              nickname_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              account_ = bs;
+              account_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              password_ = bs;
+              password_ = input.readBytes();
               break;
             }
           }
@@ -15723,6 +15751,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required string nickname = 1;
     public static final int NICKNAME_FIELD_NUMBER = 1;
     private java.lang.Object nickname_;
     /**
@@ -15765,6 +15794,7 @@ public final class Push {
       }
     }
 
+    // required string account = 2;
     public static final int ACCOUNT_FIELD_NUMBER = 2;
     private java.lang.Object account_;
     /**
@@ -15807,6 +15837,7 @@ public final class Push {
       }
     }
 
+    // required string password = 3;
     public static final int PASSWORD_FIELD_NUMBER = 3;
     private java.lang.Object password_;
     /**
@@ -15857,8 +15888,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasNickname()) {
         memoizedIsInitialized = 0;
@@ -15991,9 +16021,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegister}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.UserRegister)
-        com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.UserRegisterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
@@ -16142,6 +16171,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required string nickname = 1;
       private java.lang.Object nickname_ = "";
       /**
        * <code>required string nickname = 1;</code>
@@ -16155,12 +16185,9 @@ public final class Push {
       public java.lang.String getNickname() {
         java.lang.Object ref = nickname_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            nickname_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          nickname_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -16218,6 +16245,7 @@ public final class Push {
         return this;
       }
 
+      // required string account = 2;
       private java.lang.Object account_ = "";
       /**
        * <code>required string account = 2;</code>
@@ -16231,12 +16259,9 @@ public final class Push {
       public java.lang.String getAccount() {
         java.lang.Object ref = account_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            account_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          account_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -16294,6 +16319,7 @@ public final class Push {
         return this;
       }
 
+      // required string password = 3;
       private java.lang.Object password_ = "";
       /**
        * <code>required string password = 3;</code>
@@ -16307,12 +16333,9 @@ public final class Push {
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            password_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          password_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -16381,10 +16404,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegister)
   }
 
-  public interface UserRegisterRspOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface UserRegisterRspOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -16398,9 +16421,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegisterRsp}
    */
   public static final class UserRegisterRsp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
-      UserRegisterRspOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements UserRegisterRspOrBuilder {
     // Use UserRegisterRsp.newBuilder() to construct.
     private UserRegisterRsp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -16491,6 +16513,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -16512,8 +16535,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -16624,9 +16646,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.UserRegisterRsp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
-        com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.UserRegisterRspOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
@@ -16743,6 +16764,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -16786,9 +16808,8 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.UserRegisterRsp)
   }
 
-  public interface HeartbeatOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.Heartbeat)
-      com.google.protobuf.MessageOrBuilder {
+  public interface HeartbeatOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.Heartbeat}
@@ -16798,9 +16819,8 @@ public final class Push {
    * </pre>
    */
   public static final class Heartbeat extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.Heartbeat)
-      HeartbeatOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements HeartbeatOrBuilder {
     // Use Heartbeat.newBuilder() to construct.
     private Heartbeat(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -16889,8 +16909,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -16994,9 +17013,8 @@ public final class Push {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.Heartbeat)
-        com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.HeartbeatOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
@@ -17107,10 +17125,10 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Heartbeat)
   }
 
-  public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.letsmidi.monsys.protocol.push.Response)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 code = 1;
     /**
      * <code>required int32 code = 1;</code>
      */
@@ -17124,9 +17142,8 @@ public final class Push {
    * Protobuf type {@code com.letsmidi.monsys.protocol.push.Response}
    */
   public static final class Response extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.letsmidi.monsys.protocol.push.Response)
-      ResponseOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ResponseOrBuilder {
     // Use Response.newBuilder() to construct.
     private Response(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -17217,6 +17234,7 @@ public final class Push {
     }
 
     private int bitField0_;
+    // required int32 code = 1;
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
     /**
@@ -17238,8 +17256,7 @@ public final class Push {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCode()) {
         memoizedIsInitialized = 0;
@@ -17350,9 +17367,8 @@ public final class Push {
      * Protobuf type {@code com.letsmidi.monsys.protocol.push.Response}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.letsmidi.monsys.protocol.push.Response)
-        com.letsmidi.monsys.protocol.push.Push.ResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.letsmidi.monsys.protocol.push.Push.ResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.letsmidi.monsys.protocol.push.Push.internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor;
@@ -17469,6 +17485,7 @@ public final class Push {
       }
       private int bitField0_;
 
+      // required int32 code = 1;
       private int code_ ;
       /**
        * <code>required int32 code = 1;</code>
@@ -17512,122 +17529,122 @@ public final class Push {
     // @@protoc_insertion_point(class_scope:com.letsmidi.monsys.protocol.push.Response)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_PushMsg_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_push_Login_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor;
+      internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor;
+      internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor;
+      internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_Bind_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_BindRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_Connect_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetDevList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -17646,233 +17663,235 @@ public final class Push {
       "lue\030\002 \002(\005\"6\n\014FGatewayInfo\022\n\n\002id\030\001 \002(\t\022\014\n" +
       "\004name\030\002 \002(\t\022\014\n\004desc\030\003 \002(\t\"6\n\nDeviceInfo\022" +
       "\014\n\004addr\030\001 \002(\005\022\014\n\004type\030\002 \002(\005\022\014\n\004name\030\003 \002(" +
-      "\t\"\204\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002" +
+      "\t\"\242\013\n\007PushMsg\022\017\n\007version\030\001 \002(\005\0228\n\004type\030\002" +
       " \002(\0162*.com.letsmidi.monsys.protocol.push" +
-      ".MsgType\022\020\n\010sequence\030\003 \002(\005\0227\n\005login\030\n \001(" +
-      "\0132(.com.letsmidi.monsys.protocol.push.Lo" +
-      "gin\022>\n\tlogin_rsp\030\013 \001(\0132+.com.letsmidi.mo",
-      "nsys.protocol.push.LoginRsp\0225\n\004bind\030\014 \001(" +
-      "\0132\'.com.letsmidi.monsys.protocol.push.Bi" +
-      "nd\022<\n\010bind_rsp\030\r \001(\0132*.com.letsmidi.mons" +
-      "ys.protocol.push.BindRsp\022;\n\007connect\030\016 \001(" +
-      "\0132*.com.letsmidi.monsys.protocol.push.Co" +
-      "nnect\022B\n\013connect_rsp\030\017 \001(\0132-.com.letsmid" +
-      "i.monsys.protocol.push.ConnectRsp\022C\n\014get" +
-      "_fgw_list\030\020 \001(\0132-.com.letsmidi.monsys.pr" +
-      "otocol.push.GetFgwList\022J\n\020get_fgw_list_r" +
-      "sp\030\021 \001(\01320.com.letsmidi.monsys.protocol.",
-      "push.GetFgwListRsp\022C\n\014get_dev_list\030\022 \001(\013" +
-      "2-.com.letsmidi.monsys.protocol.push.Get" +
-      "DevList\022J\n\020get_dev_list_rsp\030\023 \001(\01320.com." +
-      "letsmidi.monsys.protocol.push.GetDevList" +
-      "Rsp\022C\n\014get_dev_info\030\024 \001(\0132-.com.letsmidi" +
-      ".monsys.protocol.push.GetDevInfo\022J\n\020get_" +
-      "dev_info_rsp\030\025 \001(\01320.com.letsmidi.monsys" +
-      ".protocol.push.GetDevInfoRsp\022C\n\014set_dev_" +
-      "info\030\026 \001(\0132-.com.letsmidi.monsys.protoco" +
-      "l.push.SetDevInfo\022J\n\020set_dev_info_rsp\030\027 ",
-      "\001(\01320.com.letsmidi.monsys.protocol.push." +
-      "SetDevInfoRsp\022D\n\014client_login\030\030 \001(\0132..co" +
-      "m.letsmidi.monsys.protocol.push.ClientLo" +
-      "gin\022K\n\020client_login_rsp\030\031 \001(\01321.com.lets" +
-      "midi.monsys.protocol.push.ClientLoginRsp" +
-      "\022F\n\ruser_register\030\032 \001(\0132/.com.letsmidi.m" +
-      "onsys.protocol.push.UserRegister\022M\n\021user" +
-      "_register_rsp\030\033 \001(\01322.com.letsmidi.monsy" +
-      "s.protocol.push.UserRegisterRsp\022?\n\theart" +
-      "beat\030\034 \001(\0132,.com.letsmidi.monsys.protoco",
-      "l.push.Heartbeat\"\032\n\005Login\022\021\n\tdevice_id\030\001" +
-      " \002(\t\"\030\n\010LoginRsp\022\014\n\004code\030\001 \002(\005\"0\n\013Client" +
-      "Login\022\017\n\007account\030\001 \002(\t\022\020\n\010password\030\002 \002(\t" +
-      "\"b\n\016ClientLoginRsp\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_" +
-      "infos\030\002 \003(\0132/.com.letsmidi.monsys.protoc" +
-      "ol.push.FGatewayInfo\"\031\n\004Bind\022\021\n\tdevice_i" +
-      "d\030\001 \002(\t\"\027\n\007BindRsp\022\014\n\004code\030\001 \002(\005\"\034\n\007Conn" +
-      "ect\022\021\n\tdevice_id\030\001 \002(\t\"\032\n\nConnectRsp\022\014\n\004" +
-      "code\030\001 \002(\005\"\014\n\nGetFgwList\"a\n\rGetFgwListRs" +
-      "p\022\014\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com",
-      ".letsmidi.monsys.protocol.push.FGatewayI" +
-      "nfo\"\037\n\nGetDevList\022\021\n\tdevice_id\030\001 \002(\t\"_\n\r" +
-      "GetDevListRsp\022\014\n\004code\030\001 \002(\005\022@\n\tdev_infos" +
-      "\030\002 \003(\0132-.com.letsmidi.monsys.protocol.pu" +
-      "sh.DeviceInfo\"0\n\nGetDevInfo\022\014\n\004addr\030\001 \002(" +
-      "\005\022\024\n\010item_ids\030\002 \003(\005B\002\020\001\"e\n\rGetDevInfoRsp" +
-      "\022\014\n\004code\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132." +
+      ".MsgType\022\020\n\010sequence\030\003 \002(\005\022A\n\005login\030\n \001(" +
+      "\01322.com.letsmidi.monsys.protocol.push.Pu" +
+      "shClientLogin\022H\n\tlogin_rsp\030\013 \001(\01325.com.l",
+      "etsmidi.monsys.protocol.push.PushClientL" +
+      "oginRsp\0225\n\004bind\030\014 \001(\0132\'.com.letsmidi.mon" +
+      "sys.protocol.push.Bind\022<\n\010bind_rsp\030\r \001(\013" +
+      "2*.com.letsmidi.monsys.protocol.push.Bin" +
+      "dRsp\022;\n\007connect\030\016 \001(\0132*.com.letsmidi.mon" +
+      "sys.protocol.push.Connect\022B\n\013connect_rsp" +
+      "\030\017 \001(\0132-.com.letsmidi.monsys.protocol.pu" +
+      "sh.ConnectRsp\022C\n\014get_fgw_list\030\020 \001(\0132-.co" +
+      "m.letsmidi.monsys.protocol.push.GetFgwLi" +
+      "st\022J\n\020get_fgw_list_rsp\030\021 \001(\01320.com.letsm",
+      "idi.monsys.protocol.push.GetFgwListRsp\022C" +
+      "\n\014get_dev_list\030\022 \001(\0132-.com.letsmidi.mons" +
+      "ys.protocol.push.GetDevList\022J\n\020get_dev_l" +
+      "ist_rsp\030\023 \001(\01320.com.letsmidi.monsys.prot" +
+      "ocol.push.GetDevListRsp\022C\n\014get_dev_info\030" +
+      "\024 \001(\0132-.com.letsmidi.monsys.protocol.pus" +
+      "h.GetDevInfo\022J\n\020get_dev_info_rsp\030\025 \001(\01320" +
+      ".com.letsmidi.monsys.protocol.push.GetDe" +
+      "vInfoRsp\022C\n\014set_dev_info\030\026 \001(\0132-.com.let" +
+      "smidi.monsys.protocol.push.SetDevInfo\022J\n",
+      "\020set_dev_info_rsp\030\027 \001(\01320.com.letsmidi.m" +
+      "onsys.protocol.push.SetDevInfoRsp\022I\n\014cli" +
+      "ent_login\030\030 \001(\01323.com.letsmidi.monsys.pr" +
+      "otocol.push.AdminClientLogin\022P\n\020client_l" +
+      "ogin_rsp\030\031 \001(\01326.com.letsmidi.monsys.pro" +
+      "tocol.push.AdminClientLoginRsp\022F\n\ruser_r" +
+      "egister\030\032 \001(\0132/.com.letsmidi.monsys.prot" +
+      "ocol.push.UserRegister\022M\n\021user_register_" +
+      "rsp\030\033 \001(\01322.com.letsmidi.monsys.protocol" +
+      ".push.UserRegisterRsp\022?\n\theartbeat\030\034 \001(\013",
+      "2,.com.letsmidi.monsys.protocol.push.Hea" +
+      "rtbeat\"$\n\017PushClientLogin\022\021\n\tdevice_id\030\001" +
+      " \002(\t\"\"\n\022PushClientLoginRsp\022\014\n\004code\030\001 \002(\005" +
+      "\"5\n\020AdminClientLogin\022\017\n\007account\030\001 \002(\t\022\020\n" +
+      "\010password\030\002 \002(\t\"g\n\023AdminClientLoginRsp\022\014" +
+      "\n\004code\030\001 \002(\005\022B\n\tfgw_infos\030\002 \003(\0132/.com.le" +
+      "tsmidi.monsys.protocol.push.FGatewayInfo" +
+      "\"\031\n\004Bind\022\021\n\tdevice_id\030\001 \002(\t\"\027\n\007BindRsp\022\014" +
+      "\n\004code\030\001 \002(\005\"\034\n\007Connect\022\021\n\tdevice_id\030\001 \002" +
+      "(\t\"\032\n\nConnectRsp\022\014\n\004code\030\001 \002(\005\"\014\n\nGetFgw",
+      "List\"a\n\rGetFgwListRsp\022\014\n\004code\030\001 \002(\005\022B\n\tf" +
+      "gw_infos\030\002 \003(\0132/.com.letsmidi.monsys.pro" +
+      "tocol.push.FGatewayInfo\"\037\n\nGetDevList\022\021\n" +
+      "\tdevice_id\030\001 \002(\t\"_\n\rGetDevListRsp\022\014\n\004cod" +
+      "e\030\001 \002(\005\022@\n\tdev_infos\030\002 \003(\0132-.com.letsmid" +
+      "i.monsys.protocol.push.DeviceInfo\"0\n\nGet" +
+      "DevInfo\022\014\n\004addr\030\001 \002(\005\022\024\n\010item_ids\030\002 \003(\005B" +
+      "\002\020\001\"e\n\rGetDevInfoRsp\022\014\n\004code\030\001 \002(\005\022F\n\016id" +
+      "_value_pairs\030\002 \003(\0132..com.letsmidi.monsys" +
+      ".protocol.push.IdValuePair\"b\n\nSetDevInfo",
+      "\022\014\n\004addr\030\001 \002(\005\022F\n\016id_value_pairs\030\002 \003(\0132." +
       ".com.letsmidi.monsys.protocol.push.IdVal" +
-      "uePair\"b\n\nSetDevInfo\022\014\n\004addr\030\001 \002(\005\022F\n\016id" +
-      "_value_pairs\030\002 \003(\0132..com.letsmidi.monsys",
-      ".protocol.push.IdValuePair\"\035\n\rSetDevInfo" +
-      "Rsp\022\014\n\004code\030\001 \002(\005\"C\n\014UserRegister\022\020\n\010nic" +
-      "kname\030\001 \002(\t\022\017\n\007account\030\002 \002(\t\022\020\n\010password" +
-      "\030\003 \002(\t\"\037\n\017UserRegisterRsp\022\014\n\004code\030\001 \002(\005\"" +
-      "\013\n\tHeartbeat\"\030\n\010Response\022\014\n\004code\030\001 \002(\005*\350" +
-      "\002\n\007MsgType\022\t\n\005LOGIN\020\001\022\r\n\tLOGIN_RSP\020e\022\010\n\004" +
-      "BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n\013CON" +
-      "NECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_FGW_" +
-      "LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_DEV_" +
-      "LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_DEV_",
-      "INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_DEV_" +
-      "INFO_RSP\020k\022\020\n\014CLIENT_LOGIN\020\010\022\024\n\020CLIENT_L" +
-      "OGIN_RSP\020l\022\021\n\rUSER_REGISTER\020\t\022\025\n\021USER_RE" +
-      "GISTER_RSP\020m\022\r\n\tHEARTBEAT\020\n\022\014\n\010RESPONSE\020" +
-      "c"
+      "uePair\"\035\n\rSetDevInfoRsp\022\014\n\004code\030\001 \002(\005\"C\n" +
+      "\014UserRegister\022\020\n\010nickname\030\001 \002(\t\022\017\n\007accou" +
+      "nt\030\002 \002(\t\022\020\n\010password\030\003 \002(\t\"\037\n\017UserRegist" +
+      "erRsp\022\014\n\004code\030\001 \002(\005\"\013\n\tHeartbeat\"\030\n\010Resp" +
+      "onse\022\014\n\004code\030\001 \002(\005*\214\003\n\007MsgType\022\025\n\021PUSH_C" +
+      "LIENT_LOGIN\020\001\022\031\n\025PUSH_CLIENT_LOGIN_RSP\020e" +
+      "\022\010\n\004BIND\020\002\022\014\n\010BIND_RSP\020f\022\013\n\007CONNECT\020\003\022\017\n" +
+      "\013CONNECT_RSP\020g\022\020\n\014GET_FGW_LIST\020\004\022\024\n\020GET_",
+      "FGW_LIST_RSP\020h\022\020\n\014GET_DEV_LIST\020\005\022\024\n\020GET_" +
+      "DEV_LIST_RSP\020i\022\020\n\014GET_DEV_INFO\020\006\022\024\n\020GET_" +
+      "DEV_INFO_RSP\020j\022\020\n\014SET_DEV_INFO\020\007\022\024\n\020SET_" +
+      "DEV_INFO_RSP\020k\022\026\n\022ADMIN_CLIENT_LOGIN\020\010\022\032" +
+      "\n\026ADMIN_CLIENT_LOGIN_RSP\020l\022\021\n\rUSER_REGIS" +
+      "TER\020\t\022\025\n\021USER_REGISTER_RSP\020m\022\r\n\tHEARTBEA" +
+      "T\020\n\022\014\n\010RESPONSE\020c"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor,
+              new java.lang.String[] { "Id", "Value", });
+          internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor,
+              new java.lang.String[] { "Id", "Name", "Desc", });
+          internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor,
+              new java.lang.String[] { "Addr", "Type", "Name", });
+          internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_com_letsmidi_monsys_protocol_push_PushMsg_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor,
+              new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", "UserRegister", "UserRegisterRsp", "Heartbeat", });
+          internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_PushClientLogin_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_PushClientLoginRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_AdminClientLogin_descriptor,
+              new java.lang.String[] { "Account", "Password", });
+          internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_AdminClientLoginRsp_descriptor,
+              new java.lang.String[] { "Code", "FgwInfos", });
+          internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_com_letsmidi_monsys_protocol_push_Bind_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor =
+            getDescriptor().getMessageTypes().get(9);
+          internal_static_com_letsmidi_monsys_protocol_push_BindRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor =
+            getDescriptor().getMessageTypes().get(10);
+          internal_static_com_letsmidi_monsys_protocol_push_Connect_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor =
+            getDescriptor().getMessageTypes().get(11);
+          internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor,
+              new java.lang.String[] { });
+          internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor =
+            getDescriptor().getMessageTypes().get(13);
+          internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor,
+              new java.lang.String[] { "Code", "FgwInfos", });
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor =
+            getDescriptor().getMessageTypes().get(14);
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor,
+              new java.lang.String[] { "DeviceId", });
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor =
+            getDescriptor().getMessageTypes().get(15);
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor,
+              new java.lang.String[] { "Code", "DevInfos", });
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor =
+            getDescriptor().getMessageTypes().get(16);
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor,
+              new java.lang.String[] { "Addr", "ItemIds", });
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor =
+            getDescriptor().getMessageTypes().get(17);
+          internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor,
+              new java.lang.String[] { "Code", "IdValuePairs", });
+          internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor =
+            getDescriptor().getMessageTypes().get(18);
+          internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor,
+              new java.lang.String[] { "Addr", "IdValuePairs", });
+          internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor =
+            getDescriptor().getMessageTypes().get(19);
+          internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor =
+            getDescriptor().getMessageTypes().get(20);
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor,
+              new java.lang.String[] { "Nickname", "Account", "Password", });
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor =
+            getDescriptor().getMessageTypes().get(21);
+          internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor,
+              new java.lang.String[] { "Code", });
+          internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor =
+            getDescriptor().getMessageTypes().get(22);
+          internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor,
+              new java.lang.String[] { });
+          internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor =
+            getDescriptor().getMessageTypes().get(23);
+          internal_static_com_letsmidi_monsys_protocol_push_Response_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor,
+              new java.lang.String[] { "Code", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_IdValuePair_descriptor,
-        new java.lang.String[] { "Id", "Value", });
-    internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_FGatewayInfo_descriptor,
-        new java.lang.String[] { "Id", "Name", "Desc", });
-    internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_DeviceInfo_descriptor,
-        new java.lang.String[] { "Addr", "Type", "Name", });
-    internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_letsmidi_monsys_protocol_push_PushMsg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_PushMsg_descriptor,
-        new java.lang.String[] { "Version", "Type", "Sequence", "Login", "LoginRsp", "Bind", "BindRsp", "Connect", "ConnectRsp", "GetFgwList", "GetFgwListRsp", "GetDevList", "GetDevListRsp", "GetDevInfo", "GetDevInfoRsp", "SetDevInfo", "SetDevInfoRsp", "ClientLogin", "ClientLoginRsp", "UserRegister", "UserRegisterRsp", "Heartbeat", });
-    internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_com_letsmidi_monsys_protocol_push_Login_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_Login_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_LoginRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_ClientLogin_descriptor,
-        new java.lang.String[] { "Account", "Password", });
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_ClientLoginRsp_descriptor,
-        new java.lang.String[] { "Code", "FgwInfos", });
-    internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_com_letsmidi_monsys_protocol_push_Bind_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_Bind_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_com_letsmidi_monsys_protocol_push_BindRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_BindRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_com_letsmidi_monsys_protocol_push_Connect_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_Connect_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_ConnectRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor =
-      getDescriptor().getMessageTypes().get(12);
-    internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetFgwList_descriptor,
-        new java.lang.String[] { });
-    internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor =
-      getDescriptor().getMessageTypes().get(13);
-    internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetFgwListRsp_descriptor,
-        new java.lang.String[] { "Code", "FgwInfos", });
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor =
-      getDescriptor().getMessageTypes().get(14);
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetDevList_descriptor,
-        new java.lang.String[] { "DeviceId", });
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetDevListRsp_descriptor,
-        new java.lang.String[] { "Code", "DevInfos", });
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor =
-      getDescriptor().getMessageTypes().get(16);
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetDevInfo_descriptor,
-        new java.lang.String[] { "Addr", "ItemIds", });
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor =
-      getDescriptor().getMessageTypes().get(17);
-    internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_GetDevInfoRsp_descriptor,
-        new java.lang.String[] { "Code", "IdValuePairs", });
-    internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor =
-      getDescriptor().getMessageTypes().get(18);
-    internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_SetDevInfo_descriptor,
-        new java.lang.String[] { "Addr", "IdValuePairs", });
-    internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor =
-      getDescriptor().getMessageTypes().get(19);
-    internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_SetDevInfoRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor =
-      getDescriptor().getMessageTypes().get(20);
-    internal_static_com_letsmidi_monsys_protocol_push_UserRegister_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_UserRegister_descriptor,
-        new java.lang.String[] { "Nickname", "Account", "Password", });
-    internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor =
-      getDescriptor().getMessageTypes().get(21);
-    internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_UserRegisterRsp_descriptor,
-        new java.lang.String[] { "Code", });
-    internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor =
-      getDescriptor().getMessageTypes().get(22);
-    internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_Heartbeat_descriptor,
-        new java.lang.String[] { });
-    internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor =
-      getDescriptor().getMessageTypes().get(23);
-    internal_static_com_letsmidi_monsys_protocol_push_Response_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_letsmidi_monsys_protocol_push_Response_descriptor,
-        new java.lang.String[] { "Code", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

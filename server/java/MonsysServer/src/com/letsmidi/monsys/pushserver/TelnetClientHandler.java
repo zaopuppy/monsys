@@ -6,10 +6,7 @@ import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.handler.RelayHandler;
-import com.letsmidi.monsys.protocol.push.Push.Login;
-import com.letsmidi.monsys.protocol.push.Push.MsgType;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
-import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -86,14 +83,14 @@ public class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN, 0);
-
-            Login.Builder login = Login.newBuilder();
-            login.setDeviceId(msg);
-
-            builder.setLogin(login);
-
-            mRelayChannel.writeAndFlush(builder.build());
+            //PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.LOGIN, 0);
+            //
+            //Login.Builder login = Login.newBuilder();
+            //login.setDeviceId(msg);
+            //
+            //builder.setLogin(login);
+            //
+            //mRelayChannel.writeAndFlush(builder.build());
         }
     }
     // --- FOR DEBUGGING ONLY ---

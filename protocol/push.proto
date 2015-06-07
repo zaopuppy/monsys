@@ -2,36 +2,36 @@
 package com.letsmidi.monsys.protocol.push;
 
 enum MsgType {
-  LOGIN             =   1;
-  LOGIN_RSP         = 101;
+  PUSH_CLIENT_LOGIN     =   1;
+  PUSH_CLIENT_LOGIN_RSP = 101;
     
-  BIND              =   2;
-  BIND_RSP          = 102;
-    
-  CONNECT           =   3;
-  CONNECT_RSP       = 103;
-    
-  GET_FGW_LIST      =   4;
-  GET_FGW_LIST_RSP  = 104;
+  BIND                  =   2;
+  BIND_RSP              = 102;
+                        
+  CONNECT               =   3;
+  CONNECT_RSP           = 103;
+                        
+  GET_FGW_LIST          =   4;
+  GET_FGW_LIST_RSP      = 104;
+                        
+  GET_DEV_LIST          =   5;
+  GET_DEV_LIST_RSP      = 105;
+                        
+  GET_DEV_INFO          =   6;
+  GET_DEV_INFO_RSP      = 106;
+                        
+  SET_DEV_INFO          =   7;
+  SET_DEV_INFO_RSP      = 107;
 
-  GET_DEV_LIST      =   5;
-  GET_DEV_LIST_RSP  = 105;
-  
-  GET_DEV_INFO      =   6;
-  GET_DEV_INFO_RSP  = 106;
-  
-  SET_DEV_INFO      =   7;
-  SET_DEV_INFO_RSP  = 107;
+  ADMIN_CLIENT_LOGIN      =   8;
+  ADMIN_CLIENT_LOGIN_RSP  = 108;
 
-  CLIENT_LOGIN      =   8;
-  CLIENT_LOGIN_RSP  = 108;
-
-  USER_REGISTER     =   9;
-  USER_REGISTER_RSP = 109;
-
-  HEARTBEAT         =  10;
-
-  RESPONSE          =  99;
+  USER_REGISTER         =   9;
+  USER_REGISTER_RSP     = 109;
+                        
+  HEARTBEAT             =  10;
+                        
+  RESPONSE              =  99;
 }
 
 message IdValuePair {
@@ -56,8 +56,8 @@ message PushMsg {
   required MsgType type = 2;
   required int32 sequence = 3;
 
-  optional Login login = 10;
-  optional LoginRsp login_rsp = 11;
+  optional PushClientLogin login = 10;
+  optional PushClientLoginRsp login_rsp = 11;
 
   optional Bind bind = 12;
   optional BindRsp bind_rsp = 13;
@@ -77,8 +77,8 @@ message PushMsg {
   optional SetDevInfo set_dev_info = 22;
   optional SetDevInfoRsp set_dev_info_rsp = 23;
 
-  optional ClientLogin client_login = 24;
-  optional ClientLoginRsp client_login_rsp = 25;
+  optional AdminClientLogin client_login = 24;
+  optional AdminClientLoginRsp client_login_rsp = 25;
 
   optional UserRegister user_register = 26;
   optional UserRegisterRsp user_register_rsp = 27;
@@ -86,20 +86,20 @@ message PushMsg {
   optional Heartbeat heartbeat = 28;
 }
 
-message Login {
+message PushClientLogin {
   required string device_id = 1;
 }
 
-message LoginRsp {
+message PushClientLoginRsp {
   required int32 code = 1;
 }
 
-message ClientLogin {
+message AdminClientLogin {
   required string account = 1;
   required string password = 2;
 }
 
-message ClientLoginRsp {
+message AdminClientLoginRsp {
   required int32 code = 1;
   repeated FGatewayInfo fgw_infos = 2;
 }

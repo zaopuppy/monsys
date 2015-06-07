@@ -64,6 +64,7 @@ public class Demo2ClientApp {
 
             Demo2.DemoMsg.Builder builder = Demo2.DemoMsg.newBuilder();
             builder.setType2(Demo2.MsgType.LOGIN);
+            builder.setSeq2(0);
             Demo2.LoginReq2.Builder loginReq2 = Demo2.LoginReq2.newBuilder();
             loginReq2.setId2("admin-id01");
 
@@ -89,14 +90,16 @@ public class Demo2ClientApp {
         public void handle(String msg) {
             Demo2.DemoMsg.Builder builder = Demo2.DemoMsg.newBuilder();
             builder.setType2(Demo2.MsgType.MSG);
-
+            builder.setSeq2(0);
             Demo2.MsgReq2.Builder msgReq2 = Demo2.MsgReq2.newBuilder();
             msgReq2.setMsg2(msg);
             msgReq2.setPeerId2("push-client-id01");
 
             builder.setMsgReq2(msgReq2);
 
-            channel().writeAndFlush(builder.build());
+            writeAndFlush(
+                    builder.build(),
+                    rsp -> log("response code: " + rsp.getMsgRsp2().getCode2()));
 
             log("msg sent");
         }
@@ -138,7 +141,7 @@ public class Demo2ClientApp {
         }
 
         @Override
-        protected RouteItem<Demo2.DemoMsg> findRoute(Demo2.DemoMsg msg) {
+        protected RouteItem<Demo2.DemoMsg> removeRoute(Demo2.DemoMsg msg) {
             return getRouteMap().getOrDefault(0, null);
         }
 

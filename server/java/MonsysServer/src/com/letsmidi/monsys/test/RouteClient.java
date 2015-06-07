@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.letsmidi.monsys.log.Logger;
-import com.letsmidi.monsys.log.MyLogger;
 import com.letsmidi.monsys.protocol.route.Route;
 import com.letsmidi.monsys.util.MsgUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -22,9 +21,11 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 public class RouteClient {
+    private static final String TAG = "RouteClient";
+
     public static void main(String[] args) {
         if (args.length != 1) {
-            MyLogger.e("Usage: xxx <port>");
+            Logger.e(TAG, "Usage: xxx <port>");
             return;
         }
 

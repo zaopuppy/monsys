@@ -58,7 +58,7 @@ public class TelnetClientConnection extends BaseClientConnection<String> {
     }
 
     @Override
-    protected RouteItem<String> findRoute(String msg) {
+    protected RouteItem<String> removeRoute(String msg) {
         return null;
     }
 

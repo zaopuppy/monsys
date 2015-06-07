@@ -253,7 +253,6 @@ const int ExchangeMsg::kConnectRspFieldNumber;
 ExchangeMsg::ExchangeMsg()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
 }
 
 void ExchangeMsg::InitAsDefaultInstance() {
@@ -267,7 +266,6 @@ ExchangeMsg::ExchangeMsg(const ExchangeMsg& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
 }
 
 void ExchangeMsg::SharedCtor() {
@@ -283,7 +281,6 @@ void ExchangeMsg::SharedCtor() {
 }
 
 ExchangeMsg::~ExchangeMsg() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   SharedDtor();
 }
 
@@ -318,7 +315,7 @@ ExchangeMsg* ExchangeMsg::New() const {
 }
 
 void ExchangeMsg::Clear() {
-  if (_has_bits_[0 / 32] & 127) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     version_ = 0u;
     type_ = 1;
     sequence_ = 0u;
@@ -341,23 +338,20 @@ void ExchangeMsg::Clear() {
 
 bool ExchangeMsg::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 version = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &version_)));
           set_has_version();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_type;
         break;
@@ -365,7 +359,8 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // required .com.letsmidi.monsys.protocol.exchange.MsgType type = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_type:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -377,7 +372,7 @@ bool ExchangeMsg::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(2, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(24)) goto parse_sequence;
         break;
@@ -385,14 +380,15 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // required uint32 sequence = 3;
       case 3: {
-        if (tag == 24) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_sequence:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &sequence_)));
           set_has_sequence();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(42)) goto parse_request_exchange;
         break;
@@ -400,12 +396,13 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.exchange.RequestExchange request_exchange = 5;
       case 5: {
-        if (tag == 42) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_request_exchange:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_request_exchange()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(50)) goto parse_request_exchange_rsp;
         break;
@@ -413,12 +410,13 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp request_exchange_rsp = 6;
       case 6: {
-        if (tag == 50) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_request_exchange_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_request_exchange_rsp()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(58)) goto parse_connect;
         break;
@@ -426,12 +424,13 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.exchange.Connect connect = 7;
       case 7: {
-        if (tag == 58) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_connect:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_connect()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(66)) goto parse_connect_rsp;
         break;
@@ -439,23 +438,23 @@ bool ExchangeMsg::MergePartialFromCodedStream(
 
       // optional .com.letsmidi.monsys.protocol.exchange.ConnectRsp connect_rsp = 8;
       case 8: {
-        if (tag == 66) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_connect_rsp:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_connect_rsp()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -463,18 +462,12 @@ bool ExchangeMsg::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
-  return false;
 #undef DO_
 }
 
 void ExchangeMsg::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   // required uint32 version = 1;
   if (has_version()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->version(), output);
@@ -519,12 +512,10 @@ void ExchangeMsg::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
 }
 
 ::google::protobuf::uint8* ExchangeMsg::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   // required uint32 version = 1;
   if (has_version()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->version(), target);
@@ -573,7 +564,6 @@ void ExchangeMsg::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.exchange.ExchangeMsg)
   return target;
 }
 
@@ -740,7 +730,6 @@ void ExchangeMsg::Swap(ExchangeMsg* other) {
 RequestExchange::RequestExchange()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.exchange.RequestExchange)
 }
 
 void RequestExchange::InitAsDefaultInstance() {
@@ -750,7 +739,6 @@ RequestExchange::RequestExchange(const RequestExchange& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.exchange.RequestExchange)
 }
 
 void RequestExchange::SharedCtor() {
@@ -759,7 +747,6 @@ void RequestExchange::SharedCtor() {
 }
 
 RequestExchange::~RequestExchange() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   SharedDtor();
 }
 
@@ -796,49 +783,34 @@ void RequestExchange::Clear() {
 
 bool RequestExchange::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.exchange.RequestExchange)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+  while ((tag = input->ReadTag()) != 0) {
+    if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
         ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+      return true;
     }
     DO_(::google::protobuf::internal::WireFormat::SkipField(
           input, tag, mutable_unknown_fields()));
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.exchange.RequestExchange)
-  return false;
 #undef DO_
 }
 
 void RequestExchange::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.exchange.RequestExchange)
 }
 
 ::google::protobuf::uint8* RequestExchange::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.exchange.RequestExchange)
   return target;
 }
 
@@ -918,7 +890,6 @@ const int RequestExchangeRsp::kPeerId2FieldNumber;
 RequestExchangeRsp::RequestExchangeRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
 }
 
 void RequestExchangeRsp::InitAsDefaultInstance() {
@@ -928,32 +899,29 @@ RequestExchangeRsp::RequestExchangeRsp(const RequestExchangeRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
 }
 
 void RequestExchangeRsp::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   code_ = 0;
-  id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  peer_id1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  peer_id2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  peer_id1_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  peer_id2_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 RequestExchangeRsp::~RequestExchangeRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   SharedDtor();
 }
 
 void RequestExchangeRsp::SharedDtor() {
-  if (id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (id_ != &::google::protobuf::internal::kEmptyString) {
     delete id_;
   }
-  if (peer_id1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (peer_id1_ != &::google::protobuf::internal::kEmptyString) {
     delete peer_id1_;
   }
-  if (peer_id2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (peer_id2_ != &::google::protobuf::internal::kEmptyString) {
     delete peer_id2_;
   }
   if (this != default_instance_) {
@@ -982,20 +950,20 @@ RequestExchangeRsp* RequestExchangeRsp::New() const {
 }
 
 void RequestExchangeRsp::Clear() {
-  if (_has_bits_[0 / 32] & 15) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     code_ = 0;
     if (has_id()) {
-      if (id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (id_ != &::google::protobuf::internal::kEmptyString) {
         id_->clear();
       }
     }
     if (has_peer_id1()) {
-      if (peer_id1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (peer_id1_ != &::google::protobuf::internal::kEmptyString) {
         peer_id1_->clear();
       }
     }
     if (has_peer_id2()) {
-      if (peer_id2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (peer_id2_ != &::google::protobuf::internal::kEmptyString) {
         peer_id2_->clear();
       }
     }
@@ -1006,23 +974,20 @@ void RequestExchangeRsp::Clear() {
 
 bool RequestExchangeRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 code = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_id;
         break;
@@ -1030,16 +995,16 @@ bool RequestExchangeRsp::MergePartialFromCodedStream(
 
       // required string id = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_id()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->id().data(), this->id().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "id");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_peer_id1;
         break;
@@ -1047,16 +1012,16 @@ bool RequestExchangeRsp::MergePartialFromCodedStream(
 
       // required string peer_id1 = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_peer_id1:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_peer_id1()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->peer_id1().data(), this->peer_id1().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "peer_id1");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(34)) goto parse_peer_id2;
         break;
@@ -1064,27 +1029,26 @@ bool RequestExchangeRsp::MergePartialFromCodedStream(
 
       // required string peer_id2 = 4;
       case 4: {
-        if (tag == 34) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_peer_id2:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_peer_id2()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->peer_id2().data(), this->peer_id2().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "peer_id2");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1092,18 +1056,12 @@ bool RequestExchangeRsp::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
-  return false;
 #undef DO_
 }
 
 void RequestExchangeRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -1111,31 +1069,28 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
 
   // required string id = 2;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "id");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->id(), output);
   }
 
   // required string peer_id1 = 3;
   if (has_peer_id1()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id1().data(), this->peer_id1().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id1");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->peer_id1(), output);
   }
 
   // required string peer_id2 = 4;
   if (has_peer_id2()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id2().data(), this->peer_id2().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id2");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->peer_id2(), output);
   }
 
@@ -1143,12 +1098,10 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
 }
 
 ::google::protobuf::uint8* RequestExchangeRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -1156,10 +1109,9 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
 
   // required string id = 2;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "id");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->id(), target);
@@ -1167,10 +1119,9 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
 
   // required string peer_id1 = 3;
   if (has_peer_id1()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id1().data(), this->peer_id1().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id1");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->peer_id1(), target);
@@ -1178,10 +1129,9 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
 
   // required string peer_id2 = 4;
   if (has_peer_id2()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id2().data(), this->peer_id2().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id2");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         4, this->peer_id2(), target);
@@ -1191,7 +1141,6 @@ void RequestExchangeRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.exchange.RequestExchangeRsp)
   return target;
 }
 
@@ -1319,7 +1268,6 @@ const int Connect::kPeerIdFieldNumber;
 Connect::Connect()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.exchange.Connect)
 }
 
 void Connect::InitAsDefaultInstance() {
@@ -1329,27 +1277,24 @@ Connect::Connect(const Connect& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.exchange.Connect)
 }
 
 void Connect::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  peer_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  peer_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 Connect::~Connect() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.exchange.Connect)
   SharedDtor();
 }
 
 void Connect::SharedDtor() {
-  if (id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (id_ != &::google::protobuf::internal::kEmptyString) {
     delete id_;
   }
-  if (peer_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (peer_id_ != &::google::protobuf::internal::kEmptyString) {
     delete peer_id_;
   }
   if (this != default_instance_) {
@@ -1378,14 +1323,14 @@ Connect* Connect::New() const {
 }
 
 void Connect::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_id()) {
-      if (id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (id_ != &::google::protobuf::internal::kEmptyString) {
         id_->clear();
       }
     }
     if (has_peer_id()) {
-      if (peer_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (peer_id_ != &::google::protobuf::internal::kEmptyString) {
         peer_id_->clear();
       }
     }
@@ -1396,25 +1341,21 @@ void Connect::Clear() {
 
 bool Connect::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.exchange.Connect)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string id = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_id()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->id().data(), this->id().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "id");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_peer_id;
         break;
@@ -1422,27 +1363,26 @@ bool Connect::MergePartialFromCodedStream(
 
       // required string peer_id = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_peer_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_peer_id()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->peer_id().data(), this->peer_id().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "peer_id");
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1450,35 +1390,27 @@ bool Connect::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.exchange.Connect)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.exchange.Connect)
-  return false;
 #undef DO_
 }
 
 void Connect::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.exchange.Connect)
   // required string id = 1;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "id");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->id(), output);
   }
 
   // required string peer_id = 2;
   if (has_peer_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id().data(), this->peer_id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->peer_id(), output);
   }
 
@@ -1486,18 +1418,15 @@ void Connect::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.exchange.Connect)
 }
 
 ::google::protobuf::uint8* Connect::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.exchange.Connect)
   // required string id = 1;
   if (has_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->id().data(), this->id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "id");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->id(), target);
@@ -1505,10 +1434,9 @@ void Connect::SerializeWithCachedSizes(
 
   // required string peer_id = 2;
   if (has_peer_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->peer_id().data(), this->peer_id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "peer_id");
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->peer_id(), target);
@@ -1518,7 +1446,6 @@ void Connect::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.exchange.Connect)
   return target;
 }
 
@@ -1623,7 +1550,6 @@ const int ConnectRsp::kCodeFieldNumber;
 ConnectRsp::ConnectRsp()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
 }
 
 void ConnectRsp::InitAsDefaultInstance() {
@@ -1633,7 +1559,6 @@ ConnectRsp::ConnectRsp(const ConnectRsp& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
 }
 
 void ConnectRsp::SharedCtor() {
@@ -1643,7 +1568,6 @@ void ConnectRsp::SharedCtor() {
 }
 
 ConnectRsp::~ConnectRsp() {
-  // @@protoc_insertion_point(destructor:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   SharedDtor();
 }
 
@@ -1674,41 +1598,39 @@ ConnectRsp* ConnectRsp::New() const {
 }
 
 void ConnectRsp::Clear() {
-  code_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    code_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool ConnectRsp::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 code = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1716,18 +1638,12 @@ bool ConnectRsp::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
-  return false;
 #undef DO_
 }
 
 void ConnectRsp::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   // required int32 code = 1;
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
@@ -1737,12 +1653,10 @@ void ConnectRsp::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
 }
 
 ::google::protobuf::uint8* ConnectRsp::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
@@ -1752,7 +1666,6 @@ void ConnectRsp::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:com.letsmidi.monsys.protocol.exchange.ConnectRsp)
   return target;
 }
 

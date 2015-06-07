@@ -2,7 +2,6 @@ package com.letsmidi.monsys.demo;
 
 import com.letsmidi.monsys.protocol.demo1.Demo1;
 import com.letsmidi.monsys.util.BaseClientConnection;
-import com.letsmidi.monsys.util.NettyUtil;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
@@ -48,10 +47,12 @@ public class Demo1ClientApp {
 
         log("login success");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-            conn.handle(line);
-        }
+        //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        //for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+        //    conn.handle(line);
+        //}
+
+        conn.channel().closeFuture().sync();
     }
 
     private static class Demo1ClientConnection extends BaseClientConnection<Demo1.DemoMsg> {
@@ -65,6 +66,7 @@ public class Demo1ClientApp {
 
             Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
             builder.setType1(Demo1.MsgType.LOGIN);
+            builder.setSeq1(0);
             Demo1.LoginReq1.Builder loginReq1 = Demo1.LoginReq1.newBuilder();
             loginReq1.setId1("push-client-id01");
 
@@ -87,20 +89,20 @@ public class Demo1ClientApp {
             return promise;
         }
 
-        public void handle(String msg) {
-            Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
-            builder.setType1(Demo1.MsgType.MSG);
-
-            Demo1.MsgReq1.Builder msgReq1 = Demo1.MsgReq1.newBuilder();
-            msgReq1.setMsg1(msg);
-            msgReq1.setPeerId1("admin-id01");
-
-            builder.setMsgReq1(msgReq1);
-
-            channel().writeAndFlush(builder.build());
-
-            log("msg sent");
-        }
+        //public void handle(String msg) {
+        //    Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
+        //    builder.setType1(Demo1.MsgType.MSG);
+        //
+        //    Demo1.MsgReq1.Builder msgReq1 = Demo1.MsgReq1.newBuilder();
+        //    msgReq1.setMsg1(msg);
+        //    msgReq1.setPeerId1("admin-id01");
+        //
+        //    builder.setMsgReq1(msgReq1);
+        //
+        //    channel().writeAndFlush(builder.build());
+        //
+        //    log("msg sent");
+        //}
 
         @Override
         protected void setChannel(Channel channel) {
@@ -139,7 +141,7 @@ public class Demo1ClientApp {
         }
 
         @Override
-        protected RouteItem<Demo1.DemoMsg> findRoute(Demo1.DemoMsg msg) {
+        protected RouteItem<Demo1.DemoMsg> removeRoute(Demo1.DemoMsg msg) {
             return getRouteMap().getOrDefault(0, null);
         }
 
@@ -150,6 +152,17 @@ public class Demo1ClientApp {
                     switch (msg.getType1()) {
                         case MSG:
                             log("received: " + msg.getMsgReq1().getMsg1());
+
+                            Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
+                            builder.setType1(Demo1.MsgType.MSG_RSP);
+                            builder.setSeq1(msg.getSeq1());
+
+                            Demo1.MsgRsp1.Builder msgRsp1 = Demo1.MsgRsp1.newBuilder();
+                            msgRsp1.setCode1(404);
+
+                            builder.setMsgRsp1(msgRsp1);
+
+                            ctx.writeAndFlush(builder.build());
                             break;
                         default:
                             onResponse(msg);

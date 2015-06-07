@@ -1,5 +1,6 @@
 package com.letsmidi.monsys.protocol.demo1;
 
+// push-client
 enum MsgType {
   LOGIN = 1;
   LOGIN_RSP = 2;
@@ -10,6 +11,7 @@ enum MsgType {
 
 message DemoMsg {
   required MsgType type1 = 1;
+  required int32 seq1 = 2;
 
   optional LoginReq1 login_req1 = 10;
   optional LoginRsp1 login_rsp1 = 11;
@@ -27,11 +29,10 @@ message LoginRsp1 {
 
 message MsgReq1 {
   required string msg1 = 1;
-  required string peerId1 = 2;
 }
 
 message MsgRsp1 {
-  required string msg1 = 1;
+  required int32 code1 = 1;
 }
 
 

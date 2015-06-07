@@ -62,7 +62,7 @@ public class MonsysClientConnection extends BaseClientConnection {
     }
 
     @Override
-    protected RouteItem findRoute(Object msg) {
+    protected RouteItem removeRoute(Object msg) {
         return null;
     }
 }

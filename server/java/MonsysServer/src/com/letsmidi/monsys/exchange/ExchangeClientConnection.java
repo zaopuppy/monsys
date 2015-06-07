@@ -117,7 +117,7 @@ public class ExchangeClientConnection extends BaseClientConnection<Exchange.Exch
     }
 
     @Override
-    protected RouteItem<Exchange.ExchangeMsg> findRoute(Exchange.ExchangeMsg msg) {
+    protected RouteItem<Exchange.ExchangeMsg> removeRoute(Exchange.ExchangeMsg msg) {
         return null;
     }
 }
