@@ -74,7 +74,6 @@ public class InnerRouterDemoApp {
 
     private static final Map<String, Entry> mAdminMap = new HashMap<>();
 
-    private static final Map<Integer, RouteRecord> mRouteMap = new HashMap<>(10000);
     private static class RouteRecord {
         private final int innerSeq;
         private final int externalSeq;
@@ -98,6 +97,7 @@ public class InnerRouterDemoApp {
             return peerId;
         }
     }
+    private static final Map<Integer, RouteRecord> mRouteMap = new HashMap<>(10000);
 
     // protocol `demo1'
     private ChannelFuture listenClients(NioEventLoopGroup worker, int port) {

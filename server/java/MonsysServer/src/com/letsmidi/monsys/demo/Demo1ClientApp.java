@@ -142,7 +142,7 @@ public class Demo1ClientApp {
 
         @Override
         protected RouteItem<Demo1.DemoMsg> removeRoute(Demo1.DemoMsg msg) {
-            return getRouteMap().getOrDefault(0, null);
+            return getRouteMap().remove(msg.getSeq1());
         }
 
         private final SimpleChannelInboundHandler<Demo1.DemoMsg> mHandler =

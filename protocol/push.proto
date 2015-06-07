@@ -56,8 +56,8 @@ message PushMsg {
   required MsgType type = 2;
   required int32 sequence = 3;
 
-  optional PushClientLogin login = 10;
-  optional PushClientLoginRsp login_rsp = 11;
+  optional PushClientLogin push_client_login = 10;
+  optional PushClientLoginRsp push_client_login_rsp = 11;
 
   optional Bind bind = 12;
   optional BindRsp bind_rsp = 13;
@@ -77,8 +77,8 @@ message PushMsg {
   optional SetDevInfo set_dev_info = 22;
   optional SetDevInfoRsp set_dev_info_rsp = 23;
 
-  optional AdminClientLogin client_login = 24;
-  optional AdminClientLoginRsp client_login_rsp = 25;
+  optional AdminClientLogin admin_client_login = 24;
+  optional AdminClientLoginRsp admin_client_login_rsp = 25;
 
   optional UserRegister user_register = 26;
   optional UserRegisterRsp user_register_rsp = 27;
@@ -138,8 +138,9 @@ message GetDevListRsp {
 }
 
 message GetDevInfo {
-  required int32 addr = 1;
-  repeated int32 item_ids = 2 [packed=true];
+  required string device_id = 1;
+  required int32 addr = 2;
+  repeated int32 item_ids = 3 [packed=true];
 }
 
 message GetDevInfoRsp {
@@ -148,8 +149,9 @@ message GetDevInfoRsp {
 }
 
 message SetDevInfo {
-  required int32 addr = 1;
-  repeated IdValuePair id_value_pairs = 2;
+  required string device_id = 1;
+  required int32 addr = 2;
+  repeated IdValuePair id_value_pairs = 3;
 }
 
 message SetDevInfoRsp {
