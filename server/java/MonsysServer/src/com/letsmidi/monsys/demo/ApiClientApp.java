@@ -2,6 +2,7 @@ package com.letsmidi.monsys.demo;
 
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.util.BaseClientConnection;
+import com.letsmidi.monsys.util.SequenceGenerator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
@@ -9,17 +10,43 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Created by zhaoyi on 15-6-7.
  */
 public class ApiClientApp {
 
+    private static final SequenceGenerator mIdGenerator = new SequenceGenerator(1, 0xFFFFFF);
+
     private static void log(String msg) {
         System.out.println(msg);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, IOException {
+        NioEventLoopGroup shared_worker = new NioEventLoopGroup();
+        ApiClientConnection conn = new ApiClientConnection(shared_worker);
 
+        conn.connect("127.0.0.1", 1984).sync();
+        log("connected");
+
+        conn.login().sync();
+        log("logged in");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+            line = line.trim();
+            if (line.equals("dev-list")) {
+                conn.getDevList();
+            } else if (line.equals("dev-info")) {
+                conn.getDevInfo();
+            } else {
+                log("unknow command");
+            }
+        }
     }
 
     private static class ApiClientConnection extends BaseClientConnection<Push.PushMsg> {
@@ -40,7 +67,34 @@ public class ApiClientApp {
         public ChannelFuture login() {
             ChannelPromise promise = channel().newPromise();
 
-            // TODO
+            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
+            builder.setType(Push.MsgType.ADMIN_CLIENT_LOGIN);
+            builder.setSequence(mIdGenerator.next());
+
+            Push.AdminClientLogin.Builder login = Push.AdminClientLogin.newBuilder();
+            login.setAccount("zao1@gmail.com");
+            login.setPassword("password");
+
+            builder.setAdminClientLogin(login);
+
+            writeAndFlush(builder.build(), msg -> {
+                if (msg == null || !msg.hasAdminClientLoginRsp()) {
+                    log("bad response");
+                    promise.setFailure(new Throwable());
+                    return;
+                }
+
+                Push.AdminClientLoginRsp rsp = msg.getAdminClientLoginRsp();
+                if (rsp.getCode() != 0) {
+                    log("not success: " + rsp.getCode());
+                    promise.setFailure(new Throwable());
+                    return;
+                }
+
+                promise.setSuccess();
+            });
+
+            return promise;
         }
 
         @Override
@@ -84,6 +138,58 @@ public class ApiClientApp {
         @Override
         protected RouteItem<Push.PushMsg> removeRoute(Push.PushMsg msg) {
             return getRouteMap().remove(msg.getSequence());
+        }
+
+        public void getDevInfo() {
+            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
+            builder.setType(Push.MsgType.GET_DEV_INFO);
+            builder.setSequence(mIdGenerator.next());
+
+            Push.GetDevInfo.Builder get_dev_info = Push.GetDevInfo.newBuilder();
+            get_dev_info.setDeviceId("any-devices");
+            get_dev_info.setAddr(123);
+            get_dev_info.addItemIds(0);
+
+            builder.setGetDevInfo(get_dev_info);
+
+            writeAndFlush(builder.build(), msg -> {
+                if (msg == null || !msg.hasGetDevInfoRsp()) {
+                    log("bad response");
+                    return;
+                }
+
+                Push.GetDevInfoRsp get_dev_info_rsp = msg.getGetDevInfoRsp();
+                log("response code: " + get_dev_info_rsp.getCode());
+                log("response size: " + get_dev_info_rsp.getIdValuePairsList().size());
+                for (Push.IdValuePair pair: get_dev_info_rsp.getIdValuePairsList()) {
+                    log("id=" + pair.getId() + ", value=" + pair.getValue());
+                }
+            });
+        }
+
+        public void getDevList() {
+            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
+            builder.setType(Push.MsgType.GET_DEV_LIST);
+            builder.setSequence(mIdGenerator.next());
+
+            Push.GetDevList.Builder get_dev_list = Push.GetDevList.newBuilder();
+            get_dev_list.setDeviceId("any-devices");
+
+            builder.setGetDevList(get_dev_list);
+
+            writeAndFlush(builder.build(), msg -> {
+                if (msg == null || !msg.hasGetDevListRsp()) {
+                    log("bad response");
+                    return;
+                }
+
+                Push.GetDevListRsp get_dev_list_rsp = msg.getGetDevListRsp();
+                log("response code: " + get_dev_list_rsp.getCode());
+                log("response size: " + get_dev_list_rsp.getDevInfosList().size());
+                for (Push.DeviceInfo info: get_dev_list_rsp.getDevInfosList()) {
+                    log("name=" + info.getName() + ", type=" + info.getType() + ", addr=" + info.getAddr());
+                }
+            });
         }
     }
 }

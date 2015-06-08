@@ -82,7 +82,7 @@ public class PushServerApp {
 
         ChannelFuture[] futures = new ChannelFuture[]{
             listenPushClients(shared_worker, Config.getPushConfig().getPushPort(), timer),
-            listenApiClients(shared_worker, Config.getPushConfig().getAccessPort(), timer)
+            listenApiClients(shared_worker, Config.getPushConfig().getApiPort(), timer)
         };
 
         try {

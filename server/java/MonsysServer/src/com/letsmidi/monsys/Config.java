@@ -117,7 +117,7 @@ public class Config {
         private String loggerName = null;
         private String logFileName = null;
         private int pushPort = -1;
-        private int accessPort = -1;
+        private int apiPort = -1;
 
         public String getLoggerName() {
             return loggerName;
@@ -143,12 +143,12 @@ public class Config {
             this.pushPort = pushPort;
         }
 
-        public int getAccessPort() {
-            return accessPort;
+        public int getApiPort() {
+            return apiPort;
         }
 
-        public void setAccessPort(int accessPort) {
-            this.accessPort = accessPort;
+        public void setApiPort(int apiPort) {
+            this.apiPort = apiPort;
         }
     }
 
