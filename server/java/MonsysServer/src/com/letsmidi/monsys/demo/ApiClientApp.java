@@ -2,6 +2,7 @@ package com.letsmidi.monsys.demo;
 
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.util.BaseClientConnection;
+import com.letsmidi.monsys.util.MsgUtil;
 import com.letsmidi.monsys.util.SequenceGenerator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -30,7 +31,7 @@ public class ApiClientApp {
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
         ApiClientConnection conn = new ApiClientConnection(shared_worker);
 
-        conn.connect("127.0.0.1", 1984).sync();
+        conn.connect("127.0.0.1", 1988).sync();
         log("connected");
 
         conn.login().sync();
@@ -67,9 +68,9 @@ public class ApiClientApp {
         public ChannelFuture login() {
             ChannelPromise promise = channel().newPromise();
 
-            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
-            builder.setType(Push.MsgType.ADMIN_CLIENT_LOGIN);
-            builder.setSequence(mIdGenerator.next());
+
+            Push.PushMsg.Builder builder =
+                MsgUtil.newPushMsgBuilder(Push.MsgType.ADMIN_CLIENT_LOGIN, mIdGenerator.next());
 
             Push.AdminClientLogin.Builder login = Push.AdminClientLogin.newBuilder();
             login.setAccount("zao1@gmail.com");
@@ -141,9 +142,7 @@ public class ApiClientApp {
         }
 
         public void getDevInfo() {
-            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
-            builder.setType(Push.MsgType.GET_DEV_INFO);
-            builder.setSequence(mIdGenerator.next());
+            Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_INFO, mIdGenerator.next());
 
             Push.GetDevInfo.Builder get_dev_info = Push.GetDevInfo.newBuilder();
             get_dev_info.setDeviceId("any-devices");
@@ -168,9 +167,7 @@ public class ApiClientApp {
         }
 
         public void getDevList() {
-            Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
-            builder.setType(Push.MsgType.GET_DEV_LIST);
-            builder.setSequence(mIdGenerator.next());
+            Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_LIST, mIdGenerator.next());
 
             Push.GetDevList.Builder get_dev_list = Push.GetDevList.newBuilder();
             get_dev_list.setDeviceId("any-devices");

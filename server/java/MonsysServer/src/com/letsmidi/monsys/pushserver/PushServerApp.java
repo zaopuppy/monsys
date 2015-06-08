@@ -67,10 +67,10 @@ public class PushServerApp {
         };
 
         // initialize hibernate
-        if (!HibernateUtil.init(mapping_classes)) {
-            mLogger.severe("Failed to initialize hibernate, failed");
-            return;
-        }
+        //if (!HibernateUtil.init(mapping_classes)) {
+        //    mLogger.severe("Failed to initialize hibernate, failed");
+        //    return;
+        //}
 
         // global timer
         final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);

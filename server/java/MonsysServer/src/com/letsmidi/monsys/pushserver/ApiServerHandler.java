@@ -115,9 +115,7 @@ public class ApiServerHandler extends SimpleChannelInboundHandler<PushMsg> {
         ctx.channel().closeFuture().addListener(future -> InMemInfo.INSTANCE.getApiClientMap().remove(mId));
 
         // build response
-        PushMsg.Builder builder = PushMsg.newBuilder();
-        builder.setType(MsgType.ADMIN_CLIENT_LOGIN_RSP);
-        builder.setSequence(msg.getSequence());
+        PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(MsgType.ADMIN_CLIENT_LOGIN_RSP, msg.getSequence());
 
         Push.AdminClientLoginRsp.Builder loginRsp = Push.AdminClientLoginRsp.newBuilder();
         loginRsp.setCode(0);
