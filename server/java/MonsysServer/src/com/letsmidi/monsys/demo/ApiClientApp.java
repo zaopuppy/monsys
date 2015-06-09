@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
  */
 public class ApiClientApp {
 
+    private static final String PUSH_CLIENT_ID = "DEVID-Z";
+
     private static final SequenceGenerator mIdGenerator = new SequenceGenerator(1, 0xFFFFFF);
 
     private static void log(String msg) {
@@ -153,7 +155,7 @@ public class ApiClientApp {
             Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_INFO, mIdGenerator.next());
 
             Push.GetDevInfo.Builder get_dev_info = Push.GetDevInfo.newBuilder();
-            get_dev_info.setDeviceId("any-devices");
+            get_dev_info.setDeviceId(PUSH_CLIENT_ID);
             get_dev_info.setAddr(123);
             get_dev_info.addItemIds(0);
 
@@ -178,7 +180,7 @@ public class ApiClientApp {
             Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_LIST, mIdGenerator.next());
 
             Push.GetDevList.Builder get_dev_list = Push.GetDevList.newBuilder();
-            get_dev_list.setDeviceId("any-devices");
+            get_dev_list.setDeviceId(PUSH_CLIENT_ID);
 
             builder.setGetDevList(get_dev_list);
 
