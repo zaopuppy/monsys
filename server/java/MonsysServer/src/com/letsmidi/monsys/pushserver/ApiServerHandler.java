@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.protocol.push.Push;
-import com.letsmidi.monsys.protocol.push.Push.ConnectRsp;
 import com.letsmidi.monsys.protocol.push.Push.MsgType;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
 import com.letsmidi.monsys.util.MsgUtil;
@@ -163,10 +162,9 @@ public class ApiServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
     private void convertAndRoute(ChannelHandlerContext ctx, PushMsg msg, String peerId) {
         PushClient client = InMemInfo.INSTANCE.getPushClientMap().getOrDefault(peerId, null);
-        //FgwManager.FgwInfo fgwInfo = FgwManager.INSTANCE.find(peerId);
-        //if (fgwInfo == null) {
         if (client == null) {
             mLogger.severe("no device was found");
+            replyError(ctx, msg, 404);
             return;
         }
 
@@ -182,6 +180,35 @@ public class ApiServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
         // send to FGW
         client.getChannel().writeAndFlush(builder.build());
+    }
+
+    private void replyError(ChannelHandlerContext ctx, PushMsg msg, int code) {
+        final PushMsg.Builder builder;
+        switch (msg.getType()) {
+            case GET_DEV_LIST:
+                builder = MsgUtil.newPushMsgBuilder(MsgType.GET_DEV_LIST_RSP, msg.getSequence());
+                Push.GetDevListRsp.Builder get_dev_list_rsp = Push.GetDevListRsp.newBuilder();
+                get_dev_list_rsp.setCode(code);
+                builder.setGetDevListRsp(get_dev_list_rsp);
+                break;
+            case GET_DEV_INFO:
+                builder = MsgUtil.newPushMsgBuilder(MsgType.GET_DEV_INFO_RSP, msg.getSequence());
+                Push.GetDevInfoRsp.Builder get_dev_info_rsp = Push.GetDevInfoRsp.newBuilder();
+                get_dev_info_rsp.setCode(code);
+                builder.setGetDevInfoRsp(get_dev_info_rsp);
+                break;
+            case SET_DEV_INFO:
+                builder = MsgUtil.newPushMsgBuilder(MsgType.SET_DEV_INFO_RSP, msg.getSequence());
+                Push.SetDevInfoRsp.Builder set_dev_info_rsp = Push.SetDevInfoRsp.newBuilder();
+                set_dev_info_rsp.setCode(code);
+                builder.setSetDevInfoRsp(set_dev_info_rsp);
+                break;
+            default:
+                mLogger.info("unknown msg type");
+                return;
+        }
+
+        ctx.writeAndFlush(builder.build());
     }
 
     private void handleFgwListReq(ChannelHandlerContext ctx, PushMsg msg) {

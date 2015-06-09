@@ -39,13 +39,21 @@ public class ApiClientApp {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+            if (!conn.channel().isActive()) {
+                log("connection break");
+                break;
+            }
             line = line.trim();
-            if (line.equals("dev-list")) {
-                conn.getDevList();
-            } else if (line.equals("dev-info")) {
-                conn.getDevInfo();
-            } else {
-                log("unknow command");
+            switch (line) {
+                case "dev-list":
+                    conn.getDevList();
+                    break;
+                case "dev-info":
+                    conn.getDevInfo();
+                    break;
+                default:
+                    log("unknown command");
+                    break;
             }
         }
     }
@@ -160,7 +168,7 @@ public class ApiClientApp {
                 Push.GetDevInfoRsp get_dev_info_rsp = msg.getGetDevInfoRsp();
                 log("response code: " + get_dev_info_rsp.getCode());
                 log("response size: " + get_dev_info_rsp.getIdValuePairsList().size());
-                for (Push.IdValuePair pair: get_dev_info_rsp.getIdValuePairsList()) {
+                for (Push.IdValuePair pair : get_dev_info_rsp.getIdValuePairsList()) {
                     log("id=" + pair.getId() + ", value=" + pair.getValue());
                 }
             });
