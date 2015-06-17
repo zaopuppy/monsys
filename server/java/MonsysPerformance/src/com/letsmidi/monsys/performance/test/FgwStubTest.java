@@ -76,14 +76,14 @@ public class FgwStubTest extends ConcurrentTest {
     private void login(ChannelHandlerContext ctx) {
       Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
       builder.setVersion(1);
-      builder.setType(Push.MsgType.LOGIN);
+      builder.setType(Push.MsgType.PUSH_CLIENT_LOGIN);
       builder.setSequence(1);
 
-      Push.Login.Builder login = Push.Login.newBuilder();
+      Push.PushClientLogin.Builder login = Push.PushClientLogin.newBuilder();
       // login.setDeviceId(genRandomString(25));
       login.setDeviceId(mDeviceId);
 
-      builder.setLogin(login);
+      builder.setPushClientLogin(login);
 
       ctx.writeAndFlush(builder.build());
     }
@@ -96,13 +96,13 @@ public class FgwStubTest extends ConcurrentTest {
     protected void channelRead0(final ChannelHandlerContext ctx, Push.PushMsg msg) throws Exception {
       // do nothing
       if (!mLoggedIn) {
-        if (msg.getType() != Push.MsgType.LOGIN_RSP && !msg.hasLoginRsp()) {
+        if (msg.getType() != Push.MsgType.PUSH_CLIENT_LOGIN_RSP && !msg.hasPushClientLoginRsp()) {
           System.out.println("unknown message");
           ctx.close();
           return;
         }
 
-        Push.LoginRsp rsp = msg.getLoginRsp();
+        Push.PushClientLoginRsp rsp = msg.getPushClientLoginRsp();
         if (rsp.getCode() != 0) {
           System.out.println("failed response");
           ctx.close();

@@ -54,14 +54,14 @@ public class ClientStubTest extends ConcurrentTest {
     private void login(ChannelHandlerContext ctx) {
       Push.PushMsg.Builder builder = Push.PushMsg.newBuilder();
       builder.setVersion(1);
-      builder.setType(Push.MsgType.CLIENT_LOGIN);
+      builder.setType(Push.MsgType.ADMIN_CLIENT_LOGIN);
       builder.setSequence(1);
 
-      Push.ClientLogin.Builder login = Push.ClientLogin.newBuilder();
+      Push.AdminClientLogin.Builder login = Push.AdminClientLogin.newBuilder();
       login.setAccount("ztest@gmail.com");
       login.setPassword("123");
 
-      builder.setClientLogin(login);
+      builder.setAdminClientLogin(login);
 
       ctx.writeAndFlush(builder.build());
     }
@@ -74,13 +74,13 @@ public class ClientStubTest extends ConcurrentTest {
     protected void channelRead0(final ChannelHandlerContext ctx, Push.PushMsg msg) throws Exception {
       // do nothing
       if (!mLoggedIn) {
-        if (msg.getType() != Push.MsgType.CLIENT_LOGIN_RSP && !msg.hasClientLoginRsp()) {
+        if (msg.getType() != Push.MsgType.ADMIN_CLIENT_LOGIN_RSP && !msg.hasAdminClientLoginRsp()) {
           System.out.println("unknown message");
           ctx.close();
           return;
         }
 
-        Push.ClientLoginRsp rsp = msg.getClientLoginRsp();
+        Push.AdminClientLoginRsp rsp = msg.getAdminClientLoginRsp();
         if (rsp.getCode() != 0) {
           System.out.println("failed response");
           ctx.close();

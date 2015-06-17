@@ -45,7 +45,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="hibernate" level="project" />
+    <orderEntry type="library" name="ext" level="project" />
   </component>
 </module>
-
