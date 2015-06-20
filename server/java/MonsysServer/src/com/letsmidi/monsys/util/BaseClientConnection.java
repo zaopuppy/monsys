@@ -44,6 +44,7 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
     @Override
     public ChannelFuture connect(String host, int port) {
+        // TODO: reuse this channel if we can
         Channel channel = new NioSocketChannel();
 
         setChannel(channel);
@@ -57,6 +58,12 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
         register_future.addListener(future -> channel.connect(new InetSocketAddress(host, port), promise));
 
         return promise;
+    }
+
+    @Override
+    public ChannelFuture close() {
+        popChannel();
+        return channel().close();
     }
 
     protected void setChannel(Channel channel) {

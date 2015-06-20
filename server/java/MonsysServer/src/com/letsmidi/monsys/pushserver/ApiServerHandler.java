@@ -214,6 +214,7 @@ public class ApiServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     private void handleFgwListReq(ChannelHandlerContext ctx, PushMsg msg) {
         mLogger.severe("not implemented yet");
         if (!msg.hasGetFgwList()) {
+            mLogger.severe("no get-fgw-list body");
             return;
         }
 

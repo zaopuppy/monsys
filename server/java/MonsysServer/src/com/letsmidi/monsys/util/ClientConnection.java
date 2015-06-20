@@ -8,6 +8,8 @@ public interface ClientConnection<T> {
 
     ChannelFuture connect(String host, int port);
 
+    ChannelFuture close();
+
     // void setChannel(Channel channel);
 
     Channel channel();

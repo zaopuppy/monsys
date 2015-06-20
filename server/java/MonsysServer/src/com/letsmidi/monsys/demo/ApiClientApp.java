@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-/**
+/**\
  * Created by zhaoyi on 15-6-7.
  */
 public class ApiClientApp {
@@ -53,6 +53,12 @@ public class ApiClientApp {
             }
             line = line.trim();
             switch (line) {
+                case "fgw-list": {
+                    Future<ArrayList<MonsysConnection.Fgw>> future = conn.getFgwList();
+                    future.sync();
+                    log(future.get().toString());
+                    break;
+                }
                 case "dev-list": {
                     Future<ArrayList<MonsysConnection.Dev>> future = conn.getDevList(PUSH_CLIENT_ID);
                     future.sync();
@@ -60,7 +66,9 @@ public class ApiClientApp {
                     break;
                 }
                 case "dev-info": {
-                    Future<MonsysConnection.DevInfo> future = conn.getDevInfo(PUSH_CLIENT_ID, 0);
+                    ArrayList<Integer> id_list = new ArrayList<>();
+                    id_list.add(0);
+                    Future<MonsysConnection.DevInfo> future = conn.getDevInfo(PUSH_CLIENT_ID, 0, id_list);
                     log(future.get().toString());
                     break;
                 }
@@ -71,144 +79,4 @@ public class ApiClientApp {
             }
         }
     }
-
-    //private static class ApiClientConnection extends BaseClientConnection<Push.PushMsg> {
-    //
-    //    public ApiClientConnection(NioEventLoopGroup group) {
-    //        super(group);
-    //    }
-    //
-    //    private SimpleChannelInboundHandler<Push.PushMsg> mHandler = new SimpleChannelInboundHandler<Push.PushMsg>() {
-    //        @Override
-    //        protected void channelRead0(ChannelHandlerContext ctx, Push.PushMsg msg) throws Exception {
-    //            log("received: " + msg.getType());
-    //
-    //            onResponse(msg);
-    //        }
-    //    };
-    //
-    //    public ChannelFuture login() {
-    //        ChannelPromise promise = channel().newPromise();
-    //
-    //
-    //        Push.PushMsg.Builder builder =
-    //            MsgUtil.newPushMsgBuilder(Push.MsgType.ADMIN_CLIENT_LOGIN, mIdGenerator.next());
-    //
-    //        Push.AdminClientLogin.Builder login = Push.AdminClientLogin.newBuilder();
-    //        login.setAccount("zao1@gmail.com");
-    //        login.setPassword("password");
-    //
-    //        builder.setAdminClientLogin(login);
-    //
-    //        writeAndFlush(builder.build(), msg -> {
-    //            if (msg == null || !msg.hasAdminClientLoginRsp()) {
-    //                log("bad response");
-    //                promise.setFailure(new Throwable());
-    //                return;
-    //            }
-    //
-    //            Push.AdminClientLoginRsp rsp = msg.getAdminClientLoginRsp();
-    //            if (rsp.getCode() != 0) {
-    //                log("not success: " + rsp.getCode());
-    //                promise.setFailure(new Throwable());
-    //                return;
-    //            }
-    //
-    //            promise.setSuccess();
-    //        });
-    //
-    //        return promise;
-    //    }
-    //
-    //    @Override
-    //    protected void setChannel(Channel channel) {
-    //        super.setChannel(channel);
-    //        if (channel != null) {
-    //            ChannelPipeline pipeline = channel.pipeline();
-    //            pipeline.addLast("header-prepender", new ProtobufVarint32LengthFieldPrepender());
-    //            pipeline.addLast("frame-decoder", new ProtobufVarint32FrameDecoder());
-    //            pipeline.addLast("encoder", new ProtobufEncoder());
-    //            pipeline.addLast("decoder", new ProtobufDecoder(
-    //                    Push.PushMsg.getDefaultInstance()));
-    //            pipeline.addLast("handler", mHandler);
-    //        }
-    //    }
-    //
-    //    @Override
-    //    public Channel popChannel() {
-    //        Channel channel = channel();
-    //        if (channel == null) {
-    //            return null;
-    //        }
-    //
-    //        ChannelPipeline pipeline = channel.pipeline();
-    //
-    //        pipeline.remove("header-prepender");
-    //        pipeline.remove("frame-decoder");
-    //        pipeline.remove("encoder");
-    //        pipeline.remove("decoder");
-    //        pipeline.remove("handler");
-    //
-    //        return channel;
-    //    }
-    //
-    //    @Override
-    //    protected boolean saveRoute(Push.PushMsg msg, Callback<Push.PushMsg> callback) {
-    //        getRouteMap().put(msg.getSequence(), new RouteItem<>(msg.getSequence(), callback));
-    //        return true;
-    //    }
-    //
-    //    @Override
-    //    protected RouteItem<Push.PushMsg> removeRoute(Push.PushMsg msg) {
-    //        return getRouteMap().remove(msg.getSequence());
-    //    }
-    //
-    //    public void getDevInfo() {
-    //        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_INFO, mIdGenerator.next());
-    //
-    //        Push.GetDevInfo.Builder get_dev_info = Push.GetDevInfo.newBuilder();
-    //        get_dev_info.setDeviceId(PUSH_CLIENT_ID);
-    //        get_dev_info.setAddr(123);
-    //        get_dev_info.addItemIds(0);
-    //
-    //        builder.setGetDevInfo(get_dev_info);
-    //
-    //        writeAndFlush(builder.build(), msg -> {
-    //            if (msg == null || !msg.hasGetDevInfoRsp()) {
-    //                log("bad response");
-    //                return;
-    //            }
-    //
-    //            Push.GetDevInfoRsp get_dev_info_rsp = msg.getGetDevInfoRsp();
-    //            log("response code: " + get_dev_info_rsp.getCode());
-    //            log("response size: " + get_dev_info_rsp.getIdValuePairsList().size());
-    //            for (Push.IdValuePair pair : get_dev_info_rsp.getIdValuePairsList()) {
-    //                log("id=" + pair.getId() + ", value=" + pair.getValue());
-    //            }
-    //        });
-    //    }
-    //
-    //    public void getDevList() {
-    //        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_LIST, mIdGenerator.next());
-    //
-    //        Push.GetDevList.Builder get_dev_list = Push.GetDevList.newBuilder();
-    //        get_dev_list.setDeviceId(PUSH_CLIENT_ID);
-    //
-    //        builder.setGetDevList(get_dev_list);
-    //
-    //        writeAndFlush(builder.build(), msg -> {
-    //            if (msg == null || !msg.hasGetDevListRsp()) {
-    //                log("bad response");
-    //                return;
-    //            }
-    //
-    //            Push.GetDevListRsp get_dev_list_rsp = msg.getGetDevListRsp();
-    //            log("response code: " + get_dev_list_rsp.getCode());
-    //            log("response size: " + get_dev_list_rsp.getDevInfosList().size());
-    //            for (Push.DeviceInfo info: get_dev_list_rsp.getDevInfosList()) {
-    //                log("name=" + info.getName() + ", type=" + info.getType() + ", addr=" + info.getAddr());
-    //            }
-    //        });
-    //    }
-    //}
 }

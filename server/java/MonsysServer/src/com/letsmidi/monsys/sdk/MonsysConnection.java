@@ -25,9 +25,17 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
         System.out.println(msg);
     }
 
+    public enum State {
+        DISCONNECTED,
+        CONNECTED,
+        LOGGED_IN,
+    }
+
     private final String mHost;
     private final int mPort;
-    private static final SequenceGenerator mIdGenerator = new SequenceGenerator(1, 0xFFFFFF);
+    private final SequenceGenerator mIdGenerator = new SequenceGenerator(1, 0xFFFFFF);
+
+    private State mState = State.DISCONNECTED;
 
     public MonsysConnection(String host, int port, NioEventLoopGroup group) {
         super(group);
@@ -35,12 +43,35 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
         mPort = port;
     }
 
+    public State getState() {
+        return mState;
+    }
+
+    private void setState(State state) {
+        this.mState = state;
+    }
+
+    public boolean isLoggedIn() {
+        return mState == State.LOGGED_IN;
+    }
+
     private SimpleChannelInboundHandler<Push.PushMsg> mHandler = new SimpleChannelInboundHandler<Push.PushMsg>() {
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, Push.PushMsg msg) throws Exception {
             log("received: " + msg.getType());
-
             onResponse(msg);
+        }
+
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            super.channelActive(ctx);
+            setState(State.CONNECTED);
+        }
+
+        @Override
+        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+            super.channelInactive(ctx);
+            setState(State.DISCONNECTED);
         }
     };
 
@@ -62,11 +93,14 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
             }
 
             Push.AdminClientLoginRsp rsp = msg.getAdminClientLoginRsp();
+            if (rsp.getCode() == 0) {
+                setState(State.LOGGED_IN);
+            }
             promise.setSuccess(rsp.getCode());
         });
     }
 
-    public Future<Integer> login(String account, String password) throws InterruptedException {
+    public Future<Integer> login(String account, String password) {
         final DefaultPromise<Integer> promise;
 
         if (channel() == null || channel().isActive()) {
@@ -83,6 +117,51 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
         }
     }
 
+    public static class Fgw {
+        public final String id;
+        public final String name;
+        public final String desc;
+
+        public Fgw(String id, String name, String desc) {
+            this.id = id;
+            this.name = name;
+            this.desc = desc;
+        }
+    }
+
+    public Future<ArrayList<Fgw>> getFgwList() {
+        DefaultPromise<ArrayList<Fgw>> promise = new DefaultPromise<>(channel().eventLoop());
+
+        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_FGW_LIST, mIdGenerator.next());
+        builder.setGetFgwList(Push.GetFgwList.newBuilder());
+
+        writeAndFlush(builder.build(), msg -> {
+            if (msg == null || !msg.hasGetFgwListRsp()) {
+                log("bad response");
+                promise.setFailure(new Throwable());
+                return;
+            }
+
+            Push.GetFgwListRsp get_fgw_list_rsp = msg.getGetFgwListRsp();
+            log("response code: " + get_fgw_list_rsp.getCode());
+            log("response code: " + get_fgw_list_rsp.getFgwInfosCount());
+
+            if (get_fgw_list_rsp.getCode() != 0) {
+                promise.setSuccess(null);
+                return;
+            }
+
+            ArrayList<Fgw> fgw_list = new ArrayList<>();
+            for (Push.FGatewayInfo info : get_fgw_list_rsp.getFgwInfosList()) {
+                fgw_list.add(new Fgw(info.getId(), info.getName(), info.getDesc()));
+            }
+
+            promise.setSuccess(fgw_list);
+        });
+
+        return promise;
+    }
+
     public static class IdValue {
         public final int id;
         public final int value;
@@ -97,7 +176,7 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
         public ArrayList<IdValue> idValueList = new ArrayList<>();
     }
 
-    public Future<DevInfo> getDevInfo(String fgwId, int addr) {
+    public Future<DevInfo> getDevInfo(String fgwId, int addr, ArrayList<Integer> id_list) {
         DefaultPromise<DevInfo> promise = new DefaultPromise<>(channel().eventLoop());
 
         Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.GET_DEV_INFO, mIdGenerator.next());
@@ -105,7 +184,10 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
         Push.GetDevInfo.Builder get_dev_info = Push.GetDevInfo.newBuilder();
         get_dev_info.setDeviceId(fgwId);
         get_dev_info.setAddr(addr);
-        get_dev_info.addItemIds(0);
+
+        for (Integer id: id_list) {
+            get_dev_info.addItemIds(id);
+        }
 
         builder.setGetDevInfo(get_dev_info);
 
@@ -118,7 +200,7 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
 
             Push.GetDevInfoRsp get_dev_info_rsp = msg.getGetDevInfoRsp();
             log("response code: " + get_dev_info_rsp.getCode());
-            log("response size: " + get_dev_info_rsp.getIdValuePairsList().size());
+            log("response size: " + get_dev_info_rsp.getIdValuePairsCount());
 
             if (get_dev_info_rsp.getCode() != 0) {
                 promise.setSuccess(null);
@@ -132,6 +214,40 @@ public class MonsysConnection extends BaseClientConnection<Push.PushMsg> {
             }
 
             promise.setSuccess(dev_info);
+        });
+
+        return promise;
+    }
+
+    public Future<Integer> setDevInfo(String fgw_id, int addr, DevInfo dev_info) {
+        DefaultPromise<Integer> promise = new DefaultPromise<>(channel().eventLoop());
+
+        Push.PushMsg.Builder builder = MsgUtil.newPushMsgBuilder(Push.MsgType.SET_DEV_INFO, mIdGenerator.next());
+
+        Push.SetDevInfo.Builder set_dev_info = Push.SetDevInfo.newBuilder();
+        set_dev_info.setAddr(addr);
+        set_dev_info.setDeviceId(fgw_id);
+
+        Push.IdValuePair.Builder id_value_builder = Push.IdValuePair.newBuilder();
+        for (IdValue id_value: dev_info.idValueList) {
+            id_value_builder.setId(id_value.id);
+            id_value_builder.setValue(id_value.value);
+            set_dev_info.addIdValuePairs(id_value_builder.build());
+        }
+
+        builder.setSetDevInfo(set_dev_info);
+
+        writeAndFlush(builder.build(), msg -> {
+            if (msg == null || !msg.hasSetDevInfoRsp()) {
+                log("bad response");
+                promise.setFailure(new Throwable());
+                return;
+            }
+
+            Push.SetDevInfoRsp info_rsp = msg.getSetDevInfoRsp();
+            log("response code: " + info_rsp.getCode());
+
+            promise.setSuccess(info_rsp.getCode());
         });
 
         return promise;
