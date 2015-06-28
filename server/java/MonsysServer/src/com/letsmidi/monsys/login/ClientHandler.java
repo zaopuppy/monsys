@@ -155,7 +155,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Client.ClientMsg>
 
         try {
             // check account/password pair
-            AccountInfo info = (AccountInfo) session.load(AccountInfo.class, req.getUserName());
+            AccountInfo info = (AccountInfo) session.get(AccountInfo.class, req.getUserName());
             if (info == null) {
                 mLogger.severe("bad account");
                 ctx.close();

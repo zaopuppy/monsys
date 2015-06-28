@@ -89,41 +89,20 @@ public class Demo1ClientApp {
             return promise;
         }
 
-        //public void handle(String msg) {
-        //    Demo1.DemoMsg.Builder builder = Demo1.DemoMsg.newBuilder();
-        //    builder.setType1(Demo1.MsgType.MSG);
-        //
-        //    Demo1.MsgReq1.Builder msgReq1 = Demo1.MsgReq1.newBuilder();
-        //    msgReq1.setMsg1(msg);
-        //    msgReq1.setPeerId1("admin-id01");
-        //
-        //    builder.setMsgReq1(msgReq1);
-        //
-        //    channel().writeAndFlush(builder.build());
-        //
-        //    log("msg sent");
-        //}
-
         @Override
-        protected void setChannel(Channel channel) {
-            super.setChannel(channel);
-            if (channel != null) {
-                ChannelPipeline pipeline = channel.pipeline();
-                pipeline.addLast("header-prepender", new ProtobufVarint32LengthFieldPrepender());
-                pipeline.addLast("frame-decoder", new ProtobufVarint32FrameDecoder());
-                pipeline.addLast("encoder", new ProtobufEncoder());
-                pipeline.addLast("decoder", new ProtobufDecoder(
-                    Demo1.DemoMsg.getDefaultInstance()));
-                pipeline.addLast("handler", mHandler);
-            }
+        protected void setChannel() {
+            ChannelPipeline pipeline = channel().pipeline();
+            pipeline.addLast("header-prepender", new ProtobufVarint32LengthFieldPrepender());
+            pipeline.addLast("frame-decoder", new ProtobufVarint32FrameDecoder());
+            pipeline.addLast("encoder", new ProtobufEncoder());
+            pipeline.addLast("decoder", new ProtobufDecoder(
+                Demo1.DemoMsg.getDefaultInstance()));
+            pipeline.addLast("handler", mHandler);
         }
 
         @Override
-        public Channel popChannel() {
+        public Channel unsetChannel() {
             Channel channel = channel();
-            if (channel == null) {
-                return null;
-            }
 
             channel.pipeline().remove("header-prepender");
             channel.pipeline().remove("frame-decoder");

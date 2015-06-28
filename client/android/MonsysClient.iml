@@ -42,7 +42,9 @@
           <root url="jar://$MODULE_DIR$/libs/netty-all-4.0.19.Final.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../server/java/MonsysServer/libs/netty-all-4.0.19.Final-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="ext" level="project" />

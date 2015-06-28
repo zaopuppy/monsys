@@ -2,7 +2,6 @@ package com.letsmidi.monsys.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Process;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,7 @@ public class MainActivity extends MonsysActivity {
 
         setContentView(R.layout.activity_main);
 
-        Button showFgwBtn = (Button) findViewById(R.id.login_button);
+        Button showFgwBtn = (Button) findViewById(R.id.show_gw_list_button);
         Button logoutBtn = (Button) findViewById(R.id.logout_button);
 
         showFgwBtn.setOnClickListener(new View.OnClickListener() {

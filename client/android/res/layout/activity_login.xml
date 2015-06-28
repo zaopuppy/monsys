@@ -29,7 +29,7 @@
     </EditText>
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/show_gw_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_text"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/login_button"
+        android:layout_below="@+id/show_gw_list_button"
         android:text="Register" />
 
 </RelativeLayout>

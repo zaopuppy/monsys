@@ -60,7 +60,7 @@ public class ClientTest {
                 log("result: " + result);
 
                 printPipeline(connection.channel());
-                TelnetClientConnection telnet_connection = new TelnetClientConnection(connection.group(), connection.popChannel());
+                TelnetClientConnection telnet_connection = new TelnetClientConnection(connection.group(), connection.unsetChannel());
                 for (String line = reader.readLine();
                      telnet_connection.channel().isActive() && line != null && !line.equals("exit");
                      line = reader.readLine()) {

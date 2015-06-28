@@ -8,7 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 public class MonsysClient {
     // TODO: need to unregister connection
     private static final NioEventLoopGroup sWorker = new NioEventLoopGroup(1);
-    private static final MonsysConnection sConnection = new MonsysConnection("127.0.0.1", 1988, sWorker);
+    private static final MonsysConnection sConnection = new MonsysConnection("letsmidi.wicp.net", 1988, sWorker);
 
     public static MonsysConnection getConnection() {
         return sConnection;

@@ -51,3 +51,12 @@ update it make it something like 28800
     mysql> SET GLOBAL wait_timeout = 28800;
 
 
+无法远程连接到mysql, 错误号111(Connection Refused), 因为
+
+    # /etc/mysql/my.cnf
+    #
+    # Instead of skip-networking the default is now to listen only on
+    # localhost which is more compatible and is not less secure.
+    bind-address            = 127.0.0.1
+
+

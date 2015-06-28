@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
 import com.letsmidi.monsys.database.AccountInfo;
+import com.letsmidi.monsys.database.DeviceInfo;
 import com.letsmidi.monsys.log.LogFormatter;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
 import com.letsmidi.monsys.util.HibernateUtil;
@@ -63,14 +64,15 @@ public class PushServerApp {
         mLogger.info("push server start");
 
         Class[] mapping_classes = new Class[]{
-                AccountInfo.class,
+            AccountInfo.class,
+            DeviceInfo.class,
         };
 
         // initialize hibernate
-        //if (!HibernateUtil.init(mapping_classes)) {
-        //    mLogger.severe("Failed to initialize hibernate, failed");
-        //    return;
-        //}
+        if (!HibernateUtil.init(mapping_classes)) {
+            mLogger.severe("Failed to initialize hibernate, failed");
+            return;
+        }
 
         // global timer
         final HashedWheelTimer timer = new HashedWheelTimer(1, TimeUnit.SECONDS);

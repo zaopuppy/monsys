@@ -10,6 +10,8 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
+import java.util.NoSuchElementException;
+
 /**
  * Created by joey on 3/27/15.
  */
@@ -20,10 +22,8 @@ public class LoginServerConnection extends BaseClientConnection {
     }
 
     @Override
-    public void setChannel(Channel channel) {
-        super.setChannel(channel);
-
-        ChannelPipeline pipeline = channel.pipeline();
+    public void setChannel() {
+        ChannelPipeline pipeline = channel().pipeline();
         pipeline.addLast("frame-prepender", new ProtobufVarint32LengthFieldPrepender());
         pipeline.addLast("frame-decoder", new ProtobufVarint32FrameDecoder());
         pipeline.addLast("encoder", new ProtobufEncoder());
@@ -32,19 +32,20 @@ public class LoginServerConnection extends BaseClientConnection {
     }
 
     @Override
-    public Channel popChannel() {
+    public Channel unsetChannel() {
         Channel channel = channel();
-        if (channel == null) {
-            return null;
-        }
 
         ChannelPipeline pipeline = channel.pipeline();
 
-        pipeline.remove("frame-prepender");
-        pipeline.remove("frame-decoder");
-        pipeline.remove("encoder");
-        pipeline.remove("decoder");
-        pipeline.remove("handler");
+        try {
+            pipeline.remove("frame-prepender");
+            pipeline.remove("frame-decoder");
+            pipeline.remove("encoder");
+            pipeline.remove("decoder");
+            pipeline.remove("handler");
+        } catch (NoSuchElementException e) {
+            // ignore
+        }
 
         return channel;
     }

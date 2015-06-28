@@ -2,9 +2,6 @@ package com.letsmidi.monsys.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +28,7 @@ public class LoginActivity extends MonsysActivity {
 
         mAccountEdit = (EditText) findViewById(R.id.account_text);
         mPasswordEdit = (EditText) findViewById(R.id.password_text);
-        mSubmitBtn = (Button) findViewById(R.id.login_button);
+        mSubmitBtn = (Button) findViewById(R.id.show_gw_list_button);
         mRegisterButton = (Button) findViewById(R.id.register_button);
 
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +45,16 @@ public class LoginActivity extends MonsysActivity {
                     @Override
                     public void operationComplete(Future<Integer> future) throws Exception {
                         try {
+                            if (future == null || !future.isSuccess()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                });
+                                return;
+                            }
                             final int code = future.get();
                             if (code == 0) {
                                 runOnUiThread(new Runnable() {
@@ -66,7 +73,12 @@ public class LoginActivity extends MonsysActivity {
                                 });
                             }
                         } finally {
-                            enableLogin();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    enableLogin();
+                                }
+                            });
                         }
                     }
                 });

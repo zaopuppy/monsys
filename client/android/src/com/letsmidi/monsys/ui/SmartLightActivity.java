@@ -55,6 +55,7 @@ public class SmartLightActivity extends MonsysActivity implements OnSeekBarChang
         // get parameters
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        mFgwId = bundle.getString("fgw-id", null);
         mDevAddr = bundle.getInt("dev-addr", -1);
         if (mDevAddr < 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -157,29 +158,34 @@ public class SmartLightActivity extends MonsysActivity implements OnSeekBarChang
                         return;
                     }
 
-                    MonsysConnection.DevInfo dev_info = future.get();
+                    final MonsysConnection.DevInfo dev_info = future.get();
 
-                    for (MonsysConnection.IdValue id_value : dev_info.idValueList) {
-                        if (id_value.id == ID_COLOR_R) { // R
-                            Log.d(TAG, "Enable R-SeekBar: " + id_value.value);
-                            mRSeekBar.setEnabled(true);
-                            mRSeekBar.setProgress(mapColorValue(id_value.value));
-                        } else if (id_value.id == ID_COLOR_G) {
-                            Log.d(TAG, "Enable G-SeekBar: " + id_value.value);
-                            mGSeekBar.setEnabled(true);
-                            mGSeekBar.setProgress(mapColorValue(id_value.value));
-                        } else if (id_value.id == ID_COLOR_B) {
-                            Log.d(TAG, "Enable B-SeekBar: " + id_value.value);
-                            mBSeekBar.setEnabled(true);
-                            mBSeekBar.setProgress(mapColorValue(id_value.value));
-                        } else {
-                            Log.e(TAG, "Unknown id: " + id_value.id + "=" + id_value.value);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (MonsysConnection.IdValue id_value : dev_info.idValueList) {
+                                if (id_value.id == ID_COLOR_R) { // R
+                                    Log.d(TAG, "Enable R-SeekBar: " + id_value.value);
+                                    mRSeekBar.setEnabled(true);
+                                    mRSeekBar.setProgress(mapColorValue(id_value.value));
+                                } else if (id_value.id == ID_COLOR_G) {
+                                    Log.d(TAG, "Enable G-SeekBar: " + id_value.value);
+                                    mGSeekBar.setEnabled(true);
+                                    mGSeekBar.setProgress(mapColorValue(id_value.value));
+                                } else if (id_value.id == ID_COLOR_B) {
+                                    Log.d(TAG, "Enable B-SeekBar: " + id_value.value);
+                                    mBSeekBar.setEnabled(true);
+                                    mBSeekBar.setProgress(mapColorValue(id_value.value));
+                                } else {
+                                    Log.e(TAG, "Unknown id: " + id_value.id + "=" + id_value.value);
+                                }
+                            }
+
+                            setPreview(mRSeekBar.getProgress(), mGSeekBar.getProgress(), mBSeekBar.getProgress());
+
+                            Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    setPreview(mRSeekBar.getProgress(), mGSeekBar.getProgress(), mBSeekBar.getProgress());
-
-                    Toast.makeText(getApplicationContext(), "dev info got successfully", Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
         );

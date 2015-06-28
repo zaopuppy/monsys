@@ -156,7 +156,7 @@ public class CenterServerHandler extends SimpleChannelInboundHandler<Center.Cent
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         try {
-            AccountInfo info = (AccountInfo) session.load(AccountInfo.class, login.getAccount());
+            AccountInfo info = (AccountInfo) session.get(AccountInfo.class, login.getAccount());
             if (info == null) {
                 mLogger.severe("bad account");
                 ctx.close();

@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * Created by zero on 8/21/14.
  */
 @Entity
-@Table(name = "account_info")
+@Table(name="account_info")
 public class AccountInfo {
     public enum Status {
         NORMAL(0),
@@ -27,22 +27,22 @@ public class AccountInfo {
     }
 
     @Id
-    @Column(name = "account")
+    @Column(name="account")
     private String account = null;
 
-    @Column(name = "password", nullable = false)
+    @Column(name="password", nullable = false)
     private String password = null;
 
-    @Column(name = "salt", nullable = false)
+    @Column(name="salt", nullable = false)
     private String salt = null;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name="nickname", nullable = false)
     private String nickname = null;
 
-    @Column(name = "fgw_list", nullable = false)
+    @Column(name="fgw_list", nullable = false)
     private String fgwList = null;
 
-    @Column(name = "status", nullable = false)
+    @Column(name="status", nullable = false)
     private int status = 0;
 
     public String getAccount() {

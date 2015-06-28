@@ -12,25 +12,18 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 import java.nio.charset.Charset;
+import java.util.NoSuchElementException;
 
 
 public class TelnetClientConnection extends BaseClientConnection<String> {
 
     public TelnetClientConnection(NioEventLoopGroup group, Channel channel) {
-        super(group);
-
-        setChannel(channel);
+        super(group, channel);
     }
 
     @Override
-    protected void setChannel(Channel channel) {
-        super.setChannel(channel);
-
-        if (channel == null) {
-            return;
-        }
-
-        ChannelPipeline pipeline = channel.pipeline();
+    protected void setChannel() {
+        ChannelPipeline pipeline = channel().pipeline();
 
         pipeline.addLast("frame-decoder", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         pipeline.addLast("decoder", new StringDecoder(Charset.forName("utf-8")));
@@ -39,15 +32,17 @@ public class TelnetClientConnection extends BaseClientConnection<String> {
     }
 
     @Override
-    public Channel popChannel() {
+    public Channel unsetChannel() {
         Channel channel = channel();
-        if (channel == null) {
-            return null;
-        }
 
-        channel.pipeline().remove("frame-decoder");
-        channel.pipeline().remove("decoder");
-        channel.pipeline().remove("encoder");
+        try {
+            channel.pipeline().remove("frame-decoder");
+            channel.pipeline().remove("decoder");
+            channel.pipeline().remove("encoder");
+        } catch (NoSuchElementException e) {
+            // ignore
+            log("NoSuchElementException");
+        }
 
         return channel;
     }

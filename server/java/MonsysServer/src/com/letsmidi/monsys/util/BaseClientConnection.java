@@ -1,7 +1,6 @@
 package com.letsmidi.monsys.util;
 
 
-import com.letsmidi.monsys.util.ClientConnection;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -36,49 +35,53 @@ public abstract class BaseClientConnection<T> implements ClientConnection<T> {
 
     private final Map<Integer, RouteItem<T>> mRouteMap = new HashMap<>();
     private final NioEventLoopGroup mGroup;
-    private Channel mChannel = null;
+    private final Channel mChannel;
 
     public BaseClientConnection(NioEventLoopGroup group) {
+        this(group, new NioSocketChannel());
+    }
+
+    public BaseClientConnection(NioEventLoopGroup group, Channel channel) {
         mGroup = group;
+        mChannel = channel;
     }
 
     @Override
-    public ChannelFuture connect(String host, int port) {
-        // TODO: reuse this channel if we can
-        Channel channel = new NioSocketChannel();
+    public ChannelFuture connect(final String host, final int port) {
 
-        setChannel(channel);
+        setChannel();
+
+        final Channel channel = channel();
 
         channel.config().setOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5 * 1000);
         channel.config().setOption(ChannelOption.SO_KEEPALIVE, true);
 
         ChannelFuture register_future = mGroup.register(channel);
 
-        ChannelPromise promise = channel.newPromise();
-        register_future.addListener(future -> channel.connect(new InetSocketAddress(host, port), promise));
+        final ChannelPromise promise = channel.newPromise();
+        register_future.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                channel.connect(new InetSocketAddress(host, port), promise);
+            }
+        });
 
         return promise;
     }
 
     @Override
     public ChannelFuture close() {
-        popChannel();
-        return channel().close();
-    }
-
-    protected void setChannel(Channel channel) {
-        if (mChannel != null && mChannel.isOpen()) {
-            mChannel.close();
+        // unsetChannel();
+        if (channel().isActive()) {
+            return channel().close();
+        } else {
+            return channel().newSucceededFuture();
         }
-
-        mChannel = channel;
     }
 
-    /**
-     *
-     * @return cleaned up channel
-     */
-    public abstract Channel popChannel();
+    protected abstract void setChannel();
+
+    public abstract Channel unsetChannel();
 
     @Override
     public Channel channel() {

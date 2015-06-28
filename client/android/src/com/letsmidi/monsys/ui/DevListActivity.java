@@ -55,6 +55,15 @@ public class DevListActivity extends MonsysActivity implements OnItemClickListen
 
         setContentView(R.layout.activity_dev_list);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null || !bundle.containsKey("fgw-id")) {
+            Toast.makeText(getApplicationContext(), "no fgw-id", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        mFgwId = bundle.getString("fgw-id", null);
+
         mListViewAdapter = new MyAdapter(getApplicationContext(), R.layout.dev_item, R.id.dev_name, mDevList);
         ListView listView = (ListView) findViewById(R.id.dev_list);
         listView.setAdapter(mListViewAdapter);
@@ -83,12 +92,22 @@ public class DevListActivity extends MonsysActivity implements OnItemClickListen
                         return;
                     }
 
-                    mDevList.clear();
-                    ArrayList<MonsysConnection.Dev> dev_list = future.get();
-                    for (MonsysConnection.Dev dev: dev_list) {
-                        mDevList.add(new DevInfo(dev.name, dev.addr, dev.type));
+                    final ArrayList<MonsysConnection.Dev> dev_list = future.get();
+                    if (dev_list == null) {
+                        Log.e(TAG, "no devices");
+                        return;
                     }
-                    mListViewAdapter.notifyDataSetChanged();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDevList.clear();
+                            for (MonsysConnection.Dev dev: dev_list) {
+                                mDevList.add(new DevInfo(dev.name, dev.addr, dev.type));
+                            }
+                            mListViewAdapter.notifyDataSetChanged();
+                        }
+                    });
                 }
             });
     }
@@ -109,7 +128,7 @@ public class DevListActivity extends MonsysActivity implements OnItemClickListen
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        // bundle.putString("fgw-id", mFgwId);
+        bundle.putString("fgw-id", mFgwId);
         bundle.putInt("dev-addr", mDevList.get(position).addr);
 
         Intent intent = new Intent(getApplicationContext(), SmartLightActivity.class);

@@ -1,26 +1,19 @@
 package com.letsmidi.monsys.demo;
 
-import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.sdk.MonsysConnection;
-import com.letsmidi.monsys.util.BaseClientConnection;
-import com.letsmidi.monsys.util.MsgUtil;
 import com.letsmidi.monsys.util.SequenceGenerator;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.util.concurrent.Future;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-/**\
+/**
  * Created by zhaoyi on 15-6-7.
  */
 public class ApiClientApp {
@@ -36,6 +29,10 @@ public class ApiClientApp {
     public static void main(String[] args) throws InterruptedException, IOException, ExecutionException {
         NioEventLoopGroup shared_worker = new NioEventLoopGroup();
         MonsysConnection conn = new MonsysConnection("127.0.0.1", 1988, shared_worker);
+
+        ChannelFuture f1 = conn.close();
+        log(f1.toString());
+        f1.sync();
 
         Future<Integer> f = conn.login("zao1@gmail.com", "password").sync();
         if (f.isSuccess() && f.get() == 0) {

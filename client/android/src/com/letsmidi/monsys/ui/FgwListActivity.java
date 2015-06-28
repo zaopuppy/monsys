@@ -62,31 +62,48 @@ public class FgwListActivity extends MonsysActivity implements OnItemClickListen
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRefreshButton.setEnabled(false);
-                mFgwList.clear();
-                mListViewAdapter.notifyDataSetChanged();
-                MonsysClient.getConnection().getFgwList().addListener(
-                    new GenericFutureListener<Future<ArrayList<MonsysConnection.Fgw>>>() {
-                        @Override
-                        public void operationComplete(Future<ArrayList<MonsysConnection.Fgw>> future) throws Exception {
-                            try {
-                                if (future == null || !future.isSuccess()) {
-                                    Log.d(TAG, "failed to get fgw_list");
-                                    return;
-                                }
+                refreshFgwList();
+            }
+        });
+
+        refreshFgwList();
+    }
+
+    private void refreshFgwList() {
+        mRefreshButton.setEnabled(false);
+        mFgwList.clear();
+        mListViewAdapter.notifyDataSetChanged();
+        MonsysClient.getConnection().getFgwList().addListener(
+            new GenericFutureListener<Future<ArrayList<MonsysConnection.Fgw>>>() {
+                @Override
+                public void operationComplete(Future<ArrayList<MonsysConnection.Fgw>> future) throws Exception {
+                    try {
+                        if (future == null || !future.isSuccess()) {
+                            Log.d(TAG, "failed to get fgw_list");
+                            return;
+                        }
+
+                        final ArrayList<MonsysConnection.Fgw> fgw_list = future.get();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
                                 mFgwList.clear();
-                                ArrayList<MonsysConnection.Fgw> fgw_list = future.get();
                                 for (MonsysConnection.Fgw fgw: fgw_list) {
                                     mFgwList.add(new FgwInfo(fgw.id, fgw.name));
                                 }
                                 mListViewAdapter.notifyDataSetChanged();
-                            } finally {
+                            }
+                        });
+                    } finally {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
                                 mRefreshButton.setEnabled(true);
                             }
-                        }
-                    });
-            }
-        });
+                        });
+                    }
+                }
+            });
     }
 
     private void disableClick() {
@@ -118,9 +135,10 @@ public class FgwListActivity extends MonsysActivity implements OnItemClickListen
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         disableClick();
-        // Bundle bundle = new Bundle();
-        // bundle.putString("fgw-id", mFgwList.get(position).id);
+        Bundle bundle = new Bundle();
+        bundle.putString("fgw-id", mFgwList.get(position).id);
         Intent intent = new Intent(getApplicationContext(), DevListActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

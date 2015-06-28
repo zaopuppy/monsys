@@ -4,14 +4,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import com.letsmidi.monsys.Config;
+import com.letsmidi.monsys.database.DeviceInfo;
 import com.letsmidi.monsys.protocol.push.Push;
 import com.letsmidi.monsys.protocol.push.Push.MsgType;
 import com.letsmidi.monsys.protocol.push.Push.PushMsg;
+import com.letsmidi.monsys.util.HibernateUtil;
 import com.letsmidi.monsys.util.MsgUtil;
 import com.letsmidi.monsys.util.SequenceGenerator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.HashedWheelTimer;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
     private final Logger mLogger = Logger.getLogger(Config.getPushConfig().getLoggerName());
@@ -54,6 +58,13 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
 
         Push.PushClientLogin login = msg.getPushClientLogin();
 
+        if (!auth(login)) {
+            // TODO: failed response;
+            mLogger.severe("device id (" + login.getDeviceId() + ") is bad");
+            ctx.close();
+            return;
+        }
+
         InMemInfo.INSTANCE.getPushClientMap().put(
                 login.getDeviceId(), new PushClient(login.getDeviceId(), ctx.channel()));
         ctx.channel().closeFuture().addListener(
@@ -72,6 +83,26 @@ public class PushServerHandler extends SimpleChannelInboundHandler<PushMsg> {
         builder.setPushClientLoginRsp(login_rsp);
 
         ctx.writeAndFlush(builder.build());
+    }
+
+    /**
+     * check if this device has been imported
+     * @param login
+     * @return
+     */
+    private boolean auth(Push.PushClientLogin login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            DeviceInfo device_info = (DeviceInfo) session.get(DeviceInfo.class, login.getDeviceId());
+            if (device_info == null) {
+                mLogger.severe("no such device");
+                return false;
+            }
+
+            return true;
+        } finally {
+            session.close();
+        }
     }
 
     private void onLoggedIn(ChannelHandlerContext ctx, PushMsg msg) throws Exception {
